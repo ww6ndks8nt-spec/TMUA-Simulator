@@ -2299,6 +2299,10 @@ body.nav-collapsed .studio-ui.nav-aware{left:76px!important;padding:48px 44px!im
 #profileSettings label.settings-check{display:flex;align-items:flex-start;gap:10px;line-height:1.5;cursor:pointer;text-align:left}
 #profileSettings label.settings-check>input[type="checkbox"]{display:block;position:static;float:none;transform:none;flex:0 0 16px;width:16px;height:16px;min-width:16px;min-height:16px;margin:2px 0 0;padding:0;accent-color:#2448b5}
 #profileSettings label.settings-check>span{display:block;flex:1;min-width:0;margin:0;padding:0;line-height:1.5}
+</style><style>
+.cloud-remember{display:flex;align-items:center;gap:8px;font-size:14px;margin-top:15px}
+.cloud-remember input{width:16px;min-height:16px;margin:0}
+[data-cloud-status]{font-size:11px;margin-top:5px;opacity:.85}
 </style></head>
 <body>
 
@@ -2338,27 +2342,28 @@ body.nav-collapsed .studio-ui.nav-aware{left:76px!important;padding:48px 44px!im
 
     <div id="signinView">
       <div class="newprof">
-        <input class="txt" id="siName" aria-label="Profile name" maxlength="24" placeholder="Profile name" autocomplete="off">
-        <input class="txt" id="siPin" aria-label="PIN (optional)" type="password" maxlength="128" style="width:170px" placeholder="PIN (blank if none)">
+        <input class="txt" id="siName" type="email" aria-label="Email" maxlength="254" placeholder="Email address" autocomplete="username">
+        <input class="txt" id="siPin" aria-label="Password" type="password" maxlength="128" style="width:170px" placeholder="Password" autocomplete="current-password">
         <button class="bigbtn" id="siBtn">Sign in</button>
       </div>
-      <p class="switchline">New here? <button class="linkbtn" id="toRegister">Register a profile</button></p>
+      <label class="cloud-remember"><input id="rememberAccount" type="checkbox" checked> Remember me on this device</label><p><button type="button" id="resetPasswordBtn" class="linkbtn">Reset password</button></p><button type="button" id="finishDeletionBtn" class="bigbtn ghost hidden">Finish deleting my account</button><p class="switchline">New here? <button class="linkbtn" id="toRegister">Register a profile</button></p>
     </div>
 
     <div id="registerView" class="hidden">
       <div class="newprof">
-        <input class="txt" id="rgName" aria-label="New profile name" maxlength="24" placeholder="Choose a profile name" autocomplete="off">
+        <input class="txt" id="rgEmail" type="email" aria-label="Registration email" maxlength="254" placeholder="Email address" autocomplete="email">
+<input class="txt" id="rgName" aria-label="New profile name" maxlength="24" placeholder="Choose a profile name" autocomplete="off">
       </div>
       <div class="newprof">
-        <input class="txt" id="rgPin" aria-label="New PIN (optional)" type="password" maxlength="128" style="width:170px" placeholder="Choose a PIN (optional)">
-        <input class="txt" id="rgPin2" aria-label="Repeat PIN" type="password" maxlength="128" style="width:170px" placeholder="Repeat PIN">
+        <input class="txt" id="rgPin" aria-label="New password" type="password" maxlength="128" style="width:170px" placeholder="Choose a password" autocomplete="new-password">
+        <input class="txt" id="rgPin2" aria-label="Repeat password" type="password" maxlength="128" style="width:170px" placeholder="Repeat password" autocomplete="new-password">
         <button class="bigbtn" id="rgBtn">Create &amp; sign in</button>
       </div>
-      <p class="switchline">Already registered on this device? <button class="linkbtn" id="toSignin">Sign in</button></p>
+      <p class="switchline">Already have an account? <button class="linkbtn" id="toSignin">Sign in</button></p>
     </div>
 
     <div class="formerr" id="loginErr"></div>
-    <p class="libnote">Profiles and results are stored only in this browser on this device — using the site on another device starts fresh (leaderboard entries, once submitted, are shared everywhere). A forgotten PIN cannot be recovered; you would need to register a new profile. If a paper is sat, the profile name appears on the public leaderboard.</p>
+    <p class="libnote">Sign in with the same email and password on any device to access your practice history. You can import an old local profile using its backup file in Settings.</p>
   </div>
 </div>
 
@@ -2452,7 +2457,7 @@ body.nav-collapsed .studio-ui.nav-aware{left:76px!important;padding:48px 44px!im
           <option value="0">No timer</option>
         </select>
       </label>
-    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Applications & reasoning</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Custom-made sets<small>Extra-challenging practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote custom-set-note">These are made to be extra challenging, so a 120-minute timer is used instead of a 75 minute timer.</p><div class="paper-grid" id="gridCustom"></div></div></details><p class="libnote">Progress is saved automatically per profile in this browser. Clearing site data erases everything. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
+    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Applications & reasoning</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Custom-made sets<small>Extra-challenging practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote custom-set-note">These are made to be extra challenging, so a 120-minute timer is used instead of a 75 minute timer.</p><div class="paper-grid" id="gridCustom"></div></div></details><p class="libnote">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
 </div>
 
 <!-- ============ REVIEW HUB ============ -->
@@ -2687,12 +2692,12 @@ body.nav-collapsed .studio-ui.nav-aware{left:76px!important;padding:48px 44px!im
 
 <dialog id="profileSettings" class="modern-ui"><form id="profileSettingsForm">
 <div class="settings-heading"><h2>Profile settings</h2><button type="button" id="closeProfileSettings" aria-label="Close settings">✕</button></div>
-<p class="study-muted">Your profile and attempts are saved in this browser. This password/PIN locks your local profile; it is not a cloud account.</p>
+<p class="study-muted">Your account and practice history sync across devices. Use the same email and password wherever you sign in.</p>
 <label>Profile name<input id="settingsName" class="txt" required maxlength="60" autocomplete="username"></label>
-<label>Current password/PIN<input id="settingsCurrentPin" class="txt" type="password" maxlength="128" autocomplete="current-password"></label>
-<p class="study-muted">Required if your profile already has a password/PIN.</p>
-<label>New password/PIN<input id="settingsNewPin" class="txt" type="password" maxlength="128" autocomplete="new-password" placeholder="Leave blank to keep it"></label>
-<label>Confirm new password/PIN<input id="settingsConfirmPin" class="txt" type="password" maxlength="128" autocomplete="new-password"></label>
+<label>Current password<input id="settingsCurrentPin" class="txt" type="password" maxlength="128" autocomplete="current-password"></label>
+<p class="study-muted">Required when changing your password or deleting your account.</p>
+<label>New password<input id="settingsNewPin" class="txt" type="password" maxlength="128" autocomplete="new-password" placeholder="Leave blank to keep it"></label>
+<label>Confirm new password<input id="settingsConfirmPin" class="txt" type="password" maxlength="128" autocomplete="new-password"></label>
 <label class="settings-check"><input id="settingsSyncName" type="checkbox" checked><span>Update my existing leaderboard entries with this name</span></label>
 <p class="study-muted">An internet connection is needed for leaderboard updates. Your scores and attempts stay attached to the same profile.</p>
 
@@ -2710,36 +2715,18 @@ body.nav-collapsed .studio-ui.nav-aware{left:76px!important;padding:48px 44px!im
 <p class="study-muted">Defaults apply to new paper selections. Saved sessions retain their own timing.</p></fieldset>
 <button id="saveProfileSettings" class="bigbtn" type="submit">Save changes</button>
 <p id="profileSettingsStatus" role="status" aria-live="polite"></p></form>
-<section class="settings-tools"><h3>Backup and restore</h3>
-<p class="study-muted">Export this profile’s attempts, bookmarks, journal, plans and saved sessions. Restoring replaces this profile’s practice history and preferences; its name and password/PIN stay the same. The backup contains personal practice data, but no password.</p>
+<section class="settings-tools"><h3>Backup and import</h3>
+<p class="study-muted">Export this profile’s attempts, bookmarks, journal, plans and saved sessions. Importing adds history to this account and updates preferences. Your email, name and password stay the same. The backup contains personal practice data, but no password.</p>
 <button type="button" id="backupProfile" class="bigbtn ghost">Download backup</button>
-<label class="settings-file">Restore from backup<input id="restoreProfile" type="file" accept=".json,application/json"></label>
+<label class="settings-file">Import backup<input id="restoreProfile" type="file" accept=".json,application/json"></label>
 <p id="backupStatus" role="status"></p></section>
 <section class="settings-tools"><h3>Profile actions</h3>
 <button type="button" id="signOutBtn" class="bigbtn ghost">Sign out</button>
-<button type="button" id="deleteProfileBtn" class="bigbtn ghost settings-danger">Delete profile</button>
-<p class="study-muted">Deleting removes this profile and its history from this browser. Previously published leaderboard entries are not deleted.</p>
+<button type="button" id="deleteProfileBtn" class="bigbtn ghost settings-danger">Delete account</button>
+<p class="study-muted">Deleting permanently removes your cloud account, its practice history and leaderboard entries linked to this account.</p>
 </section></dialog>
 <script>
-/* =========================================================================
-   LEADERBOARD SETUP (optional — enables a shared, public leaderboard)
-   =========================================================================
-   1. Go to console.firebase.google.com → Add project (Analytics not needed).
-   2. Build → Realtime Database → Create database (pick a nearby region,
-      e.g. europe-west1) → start in locked mode.
-   3. In the Rules tab, replace the rules with exactly:
-
-        { "rules": { "leaderboards": { ".read": true, ".write": true } } }
-
-      then press Publish.
-   4. Copy the database URL shown at the top of the Data tab — it looks like
-      https://your-project-default-rtdb.europe-west1.firebasedatabase.app
-      — and paste it between the quotes below.
-
-   Leave it as '' to disable the leaderboard (everything else still works).
-   Note: with these rules, anyone who has your site link can read and write
-   leaderboard entries. Fine for a friend group; not tamper-proof.
-   ========================================================================= */
+/* Cloud setup: publish database.rules.json from the accompanying package. */
 const LEADERBOARD_URL = 'https://tmua-leaderboard-default-rtdb.europe-west1.firebasedatabase.app';
 
 /* =========================================================================
@@ -3588,7 +3575,7 @@ let mathJaxQueue=Promise.resolve();
 function typeset(el){ if(window.MathJax && MathJax.typesetPromise){ mathJaxQueue=mathJaxQueue.catch(()=>{}).then(()=>MathJax.typesetPromise([el])).catch(()=>{}); } }
 
 /* ---------------- persistence & profiles ---------------- */
-const SAVE_KEY='tmua-sim-v2', OLD_KEY='tmua-sim-v1';
+const SAVE_KEY='tmua-cloud-cache-v1', OLD_KEY='tmua-sim-v2';
 const Store = {
   async readKey(key){
     if(window.storage && window.storage.get){
@@ -3598,7 +3585,7 @@ const Store = {
     try{ const v=localStorage.getItem(key); return v?JSON.parse(v):null; }catch(e){}
     return null;
   },
-  async write(obj){
+  async writeLocal(obj){
     const s=JSON.stringify(obj);
     if(window.storage && window.storage.set){
       try{ await window.storage.set(SAVE_KEY, s); return true; }catch(e){}
@@ -3606,6 +3593,7 @@ const Store = {
     try{ localStorage.setItem(SAVE_KEY, s); return true; }catch(e){return false;}
   }
 };
+Store.write=cloudPersist;
 let ROOT = { v:2, profiles:{}, data:{}, lastUser:null };
 let currentUser = null;
 let STATE = { results:{}, inprogress:{}, combinedResults:[], randomResults:[], resolvedErrors:{} };   // reference into ROOT.data[currentUser]
@@ -3676,7 +3664,7 @@ function richMathHtml(str){
 }
 
 function showLogin(){
-  ['siName','siPin','rgName','rgPin','rgPin2'].forEach(id=>{ $(id).value=''; });
+  ['siName','siPin','rgEmail','rgName','rgPin','rgPin2'].forEach(id=>{ $(id).value=''; });
   $('loginErr').textContent='';
   $('registerView').classList.add('hidden');
   $('signinView').classList.remove('hidden');
@@ -3694,34 +3682,12 @@ function findProfileByName(name){
   for(const id in ROOT.profiles){ if((ROOT.profiles[id].name||'').toLowerCase()===lc) return id; }
   return null;
 }
-async function doSignIn(){
-  const name=$('siName').value.trim();
-  if(!name){ authErr('Enter your profile name.'); return; }
-  const bad='No matching profile on this device \u2014 check the name and PIN, or register a new profile.';
-  const id=findProfileByName(name);
-  if(!id){ authErr(bad); return; }
-  const p=ROOT.profiles[id];
-  if(p.pin){
-    const pinRaw=$('siPin').value;
-    if(!pinRaw || (await hashPin(pinRaw))!==p.pin){ authErr(bad); return; }
-  }
-  signIn(id);
-}
+
 $('siBtn').addEventListener('click', doSignIn);
 $('siName').addEventListener('keydown', e=>{ if(e.key==='Enter') doSignIn(); });
 $('siPin').addEventListener('keydown', e=>{ if(e.key==='Enter') doSignIn(); });
 
-async function doRegister(){
-  const name=$('rgName').value.trim();
-  if(!name){ authErr('Choose a name for the profile.'); return; }
-  if(findProfileByName(name)){ authErr('That name is already registered on this device \u2014 sign in instead.'); return; }
-  const pin=$('rgPin').value, pin2=$('rgPin2').value;
-  if(pin!==pin2){ authErr('The PINs don\u2019t match.'); return; }
-  const id='u'+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36);
-  ROOT.profiles[id]={ name, pin: pin ? await hashPin(pin) : null, created:Date.now() };
-  ROOT.data[id]={ results:{}, inprogress:{}, combinedResults:[], randomResults:[], resolvedErrors:{} };
-  persist(); signIn(id);
-}
+
 $('rgBtn').addEventListener('click', doRegister);
 $('rgName').addEventListener('keydown', e=>{ if(e.key==='Enter') doRegister(); });
 $('rgPin2').addEventListener('keydown', e=>{ if(e.key==='Enter') doRegister(); });
@@ -3780,26 +3746,8 @@ function signIn(id){
   $('loginScreen').classList.add('hidden');
   showDashboardHub();
 }
-$('signOutBtn').addEventListener('click', ()=>{
-  studyFlush();studySession=null;studyOwner=null;$('profileSettings').close();ROOT.lastUser=null; persistNow(); currentUser=null; STATE={results:{},inprogress:{},combinedResults:[],randomResults:[],resolvedErrors:{}}; hideSideNav();
-  document.querySelectorAll('.screen').forEach(el=>el.classList.add('hidden'));
-  showLogin(); $('loginScreen').classList.remove('hidden');
-});
-$('deleteProfileBtn').addEventListener('click', async ()=>{
- if(!currentUser||!ROOT.profiles[currentUser])return;
- const uid=currentUser,name=ROOT.profiles[uid].name;
- if(!confirm('Delete profile “'+name+'” and all its saved practice history from this browser? Published leaderboard entries remain. This cannot be undone.'))return;
- const next={...ROOT,profiles:{...ROOT.profiles},data:{...ROOT.data},lastUser:ROOT.lastUser===uid?null:ROOT.lastUser};
- delete next.profiles[uid];delete next.data[uid];clearTimeout(saveDebounce);
- setProfileSettingsBusy(true);
- try{
- if(!await Store.write(next)){$('backupStatus').textContent='Could not delete the profile. Browser storage is unavailable.';return;}
- ROOT=next;currentUser=null;STATE={results:{},inprogress:{},combinedResults:[],randomResults:[],resolvedErrors:{}};
- studySession=null;studyOwner=null;studyTick=0;studySelected.clear();
- $('profileSettings').close();hideSideNav();document.querySelectorAll('.screen').forEach(el=>el.classList.add('hidden'));
- showLogin();$('loginScreen').classList.remove('hidden');
- }finally{setProfileSettingsBusy(false);}
-});
+
+
 
 
 
@@ -3838,37 +3786,7 @@ async function syncProfileLeaderboardName(uid,name){
  }
  return {failed,updated};
 }
-$('profileSettingsForm').addEventListener('submit',async e=>{
- e.preventDefault();const uid=currentUser,p=ROOT.profiles[uid];if(!p)return;
- const status=$('profileSettingsStatus'),button=$('saveProfileSettings');
- const name=$('settingsName').value.trim(),pin=$('settingsNewPin').value,confirmPin=$('settingsConfirmPin').value;
- if(!name||name.length>60){status.textContent='Enter a profile name of 1–60 characters.';return;}
- const duplicate=findProfileByName(name);if(duplicate&&duplicate!==uid){status.textContent='That profile name is already in use on this device.';return;}
- if(pin!==confirmPin){status.textContent='The new passwords/PINs do not match.';return;}
- setProfileSettingsBusy(true);
- const preventClose=e=>e.preventDefault();$('profileSettings').addEventListener('cancel',preventClose);
- try{
-  if(p.pin&&(await hashPin($('settingsCurrentPin').value))!==p.pin){status.textContent='Current password/PIN is incorrect.';return;}
-  const previous={...p},next={...p,name,pin:pin?await hashPin(pin):p.pin,preferences:{
- leaderboard:$('settingsLeaderboard').checked,publicName:$('settingsPublicName').value,
- hideSolutions:$('settingsHideSolutions').checked,textSize:$('settingsTextSize').value,
- contrast:$('settingsContrast').checked,duration:Number($('settingsDuration').value),timerAlerts:$('settingsTimerAlerts').checked
- }};
-  if(currentUser!==uid)return;
-  clearTimeout(saveDebounce);ROOT.profiles[uid]=next;
-  if(!await Store.write(ROOT)){ROOT.profiles[uid]=previous;status.textContent='Could not save changes. Check that browser storage is available and try again.';return;}
-  applyProfilePreferences();
-  ['settingsCurrentPin','settingsNewPin','settingsConfirmPin'].forEach(id=>$(id).value='');
-  if(!$('modernReviewScreen').classList.contains('hidden'))renderModernReview();
-  status.textContent='Profile saved.';
-  if($('settingsSyncName').checked&&LEADERBOARD_URL){
-   status.textContent='Profile saved. Updating leaderboard names…';
-   const result=await syncProfileLeaderboardName(uid,publicProfileName());
-   status.textContent=result.failed?'Profile saved locally. Some leaderboard updates could not be verified. Re-enter your current password/PIN and save again to retry.':'Profile saved. Existing leaderboard display names are up to date.';
-  }
- }catch(error){status.textContent='Could not finish saving. Please try again.';}
- finally{setProfileSettingsBusy(false);$('profileSettings').removeEventListener('cancel',preventClose);}
-});
+
 
 
 function setProfileSettingsBusy(busy){
@@ -3928,22 +3846,7 @@ function validateProfileBackup(b){
  if(d.study){if(!object(d.study))throw Error('Invalid study data.');for(const k of ['bookmarks','ratings','journal'])if(d.study[k]&&!object(d.study[k]))throw Error('Invalid study data.');for(const k of ['responses','plans','sessions'])if(d.study[k]&&!Array.isArray(d.study[k]))throw Error('Invalid study data.');}
  return b;
 }
-$('restoreProfile').onchange=async e=>{
- const file=e.target.files[0],uid=currentUser;if(!file||!uid)return;
- try{
- if(file.size>25*1024*1024)throw Error('Choose a backup smaller than 25 MB.');
- const b=validateProfileBackup(JSON.parse(await file.text()));
- if(currentUser!==uid)return;
- if(!confirm('Replace this profile’s practice history and preferences with this backup? Download a backup first if you want to keep the current history. Your name and password/PIN will stay the same.'))return;
- setProfileSettingsBusy(true);
- const oldData=STATE,oldPrefs=ROOT.profiles[uid].preferences;
- clearTimeout(saveDebounce);ROOT.data[uid]=b.data;STATE=b.data;ROOT.profiles[uid].preferences=b.preferences||{};
- if(!await Store.write(ROOT)){ROOT.data[uid]=oldData;STATE=oldData;ROOT.profiles[uid].preferences=oldPrefs;throw Error('Could not save the restored backup.');}
- studyOwner=null;studySession=null;studyTick=0;studySelected.clear();
- applyProfilePreferences();$('profileSettings').close();studyHide();showDashboardHub();
- }catch(error){$('backupStatus').textContent=error.message||'Could not restore this backup.';}
- finally{e.target.value='';setProfileSettingsBusy(false);}
-};
+
 /* ---------------- library ---------------- */
 function buildLibrary(){
   const grids={4:$('grid4')};
@@ -5196,13 +5099,11 @@ function reviewAttempt(rec){
 }
 
 /* ---------------- leaderboard ---------------- */
-async function lbRequest(path, opts){
-  const ctl=new AbortController(); const to=setTimeout(()=>ctl.abort(), 6000);
-  try{
-    const r=await fetch(LEADERBOARD_URL.replace(/\/+$/,'')+path, Object.assign({signal:ctl.signal}, opts||{}));
-    if(!r.ok) throw new Error('http '+r.status);
-    return await r.json();
-  } finally { clearTimeout(to); }
+async function lbRequest(path,opts){
+ if(opts)return cloudRequest(path,opts);
+ const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);
+ try{const r=await fetch(LEADERBOARD_URL.replace(/\/+$/,'')+path,{signal:ctl.signal});if(!r.ok)throw Error('Leaderboard unavailable');return await r.json();}
+ finally{clearTimeout(timeout);}
 }
 function lbGet(pid){ return lbRequest('/leaderboards/'+encodeURIComponent(pid)+'.json'); }
 function lbPut(pid, uid, entry){
@@ -5892,26 +5793,337 @@ function downloadDifficultyRatings(){
 }
 
 $('downloadDifficulties').addEventListener('click',downloadDifficultyRatings);
-(async function boot(){
+/* Cloud account adapter. Only Firebase Authentication handles passwords. */
+const firebaseConfig={
+ apiKey:"AIzaSyB7I7lVrNPOO8lM_jOz3gigG5DHKkcT3GE",
+ authDomain:"tmua-leaderboard.firebaseapp.com",
+ databaseURL:"https://tmua-leaderboard-default-rtdb.europe-west1.firebasedatabase.app",
+ projectId:"tmua-leaderboard",storageBucket:"tmua-leaderboard.firebasestorage.app",
+ messagingSenderId:"522075367738",appId:"1:522075367738:web:764342a9e489d8efc7c803"
+};
+const CLOUD={sdk:null,auth:null,uid:null,ready:false,busy:false,observed:{},pending:{},queue:Promise.resolve(),poll:null,deleting:false};
+function emptyCloudState(){return {results:{},inprogress:{},combinedResults:[],randomResults:[],resolvedErrors:{}};}
+function cloudKey(path){return btoa(unescape(encodeURIComponent(JSON.stringify(path)))).replaceAll('+','-').replaceAll('/','_').replaceAll('=','');}
+function cloudPath(key){return JSON.parse(decodeURIComponent(escape(atob(key.replaceAll('-','+').replaceAll('_','/')))));}
+function cloudRecordId(r){
+ if(r._syncId)return r._syncId;
+ if(r.id)return r._syncId=String(r.id);
+ // Stable IDs also make repeated backup imports idempotent.
+ const text=JSON.stringify(r);let a=2166136261,b=5381;
+ for(let i=0;i<text.length;i++){a=Math.imul(a^text.charCodeAt(i),16777619)>>>0;b=(Math.imul(b,33)^text.charCodeAt(i))>>>0;}
+ return r._syncId='r'+a.toString(16)+b.toString(16);
+}
+function flattenCloud(profile,state){
+ const flat={};
+ flat['profile/name']=profile.name;
+ flat['profile/created']=profile.created||0;
+ for(const [k,v] of Object.entries(profile.preferences||{}))if(v!==undefined)flat['profile/preferences/'+k]=v;
+ const put=(path,v)=>{if(v!==undefined)flat['records/'+cloudKey(path)]=JSON.stringify(v);};
+ for(const [pid,rows] of Object.entries(state.results||{}))for(const r of rows||[])put(['results',pid,cloudRecordId(r)],r);
+ for(const key of ['combinedResults','randomResults'])for(const r of state[key]||[])put([key,cloudRecordId(r)],r);
+ for(const key of ['inprogress','resolvedErrors'])for(const [id,r] of Object.entries(state[key]||{}))put([key,id],r);
+ const study=state.study||{};
+ for(const key of ['responses','plans','sessions'])for(const r of study[key]||[])put(['study',key,cloudRecordId(r)],r);
+ for(const key of ['bookmarks','ratings','journal'])for(const [id,r] of Object.entries(study[key]||{}))put(['study',key,id],r);
+ return flat;
+}
+function remoteCloudMap(remote){
+ const flat={};if(!remote)return flat;
+ if(remote.profile){
+  if(remote.profile.name!==undefined)flat['profile/name']=remote.profile.name;
+  if(remote.profile.created!==undefined)flat['profile/created']=remote.profile.created;
+  for(const [key,v] of Object.entries(remote.profile.preferences||{}))flat['profile/preferences/'+key]=v;
+ }
+ for(const [key,v] of Object.entries(remote.records||{}))flat['records/'+key]=v;
+ return flat;
+}
+function expandCloud(flat,fallbackName='Student'){
+ const profile={name:fallbackName,created:Date.now(),preferences:{}},state=emptyCloudState();
+ state.study={responses:[],plans:[],sessions:[],bookmarks:{},ratings:{},journal:{}};
+ for(const [key,value] of Object.entries(flat)){
+  if(value===null)continue;
+  if(key==='profile/name'){profile.name=String(value);continue;}
+  if(key==='profile/created'){profile.created=Number(value)||0;continue;}
+  if(key.startsWith('profile/preferences/')){const k=key.slice(20);if(!['__proto__','constructor','prototype'].includes(k))profile.preferences[k]=value;continue;}
+  if(!key.startsWith('records/'))continue;
+  const path=cloudPath(key.slice(8));if(!Array.isArray(path)||path.some(k=>['__proto__','constructor','prototype'].includes(k)))throw Error('Invalid cloud record.');
+  const r=JSON.parse(value),[a,b,c]=path;
+  if(a==='results'){(state.results[b]??=[]).push(r);}
+  else if(['combinedResults','randomResults'].includes(a))state[a].push(r);
+  else if(['inprogress','resolvedErrors'].includes(a))state[a][b]=r;
+  else if(a==='study'&&['responses','plans','sessions'].includes(b))state.study[b].push(r);
+  else if(a==='study'&&['bookmarks','ratings','journal'].includes(b))state.study[b][c]=r;
+ }
+ const byTime=(a,b)=>(a.t||a.started||0)-(b.t||b.started||0);
+ Object.values(state.results).forEach(rows=>rows.sort(byTime));
+ state.combinedResults.sort(byTime);state.randomResults.sort(byTime);
+ state.study.responses.sort(byTime);state.study.sessions.sort(byTime);
+ return {profile,state};
+}
+function cloudOverlay(remote,delta){
+ const result={...remote};for(const [key,v] of Object.entries(delta))if(v===null)delete result[key];else result[key]=v;return result;
+}
+function cloudDiff(before,after){
+ const delta={};for(const k of new Set([...Object.keys(before),...Object.keys(after)]))if(JSON.stringify(before[k])!==JSON.stringify(after[k]))delta[k]=after[k]===undefined?null:after[k];return delta;
+}
+function cloudStatus(message){
+ document.querySelectorAll('.profile-menu').forEach(menu=>{
+  let line=menu.querySelector('[data-cloud-status]');
+  if(!line){line=document.createElement('small');line.dataset.cloudStatus='';line.style.display='block';menu.querySelector('summary').appendChild(line);}
+  line.textContent=message;
+ });
+}
+function cloudCapture(){
+ if(!CLOUD.ready||CLOUD.deleting||currentUser!==CLOUD.uid)return;
+ const now=flattenCloud(ROOT.profiles[currentUser],STATE);
+ Object.assign(CLOUD.pending,cloudDiff(CLOUD.observed,now));CLOUD.observed=now;
+ ROOT.cloudSync=ROOT.cloudSync||{};ROOT.cloudSync[CLOUD.uid]={pending:CLOUD.pending};
+}
+async function cloudPersist(obj){
+ if(CLOUD.deleting)return false;
+ cloudCapture();const cached=await Store.writeLocal(obj);
+ if(!CLOUD.ready)return cached;
+ cloudStatus(Object.keys(CLOUD.pending).length?'Saving…':'Cloud saved');
+ cloudFlush();return cached;
+}
+async function cloudRequest(path,opts={}){
+ if(!CLOUD.auth?.currentUser)throw Error('Please sign in again.');
+ const token=await CLOUD.auth.currentUser.getIdToken();
+ const ctrl=new AbortController(),timeout=setTimeout(()=>ctrl.abort(),10000);
+ try{
+  const url=firebaseConfig.databaseURL+path+(path.includes('?')?'&':'?')+'auth='+encodeURIComponent(token);
+  const res=await fetch(url,{...opts,headers:{'Content-Type':'application/json',...opts.headers},signal:ctrl.signal});
+  if(!res.ok)throw Error(res.status===401||res.status===403?'Cloud access denied. Check that the supplied database rules are published.':'Cloud request failed ('+res.status+').');
+  return await res.json();
+ }finally{clearTimeout(timeout);}
+}
+function cloudFlush(){
+ const uid=CLOUD.uid;
+ CLOUD.queue=CLOUD.queue.catch(()=>false).then(async()=>{
+  if(!CLOUD.ready||CLOUD.deleting||uid!==CLOUD.uid||CLOUD.auth.currentUser?.uid!==uid)return false;
+  cloudCapture();const sent={...CLOUD.pending};if(!Object.keys(sent).length)return true;
   try{
-    const saved=await Store.readKey(SAVE_KEY);
-    if(saved && saved.profiles){
-      ROOT.profiles=saved.profiles||{};
-      ROOT.data=saved.data||{};
-      ROOT.lastUser=saved.lastUser||null;
-    } else {
-      const v1=await Store.readKey(OLD_KEY);
-      if(v1 && (v1.results || v1.inprogress)){
-        const id='u'+Date.now().toString(36);
-        ROOT.profiles[id]={ name:'Player 1', pin:null, created:Date.now() };
-        ROOT.data[id]={ results:v1.results||{}, inprogress:v1.inprogress||{}, combinedResults:[], randomResults:[], resolvedErrors:{} };
-        ROOT.lastUser=id;
-        persist();
-      }
-    }
-  }catch(e){}
-  showLogin();
-})();
+   await cloudRequest('/users/'+uid+'.json',{method:'PATCH',body:JSON.stringify(sent)});
+   if(uid!==CLOUD.uid)return false;
+   for(const [k,v] of Object.entries(sent))if(JSON.stringify(CLOUD.pending[k])===JSON.stringify(v))delete CLOUD.pending[k];
+   ROOT.cloudSync[uid]={pending:CLOUD.pending};await Store.writeLocal(ROOT);
+   cloudStatus(Object.keys(CLOUD.pending).length?'Saving…':'Cloud saved');return true;
+  }catch(error){cloudStatus('Not synced — retry when online');return false;}
+ });
+ return CLOUD.queue;
+}
+function cloudCanRefresh(){
+ return currentUser&&!CLOUD.busy&&!$('profileSettings').open&&$('testMain').classList.contains('hidden')&&$('studyScreen').classList.contains('hidden')&&$('preExamScreen').classList.contains('hidden')&&$('paperGapScreen').classList.contains('hidden');
+}
+async function cloudRefresh(){
+ if(!CLOUD.ready||CLOUD.deleting)return;
+ await cloudFlush();if(!cloudCanRefresh())return;
+ const uid=CLOUD.uid;
+ try{
+  const remote=await cloudRequest('/users/'+uid+'.json');
+  if(uid!==CLOUD.uid||!cloudCanRefresh())return;
+  if(!remote&&await cloudRequest('/deletedAccounts/'+uid+'.json')){
+   if(uid!==CLOUD.uid)return;
+   CLOUD.busy=true;try{await CLOUD.sdk.signOut(CLOUD.auth);cloudLeaveUI();authErr('This account was deleted.');}finally{CLOUD.busy=false;}
+   return;
+  }
+  cloudCapture();const merged=cloudOverlay(remoteCloudMap(remote),CLOUD.pending);
+  const values=expandCloud(merged,CLOUD.auth.currentUser.displayName||'Student');
+  ROOT.profiles[uid]=values.profile;ROOT.data[uid]=STATE=values.state;CLOUD.observed=flattenCloud(values.profile,values.state);
+  await Store.writeLocal(ROOT);applyCloudAppearance();
+  // Avoid replacing a form while the user is typing.
+  if(!document.activeElement?.matches('input,textarea,select')){
+   if(!$('dashboardScreen').classList.contains('hidden'))buildDashboard();
+   if(!$('libraryScreen').classList.contains('hidden'))buildLibrary();
+   if(!$('reviewHubScreen').classList.contains('hidden'))buildReviewHub();
+  }
+  cloudStatus(Object.keys(CLOUD.pending).length?'Not synced — retry when online':'Cloud saved');
+ }catch(error){cloudStatus('Not synced — retry when online');}
+}
+function applyCloudAppearance(){
+ const selected=$('timeSelect').value;applyProfilePreferences();$('timeSelect').value=selected;
+}
+function cloudError(error){
+ const messages={
+  'auth/invalid-credential':'The email or password is incorrect.',
+  'auth/email-already-in-use':'An account already uses that email. Sign in or reset its password.',
+  'auth/invalid-email':'Enter a valid email address.',
+  'auth/weak-password':'Choose a stronger password (at least 6 characters).',
+  'auth/password-does-not-meet-requirements':'The password does not meet this project’s password policy.',
+  'auth/operation-not-allowed':'Enable Email/Password in Firebase Authentication before using accounts.',
+  'auth/network-request-failed':'Cannot connect. Check your internet connection.',
+  'auth/too-many-requests':'Too many attempts. Please wait before trying again.',
+  'auth/requires-recent-login':'Sign in again before changing your password or deleting your account.',
+  'auth/user-disabled':'This account has been disabled.'
+ };
+ return messages[error.code]||error.message||'The request could not be completed.';
+}
+function cloudAuthControls(disabled){['siBtn','rgBtn','resetPasswordBtn'].forEach(id=>$(id).disabled=disabled);}
+async function cloudOpenUser(user){
+ const deleted=await cloudRequest('/deletedAccounts/'+user.uid+'.json');
+ if(deleted){$('finishDeletionBtn').classList.remove('hidden');throw Error('This account has a pending deletion. Enter your password and use Finish deleting my account.');}
+ $('finishDeletionBtn').classList.add('hidden');
+ const remote=await cloudRequest('/users/'+user.uid+'.json');
+ if(CLOUD.auth.currentUser?.uid!==user.uid)return;
+ if(remote?.deleting)throw Error('Account deletion is incomplete. Contact the site owner to finish removing this account.');
+ CLOUD.uid=user.uid;CLOUD.pending=ROOT.cloudSync?.[user.uid]?.pending||{};
+ const values=expandCloud(cloudOverlay(remoteCloudMap(remote),CLOUD.pending),user.displayName||'Student');
+ ROOT.profiles[user.uid]=values.profile;ROOT.data[user.uid]=values.state;
+ CLOUD.observed=remoteCloudMap(remote);
+ currentUser=user.uid;STATE=values.state;CLOUD.ready=true;
+ signIn(user.uid);
+ cloudCapture();await Store.writeLocal(ROOT);await cloudFlush();
+ clearInterval(CLOUD.poll);CLOUD.poll=setInterval(cloudRefresh,15000);
+}
+function cloudLeaveUI(){
+ clearTimeout(saveDebounce);clearInterval(CLOUD.poll);clearInterval(timerId);
+ CLOUD.ready=false;CLOUD.uid=null;CLOUD.pending={};CLOUD.observed={};
+ currentUser=null;STATE=emptyCloudState();studySession=null;studyOwner=null;studyTick=0;
+ hideSideNav();$('profileSettings').close();
+ document.querySelectorAll('.screen').forEach(el=>el.classList.add('hidden'));
+ showLogin();$('loginScreen').classList.remove('hidden');
+}
+async function cloudBoot(){
+ showLogin();cloudAuthControls(true);
+ if(location.protocol==='file:'){authErr('Open the hosted simulator website to use cloud accounts. This downloaded file must first be served over HTTPS or localhost.');return;}
+ try{
+  const [appSDK,authSDK]=await Promise.all([
+   import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js'),
+   import('https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js')
+  ]);
+  CLOUD.sdk=authSDK;CLOUD.auth=authSDK.getAuth(appSDK.initializeApp(firebaseConfig));
+  const cached=await Store.readKey(SAVE_KEY);
+  if(cached?.profiles&&cached?.data){ROOT=cached;ROOT.cloudSync=ROOT.cloudSync||{};}
+  authSDK.onAuthStateChanged(CLOUD.auth,async user=>{
+   if(CLOUD.busy)return;
+   if(!user){cloudLeaveUI();return;}
+   if(CLOUD.uid&&CLOUD.uid!==user.uid){cloudCapture();await Store.writeLocal(ROOT);cloudLeaveUI();}
+   CLOUD.busy=true;cloudAuthControls(true);
+   try{await cloudOpenUser(user);}catch(error){cloudLeaveUI();authErr(cloudError(error));}
+   finally{CLOUD.busy=false;cloudAuthControls(false);}
+  });
+  cloudAuthControls(false);
+  window.addEventListener('online',cloudRefresh);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)cloudRefresh();else if(CLOUD.ready){cloudCapture();Store.writeLocal(ROOT);cloudFlush();}});
+ }catch(error){authErr('Could not load cloud sign-in. Check your connection and reload.');}
+}
+
+async function doSignIn(){
+ if(CLOUD.busy||!CLOUD.sdk)return;
+ const email=$('siName').value.trim(),password=$('siPin').value;
+ if(!email||!password){authErr('Enter your email and password.');return;}
+ CLOUD.busy=true;cloudAuthControls(true);authErr('Signing in…');
+ try{
+  await CLOUD.sdk.setPersistence(CLOUD.auth,$('rememberAccount').checked?CLOUD.sdk.browserLocalPersistence:CLOUD.sdk.browserSessionPersistence);
+  const result=await CLOUD.sdk.signInWithEmailAndPassword(CLOUD.auth,email,password);
+  await cloudOpenUser(result.user);authErr('');
+ }catch(error){authErr(cloudError(error));}
+ finally{CLOUD.busy=false;cloudAuthControls(false);}
+}
+async function doRegister(){
+ if(CLOUD.busy||!CLOUD.sdk)return;
+ const email=$('rgEmail').value.trim(),name=$('rgName').value.trim(),password=$('rgPin').value;
+ if(!name||!email){authErr('Enter your display name and email.');return;}
+ if(password!==$('rgPin2').value){authErr('The passwords do not match.');return;}
+ if(password.length<6){authErr('Use a password of at least 6 characters.');return;}
+ CLOUD.busy=true;cloudAuthControls(true);authErr('Creating account…');
+ try{
+  await CLOUD.sdk.setPersistence(CLOUD.auth,CLOUD.sdk.browserLocalPersistence);
+  const result=await CLOUD.sdk.createUserWithEmailAndPassword(CLOUD.auth,email,password);
+  await CLOUD.sdk.updateProfile(result.user,{displayName:name});
+  await cloudOpenUser(result.user);authErr('');
+ }catch(error){authErr(cloudError(error));}
+ finally{CLOUD.busy=false;cloudAuthControls(false);}
+}
+$('resetPasswordBtn').onclick=async()=>{
+ if(CLOUD.busy||!CLOUD.sdk)return;
+ const email=$('siName').value.trim();if(!email){authErr('Enter your email above, then click Reset password.');return;}
+ cloudAuthControls(true);
+ try{await CLOUD.sdk.sendPasswordResetEmail(CLOUD.auth,email);authErr('If that email has an account, a password-reset email will be sent. Check your inbox and spam folder.');}
+ catch(error){authErr(cloudError(error));}finally{cloudAuthControls(false);}
+};
+$('signOutBtn').addEventListener('click',async()=>{
+ setProfileSettingsBusy(true);studyFlush();cloudCapture();
+ try{
+  if(!await cloudFlush()){alert('Some changes have not reached the cloud. Reconnect and try again, or download a backup before leaving.');return;}
+  CLOUD.busy=true;await CLOUD.sdk.signOut(CLOUD.auth);cloudLeaveUI();
+ }catch(error){$('profileSettingsStatus').textContent=cloudError(error);}
+ finally{CLOUD.busy=false;setProfileSettingsBusy(false);}
+});
+async function reauthenticateCloud(password){
+ const user=CLOUD.auth.currentUser;
+ if(!user||!password)throw Error('Enter your current password to continue.');
+ await CLOUD.sdk.reauthenticateWithCredential(user,CLOUD.sdk.EmailAuthProvider.credential(user.email,password));
+}
+async function cloudDeleteAccount(fromLogin=false){
+ const user=CLOUD.auth?.currentUser;if(!user)return;
+ const status=fromLogin?$('loginErr'):$('profileSettingsStatus');
+ if(!confirm('Permanently delete this account, its cloud practice history and its linked leaderboard entries? Download a backup first if you want to keep your history.'))return;
+ setProfileSettingsBusy(true);cloudAuthControls(true);CLOUD.busy=true;
+ try{
+  await reauthenticateCloud(fromLogin?$('siPin').value:$('settingsCurrentPin').value);
+  await CLOUD.queue;CLOUD.deleting=true;
+  const patch={};patch['users/'+user.uid]=null;patch['deletedAccounts/'+user.uid]=true;
+  const pids=new Set([...PAPERS.map(p=>p.id),...Object.keys(ROOT.data[user.uid]?.results||{})]);
+  for(const pid of pids)patch['leaderboards/'+pid+'/'+user.uid]=null;
+  await cloudRequest('/.json',{method:'PATCH',body:JSON.stringify(patch)});
+  await CLOUD.sdk.deleteUser(user);
+  delete ROOT.profiles[user.uid];delete ROOT.data[user.uid];if(ROOT.cloudSync)delete ROOT.cloudSync[user.uid];
+  await Store.writeLocal(ROOT);cloudLeaveUI();$('finishDeletionBtn').classList.add('hidden');authErr('Account deleted.');
+ }catch(error){status.textContent=cloudError(error)+' If data deletion already completed, use Delete account again to finish.';}
+ finally{CLOUD.busy=false;CLOUD.deleting=false;setProfileSettingsBusy(false);cloudAuthControls(false);}
+}
+$('deleteProfileBtn').addEventListener('click',()=>cloudDeleteAccount(false));
+$('finishDeletionBtn').onclick=()=>cloudDeleteAccount(true);
+$('profileSettingsForm').addEventListener('submit',async e=>{
+ e.preventDefault();const user=CLOUD.auth.currentUser;if(!user||currentUser!==user.uid)return;
+ const status=$('profileSettingsStatus'),name=$('settingsName').value.trim(),password=$('settingsNewPin').value;
+ if(!name||name.length>60){status.textContent='Enter a display name of 1–60 characters.';return;}
+ if(password!==$('settingsConfirmPin').value){status.textContent='The passwords do not match.';return;}
+ if(password&&password.length<6){status.textContent='Use a password of at least 6 characters.';return;}
+ setProfileSettingsBusy(true);CLOUD.busy=true;
+ let passwordChanged=false;
+ try{
+  if(password){await reauthenticateCloud($('settingsCurrentPin').value);await CLOUD.sdk.updatePassword(user,password);passwordChanged=true;}
+  ROOT.profiles[user.uid]={...ROOT.profiles[user.uid],name,preferences:{
+   leaderboard:$('settingsLeaderboard').checked,publicName:$('settingsPublicName').value,
+   hideSolutions:$('settingsHideSolutions').checked,textSize:$('settingsTextSize').value,
+   contrast:$('settingsContrast').checked,duration:Number($('settingsDuration').value),timerAlerts:$('settingsTimerAlerts').checked
+  }};
+  await CLOUD.sdk.updateProfile(user,{displayName:name});
+  cloudCapture();await Store.writeLocal(ROOT);
+  const synced=await cloudFlush();applyProfilePreferences();
+  if(!$('modernReviewScreen').classList.contains('hidden'))renderModernReview();
+  ['settingsCurrentPin','settingsNewPin','settingsConfirmPin'].forEach(id=>$(id).value='');
+  status.textContent=synced?'Account settings saved.':'Settings saved on this device; cloud sync is pending.';
+  if(synced&&$('settingsSyncName').checked){
+   const result=await syncProfileLeaderboardName(user.uid,publicProfileName());
+   status.textContent=result.failed?'Account settings saved. Some leaderboard names could not be updated; save again to retry.':'Account settings and leaderboard names saved.';
+  }
+ }catch(error){status.textContent=(passwordChanged?'Password changed. ':'')+cloudError(error);}
+ finally{CLOUD.busy=false;setProfileSettingsBusy(false);}
+});
+$('restoreProfile').onchange=async e=>{
+ const file=e.target.files[0],uid=currentUser;if(!file||!uid)return;
+ setProfileSettingsBusy(true);CLOUD.busy=true;
+ try{
+  if(file.size>25*1024*1024)throw Error('Choose a backup smaller than 25 MB.');
+  const backup=validateProfileBackup(JSON.parse(await file.text()));
+  if(currentUser!==uid)return;
+  if(!confirm('Import this backup into your cloud account? Existing attempts will be kept. Imported preferences and matching bookmarks or journal entries will replace those values. Your name and password stay the same.'))return;
+  cloudCapture();
+  const imported=flattenCloud({...ROOT.profiles[uid],preferences:backup.preferences||ROOT.profiles[uid].preferences},backup.data);
+  const merged=expandCloud({...CLOUD.observed,...imported},ROOT.profiles[uid].name);
+  ROOT.profiles[uid]=merged.profile;ROOT.data[uid]=STATE=merged.state;
+  studyOwner=null;studySession=null;studyTick=0;studySelected.clear();
+  cloudCapture();await Store.writeLocal(ROOT);const synced=await cloudFlush();
+  applyProfilePreferences();
+  $('backupStatus').textContent=synced?'Backup imported and saved to your cloud account.':'Backup imported locally. Keep this page open until cloud sync completes.';
+ }catch(error){$('backupStatus').textContent=cloudError(error);}
+ finally{e.target.value='';CLOUD.busy=false;setProfileSettingsBusy(false);}
+};
+
+cloudBoot();
 </script>
 </body>
 </html>
