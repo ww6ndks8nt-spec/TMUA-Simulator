@@ -2550,6 +2550,8 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt,
 html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.unavailable){color:#fff!important}
 </style>
 <link rel="stylesheet" href="duck-redesign.css?v=20260913-4">
+<script src="esat-papers.js?v=20260914-1"></script>
+<link rel="stylesheet" href="esat.css?v=20260913-1">
 </head>
 <body class="duck-redesign">
 
@@ -2975,8 +2977,8 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <p class="study-muted">Deleting permanently removes your cloud account, its practice history and leaderboard entries linked to this account.</p>
 </section></dialog>
 <script src="set_b_data.js?v=20260912-2"></script>
-<script src="set_b_revised.js?v=3"></script>
-<script src="practice_solutions.js?v=20260913-1"></script>
+<script src="set_b_revised.js?v=4"></script>
+<script src="practice_solutions.js?v=20260913-2"></script>
 <script src="set_c_revised.js?v=2"></script>
 <script>
 /* Cloud setup: publish database.rules.json from the accompanying package. */
@@ -3677,9 +3679,14 @@ MAT_PAPERS_METADATA.forEach(p=>PAPERS.push({
  questions:p.key.split('').map((key,i)=>({mat:true,companion:false,sourcePart:'1'+'ABCDEFGHIJ'[i],topics:p.topics[i],stem:MAT_TRANSCRIBED[p.id][i].stem,opts:MAT_TRANSCRIBED[p.id][i].opts,correct:'ABCDE'.indexOf(key),sol:'<a class="official-solution-link" href="'+p.solutionUrl+'" target="_blank" rel="noopener noreferrer">Oxford solutions · PDF ↗</a>'}))
 }));
 
-function paperById(id){ return PAPERS.find(p=>p.id===id) || null; }
+const ALL_PAPERS=[...PAPERS,...ESAT_ALL_PAPERS];
+if(ESAT_MODE) PAPERS.splice(0,PAPERS.length,...ESAT_PAPERS);
+function paperById(id){ return ALL_PAPERS.find(p=>p.id===id) || null; }
+function paperInCurrentPrep(p){return !!p && !p.archived && !!p.esat===ESAT_MODE;}
+function historyPapers(){return ESAT_MODE?[...PAPERS,...ESAT_LEGACY_PAPERS]:PAPERS;}
+function planInCurrentPrep(p){return p.kind==='paper'?paperInCurrentPrep(paperById(p.target)):(p.prep||'tmua')===(ESAT_MODE?'esat':'tmua');}
 function paperDescription(p){
-  if(p?.mat)return p.sub;
+  if(p?.mat||p?.esat)return p.sub;
   if(p && p.type===1) return 'Applications of Mathematical Knowledge';
   if(p && p.type===2) return 'Mathematical Reasoning';
   return (p && p.sub) ? p.sub : '';
@@ -3728,7 +3735,7 @@ function topicText(q){
     .replace(/\s+/g,' ')
     .toLowerCase();
 }
-const TOPIC_CATEGORIES=['Geometry','Differentiation','Integration','Trigonometry','Functions and Graphs','Logic','Exponentials and Logarithms','General algebra','Probability and Statistics','Combinatorics','Sequences and Series','Number Theory'];
+const TOPIC_CATEGORIES=ESAT_MODE?['Mathematics','Physics','Chemistry','Biology','Mathematics and Physics','Advanced Mathematics and Advanced Physics','Advanced Mathematics','Advanced Physics']:['Geometry','Differentiation','Integration','Trigonometry','Functions and Graphs','Logic','Exponentials and Logarithms','General algebra','Probability and Statistics','Combinatorics','Sequences and Series','Number Theory'];
 function normaliseTopicNames(value){
  const text=String(value||'').toLowerCase(),out=[];
  const add=t=>{if(!out.includes(t))out.push(t);};
@@ -3747,6 +3754,7 @@ function normaliseTopicNames(value){
  return out;
 }
 function questionTopics(q){
+ if(q?.esat)return q.topics||[];
  const raw=String(q?.stem||'').toLowerCase(),text=topicText(q),found=new Set();
  const add=t=>found.add(t);
  for(const topic of Array.isArray(q?.topics)?q.topics:[q?.topic])normaliseTopicNames(topic).forEach(add);
@@ -3767,6 +3775,7 @@ function questionTopics(q){
 }
 function questionTopic(q){return questionTopics(q).join(' · ');}
 function planTopicCategories(plan){
+ if(ESAT_MODE)return [plan.target];
  const names=normaliseTopicNames(plan.target);
  if(names.length)return names;
  return /calculus/i.test(plan.target)?['Differentiation','Integration']:['General algebra'];
@@ -4057,8 +4066,8 @@ async function syncProfileLeaderboardName(uid,name){
  if(!LEADERBOARD_URL)return {failed:0,updated:0};
  let failed=0,updated=0;
  // Read only this profile's records and patch only their display names.
- for(let offset=0;offset<PAPERS.length;offset+=5){
-  await Promise.all(PAPERS.slice(offset,offset+5).map(async p=>{
+ for(let offset=0;offset<ALL_PAPERS.length;offset+=5){
+  await Promise.all(ALL_PAPERS.slice(offset,offset+5).map(async p=>{
    const path='/leaderboards/'+encodeURIComponent(p.id)+'/'+encodeURIComponent(uid)+'.json';
    try{const entry=await lbRequest(path);
     if(entry&&entry.name!==name){await lbRequest(path,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})});updated++;}
@@ -4150,14 +4159,14 @@ function buildLibrary(){
   }).forEach(p=>{
     const hist=STATE.results[p.id]||[];
     const best=hist.length?Math.max(...hist.map(r=>Math.round(100*r.c/Math.max(1,r.s))))+'%':'—';
-    const mean=p.mat?null:difficultyStats(p).mean;
+    const mean=(p.mat||p.esat)?null:difficultyStats(p).mean;
     const difficulty=mean===null?'—':mean.toFixed(2);
     const b=document.createElement('button');
     b.type='button';
     b.className='paper compact-paper t'+p.type;
     b.dataset.paperId=p.id;
     b.innerHTML='<span class="pn">'+escapeHtml(p.title)+'</span>'
-      +'<span class="meta"><span>Difficulty '+difficulty+'</span>'
+      +'<span class="meta">'+(p.esat?'<span>'+escapeHtml(p.sub)+'</span>':'<span>Difficulty '+difficulty+'</span>')
       +'<span>Best '+best+'</span>'
       +'<span>'+hist.length+' attempt'+(hist.length===1?'':'s')+'</span></span>';
     if(p.locked){b.className+=' locked';b.disabled=true;b.title='Answer key not available yet';}
@@ -4189,8 +4198,8 @@ function buildLibrary(){
 }
 
 function completedAttemptCount(){
-  const papers=Object.values(STATE.results||{}).reduce((n,a)=>n+(Array.isArray(a)?a.length:0),0);
-  return papers + (Array.isArray(STATE.combinedResults)?STATE.combinedResults.length:0);
+  const papers=historyPapers().reduce((n,p)=>n+(STATE.results[p.id]?.length||0),0);
+  return papers + (ESAT_MODE?0:(Array.isArray(STATE.combinedResults)?STATE.combinedResults.length:0));
 }
 
 let dashboardRange='30';
@@ -4479,7 +4488,7 @@ function resolvedErrorPool(){
     const m=/^(.*):(\d+)$/.exec(key);
     if(!m) return null;
     const p=paperById(m[1]), qIndex=+m[2];
-    if(!p || !p.questions[qIndex]) return null;
+    if(!paperInCurrentPrep(p) || !p.questions[qIndex]) return null;
     const q=p.questions[qIndex];
     return {
       key,
@@ -4557,7 +4566,7 @@ function makeWrongRandomPaper(items,stamp){
     id:'wrong-random:'+stamp,
     title:'Wrong-answer randomised paper',
     sub:qs.length+' question'+(qs.length===1?'':'s')+' · 03:45 per question',
-    type:0,group:6,randomized:true,questions:qs
+    type:0,group:6,esat:qs.every(q=>q.esat),randomized:true,questions:qs
   };
 }
 function buildWrongHub(){
@@ -4600,7 +4609,7 @@ function buildWrongHub(){
   }
 
   const recent=$('wrongRecent'); recent.innerHTML='';
-  const recs=(Array.isArray(STATE.randomResults)?STATE.randomResults:[]).slice().reverse();
+  const recs=(Array.isArray(STATE.randomResults)?STATE.randomResults:[]).filter(r=>r.sources?.some(x=>paperInCurrentPrep(paperById(x.paperId)))).slice().reverse();
   if(!recs.length){
     recent.innerHTML='<div class="wrong-empty">No randomised wrong-answer papers completed yet.</div>';
   } else {
@@ -4664,13 +4673,14 @@ $('wrongGenerateBtn').addEventListener('click',()=>{
 
 const OFFICIAL_SOLUTION_PDFS={"tmua2016p1": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07125113/TMUA-2016-paper-1-worked-answers.pdf", "tmua2016p2": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07125106/TMUA-2016-paper-2-worked-answers.pdf", "tmua2017p1": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07125231/TMUA-2017-paper-1-worked-answers.pdf", "tmua2017p2": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07125228/TMUA-2017-paper-2-worked-answers.pdf", "tmua2018p1": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07125413/TMUA-2018-paper-1-worked-answers.pdf", "tmua2018p2": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07125406/TMUA-2018-paper-2-worked-answers.pdf", "tmua2019p1": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07140826/TMUA-2019-paper-1-worked-answers.pdf", "tmua2019p2": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07140824/TMUA-2019-paper-2-worked-answers.pdf", "tmua2020p1": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07140955/TMUA-2020-paper-1-worked-answers.pdf", "tmua2020p2": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07140952/TMUA-2020-paper-2-worked-answers.pdf", "tmua2021p1": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07141121/TMUA-2021-paper-1-worked-answers.pdf", "tmua2021p2": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/07141118/TMUA-2021-paper-2-worked-answers.pdf", "tmua2022p1": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/06/04105226/TMUA-2022-paper-1-worked-answers.pdf", "tmua2022p2": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/06/04105227/TMUA-2022-paper-2-worked-answers.pdf", "tmua2023p1": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/06/04105227/TMUA-2023-paper-1-worked-answers.pdf", "tmua2023p2": "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/06/04105226/TMUA-2023-paper-2-worked-answers.pdf"};
 function officialSolutionLink(p){
+ if(p?.esat)return p.questions[0].sol;
  if(p?.mat)return '<a class="official-solution-link" href="'+p.solutionUrl+'" target="_blank" rel="noopener noreferrer">Oxford solutions · PDF ↗</a>';
  const url=p&&OFFICIAL_SOLUTION_PDFS[p.id];
  return url?'<a class="official-solution-link" href="'+url+'" target="_blank" rel="noopener noreferrer">UAT-UK worked solutions · PDF ↗</a>':'';
 }
 function buildReviewHub(){
   const host=$('reviewHubList'); host.innerHTML='';
-  const combined=(Array.isArray(STATE.combinedResults)?STATE.combinedResults:[]).slice().reverse();
+  const combined=(ESAT_MODE?[]:(Array.isArray(STATE.combinedResults)?STATE.combinedResults:[])).slice().reverse();
   if(combined.length){
     const card=document.createElement('section'); card.className='review-paper';
     const combinedScore=r=>{
@@ -4692,7 +4702,7 @@ function buildReviewHub(){
     host.appendChild(card);
   }
   const groups=[];
-  PAPERS.forEach(p=>{
+  historyPapers().forEach(p=>{
     const recs=(STATE.results[p.id]||[]).slice().reverse();
     if(recs.length) groups.push({p,recs});
   });
@@ -4713,7 +4723,7 @@ function buildReviewHub(){
       const row=document.createElement('div'); row.className='review-attempt';
       const sc=(Array.isArray(r.a)&&r.a.length===p.questions.length)?scoreAttemptForPaper(p,r.a):{c:r.c||0,s:r.s||0};
       const pct=sc.s?Math.round(100*sc.c/sc.s):0;
-      row.innerHTML='<span class="date">'+fmtDate(r.t)+'</span><span class="score">'+sc.c+' / '+sc.s+' ('+pct+'%)'+(p.mat?'':' · estimated score '+difficultyGradeText(sc.c,p))+'</span>';
+      row.innerHTML='<span class="date">'+fmtDate(r.t)+'</span><span class="score">'+sc.c+' / '+sc.s+' ('+pct+'%)'+((p.mat||p.esat)?'':' · estimated score '+difficultyGradeText(sc.c,p))+'</span>';
       if(Array.isArray(r.a) && r.a.length===p.questions.length){
         const go=document.createElement('button'); go.className='review-go'; go.type='button'; go.textContent='Review answers & solutions →';
         go.addEventListener('click',()=>openStoredAttempt(p,r)); row.appendChild(go);
@@ -4740,6 +4750,7 @@ function openStoredAttempt(p,rec){
 }
 
 function selectedTimeMinutesForPaper(p){
+  if(p?.esat)return $('timeSelect').value==='0'?0:p.timerSeconds/60;
   if(p?.mat) return 60;
   if(p && p.id==='customset1p1') return 120;
   return parseInt($('timeSelect').value,10);
@@ -4805,7 +4816,7 @@ function openStart(p){
       const sc=(r.a && r.a.length===p.questions.length) ? scoreAttemptForPaper(p,r.a) : {c:r.c||0,s:r.s||0};
       row.innerHTML='<span>'+fmtDate(r.t)+'</span>'
         +(r.a?'<span class="rv">Review &rarr;</span>':'')
-        +'<span class="sc">Score <b>'+sc.c+' / '+sc.s+'</b> ('+Math.round(100*sc.c/Math.max(1,sc.s))+'%)'+(p.mat?'':' · estimated score '+difficultyGradeText(sc.c,p))+'</span>';
+        +'<span class="sc">Score <b>'+sc.c+' / '+sc.s+'</b> ('+Math.round(100*sc.c/Math.max(1,sc.s))+'%)'+((p.mat||p.esat)?'':' · estimated score '+difficultyGradeText(sc.c,p))+'</span>';
       if(r.a) row.addEventListener('click',()=>reviewAttempt(r));
       ah.appendChild(row);
     });
@@ -5553,12 +5564,12 @@ function showResults(){
   $('rawScore').textContent=correct;
   $('dial').querySelector('.of').textContent='/ '+scored;
   $('pctText').textContent=scored ? (active.combined ? (correct+' / 40 overall · '+pct+'%') : (pct+'% correct'+(flawedN?' · '+flawedN+' flagged item'+(flawedN>1?'s':'')+' excluded':''))) : 'Practice completed · unscored';
-  $('resultScreen').querySelector('.scoremeta > .study-muted').textContent=active.mat?'Four marks per correct answer · solutions PDF available in review.':'Estimated conversion; not an official TMUA score.';
-  $('bandLabel').textContent=active.mat?'Section 1 marks':active.randomized?'Practice type':'Estimated practice score';
+  $('resultScreen').querySelector('.scoremeta > .study-muted').textContent=active.esat?'Answer choices checked · answer key PDF available in review.':active.mat?'Four marks per correct answer · solutions PDF available in review.':'Estimated conversion; not an official TMUA score.';
+  $('bandLabel').textContent=active.esat?'Accuracy':active.mat?'Section 1 marks':active.randomized?'Practice type':'Estimated practice score';
   $('resultDifficulty').innerHTML=active.randomized?'':difficultyPanel(active,false);
   $('resultDifficulty').classList.add('hidden');
   const conversionButton=$('showScoreConversion');
-  conversionButton.classList.toggle('hidden',!!active.randomized||!!active.mat);
+  conversionButton.classList.toggle('hidden',!!active.randomized||!!active.mat||!!active.esat);
   conversionButton.setAttribute('aria-expanded','false');conversionButton.textContent='View score conversion';
   conversionButton.onclick=()=>{
     const open=$('resultDifficulty').classList.contains('hidden');
@@ -5566,7 +5577,7 @@ function showResults(){
     conversionButton.setAttribute('aria-expanded',String(open));
     conversionButton.textContent=open?'Hide score conversion':'View score conversion';
   };
-  $('bandText').textContent=active.mat?(correct*4)+' / '+(scored*4):scored ? (active.combined?overallGrade(correct,active):(active.randomized?'Wrong-answer drill':scaledBand(pct,active,correct))) : 'Not available';
+  $('bandText').textContent=active.esat?pct+'%':active.mat?(correct*4)+' / '+(scored*4):scored ? (active.combined?overallGrade(correct,active):(active.randomized?'Wrong-answer drill':scaledBand(pct,active,correct))) : 'Not available';
   $('resultScreen').classList.toggle('combined-result',!!active.combined);
   $('dial').style.setProperty('--pct', scored ? (pct+'%') : '0%');
 
@@ -5618,6 +5629,7 @@ function backToResults(){
   $('resultScreen').classList.remove('hidden'); window.scrollTo(0,0);
 }
 $('retakeBtn').addEventListener('click', ()=>{
+  if(active?.replacementId){openStart(paperById(active.replacementId));return;}
   const t=selectedTimeMinutesForPaper(active);
   if(active && active.randomized){
     const n=QUESTIONS.length;
@@ -5736,7 +5748,7 @@ function buildStudyBank(){
  const body=document.createElement('div');body.className='study-row-body';const title=document.createElement('b');title.textContent=studyKeyTitle(x);const meta=document.createElement('p');meta.className='study-muted';meta.textContent=studyMeta(x,h);body.append(title,meta);
  row.append(check,body,studyButton('Open',()=>startStudySession([x.key])));host.appendChild(row);
  });
- const resume=$('bankResume');resume.innerHTML='';studyData().sessions.filter(s=>!s.finished).slice(-5).reverse().forEach(s=>resume.appendChild(studyButton('Resume '+s.keys.length+' questions · '+new Date(s.started).toLocaleDateString(),()=>resumeStudySession(s.id))));
+ const resume=$('bankResume');resume.innerHTML='';studyData().sessions.filter(s=>!s.finished&&s.keys.some(k=>studyMap.has(k))).slice(-5).reverse().forEach(s=>resume.appendChild(studyButton('Resume '+s.keys.length+' questions · '+new Date(s.started).toLocaleDateString(),()=>resumeStudySession(s.id))));
 }
 function startStudySession(keys){
  const valid=keys.filter(k=>studyMap.has(k));if(!valid.length)return;
@@ -5815,7 +5827,7 @@ function studyToday(){const d=new Date();return d.getFullYear()+'-'+String(d.get
 function studyPlanLabel(plan){return plan.kind==='paper'?(paperById(plan.target)?.title||'Unavailable paper'):planTopicCategories(plan).join(' · ');}
 function studyPlanOptions(){const kind=$('planKind').value;$('planTarget').innerHTML=(kind==='paper'?PAPERS.filter(p=>!p.locked&&!p.archived).map(p=>studyOption(p.id,p.title)):TOPIC_CATEGORIES.map(t=>studyOption(t))).join('');}
 function buildStudyPlanner(){
- const host=$('plannerList');host.innerHTML='';const plans=studyData().plans.slice().sort((a,b)=>Number(a.done)-Number(b.done)||a.date.localeCompare(b.date));
+ const host=$('plannerList');host.innerHTML='';const plans=studyData().plans.filter(planInCurrentPrep).slice().sort((a,b)=>Number(a.done)-Number(b.done)||a.date.localeCompare(b.date));
  if(!plans.length)studyEmpty(host,'No sessions planned yet. Schedule a paper or a topic session above.');
  plans.forEach(p=>{
  const row=document.createElement('article');row.className='study-list-row';const body=document.createElement('div');body.className='study-row-body';const title=document.createElement('b');title.textContent=studyPlanLabel(p);
@@ -5878,7 +5890,7 @@ $('studyCategory').innerHTML=STUDY_CATEGORIES.map(c=>studyOption(c)).join('');
 $('journalCategoryFilter').innerHTML=studyOption('','All categories')+STUDY_CATEGORIES.map(c=>studyOption(c)).join('');
 ['journalFilter','journalCategoryFilter'].forEach(id=>$(id).addEventListener('change',buildStudyJournal));
 $('planKind').addEventListener('change',studyPlanOptions);studyPlanOptions();$('planDate').value=studyToday();
-$('plannerForm').addEventListener('submit',e=>{e.preventDefault();const date=$('planDate').value,minutes=Number($('planMinutes').value);if(!date||!Number.isFinite(minutes)||minutes<5||minutes>600)return;studyData().plans.push({id:'plan-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),date,minutes,kind:$('planKind').value,target:$('planTarget').value,done:false});studySave();$('plannerSaved').textContent='Session scheduled.';buildStudyPlanner();});
+$('plannerForm').addEventListener('submit',e=>{e.preventDefault();const date=$('planDate').value,minutes=Number($('planMinutes').value);if(!date||!Number.isFinite(minutes)||minutes<5||minutes>600)return;studyData().plans.push({id:'plan-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),date,minutes,kind:$('planKind').value,target:$('planTarget').value,done:false,prep:ESAT_MODE?'esat':'tmua'});studySave();$('plannerSaved').textContent='Session scheduled.';buildStudyPlanner();});
 window.addEventListener('beforeunload',studyFlush);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)studyFlush();else if(studySession&&!$('studyScreen').classList.contains('hidden')&&!studySession.revealed[studySession.keys[studySession.index]]&&!studySession.finished)studyTick=Date.now();});
 
@@ -5916,12 +5928,12 @@ function modernReviewList(){
 function renderModernReview(){
  if(!QUESTIONS.length)return;idx=Math.max(0,Math.min(QUESTIONS.length-1,idx));modernReviewList();
  const q=QUESTIONS[idx],a=answers[idx],src=modernReviewSource(idx),status=modernReviewStatus(idx),d=studyData();
- $('modernReviewPaper').textContent=active.title+(active.mat?'':' · '+difficultyMeanLabel(active));
- $('modernReviewQuestion').textContent='Question '+(q.mat?q.sourcePart:(src.index+1));
+ $('modernReviewPaper').textContent=active.title+((active.mat||active.esat)?'':' · '+difficultyMeanLabel(active));
+ $('modernReviewQuestion').textContent='Question '+(q.esat?q.sourceNumber:q.mat?q.sourcePart:(src.index+1));
  $('modernReviewTopic').textContent=(paperById(src.id)?.title||active.title)+' · '+questionTopic(q);
  let ratingLabel=$('modernReviewDifficulty');
  if(!ratingLabel){ratingLabel=document.createElement('div');ratingLabel.id='modernReviewDifficulty';ratingLabel.style.marginTop='10px';$('modernReviewTopic').insertAdjacentElement('afterend',ratingLabel);}
- ratingLabel.innerHTML='Difficulty '+difficultyRatingMarkup(q.estimatedDifficulty);ratingLabel.hidden=!!q.mat;
+ ratingLabel.innerHTML='Difficulty '+difficultyRatingMarkup(q.estimatedDifficulty);ratingLabel.hidden=!!q.mat||!!q.esat;
  $('modernReviewState').textContent=modernReviewLabel(status);$('modernReviewState').className='modern-review-status '+status;
  $('modernReviewYourAnswer').textContent=a===null||a===undefined?'Not answered':LETTERS[a];
  $('modernReviewCorrectAnswer').textContent=q.correct===99?'Unscored':LETTERS[q.correct]+(q.also?'/'+q.also.map(i=>LETTERS[i]).join('/'):'');
@@ -5947,7 +5959,7 @@ function renderModernReview(){
  revealButton.classList.toggle('hidden',!conceal);setRevealed(!conceal);
  revealButton.onclick=()=>setRevealed($('modernReviewSolution').classList.contains('hidden'));
  $('modernReviewSolutionNotice').textContent=onlyKey?'This entry currently contains an answer key, not a derivation.':src.id==='beyond3p2'&&[4,18].includes(src.index)?'Question wording issue: read the explanation before relying on the stored key.':'';
- if(q.mat){$('modernReviewSolutionTitle').textContent='Solutions PDF';$('modernReviewSolution').innerHTML='';$('modernReviewSolution').classList.add('hidden');$('modernReviewSolutionNotice').textContent='';$('modernReviewSolutionNotice').classList.add('hidden');pdfLinks.innerHTML=q.sol;pdfLinks.hidden=false;pdfLinks.classList.remove('hidden');revealButton.classList.add('hidden');}
+ if(q.mat||q.esat){$('modernReviewSolutionTitle').textContent='Solutions PDF';$('modernReviewSolution').innerHTML='';$('modernReviewSolution').classList.add('hidden');$('modernReviewSolutionNotice').textContent='';$('modernReviewSolutionNotice').classList.add('hidden');pdfLinks.innerHTML=q.sol;pdfLinks.hidden=false;pdfLinks.classList.remove('hidden');revealButton.classList.add('hidden');}
  $('modernReviewBookmark').textContent=d.bookmarks[src.key]?'Bookmarked — remove':'Bookmark question';
  const valid=studyMap.has(src.key);$('modernReviewBookmark').disabled=!valid;$('modernReviewPractice').disabled=!valid;$('modernReviewSaveLesson').disabled=!valid;
  const j=d.journal[src.key]||{};$('modernReviewCategory').value=j.category||'Unclassified';$('modernReviewLesson').value=j.lesson||'';$('modernReviewSaved').textContent='';
@@ -5983,7 +5995,7 @@ QUESTION_DIFFICULTY_RATINGS.setbr3p2=REVISED_SET_B_P2.map(q=>q.estimatedDifficul
 QUESTION_DIFFICULTY_RATINGS.setcr2p1=REVISED_SET_C_P1.map(q=>q.estimatedDifficulty);
 QUESTION_DIFFICULTY_RATINGS.setcr2p2=REVISED_SET_C_P2.map(q=>q.estimatedDifficulty);
 const SPREADSHEET_RATING_COLUMNS={"tmua2023p1":"B","tmua2023p2":"C","tmua2022p1":"D","tmua2022p2":"E","tmua2021p1":"F","tmua2021p2":"G","tmua2020p1":"H","tmua2020p2":"I","tmua2019p1":"J","tmua2019p2":"K","tmua2018p1":"L","tmua2018p2":"M","tmua2017p1":"N","tmua2017p2":"O"};
-PAPERS.forEach(p=>{if(p.mat)return;const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
+PAPERS.forEach(p=>{if(p.mat||p.esat)return;const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
 /* Sources: user spreadsheet (280 official item ratings), user-supplied 2023
    conversion image and approximate digitisation of the attached 2023/2024 CDF.
    Estimated ratings are comparisons with supplied questions, not ability thresholds.
@@ -6020,6 +6032,7 @@ function referenceMeanDifficulty(p){
  return p?.type===1?5.9:p?.type===2?6:5.95;
 }
 function difficultyGrade(raw,p){
+ if(p?.esat)return null;
  const stats=difficultyStats(p),n=stats.scored;if(!n||!Number.isFinite(Number(raw)))return null;
  const fraction=Math.max(0,Math.min(1,Number(raw)/n));
  const r=SCORE_CONVERSION_REFERENCE;
@@ -6049,7 +6062,7 @@ function difficultyPanel(p){
 }
 function downloadDifficultyRatings(){
  const rows=[['Paper','Question','Difficulty','Paper mean','Scored mean','Scored','Source','Model version']];
- PAPERS.filter(p=>!p.mat).forEach(p=>{const s=difficultyStats(p);p.questions.forEach((q,i)=>rows.push([p.title,i+1,q.estimatedDifficulty.toFixed(1),s.mean.toFixed(2),s.scoredMean?.toFixed(2)||'',q.correct!==99?'Yes':'No',q.difficultySource==='spreadsheet'?'User spreadsheet: '+q.difficultySourceCell:'Estimated against supplied official questions',DIFFICULTY_MODEL_VERSION]));});
+ PAPERS.filter(p=>!p.mat&&!p.esat).forEach(p=>{const s=difficultyStats(p);p.questions.forEach((q,i)=>rows.push([p.title,i+1,q.estimatedDifficulty.toFixed(1),s.mean.toFixed(2),s.scoredMean?.toFixed(2)||'',q.correct!==99?'Yes':'No',q.difficultySource==='spreadsheet'?'User spreadsheet: '+q.difficultySourceCell:'Estimated against supplied official questions',DIFFICULTY_MODEL_VERSION]));});
  const csv=rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n');
  const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='tmua_question_difficulties.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
@@ -6430,18 +6443,23 @@ if(duck){
  const button=document.createElement('button');button.type='button';button.className='duck-play';button.setAttribute('aria-label','Duck: click to quack; click three times quickly for a surprise');
  duck.replaceWith(button);button.appendChild(duck);
  const bubble=document.createElement('span');bubble.className='duck-bubble';bubble.setAttribute('role','status');button.appendChild(bubble);
- const egg=document.createElement('span');egg.className='duck-egg';egg.setAttribute('aria-hidden','true');button.appendChild(egg);
+ const mascot=document.createElement('span');mascot.className='duck-mascot';button.replaceWith(mascot);mascot.appendChild(button);
+ const egg=document.createElement('button');egg.type='button';egg.className='duck-egg';egg.hidden=true;
+ const eggLabel=ESAT_MODE?'Return to TMUA preparation':'Open ESAT preparation';
+ egg.setAttribute('aria-label',eggLabel);egg.title=eggLabel;mascot.appendChild(egg);
+ egg.onclick=e=>{e.stopPropagation();window.location.href=ESAT_MODE?'index.html':'index.html?prep=esat';};
  let clicks=0,last=0,clear;
  button.onclick=()=>{const now=Date.now();clicks=now-last<450?clicks+1:1;last=now;clearTimeout(clear);
-  bubble.textContent='Quack';button.classList.add('quacking');
-  if(clicks===3){clicks=0;button.classList.remove('laying');void button.offsetWidth;button.classList.add('laying');bubble.textContent='Quack! An egg!';}
-  clear=setTimeout(()=>{button.classList.remove('quacking','laying');bubble.textContent='';clicks=0;},2400);
+ bubble.textContent='Quack';button.classList.add('quacking');
+ if(clicks===3){clicks=0;egg.hidden=false;mascot.classList.remove('laying');void mascot.offsetWidth;mascot.classList.add('laying');bubble.textContent='Quack! An egg!';}
+ clear=setTimeout(()=>{button.classList.remove('quacking');bubble.textContent='';clicks=0;},2400);
  };
 }
 refreshAccountCircles();
 
-cloudBoot();
 </script>
-<script src="duck-redesign.js?v=20260913-1"></script>
+<script src="duck-redesign.js?v=20260913-2"></script>
+<script src="esat.js?v=20260914-1"></script>
+<script>cloudBoot();</script>
 </body>
 </html>

@@ -1,0 +1,19 @@
+/* Hidden ESAT route and the interactive white egg. */
+.duck-mascot{display:inline-flex;position:relative;flex:none;align-items:center;overflow:visible}
+.duck-mascot .duck-egg{display:block;pointer-events:auto;cursor:pointer;position:absolute;left:12px;bottom:-23px;z-index:5;width:26px;height:34px;padding:0;background:#fff!important;border:1px solid #aaa;border-radius:52% 48% 48% 52% / 65% 65% 35% 35%;box-shadow:0 3px 8px #0003}
+.duck-mascot .duck-egg[hidden]{display:none!important}
+.duck-mascot .duck-egg:hover{box-shadow:0 0 0 5px #ffdc5370,0 3px 8px #0003}
+.duck-mascot .duck-egg:focus-visible{outline:3px solid #cc9c00;outline-offset:4px}
+.esat-question-reader{max-width:100%;min-width:0}
+.esat-question-reader iframe{display:block;width:100%;height:min(66vh,820px);min-height:420px;margin:14px 0;border:1px solid #8c866e;border-radius:8px;background:white;color-scheme:light}
+.esat-question-reader p{margin:8px 0;font-size:14px;line-height:1.5}
+.esat-question-reader .official-solution-link{display:inline-flex;background:linear-gradient(115deg,#ffe15a,#ffce28)!important;color:#302600!important;border:1px solid #d7ad23;text-decoration:none;padding:9px 14px;border-radius:10px}
+.esat-prep [hidden]{display:none!important}
+.esat-prep .esat-archive-note{padding:14px 18px;background:var(--du-surface,#fff8d6);border:1px solid var(--du-line,#e3d9b8);border-radius:12px;line-height:1.6;font-size:14px;color:var(--du-muted,#605944)}
+.esat-prep[data-duck-theme="dark"] .esat-archive-note{background:#272720;color:#f5ecd3}
+.esat-archive-note a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.du-esat-back{display:block;padding:12px;color:inherit;text-decoration:none;border-top:1px solid var(--du-line,#ddd)}
+.esat-prep .nav-collapsed .du-esat-back{font-size:11px;padding:8px 3px;text-align:center}
+.esat-prep .mastery-card{justify-content:center}
+@media(max-width:650px){.esat-question-reader iframe{min-height:360px;height:55vh}.esat-question-reader p{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.duck-mascot .duck-egg{animation:none!important}}
