@@ -1,0 +1,282 @@
+/* Duck TMUA workspace. Exam delivery selectors are deliberately excluded. */
+html body.duck-redesign{--du-bg:#f7f7f2;--du-surface:#fff;--du-soft:#f0f1e9;--du-ink:#242822;--du-muted:#687063;--du-line:#dfe3d7;--du-yellow:#f4ce45;--du-yellow-soft:#fff4c7;--du-yellow-ink:#544112;--du-green:#24684c;--du-green-bg:#edf7ee;--du-red:#ad403e;--du-red-bg:#fff0ed;--du-shadow:0 16px 55px #1e291615;--du-nav:224px}
+html[data-duck-theme="dark"] body.duck-redesign{--du-bg:#171c19;--du-surface:#202722;--du-soft:#29322b;--du-ink:#f0f3eb;--du-muted:#b5c0b0;--du-line:#39463b;--du-yellow:#edce57;--du-yellow-soft:#3c3723;--du-yellow-ink:#f5dc84;--du-green:#b4e0be;--du-green-bg:#233e2e;--du-red:#ffb7ae;--du-red-bg:#472c2b;--du-shadow:0 16px 55px #0004}
+html body.duck-redesign :is(#dashboardScreen,#libraryScreen,#reviewHubScreen,#wrongHubScreen,#bankScreen,#bookmarksScreen,#journalScreen,#plannerScreen,#studyScreen,#modernReviewScreen,#loginScreen,#startScreen,#resultScreen).modern-ui{background:var(--du-bg)!important;color:var(--du-ink)!important;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;line-height:1.55;scrollbar-color:var(--du-line) transparent}
+html body.duck-redesign .screen.modern-ui.nav-aware{left:var(--du-nav)!important;right:0!important;padding:32px 38px 60px!important;transition:left .18s ease}
+html body.duck-redesign.nav-collapsed{--du-nav:76px}
+html body.duck-redesign .screen.modern-ui.nav-aware>.card{max-width:1320px!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;color:var(--du-ink)!important}
+html body.duck-redesign .modern-ui [hidden]{display:none!important}
+html body.duck-redesign .modern-ui :is(h1,h2,h3,h4,strong,b,.pn,.study-row-body,.modern-review-option-body){color:var(--du-ink)!important}
+html body.duck-redesign .modern-ui h1{font-size:32px!important;line-height:1.2!important;letter-spacing:-1.15px!important;font-weight:650!important;margin:5px 0 0!important}
+html body.duck-redesign .modern-ui h2{font-size:18px!important;letter-spacing:-.4px!important;font-weight:650!important;margin:0 0 17px!important}
+html body.duck-redesign .modern-ui h3{font-size:16px!important}
+html body.duck-redesign .modern-ui :is(p,.lead,.study-muted,.studio-eyebrow,.meta,.l,.label,.desc,.dash-bench-sub,.dash-footnote,.collection-name small,.modern-review-metrics span,.topic-head,.recent-muted,.libnote){color:var(--du-muted)!important}
+html body.duck-redesign .modern-ui .lead{font-size:14px!important;line-height:1.7!important;max-width:850px;margin:0 0 24px!important}
+html body.duck-redesign .modern-ui .studio-eyebrow{font-size:10px!important;font-weight:700!important;letter-spacing:1.5px!important;text-transform:uppercase}
+html body.duck-redesign .modern-ui .studio-heading{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto;gap:20px!important;align-items:center!important;margin-bottom:24px!important;min-height:62px}
+html body.duck-redesign .modern-ui .duck-heading-copy{gap:15px!important}
+html body.duck-redesign .modern-ui .studio-heading .duck-logo{width:44px!important;height:44px!important;flex-shrink:0}
+html body.duck-redesign .modern-ui .duck-heading-copy>div{min-width:0;flex:1}
+html body.duck-redesign .modern-ui .duck-play{width:44px!important;height:44px!important;min-width:44px!important;flex:0 0 44px;padding:0!important}
+html body.duck-redesign .modern-ui .account-circles{gap:8px!important}
+html body.duck-redesign .modern-ui .account-circle{width:36px!important;height:36px!important;min-width:36px!important;border-radius:50%!important;border:1px solid var(--du-line)!important;background:var(--du-surface)!important;color:var(--du-ink)!important;font-size:16px!important;padding:0!important;box-shadow:none!important}
+html body.duck-redesign .modern-ui .account-circle:hover{background:var(--duck-gradient)!important;color:#49380e!important;border-color:#dbad1b!important}
+html body.duck-redesign .modern-ui .account-avatar{background:var(--du-soft)!important;font-size:12px!important}
+html body.duck-redesign .modern-ui .account-popover{background:var(--du-surface)!important;border:1px solid var(--du-line)!important;border-radius:12px!important;box-shadow:var(--du-shadow)!important;color:var(--du-ink)!important}
+html body.duck-redesign .modern-ui .account-popover :is(button,span){color:var(--du-ink)!important}
+html body.duck-redesign .modern-ui .account-popover button:hover{background:var(--du-soft)!important}
+html body.duck-redesign .modern-ui .account-dropdown:not([open])>.account-popover{display:none!important}
+html body.duck-redesign :is(.modern-ui,#duckQuickFind) :is(button,input,select,textarea,a,summary):focus-visible,html body.duck-redesign #sideNav button:focus-visible{outline:3px solid #b28c10!important;outline-offset:3px!important}
+html body.duck-redesign .modern-ui :is(.bigbtn,.study-btn,.review-go){font-size:13px!important;font-weight:650!important;min-height:38px!important;padding:9px 15px!important;border:1px solid #dbad1b!important;border-radius:8px!important;background:var(--duck-gradient)!important;color:#49380e!important;box-shadow:none!important;transition:background .15s,border-color .15s,transform .15s}
+html body.duck-redesign .modern-ui :is(.bigbtn.ghost,.study-btn.secondary){background:var(--du-surface)!important;color:var(--du-ink)!important;border-color:var(--du-line)!important}
+html body.duck-redesign .modern-ui :is(.bigbtn,.study-btn,.review-go):hover:not(:disabled){background:var(--duck-gradient)!important;border-color:#ba8a00!important;color:#49380e!important;box-shadow:0 5px 18px #ba8a001a!important;transform:translateY(-1px)}
+html body.duck-redesign .modern-ui :is(button:disabled,input:disabled,select:disabled){opacity:.5!important;cursor:not-allowed!important;transform:none!important}
+html body.duck-redesign .modern-ui :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea){border:1px solid var(--du-line)!important;background:var(--du-surface)!important;color:var(--du-ink)!important;border-radius:8px!important;font-size:13px!important;min-height:40px;padding:10px 12px!important;box-shadow:none!important}
+html body.duck-redesign .modern-ui :is(label,legend,.study-field){color:var(--du-muted)!important;font-size:12px!important;font-weight:550}
+html body.duck-redesign .modern-ui :is(option,optgroup){background:var(--du-surface)!important;color:var(--du-ink)!important}
+html body.duck-redesign .modern-ui ::placeholder{color:var(--du-muted)!important;opacity:.9}
+html body.duck-redesign .modern-ui :is(a:not(.bigbtn),.linkback,.linkbtn,.dash-help){color:var(--du-yellow-ink)!important}
+html body.duck-redesign .modern-ui .study-actions{gap:8px!important;align-items:center}
+
+/* The persistent study menu. */
+html body.duck-redesign #sideNav{width:var(--du-nav)!important;left:0!important;top:0!important;bottom:0!important;height:100dvh!important;padding:0 14px!important;border:0!important;border-right:1px solid var(--du-line)!important;background:var(--du-surface)!important;color:var(--du-ink)!important;box-shadow:none!important;z-index:70;overflow-y:auto}
+html body.duck-redesign #sideNav .side-nav-head{min-height:100px!important;padding:26px 6px 20px!important;border:0!important;gap:9px!important;position:relative}
+html body.duck-redesign #sideNav .side-nav-brand{display:grid!important;grid-template-columns:35px 1fr;column-gap:8px;text-align:left;line-height:1.2;min-width:0}
+html body.duck-redesign #sideNav .side-nav-brand .duck-logo{width:34px!important;height:34px!important;grid-column:1;grid-row:1/3;align-self:center;margin:0!important}
+html body.duck-redesign #sideNav .side-nav-brand .duck-brand-word{grid-column:2;grid-row:1;font-size:17px!important;font-weight:750!important;letter-spacing:-.6px!important;color:var(--du-ink)!important;white-space:nowrap}
+html body.duck-redesign #sideNav .side-nav-brand>span:last-child{grid-column:2;grid-row:2;font-size:10px!important;color:var(--du-muted)!important;margin-top:4px}
+html body.duck-redesign #sideNav .side-nav-toggle{position:absolute;right:-7px;top:8px;width:24px;height:24px;border:0!important;border-radius:6px!important;font-size:15px;background:transparent!important;color:var(--du-muted)!important;padding:0!important}
+html body.duck-redesign #sideNav .side-nav-toggle:hover{background:var(--du-soft)!important}
+html body.duck-redesign #sideNav .side-nav-items{padding:8px 0!important;gap:3px!important;display:flex!important;flex-direction:column!important}
+html body.duck-redesign #sideNav .side-nav-item{min-height:41px!important;padding:10px 11px!important;border:0!important;border-radius:8px!important;gap:11px!important;font-size:12px!important;font-weight:550!important;background:transparent!important;color:var(--du-muted)!important;text-align:left;white-space:normal}
+html body.duck-redesign #sideNav .side-nav-item:hover{background:var(--du-soft)!important;color:var(--du-ink)!important}
+html body.duck-redesign #sideNav .side-nav-item.active{background:var(--du-yellow-soft)!important;color:var(--du-yellow-ink)!important;font-weight:700!important;box-shadow:none!important}
+html body.duck-redesign #sideNav .side-nav-icon{width:19px!important;height:20px!important;min-width:19px!important;font-size:19px!important;display:flex;align-items:center;justify-content:center}
+html body.duck-redesign #sideNav .side-nav-badge{font-size:10px!important;min-width:21px!important;min-height:18px!important;padding:1px 5px!important;border-radius:5px!important;background:var(--du-soft)!important;color:var(--du-muted)!important;margin-left:auto}
+html body.duck-redesign #sideNav .side-nav-foot{margin-top:auto!important;border:0!important;padding:20px 8px!important;color:var(--du-muted)!important;font-size:11px!important}
+html body.duck-redesign #sideNav .side-nav-foot .duck-logo{width:24px!important;height:24px!important}
+html body.duck-redesign #sideNav .du-nav-caption{padding:22px 11px 8px;color:var(--du-muted);font-size:9px;font-weight:700;letter-spacing:1.7px}
+html body.duck-redesign #sideNav .du-nav-search{display:flex;align-items:center;justify-content:space-between;width:100%;padding:10px 12px;border:1px solid var(--du-line);border-radius:8px;background:var(--du-bg);color:var(--du-muted);font-size:12px;cursor:pointer}
+html body.duck-redesign kbd{font:10px ui-monospace,monospace;border:1px solid var(--du-line);border-radius:4px;padding:2px 4px;background:var(--du-surface);color:var(--du-muted)}
+html body.duck-redesign.nav-collapsed #sideNav{padding:0 10px!important}
+html body.duck-redesign.nav-collapsed #sideNav .side-nav-brand{display:none!important}
+html body.duck-redesign.nav-collapsed #sideNav .side-nav-head{min-height:62px!important}
+html body.duck-redesign.nav-collapsed #sideNav .side-nav-toggle{position:static;width:36px;height:36px}
+html body.duck-redesign.nav-collapsed #sideNav :is(.du-nav-caption,.side-nav-label,.side-nav-badge,.side-nav-foot,.du-nav-search span,.du-nav-search kbd){display:none!important}
+html body.duck-redesign.nav-collapsed #sideNav .side-nav-item{justify-content:center!important}
+html body.duck-redesign.nav-collapsed #sideNav .du-nav-search{justify-content:center}
+
+/* Small, actionable dashboard. */
+html body.duck-redesign #dashboardScreen .du-welcome{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:24px;margin-bottom:24px;padding:25px 28px;background:var(--duck-gradient);border-radius:14px;color:#403514}
+html body.duck-redesign #dashboardScreen .du-welcome :is(h2,p,b){color:#403514!important}
+html body.duck-redesign #dashboardScreen .du-welcome h2{font-size:24px!important;letter-spacing:-.8px!important;margin:0 0 6px!important}
+html body.duck-redesign #dashboardScreen .du-welcome p{font-size:13px!important;margin:0!important;max-width:520px}
+html body.duck-redesign #dashboardScreen .du-welcome .bigbtn{background:var(--duck-gradient)!important;border-color:#a47b15!important;color:#49380e!important}
+html body.duck-redesign #dashboardScreen .du-welcome .bigbtn:hover{background:var(--duck-gradient)!important;border-color:#78590f!important}
+html body.duck-redesign #dashboardScreen .dash-stats{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:16px!important;border:0!important;background:transparent!important;box-shadow:none!important;margin:0 0 22px!important;padding:0!important}
+html body.duck-redesign #dashboardScreen .dash-stat{padding:18px 22px!important;border:1px solid var(--du-line)!important;background:var(--du-surface)!important;border-radius:12px!important;display:flex;flex-direction:column-reverse;gap:6px;text-align:left!important}
+html body.duck-redesign #dashboardScreen .dash-stat .v{font-size:27px!important;color:var(--du-ink)!important;font-weight:650!important;letter-spacing:-1px}
+html body.duck-redesign #dashboardScreen .dash-stat .l{font-size:12px!important;color:var(--du-muted)!important}
+html body.duck-redesign #dashboardScreen .studio-dashboard-grid{display:grid!important;grid-template-columns:minmax(240px,.75fr) minmax(0,1.45fr)!important;gap:18px!important;margin-bottom:0!important}
+html body.duck-redesign #dashboardScreen :is(.dash-panel,.mastery-card,.studio-benchmarks,.dash-split-card,.du-next){background:var(--du-surface)!important;border:1px solid var(--du-line)!important;border-radius:12px!important;box-shadow:none!important;padding:22px!important;color:var(--du-ink)!important}
+html body.duck-redesign #dashboardScreen .mastery-card{background:var(--duck-gradient)!important;min-height:260px;overflow:hidden}
+html body.duck-redesign #dashboardScreen .mastery-card :is(.mastery-kicker,.mastery-range,.mastery-sub,.mastery-number,.legend-chip,.mastery-ticks,b){color:#49380e!important}
+html body.duck-redesign #dashboardScreen .mastery-kicker{font-size:12px!important;font-weight:650!important;text-transform:none!important;letter-spacing:0!important}
+html body.duck-redesign #dashboardScreen .mastery-number{font-size:54px!important;font-weight:650!important;letter-spacing:-2px!important;line-height:1.15!important}
+html body.duck-redesign #dashboardScreen .mastery-row{align-items:baseline!important;gap:14px!important;margin:18px 0 8px!important}
+html body.duck-redesign #dashboardScreen :is(.mastery-range,.mastery-sub,.mastery-legend){font-size:11px!important}
+html body.duck-redesign #dashboardScreen .mastery-scale{margin-top:20px!important}
+html body.duck-redesign #dashboardScreen .studio-chart{min-width:0}
+html body.duck-redesign #dashboardScreen .dash-range-toggle{background:var(--du-soft)!important;border:0!important;border-radius:7px;padding:3px!important;gap:2px!important}
+html body.duck-redesign #dashboardScreen .dash-range-btn{background:transparent!important;color:var(--du-muted)!important;border:0!important;border-radius:5px!important;padding:5px 9px!important;font-size:11px!important}
+html body.duck-redesign #dashboardScreen .dash-range-btn.active{background:var(--du-surface)!important;color:var(--du-ink)!important;box-shadow:0 1px 3px #0001}
+html body.duck-redesign #dashboardScreen .studio-estimate-note{margin:8px 0 22px!important}
+html body.duck-redesign #dashboardScreen .dash-chart-empty{background:transparent!important;color:var(--du-muted)!important;font-size:13px!important}
+html body.duck-redesign #dashboardScreen .studio-benchmarks{margin-bottom:18px!important}
+html body.duck-redesign #dashboardScreen .dash-bench-title{font-size:15px!important;color:var(--du-ink)!important}
+html body.duck-redesign #dashboardScreen .dash-bench-sub{font-size:12px!important;margin:6px 0 14px!important}
+html body.duck-redesign #dashboardScreen .dash-bench{border-color:var(--du-line)!important;padding:12px 14px!important;background:transparent!important}
+html body.duck-redesign #dashboardScreen .dash-bench :is(.label,.value){color:var(--du-ink)!important}
+html body.duck-redesign #dashboardScreen .dash-bench .value{font-size:23px!important}
+html body.duck-redesign #dashboardScreen .dash-split{gap:18px!important;margin:0 0 24px!important}
+html body.duck-redesign #dashboardScreen .dash-split-card{padding:18px 22px!important}
+html body.duck-redesign #dashboardScreen .dash-split-card :is(.h,.small){color:var(--du-muted)!important;font-size:12px!important}
+html body.duck-redesign #dashboardScreen .dash-split-card .big{font-size:28px!important;margin:7px 0!important;color:var(--du-ink)!important}
+html body.duck-redesign #dashboardScreen .studio-analysis{margin-top:28px!important}
+html body.duck-redesign #dashboardScreen :is(.topic-row,.recent-row){padding:12px 0!important;gap:14px!important;font-size:12px!important;border-color:var(--du-line)!important;color:var(--du-ink)!important}
+html body.duck-redesign #dashboardScreen :is(.topic-name,.topic-num,.recent-paper,.recent-muted){color:var(--du-ink)!important;font-size:12px!important}
+html body.duck-redesign #dashboardScreen .topic-head{font-size:9px!important;letter-spacing:.6px!important;color:var(--du-muted)!important}
+html body.duck-redesign #dashboardScreen .topic-bar{height:6px!important;background:var(--du-soft)!important}
+html body.duck-redesign #dashboardScreen .topic-fill{background:#c7a62d!important}
+html body.duck-redesign #dashboardScreen .dash-footnote{font-size:11px!important;line-height:1.6;margin-top:12px}
+html body.duck-redesign #dashboardScreen .du-next{margin:0 0 24px!important;padding:0!important;overflow:hidden}
+html body.duck-redesign #dashboardScreen .du-next-head{padding:16px 20px;border-bottom:1px solid var(--du-line);display:flex;align-items:center;justify-content:space-between}
+html body.duck-redesign #dashboardScreen .du-next-head h2{font-size:15px!important;margin:0!important;white-space:nowrap;flex-shrink:0}
+html body.duck-redesign #dashboardScreen .du-next-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+html body.duck-redesign #dashboardScreen .du-next-item{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:20px;border-right:1px solid var(--du-line)}
+html body.duck-redesign #dashboardScreen .du-next-item:last-child{border-right:0}
+html body.duck-redesign #dashboardScreen .du-next-item small{color:var(--du-muted);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+html body.duck-redesign #dashboardScreen .du-next-item b{font-size:13px;line-height:1.5}
+html body.duck-redesign #dashboardScreen .du-next-item p{font-size:12px;margin:0 0 4px!important;flex:1}
+
+/* Searchable paper collections and compact paper rows. */
+html body.duck-redesign #libraryScreen .libhead{padding:0!important;margin:0 0 20px!important;border:0!important;display:flex;align-items:center;justify-content:space-between}
+html body.duck-redesign #libraryScreen .group-label{color:var(--du-muted)!important;font-size:11px!important;letter-spacing:.7px}
+html body.duck-redesign #libraryScreen .timepick{font-size:12px!important;color:var(--du-muted)!important;gap:10px!important;display:flex;align-items:center}
+html body.duck-redesign #libraryScreen .timepick select{min-height:35px!important;padding:6px 10px!important}
+html body.duck-redesign #libraryScreen .du-library-tools{margin-bottom:22px}
+html body.duck-redesign #libraryScreen .du-paper-filters{display:grid;grid-template-columns:minmax(160px,1fr) 150px 175px;gap:12px;align-items:end}
+html body.duck-redesign #libraryScreen .du-paper-filters label{display:flex;flex-direction:column;gap:6px;min-width:0}
+html body.duck-redesign #libraryScreen .du-paper-filters :is(input,select){width:100%!important;min-width:0!important;box-sizing:border-box}
+html body.duck-redesign #libraryScreen .du-collection-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 10px}
+html body.duck-redesign #libraryScreen .du-collection-tab{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:auto;min-width:0;min-height:33px;border:1px solid var(--du-line);border-radius:7px;background:var(--du-surface);color:var(--du-muted);padding:7px 12px;font-size:12px;line-height:1.3;cursor:pointer}
+html body.duck-redesign #libraryScreen .du-collection-tab[aria-pressed="true"]{background:var(--duck-gradient)!important;border-color:#dbad1b!important;color:#49380e!important;font-weight:650}
+html body.duck-redesign #libraryScreen .du-filter-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--du-muted);font-size:11px}
+html body.duck-redesign #libraryScreen .du-filter-bottom button{border:0;background:transparent;color:var(--du-yellow-ink);text-decoration:underline;cursor:pointer;font:inherit}
+html body.duck-redesign #libraryScreen .studio-collection{background:var(--du-surface)!important;border:1px solid var(--du-line)!important;border-radius:12px!important;box-shadow:none!important;margin:0 0 16px!important;overflow:hidden}
+html body.duck-redesign #libraryScreen .studio-collection>summary{padding:19px 22px!important;gap:15px!important;background:var(--du-surface)!important;align-items:center!important;min-height:0!important}
+html body.duck-redesign #libraryScreen .studio-collection>summary:hover{background:var(--du-soft)!important}
+html body.duck-redesign #libraryScreen .collection-num{display:flex!important;align-items:center;justify-content:center;width:32px;height:32px;flex:0 0 32px;border-radius:8px;background:var(--du-soft);font-size:12px!important;font-weight:600!important;color:var(--du-muted)!important}
+html body.duck-redesign #libraryScreen .collection-name{font-size:15px!important;font-weight:650!important;letter-spacing:-.2px!important;color:var(--du-ink)!important;flex:1}
+html body.duck-redesign #libraryScreen .collection-name small{font-size:11px!important;margin-top:3px!important;font-weight:400!important;color:var(--du-muted)!important}
+html body.duck-redesign #libraryScreen .collection-chevron{width:25px!important;height:25px!important;font-size:18px!important;border:0!important;background:transparent!important;color:var(--du-muted)!important}
+html body.duck-redesign #libraryScreen .du-collection-count{color:var(--du-muted);font-size:11px;white-space:nowrap}
+html body.duck-redesign #libraryScreen .collection-content{background:transparent!important;padding:0 20px 18px!important;border-top:1px solid var(--du-line)!important}
+html body.duck-redesign #libraryScreen :is(.paper-grid,.mock-pair-grid){gap:0 18px!important;margin:0!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+html body.duck-redesign #libraryScreen .mock-pair-grid{display:block!important}
+html body.duck-redesign #libraryScreen .mock-pair-row{gap:18px!important;margin:0!important}
+html body.duck-redesign #libraryScreen .mock-pair-head{padding:13px 0 0!important;margin:0!important;gap:18px!important}
+html body.duck-redesign #libraryScreen .mock-section-label{font-size:10px!important;color:var(--du-muted)!important;letter-spacing:.7px}
+html body.duck-redesign #libraryScreen .paper.compact-paper{display:flex!important;flex-direction:column!important;align-items:stretch!important;text-align:left!important;gap:6px!important;padding:15px 10px!important;min-height:73px!important;max-height:none!important;border:0!important;border-bottom:1px solid var(--du-line)!important;background:transparent!important;border-radius:0!important;box-shadow:none!important;transform:none!important;position:relative;color:var(--du-ink)!important}
+html body.duck-redesign #libraryScreen .paper.compact-paper[hidden]{display:none!important}
+html body.duck-redesign #libraryScreen .paper.compact-paper .pn{font-size:13px!important;font-weight:650!important;line-height:1.45!important;color:var(--du-ink)!important;letter-spacing:-.1px!important;padding-right:16px}
+html body.duck-redesign #libraryScreen .paper.compact-paper .meta{display:flex!important;align-items:center;gap:12px!important;border:0!important;padding:0!important;margin:0!important;font-size:10px!important;color:var(--du-muted)!important;flex-wrap:wrap}
+html body.duck-redesign #libraryScreen .paper.compact-paper::after{content:'↗';position:absolute;right:10px;top:14px;font-size:14px;color:var(--du-muted)}
+html body.duck-redesign #libraryScreen .paper.compact-paper:hover:not(:disabled),html body.duck-redesign #libraryScreen .paper.compact-paper:focus-visible{background:var(--duck-gradient)!important;border-radius:8px!important;box-shadow:0 5px 18px #ba8a001a!important}
+html body.duck-redesign #libraryScreen .paper.compact-paper:is(:hover,:focus-visible):not(:disabled) :is(.pn,.meta,.meta span),html body.duck-redesign #libraryScreen .paper.compact-paper:hover::after{color:#433613!important}
+html body.duck-redesign #libraryScreen .libnote{font-size:11px!important;line-height:1.75!important;background:transparent!important;border:0!important;margin:14px 0!important;padding:0!important;color:var(--du-muted)!important}
+html body.duck-redesign #libraryScreen #cloudDescription{border-top:1px solid var(--du-line)!important;padding-top:18px!important;margin-top:28px!important}
+html body.duck-redesign #libraryScreen .du-no-papers{padding:38px 24px;text-align:center;border:1px dashed var(--du-line);border-radius:12px;color:var(--du-muted);font-size:14px}
+
+/* Study tools, attempts, and detailed answer review. */
+html body.duck-redesign :is(#bankScreen,#bookmarksScreen,#journalScreen,#plannerScreen,#studyScreen,#modernReviewScreen,#wrongHubScreen) :is(.study-panel,.study-list-row,.study-plan,.wrong-builder,.wrong-empty,.study-solution){background:var(--du-surface)!important;color:var(--du-ink)!important;border:1px solid var(--du-line)!important;border-radius:12px!important;box-shadow:none!important;padding:22px!important}
+html body.duck-redesign .modern-ui .study-list-row{margin:0 0 12px!important;gap:20px!important}
+html body.duck-redesign .modern-ui .study-list-row p{font-size:12px!important;line-height:1.65!important}
+html body.duck-redesign .modern-ui .study-list-row .study-row-body>b{font-size:14px!important}
+html body.duck-redesign #bankScreen #bankList .bank-question-row{display:grid!important;grid-template-columns:18px minmax(0,1fr) auto;align-items:center!important;gap:12px!important;padding:11px 15px!important;margin-bottom:8px!important;min-height:0!important;border-radius:9px!important;transition:background .15s,border-color .15s}
+html body.duck-redesign #bankScreen #bankList .bank-question-row .study-row-body{min-width:0!important}
+html body.duck-redesign #bankScreen #bankList .bank-question-row .study-row-body>b{font-size:13px!important;line-height:1.45!important}
+html body.duck-redesign #bankScreen #bankList .bank-question-row .study-muted{margin:3px 0 0!important;font-size:11px!important;line-height:1.5!important;overflow-wrap:anywhere}
+html body.duck-redesign #bankScreen #bankList .bank-question-row input[type="checkbox"]{width:16px!important;height:16px!important;min-width:16px!important;min-height:16px!important;margin:0!important;padding:0!important;accent-color:#9b7400}
+html body.duck-redesign #bankScreen #bankList .bank-question-row>.bigbtn{width:auto!important;min-width:0!important;min-height:30px!important;padding:5px 11px!important;font-size:12px!important;border-radius:6px!important}
+html body.duck-redesign #bankScreen #bankList .bank-question-row:is(:hover,:focus-within){background:var(--duck-gradient)!important;border-color:#dbad1b!important}
+html body.duck-redesign #bankScreen #bankList .bank-question-row:is(:hover,:focus-within) :is(.study-row-body,b,p,.bigbtn){color:#49380e!important}
+html body.duck-redesign #bankScreen #bankList .bank-question-row:is(:hover,:focus-within)>.bigbtn{background:transparent!important;border-color:#9a791c!important}
+html body.duck-redesign .modern-ui a.official-solution-link{background:var(--duck-gradient)!important;color:#49380e!important;border:1px solid #b38b16!important}
+html body.duck-redesign .modern-ui a.official-solution-link:is(:visited,:hover,:focus-visible){color:#49380e!important}
+html body.duck-redesign .modern-ui .study-filters{gap:14px!important;margin:18px 0!important}
+html body.duck-redesign #bankScreen .study-filters{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+html body.duck-redesign .modern-ui .study-stem{font-size:17px!important;line-height:1.85!important;color:var(--du-ink)!important}
+html body.duck-redesign #reviewHubScreen .review-paper{margin-bottom:22px!important;border:1px solid var(--du-line)!important;border-radius:12px!important;overflow:hidden;background:var(--du-surface)!important}
+html body.duck-redesign #reviewHubScreen .review-paper-head{background:var(--duck-gradient)!important;padding:20px 22px!important;color:#463913!important}
+html body.duck-redesign #reviewHubScreen .review-paper-head :is(.review-paper-title,.review-paper-sub,.review-paper-stat,b){color:#463913!important}
+html body.duck-redesign #reviewHubScreen .review-paper-head .official-solution-link{background:transparent!important;border:1px solid #9a791c!important;color:#463913!important}
+html body.duck-redesign #reviewHubScreen .review-paper-head .official-solution-link:hover{background:#fff3ad!important;color:#463913!important}
+html[data-duck-theme="dark"] body.duck-redesign #wrongHubScreen #wrongBuilder :is(div,span,label,p,b){color:var(--du-ink)!important}
+html body.duck-redesign #reviewHubScreen .review-paper-title{font-size:15px!important;line-height:1.5!important}
+html body.duck-redesign #reviewHubScreen :is(.review-paper-sub,.review-paper-stat){font-size:11px!important}
+html body.duck-redesign #reviewHubScreen .review-attempt{background:var(--du-surface)!important;border-color:var(--du-line)!important;padding:16px 22px!important;gap:20px!important;min-height:0!important}
+html body.duck-redesign #reviewHubScreen .review-attempt :is(.date,.score,.unavailable){font-size:12px!important;line-height:1.6!important;color:var(--du-ink)!important}
+html body.duck-redesign #modernReviewScreen .modern-review-layout{grid-template-columns:180px minmax(0,1fr)!important;gap:20px!important}
+html body.duck-redesign #modernReviewScreen .modern-review-sidebar{padding:18px!important;position:sticky;top:0;align-self:start}
+html body.duck-redesign #modernReviewScreen .modern-review-sidebar h2{font-size:15px!important}
+html body.duck-redesign #modernReviewScreen .modern-review-sidebar p{font-size:11px!important}
+html body.duck-redesign #modernReviewScreen #modernReviewNavigator{display:block!important;max-height:55vh!important}
+html body.duck-redesign #modernReviewScreen .modern-review-question-group{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+html body.duck-redesign #modernReviewScreen .modern-review-question-group+.modern-review-question-group{border-top:1px solid var(--du-line);margin-top:13px;padding-top:13px}
+html body.duck-redesign #modernReviewScreen .modern-review-jump{border-radius:7px!important;font-size:12px!important;min-height:32px!important;line-height:1.2!important;white-space:nowrap!important;padding:6px 3px!important;border:1px solid var(--du-line)!important;background:var(--du-soft)!important;color:var(--du-ink)!important}
+html body.duck-redesign #modernReviewScreen .modern-review-jump.correct{background:var(--du-green-bg)!important;color:var(--du-green)!important;border-color:#62906c!important}
+html body.duck-redesign #modernReviewScreen .modern-review-jump.incorrect{background:var(--du-red-bg)!important;color:var(--du-red)!important;border-color:#c8786f!important}
+html body.duck-redesign #modernReviewScreen .modern-review-jump.current{outline:2px solid #b39116!important;outline-offset:2px}
+html body.duck-redesign #modernReviewScreen :is(.modern-review-metrics,.modern-review-option){background:transparent!important;border-color:var(--du-line)!important;color:var(--du-ink)!important}
+html body.duck-redesign #modernReviewScreen .modern-review-option{border-radius:8px!important;padding:12px 15px!important;font-size:16px!important;margin:9px 0!important}
+html body.duck-redesign #modernReviewScreen .modern-review-option.correct{background:var(--du-green-bg)!important;border-color:#79a184!important}
+html body.duck-redesign #modernReviewScreen .modern-review-option.incorrect{background:var(--du-red-bg)!important;border-color:#c8786f!important}
+html body.duck-redesign #modernReviewScreen .modern-review-letter{background:transparent!important;color:var(--du-ink)!important;border:0!important;box-shadow:none!important}
+html body.duck-redesign #modernReviewScreen .modern-review-option-tag{color:var(--du-muted)!important;font-size:11px!important}
+html body.duck-redesign #modernReviewScreen .modern-review-metrics{margin:20px 0!important;padding:14px 0!important}
+html body.duck-redesign #modernReviewScreen .modern-review-metrics :is(span,b){color:var(--du-ink)!important}
+html body.duck-redesign #modernReviewScreen .modern-review-status.correct{background:var(--du-green-bg)!important;color:var(--du-green)!important}
+html body.duck-redesign #modernReviewScreen .modern-review-status.incorrect{background:var(--du-red-bg)!important;color:var(--du-red)!important}
+html body.duck-redesign #modernReviewScreen :is(#modernReviewSolution,#modernReviewSolution p){color:var(--du-ink)!important;font-size:16px!important;line-height:1.9!important}
+html body.duck-redesign .modern-ui .worked-steps{padding-left:25px!important;margin:18px 0 0}
+html body.duck-redesign .modern-ui .worked-steps>li{padding-left:8px;margin-bottom:19px}
+html body.duck-redesign .modern-ui .worked-steps>li::marker{font-weight:700;color:var(--du-yellow-ink)}
+html body.duck-redesign .modern-ui :is(#studySolution,.study-stem,#modernReviewSolution){overflow-wrap:break-word}
+html body.duck-redesign .modern-ui mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding:4px 0}
+html body.duck-redesign #wrongHubScreen :is(.wrong-row,.random-row,.resolved-row){background:var(--du-surface)!important;color:var(--du-ink)!important;border-color:var(--du-line)!important}
+html body.duck-redesign #wrongHubScreen :is(.paper-title,.random-score,.wrong-paper,.resolved-paper,.score){color:var(--du-ink)!important}
+
+/* Paper information and results use the same study palette. */
+html body.duck-redesign :is(#startScreen,#resultScreen).studio-ui{padding:32px 24px!important}
+html body.duck-redesign :is(#startScreen,#resultScreen).studio-ui>.card{max-width:1050px!important;border:1px solid var(--du-line)!important;border-radius:16px!important;padding:34px!important;background:var(--du-surface)!important;box-shadow:none!important;color:var(--du-ink)!important}
+html body.duck-redesign #startScreen :is(.specs,.specgrid,.spec-grid){background:transparent!important;border:0!important;gap:12px!important}
+html body.duck-redesign #startScreen .spec{background:var(--du-soft)!important;border:0!important;border-radius:10px!important;padding:18px!important}
+html body.duck-redesign #startScreen :is(.spec b,.spec span,.spec label,.spec .k,.spec .v,#startBrand){color:var(--du-ink)!important}
+html body.duck-redesign #startScreen :is(#stdInstructions,#companionInstructions,.ahead,.leaderboard-head){background:var(--du-soft)!important;border-color:var(--du-line)!important;color:var(--du-ink)!important}
+html body.duck-redesign #startScreen :is(.attempt-hist,.arow,.leaderboard-row,.leaderboard,.lb-row,.lb-head){background:var(--du-surface)!important;border-color:var(--du-line)!important;color:var(--du-ink)!important}
+html body.duck-redesign #startScreen :is(.rank,.lb-rank,.sc,#startBrand){color:var(--du-ink)!important}
+html body.duck-redesign #resultScreen .scorehead{background:var(--duck-gradient)!important;border-radius:12px!important;box-shadow:none!important}
+html body.duck-redesign #resultScreen .scorehead :is(div,span,b,p,h2,button){color:#423513!important;background-color:transparent!important}
+html body.duck-redesign #resultScreen :is(.result-eyebrow,.result-row,.breakdown,.ans-row){color:var(--du-ink)!important;background:var(--du-surface)!important;border-color:var(--du-line)!important}
+
+/* Sign-in and settings. */
+html body.duck-redesign #loginScreen{padding:40px 24px!important;align-items:center!important;background:var(--du-bg)!important}
+html body.duck-redesign #loginScreen.studio-ui>.card{background:var(--du-surface)!important;border:1px solid var(--du-line)!important;border-radius:20px!important;padding:38px!important;max-width:470px!important;box-shadow:var(--du-shadow)!important}
+html body.duck-redesign #loginScreen h1{font-size:29px!important}
+html body.duck-redesign #loginScreen .newprof{display:flex!important;flex-wrap:wrap;gap:10px!important}
+html body.duck-redesign #loginScreen .txt{width:100%!important;flex:1 1 100%;min-width:0!important}
+html body.duck-redesign #loginScreen .newprof .bigbtn{width:100%!important;margin-top:4px}
+html body.duck-redesign #profileSettings{background:var(--du-surface)!important;color:var(--du-ink)!important;border:1px solid var(--du-line)!important;border-radius:16px!important;box-shadow:var(--du-shadow)!important;max-width:660px!important;padding:28px!important;font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+html body.duck-redesign #profileSettings :is(fieldset,.settings-tools){border-color:var(--du-line)!important;border-radius:10px!important;padding:18px!important}
+html body.duck-redesign #profileSettings :is(h2,legend,label,p,span){color:var(--du-ink)!important}
+html body.duck-redesign #profileSettings .study-muted{font-size:12px!important;color:var(--du-muted)!important}
+html body.duck-redesign #profileSettings #closeProfileSettings{border:1px solid var(--du-line)!important;background:var(--du-soft)!important;color:var(--du-ink)!important;border-radius:50%!important;width:32px;height:32px;cursor:pointer}
+html body.duck-redesign #profileSettings::backdrop,html body.duck-redesign #duckQuickFind::backdrop{background:#111c1866;backdrop-filter:blur(4px)}
+html body.duck-redesign #profileSettings .settings-danger{background:var(--du-red-bg)!important;color:var(--du-red)!important;border-color:#bd8079!important}
+
+/* Quick finder: native modal focus management, with ordinary buttons. */
+html body.duck-redesign #duckQuickFind{width:min(620px,calc(100vw - 32px));max-height:80dvh;margin:12vh auto auto;padding:0;border:1px solid var(--du-line);border-radius:16px;background:var(--du-surface);color:var(--du-ink);box-shadow:var(--du-shadow);font-family:Inter,ui-sans-serif,system-ui,sans-serif;overflow:hidden}
+html body.duck-redesign #duckQuickFind .du-find-head{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--du-line)}
+html body.duck-redesign #duckQuickFind input{flex:1;min-width:0;border:0;background:transparent;color:var(--du-ink);font:15px inherit;outline:none;padding:5px}
+html body.duck-redesign #duckQuickFind .du-find-close{border:1px solid var(--du-line);border-radius:5px;background:var(--du-soft);color:var(--du-muted);padding:5px 7px;font-size:11px;cursor:pointer}
+html body.duck-redesign #duckQuickFind .du-find-results{max-height:52dvh;overflow-y:auto;padding:8px}
+html body.duck-redesign #duckQuickFind .du-find-result{display:flex;width:100%;align-items:center;justify-content:space-between;gap:16px;padding:12px;border:0;border-radius:8px;background:transparent;color:var(--du-ink);text-align:left;cursor:pointer;font-size:13px}
+html body.duck-redesign #duckQuickFind .du-find-result:is(:hover,:focus){background:var(--du-yellow-soft);color:var(--du-yellow-ink)}
+html body.duck-redesign #duckQuickFind .du-find-result small{color:var(--du-muted);font-size:11px;white-space:nowrap}
+html body.duck-redesign #duckQuickFind .du-find-foot{padding:10px 20px;border-top:1px solid var(--du-line);font-size:11px;color:var(--du-muted)}
+
+/* Responsive layouts keep every destination available. */
+@media(min-width:1500px){html body.duck-redesign .screen.modern-ui.nav-aware{padding:40px 55px 70px!important}}
+@media(max-width:1100px){html body.duck-redesign{--du-nav:190px}html body.duck-redesign .screen.modern-ui.nav-aware{padding:28px 25px 50px!important}html body.duck-redesign #sideNav .side-nav-brand .duck-brand-word{font-size:15px!important}html body.duck-redesign #sideNav .side-nav-brand{grid-template-columns:28px 1fr}html body.duck-redesign #sideNav .side-nav-brand .duck-logo{width:28px!important;height:28px!important}html body.duck-redesign #dashboardScreen .mastery-row{flex-direction:column;gap:4px!important}html body.duck-redesign #dashboardScreen .du-next-list{grid-template-columns:1fr}html body.duck-redesign #dashboardScreen .du-next-item{display:grid;grid-template-columns:1fr auto;gap:5px 16px;border-right:0;border-bottom:1px solid var(--du-line)}html body.duck-redesign #dashboardScreen .du-next-item:last-child{border-bottom:0}html body.duck-redesign #dashboardScreen .du-next-item .bigbtn{grid-column:2;grid-row:1/4;align-self:center}html body.duck-redesign #dashboardScreen .du-next-item p{margin:0!important}}
+@media(max-width:850px){html body.duck-redesign,html body.duck-redesign.nav-collapsed{--du-nav:76px}html body.duck-redesign #sideNav{padding:0 10px!important}html body.duck-redesign #sideNav :is(.side-nav-label,.side-nav-badge,.du-nav-caption,.side-nav-foot,.du-nav-search span,.du-nav-search kbd){display:none!important}html body.duck-redesign #sideNav .side-nav-brand{display:none!important}html body.duck-redesign #sideNav .side-nav-head{min-height:60px!important;padding:15px 8px!important}html body.duck-redesign #sideNav .side-nav-toggle{position:static;width:32px;height:32px}html body.duck-redesign #sideNav .side-nav-item,html body.duck-redesign #sideNav .du-nav-search{justify-content:center!important}html body.duck-redesign #dashboardScreen .studio-dashboard-grid{grid-template-columns:1fr!important}html body.duck-redesign #dashboardScreen .mastery-card{min-height:0}html body.duck-redesign #dashboardScreen .mastery-row{flex-direction:row!important}html body.duck-redesign #modernReviewScreen .modern-review-layout{grid-template-columns:145px minmax(0,1fr)!important}html body.duck-redesign #libraryScreen .du-paper-filters{grid-template-columns:1fr 1fr}html body.duck-redesign #libraryScreen .du-paper-filters label:first-child{grid-column:1/-1}}
+@media(max-width:600px){html body.duck-redesign,html body.duck-redesign.nav-collapsed{--du-nav:0px}html body.duck-redesign .screen.modern-ui.nav-aware{left:0!important;padding:22px 16px 92px!important}html body.duck-redesign #sideNav{top:auto!important;bottom:0!important;width:100%!important;height:66px!important;padding:5px 8px!important;border-right:0!important;border-top:1px solid var(--du-line)!important;overflow:visible}html body.duck-redesign #sideNav :is(.side-nav-head,.side-nav-foot,.du-nav-search){display:none!important}html body.duck-redesign #sideNav .side-nav-items{display:flex!important;flex-direction:row!important;padding:0!important;justify-content:space-around;gap:0!important;height:56px}html body.duck-redesign #sideNav .side-nav-item{display:flex!important;flex:1;flex-direction:column!important;gap:3px!important;min-height:50px!important;max-width:80px;padding:6px 4px!important;font-size:9px!important}html body.duck-redesign #sideNav .side-nav-item .side-nav-label{display:block!important;font-size:9px!important;line-height:1.1!important}html body.duck-redesign #sideNav :is(#navWrong,#navBookmarks,#navJournal,#navPlanner){display:none!important}html body.duck-redesign #sideNav #duNavMore{display:flex!important}html body.duck-redesign .modern-ui h1{font-size:25px!important;letter-spacing:-.8px!important}html body.duck-redesign .modern-ui .studio-heading{gap:10px!important;flex-wrap:wrap!important;margin-bottom:22px!important}html body.duck-redesign .modern-ui .studio-heading .duck-logo{width:32px!important;height:32px!important}html body.duck-redesign .modern-ui .account-circle{width:32px!important;height:32px!important;min-width:32px!important}html body.duck-redesign .modern-ui .account-circles{gap:5px!important}html body.duck-redesign #dashboardScreen .du-welcome{padding:21px!important;grid-template-columns:1fr;gap:16px}html body.duck-redesign #dashboardScreen .du-welcome h2{font-size:22px!important}html body.duck-redesign #dashboardScreen .du-welcome .bigbtn{justify-self:start}html body.duck-redesign #dashboardScreen .dash-stats{gap:8px!important}html body.duck-redesign #dashboardScreen .dash-stat{padding:14px 10px!important}html body.duck-redesign #dashboardScreen .dash-stat .v{font-size:22px!important}html body.duck-redesign #dashboardScreen .dash-stat .l{font-size:10px!important}html body.duck-redesign #dashboardScreen :is(.dash-panel,.mastery-card,.studio-benchmarks,.dash-split-card){padding:18px!important}html body.duck-redesign #dashboardScreen .dash-split{gap:10px!important}html body.duck-redesign #dashboardScreen .dash-bench-grid{grid-template-columns:1fr!important}html body.duck-redesign #dashboardScreen .du-next-item{display:flex!important;padding:17px}html body.duck-redesign #dashboardScreen .du-next-item .bigbtn{margin-top:5px}html body.duck-redesign #dashboardScreen :is(.topic-table,.recent-table){min-width:560px}html body.duck-redesign #dashboardScreen .studio-analysis>.dash-panel{overflow-x:auto}html body.duck-redesign #libraryScreen .paper-grid,html body.duck-redesign #libraryScreen .mock-pair-row{grid-template-columns:1fr!important}html body.duck-redesign #libraryScreen .mock-pair-head{display:none!important}html body.duck-redesign #libraryScreen .mock-pair-cell::before{display:none!important}html body.duck-redesign #libraryScreen .collection-content{padding:0 12px 12px!important}html body.duck-redesign #libraryScreen .studio-collection>summary{padding:16px 14px!important;gap:10px!important}html body.duck-redesign #libraryScreen .collection-name{font-size:14px!important}html body.duck-redesign #libraryScreen .du-collection-count{display:none}html body.duck-redesign #libraryScreen .libhead{gap:10px;align-items:flex-end}html body.duck-redesign #libraryScreen .timepick{flex-direction:column!important;gap:4px!important;align-items:flex-end!important}html body.duck-redesign #libraryScreen .du-collection-tabs{gap:5px}html body.duck-redesign #libraryScreen .du-collection-tab{font-size:11px;padding:7px 9px}html body.duck-redesign #modernReviewScreen .modern-review-layout{display:block!important}html body.duck-redesign #modernReviewScreen .modern-review-sidebar{position:static;margin-bottom:16px}html body.duck-redesign #modernReviewScreen #modernReviewNavigator{grid-template-columns:repeat(8,1fr)!important}html body.duck-redesign #modernReviewScreen .modern-review-sidebar>p:last-child{display:none}html body.duck-redesign #bankScreen .study-filters{grid-template-columns:repeat(2,minmax(0,1fr))!important}html body.duck-redesign .modern-ui .study-list-row{flex-direction:column;align-items:stretch!important}html body.duck-redesign :is(#startScreen,#resultScreen).studio-ui{padding:16px!important}html body.duck-redesign :is(#startScreen,#resultScreen).studio-ui>.card{padding:22px 18px!important}html body.duck-redesign #resultScreen .result-hero{padding:22px!important;gap:18px!important}html body.duck-redesign #profileSettings{padding:20px!important;max-width:calc(100vw - 24px)!important}html body.duck-redesign #loginScreen.studio-ui>.card{padding:28px!important}html body.duck-redesign #duckQuickFind{margin-top:6vh}}
+@media(min-width:601px){html body.duck-redesign #sideNav #duNavMore{display:none!important}}
+@media(prefers-reduced-motion:reduce){html body.duck-redesign :is(.modern-ui,#sideNav) *{scroll-behavior:auto!important;transition:none!important}}
+
+html body.duck-redesign #dashboardScreen #dashMasteryChart path[stroke]{stroke:#b59626!important}
+html body.duck-redesign #dashboardScreen #dashMasteryChart circle{fill:#b59626!important;stroke:var(--du-surface)!important}
+html body.duck-redesign #dashboardScreen #dashMasteryChart polygon{fill:#e7c74e!important;fill-opacity:.22!important}
+html body.duck-redesign #dashboardScreen #dashMasteryChart text{fill:var(--du-muted)!important}
+@media(max-width:600px){html body.duck-redesign .modern-ui .studio-heading{grid-template-columns:minmax(0,1fr) auto;gap:12px!important}html body.duck-redesign .modern-ui .studio-heading>.study-actions{grid-column:1/-1;grid-row:2}html body.duck-redesign .modern-ui .duck-play{width:32px!important;height:32px!important;min-width:32px!important;flex-basis:32px!important}html body.duck-redesign #libraryScreen .du-paper-filters{display:flex;flex-wrap:wrap}html body.duck-redesign #libraryScreen .du-paper-filters label{flex:1 1 40%;width:auto}html body.duck-redesign #libraryScreen .du-paper-filters label:first-child{flex:1 1 100%}html body.duck-redesign #dashboardScreen .du-next-head>span{display:none}html body.duck-redesign #resultScreen .scorehead{padding:22px!important;gap:18px!important}}
+html body.duck-redesign #modernReviewScreen .modern-review-sidebar select{display:block;width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box}
+html body.duck-redesign #modernReviewScreen #modernReviewNavigator{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+html body.duck-redesign #modernReviewScreen .modern-review-jump{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box}
+html body.duck-redesign #modernReviewScreen .modern-review-heading{display:flex;gap:15px;align-items:center}
+html body.duck-redesign #modernReviewScreen .modern-review-heading h2{white-space:nowrap;flex:1;min-width:0}
+html body.duck-redesign #dashboardScreen .mastery-ticks span{color:#49380e!important}
+html body.duck-redesign #dashboardScreen :is(.mastery-est,.legend-est){background:#49380e!important}
+html body.duck-redesign #dashboardScreen :is(.mastery-ci,.legend-range){background:#c5a536!important}
+html body.duck-redesign #sideNav .side-nav-icon{color:inherit!important}
+@media(max-width:600px){html body.duck-redesign #modernReviewScreen .modern-review-question-group{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:420px){html body.duck-redesign #libraryScreen .du-paper-filters label{flex:1 1 100%;width:100%}html body.duck-redesign .modern-ui .account-circles{justify-self:end}html body.duck-redesign .modern-ui .studio-heading .duck-heading-copy{gap:8px!important}html body.duck-redesign #dashboardScreen .mastery-range{font-size:10px!important}}
