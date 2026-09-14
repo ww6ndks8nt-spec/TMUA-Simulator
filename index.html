@@ -2549,9 +2549,9 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-paper-head *{color:#49380e
 html[data-duck-theme="dark"] #reviewHubScreen .review-attempt,
 html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.unavailable){color:#fff!important}
 </style>
-<link rel="stylesheet" href="duck-redesign.css?v=20260913-4">
+<link rel="stylesheet" href="duck-redesign.css?v=20260914-1">
 <script src="esat-papers.js?v=20260914-1"></script>
-<link rel="stylesheet" href="esat.css?v=20260913-1">
+<link rel="stylesheet" href="esat.css?v=20260914-2">
 </head>
 <body class="duck-redesign">
 
@@ -2595,7 +2595,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
         <input class="txt" id="siPin" aria-label="Password" type="password" maxlength="128" style="width:170px" placeholder="Password" autocomplete="current-password">
         <button class="bigbtn" id="siBtn">Sign in</button>
       </div>
-      <label class="cloud-remember"><input id="rememberAccount" type="checkbox" checked> Remember me on this device</label><p><button type="button" id="resetPasswordBtn" class="linkbtn">Reset password</button></p><button type="button" id="finishDeletionBtn" class="bigbtn ghost hidden">Finish deleting my account</button><p class="switchline">New here? <button class="linkbtn" id="toRegister">Register a profile</button></p>
+      <label class="cloud-remember"><input id="rememberAccount" type="checkbox" checked> Remember me on this device</label><p><button type="button" id="resetPasswordBtn" class="linkbtn">Forgot password?</button></p><button type="button" id="finishDeletionBtn" class="bigbtn ghost hidden">Finish deleting my account</button><p class="switchline">New here? <button class="linkbtn" id="toRegister">Register a profile</button></p>
     </div>
 
     <div id="registerView" class="hidden">
@@ -5737,6 +5737,11 @@ function studyFiltered(){
  });
 }
 function studyMeta(x,h){const v=h.get(x.key);return x.topic+' · '+difficultyLabel(x.q)+' · Your rating: '+(studyData().ratings[x.key]||'Unrated')+' · '+(!v?'Not attempted':v.ok?'Last attempt correct':'Last attempt incorrect');}
+function makeStudyRowClickable(row, action, label){
+ row.classList.add('study-clickable-row');row.tabIndex=0;row.setAttribute('role','group');row.setAttribute('aria-label',label+' — press Enter to open');
+ row.addEventListener('click',event=>{if(event.target.closest('button,input,label,a,select,textarea'))return;action();});
+ row.addEventListener('keydown',event=>{if(event.target!==row)return;if(event.key==='Enter'||event.key===' '){event.preventDefault();action();}});
+}
 function buildStudyBank(){
  const all=studyFiltered(),pages=Math.max(1,Math.ceil(all.length/24));studyPage=Math.min(studyPage,pages-1);const host=$('bankList');host.innerHTML='';const h=studyHistory();
  $('bankCount').textContent=all.length+' questions · '+studySelected.size+' selected';$('bankPage').textContent='Page '+(studyPage+1)+' of '+pages;
@@ -5746,7 +5751,7 @@ function buildStudyBank(){
  const row=document.createElement('article');row.className='study-list-row bank-question-row';
  const check=document.createElement('input');check.type='checkbox';check.checked=studySelected.has(x.key);check.setAttribute('aria-label','Select '+studyKeyTitle(x));check.addEventListener('change',()=>{if(check.checked)studySelected.add(x.key);else studySelected.delete(x.key);$('bankCount').textContent=all.length+' questions · '+studySelected.size+' selected';$('bankStart').disabled=!studySelected.size;});
  const body=document.createElement('div');body.className='study-row-body';const title=document.createElement('b');title.textContent=studyKeyTitle(x);const meta=document.createElement('p');meta.className='study-muted';meta.textContent=studyMeta(x,h);body.append(title,meta);
- row.append(check,body,studyButton('Open',()=>startStudySession([x.key])));host.appendChild(row);
+ row.append(check,body,studyButton('Open',()=>startStudySession([x.key])));makeStudyRowClickable(row,()=>startStudySession([x.key]),studyKeyTitle(x));host.appendChild(row);
  });
  const resume=$('bankResume');resume.innerHTML='';studyData().sessions.filter(s=>!s.finished&&s.keys.some(k=>studyMap.has(k))).slice(-5).reverse().forEach(s=>resume.appendChild(studyButton('Resume '+s.keys.length+' questions · '+new Date(s.started).toLocaleDateString(),()=>resumeStudySession(s.id))));
 }
@@ -5858,7 +5863,7 @@ function buildStudyTiming(){
  const h=document.createElement('h3');h.textContent='Most time spent on incorrect answers';host.appendChild(h);
  const slow=wrong.slice().sort((a,b)=>b.ms-a.ms).slice(0,5);
  if(!slow.length){const p=document.createElement('p');p.textContent='No timed incorrect answers recorded.';host.appendChild(p);}
- slow.forEach(r=>{const row=document.createElement('div');row.className='study-list-row';const span=document.createElement('span');span.className='study-row-body';span.textContent=r.title+' · '+fmtQuestionTime(r.ms)+' · '+Math.round(r.share*100)+'% of recorded paper time · '+dashboardDateShort(r.t);row.append(span,studyButton('Practise',()=>startStudySession([r.key])));host.appendChild(row);});
+ slow.forEach(r=>{const row=document.createElement('div');row.className='study-list-row';const span=document.createElement('span');span.className='study-row-body';span.textContent=r.title+' · '+fmtQuestionTime(r.ms)+' · '+Math.round(r.share*100)+'% of recorded paper time · '+dashboardDateShort(r.t);row.append(span,studyButton('Practise',()=>startStudySession([r.key])));makeStudyRowClickable(row,()=>startStudySession([r.key]),'Practise '+r.title);host.appendChild(row);});
  const note=document.createElement('p');note.className='study-muted';note.textContent='Based on timed, answered questions in completed source papers, including retakes. Blanks, unscored questions and question-bank sessions are excluded. Position means question number, not the order in which you visited questions.';host.appendChild(note);
 }
 // Wire the new screens into the existing navigation without changing exam controls.
@@ -6313,11 +6318,15 @@ async function doRegister(){
  finally{CLOUD.busy=false;cloudAuthControls(false);}
 }
 $('resetPasswordBtn').onclick=async()=>{
- if(CLOUD.busy||!CLOUD.sdk)return;
- const email=$('siName').value.trim();if(!email){authErr('Enter your email above, then click Reset password.');return;}
- cloudAuthControls(true);
- try{await CLOUD.sdk.sendPasswordResetEmail(CLOUD.auth,email);authErr('If that email has an account, a password-reset email will be sent. Check your inbox and spam folder.');}
- catch(error){authErr(cloudError(error));}finally{cloudAuthControls(false);}
+ if(CLOUD.busy)return;
+ if(!CLOUD.sdk){authErr('Sign-in is still loading. Check your connection and try again shortly.');return;}
+ const input=$('siName'),email=input.value.trim();
+ if(!email||!input.checkValidity()){authErr('Enter a valid email address above, then click Forgot password?');input.focus();return;}
+ CLOUD.busy=true;cloudAuthControls(true);authErr('Sending password-reset email…');
+ const message='If that email has an account, a password-reset email will be sent. Check your inbox and spam folder.';
+ try{await CLOUD.sdk.sendPasswordResetEmail(CLOUD.auth,email);authErr(message);}
+ catch(error){authErr(error.code==='auth/user-not-found'?message:cloudError(error));}
+ finally{CLOUD.busy=false;cloudAuthControls(false);}
 };
 $('signOutBtn').addEventListener('click',async()=>{
  setProfileSettingsBusy(true);studyFlush();cloudCapture();

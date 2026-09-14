@@ -17,3 +17,6 @@
 .esat-prep .mastery-card{justify-content:center}
 @media(max-width:650px){.esat-question-reader iframe{min-height:360px;height:55vh}.esat-question-reader p{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.duck-mascot .duck-egg{animation:none!important}}
+
+/* Separate dashboard summary panels from section performance cards. */
+html.esat-prep body.duck-redesign #dashboardScreen .dash-split{margin-top:24px!important}
