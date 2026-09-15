@@ -2579,7 +2579,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 </nav>
 
 <div id="bankScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Targeted practice</div><h1>Question bank</h1></div></header><p class="lead">Browse individual questions and build short practice sessions. Filter by topic, source and estimated difficulty, then add your own rating after practising.</p>
-<div class="study-filters"><label>Search<input id="bankSearch" type="search" placeholder="Paper or question text"></label><label>Topic<select id="bankTopic"></select></label><label>Source<select id="bankSource"></select></label><label>Estimated difficulty<select id="bankEstimatedDifficulty"><option value="">All levels</option><option value="1,4">1.0–3.9</option><option value="4,5">4.0–4.9</option><option value="5,6">5.0–5.9</option><option value="6,7">6.0–6.9</option><option value="7,8">7.0–7.9</option><option value="8,9">8.0–8.9</option><option value="9,10">9.0</option></select></label><label>Attempt status<select id="bankStatus"><option value="">All questions</option><option value="new">Not attempted</option><option value="attempted">Attempted</option><option value="wrong">Last answer incorrect</option><option value="correct">Last answer correct</option></select></label><label>Your rating<select id="bankDifficulty"><option value="">All ratings</option><option>Unrated</option><option>Easy</option><option>Moderate</option><option>Hard</option></select></label></div>
+<div class="study-filters"><label>Search<input id="bankSearch" type="search" placeholder="Paper or question text"></label><label>Topic<select id="bankTopic"></select></label><label>Source<select id="bankSource"></select></label><label>Estimated difficulty<select id="bankEstimatedDifficulty"><option value="">All levels</option><option value="1,4">1.0–3.9</option><option value="4,5">4.0–4.9</option><option value="5,6">5.0–5.9</option><option value="6,7">6.0–6.9</option><option value="7,8">7.0–7.9</option><option value="8,9">8.0–8.9</option><option value="9,10">9.0+</option></select></label><label>Attempt status<select id="bankStatus"><option value="">All questions</option><option value="new">Not attempted</option><option value="attempted">Attempted</option><option value="wrong">Last answer incorrect</option><option value="correct">Last answer correct</option></select></label><label>Your rating<select id="bankDifficulty"><option value="">All ratings</option><option>Unrated</option><option>Easy</option><option>Moderate</option><option>Hard</option></select></label></div>
 <div class="study-actions"><button id="bankSelect" class="bigbtn ghost">Select this page</button><button id="bankClear" class="bigbtn ghost">Clear selection</button><button id="bankStart" class="bigbtn" disabled>Practise selected questions</button></div><p id="bankCount" class="study-muted" role="status"></p><p id="bankSessionSummary" role="status"></p><div id="bankResume" class="study-actions"></div><p class="study-muted"><button type="button" id="downloadDifficulties" class="linkback">Download difficulty ratings (CSV)</button></p><div id="bankList"></div><div class="study-actions"><button id="bankPrev" class="bigbtn ghost">Previous page</button><span id="bankPage"></span><button id="bankNext" class="bigbtn ghost">Next page</button></div></div></div><div id="bookmarksScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div class="duck-heading-copy"><span class="duck-logo" aria-hidden="true"></span><div><div class="studio-eyebrow">Return to the good ones</div><h1>Bookmarks</h1></div></div></header><p class="lead">Your saved questions, with a note about what makes each worth revisiting.</p><div id="bookmarksList"></div></div></div><div id="journalScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Review & reflect</div><h1>Mistake journal</h1></div></header><p class="lead">Turn incorrect answers into specific lessons. Marking a journal entry resolved does not remove it from wrong-answer practice.</p><div class="study-filters"><label>Status<select id="journalFilter"><option value="">All entries</option><option value="open">To review</option><option value="resolved">Resolved</option></select></label><label>Category<select id="journalCategoryFilter"></select></label></div><p id="journalCount" role="status" class="study-muted"></p><div id="journalList"></div></div></div><div id="plannerScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Make a plan</div><h1>Practice planner</h1></div></header><p class="lead">Plan a full paper or a focused topic session. Dates are saved with your profile; this planner does not send notifications.</p><form id="plannerForm" class="study-panel"><div class="study-filters"><label>Session type<select id="planKind"><option value="paper">Full paper</option><option value="topic">Topic practice</option></select></label><label>Paper or topic<select id="planTarget" required></select></label><label>Date<input id="planDate" type="date" required></label><label>Planned minutes<input id="planMinutes" type="number" min="5" max="600" value="75" required></label></div><button class="bigbtn" type="submit">Schedule session</button><span id="plannerSaved" role="status"></span><p class="study-muted">Planned minutes reserve study time. Full papers keep their existing exam timer settings.</p></form><section class="study-panel"><h2>Suggested topics</h2><p class="study-muted">Lowest accuracy in your completed papers, with at least three attempted questions per topic.</p><div id="plannerSuggestions" class="study-actions"></div></section><div id="plannerList"></div></div></div><div id="studyScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Question-bank practice</div><h1>Focused practice</h1></div></header><div class="study-actions"><button id="studyBack" class="bigbtn ghost">Save & return to bank</button><button id="studyBookmark" class="bigbtn ghost">Bookmark question</button></div><p id="studyPosition" class="study-muted"></p><section id="studyContent" class="study-panel"><h2 id="studyTitle"></h2><div id="studyStem" class="study-stem"></div><div id="studyOptions"></div><button id="studyCheck" class="bigbtn">Check answer</button><p id="studyFeedback" role="status"></p><div id="studySolution" class="study-solution hidden"></div></section><div class="study-actions"><button id="studyPrev" class="bigbtn ghost">Previous question</button><button id="studyNext" class="bigbtn ghost">Next question</button><button id="studyFinish" class="bigbtn">Finish session</button></div><details class="study-panel"><summary>Bookmark notes & mistake lesson</summary><div class="study-filters"><label>Your difficulty<select id="studyRating"><option>Unrated</option><option>Easy</option><option>Moderate</option><option>Hard</option></select></label><label>Mistake category<select id="studyCategory"></select></label></div><label class="study-field">Bookmark note<textarea id="studyBookmarkNote" maxlength="4000" placeholder="Adding a note also bookmarks this question."></textarea></label><label class="study-field">Lesson learned<textarea id="studyLesson" maxlength="4000" placeholder="What will you do differently next time?"></textarea></label><button id="studySaveDetails" class="bigbtn ghost">Save notes & lesson</button><span id="studySaved" role="status"></span></details></div></div>
 <div id="modernReviewScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Review & understand</div><h1>Answer review</h1></div><div class="study-actions"><button id="modernReviewBack" class="bigbtn ghost">Results summary</button><button id="modernReviewHistory" class="bigbtn ghost">Review history</button></div></header><p id="modernReviewPaper" class="lead"></p><div class="modern-review-layout"><aside class="study-panel modern-review-sidebar"><h2>Questions</h2><label class="study-field">Show<select id="modernReviewFilter"><option value="">All questions</option><option value="incorrect">Incorrect answers</option><option value="skipped">Not answered</option><option value="correct">Correct answers</option><option value="unscored">Unscored</option></select></label><p id="modernReviewFilterCount" class="study-muted"></p><div id="modernReviewNavigator"></div><p class="study-muted">Green: correct<br>Red: incorrect<br>Grey: not answered or unscored</p></aside><div id="modernReviewContent"><section class="study-panel"><div class="modern-review-heading"><h2 id="modernReviewQuestion"></h2><span id="modernReviewState"></span></div><p id="modernReviewTopic" class="study-muted"></p><div class="modern-review-metrics"><div><span>Your answer</span><b id="modernReviewYourAnswer"></b></div><div><span>Correct answer</span><b id="modernReviewCorrectAnswer"></b></div><div><span>Time spent</span><b id="modernReviewTime"></b></div></div><div id="modernReviewStem" class="study-stem"></div><div id="modernReviewOptions"></div></section><section class="study-panel modern-review-worked"><h2 id="modernReviewSolutionTitle">Worked solution</h2><p id="modernReviewSolutionNotice" class="modern-review-notice" role="status"></p><div id="modernReviewSolution"></div></section><div class="study-actions"><button id="modernReviewPrev" class="bigbtn ghost">Previous question</button><button id="modernReviewNext" class="bigbtn">Next question</button><button id="modernReviewBookmark" class="bigbtn ghost">Bookmark question</button><button id="modernReviewPractice" class="bigbtn ghost">Practise again</button></div><details class="study-panel"><summary>Add a lesson to your mistake journal</summary><label class="study-field">Category<select id="modernReviewCategory"></select></label><label class="study-field">Lesson<textarea id="modernReviewLesson" maxlength="4000" placeholder="What will you do differently next time?"></textarea></label><button id="modernReviewSaveLesson" class="bigbtn ghost">Save lesson</button><span id="modernReviewSaved" role="status"></span></details></div></div></div></div>
 <!-- ============ LOGIN ============ -->
@@ -2979,7 +2979,8 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <script src="set_b_data.js?v=20260912-2"></script>
 <script src="set_b_revised.js?v=4"></script>
 <script src="practice_solutions.js?v=20260913-2"></script>
-<script src="set_c_revised.js?v=2"></script>
+<script src="set_c_revised.js?v=4"></script>
+<script src="challenge_set_1_p2.js?v=20260915-1"></script>
 <script>
 /* Cloud setup: publish database.rules.json from the accompanying package. */
 const LEADERBOARD_URL = 'https://tmua-leaderboard-default-rtdb.europe-west1.firebasedatabase.app';
@@ -3622,6 +3623,7 @@ const PAPERS = [
   { id:'setcr2p1', title:'Paper 1 · Set C', sub:'Applications of Mathematical Knowledge', type:1, group:1, questions:REVISED_SET_C_P1 },
   { id:'setcr2p2', title:'Paper 2 · Set C', sub:'Mathematical Reasoning', type:2, group:2, questions:REVISED_SET_C_P2 },
   { id:'customset1p1', title:"Challenge set 1 – Paper 1", sub:"Community-contributed full-length TMUA Paper 1 mock · high difficulty", type:1, group:3, questions:CUSTOM_SET1_P1 },
+  { id:'customset1p2', title:"Challenge set 1 – Paper 2", sub:"Extended Mathematical Reasoning · 20 original questions · 120 minutes · provisional difficulty ratings", type:2, group:3, questions:CHALLENGE_SET_1_P2 },
   { id:'sim2024p1', title:"TMUA 2024 · Paper 1", sub:"Applications of Mathematical Knowledge", type:1, group:4, officialTyped:true, questions:SIM24P1 },
   { id:'sim2024p2', title:"TMUA 2024 · Paper 2", sub:"Mathematical Reasoning", type:2, group:4, officialTyped:true, questions:SIM24P2 },
   { id:'sim2025p1', title:"TMUA 2025 · Paper 1", sub:"Applications of Mathematical Knowledge", type:1, group:4, officialTyped:true, questions:SIM25P1 },
@@ -3686,7 +3688,7 @@ function paperInCurrentPrep(p){return !!p && !p.archived && !!p.esat===ESAT_MODE
 function historyPapers(){return ESAT_MODE?[...PAPERS,...ESAT_LEGACY_PAPERS]:PAPERS;}
 function planInCurrentPrep(p){return p.kind==='paper'?paperInCurrentPrep(paperById(p.target)):(p.prep||'tmua')===(ESAT_MODE?'esat':'tmua');}
 function paperDescription(p){
-  if(p?.mat||p?.esat)return p.sub;
+  if(p?.mat||p?.esat||p?.id==='customset1p2')return p.sub;
   if(p && p.type===1) return 'Applications of Mathematical Knowledge';
   if(p && p.type===2) return 'Mathematical Reasoning';
   return (p && p.sub) ? p.sub : '';
@@ -3698,6 +3700,7 @@ function pairedPapersFor(p){
     setbjp1:['setbjp1','setbjp2'], setbjp2:['setbjp1','setbjp2'],
     setbr3p1:['setbr3p1','setbr3p2'], setbr3p2:['setbr3p1','setbr3p2'],
     setcr2p1:['setcr2p1','setcr2p2'], setcr2p2:['setcr2p1','setcr2p2'],
+    customset1p1:['customset1p1','customset1p2'], customset1p2:['customset1p1','customset1p2'],
     p1a:['p1a','p2a'], p2a:['p1a','p2a'],
     p1b:['p1b','p2b'], p2b:['p1b','p2b'],
     p1c:['p1c','p2c'], p2c:['p1c','p2c'],
@@ -4171,7 +4174,7 @@ function buildLibrary(){
       +'<span>'+hist.length+' attempt'+(hist.length===1?'':'s')+'</span></span>';
     if(p.locked){b.className+=' locked';b.disabled=true;b.title='Answer key not available yet';}
     else{b.addEventListener('click',()=>openStart(p));}
-    if(p.id==='customset1p1'){
+    if(p.id==='customset1p1'||p.id==='customset1p2'){
       $('gridCustom').appendChild(b);
     } else if(p.group===1 || p.group===2){
       const setKey = ({setajp1:'Set A',setajp2:'Set A',setbjp1:'Set B',setbjp2:'Set B',setbr3p1:'Set B',setbr3p2:'Set B',setcr2p1:'Set C',setcr2p2:'Set C',p1a:'Set A',p2a:'Set A',p1b:'Set B',p2b:'Set B',p1c:'Set C',p2c:'Set C',p1d:'Set D',p2d:'Set D',p1e:'Set E',p2e:'Set E'})[p.id] || p.id;
@@ -4752,14 +4755,14 @@ function openStoredAttempt(p,rec){
 function selectedTimeMinutesForPaper(p){
   if(p?.esat)return $('timeSelect').value==='0'?0:p.timerSeconds/60;
   if(p?.mat) return 60;
-  if(p && p.id==='customset1p1') return 120;
+  if(p && (p.id==='customset1p1'||p.id==='customset1p2'||p.p1Id==='customset1p1')) return 120;
   return parseInt($('timeSelect').value,10);
 }
 
 function updateCombinedStartButton(p){
   const btn=$('beginBothBtn'), note=$('beginBothNote');
   const pair=pairedPapersFor(p);
-  const t=parseInt($('timeSelect').value,10);
+  const t=selectedTimeMinutesForPaper(p);
   const available=!!(pair && p.type===1);
   btn.classList.toggle('hidden',!available);
   note.classList.toggle('hidden',!available);
@@ -4780,7 +4783,7 @@ function openStart(p){
   hideSideNav(); reviewOriginHub=false;
   active=p; QUESTIONS=p.questions;
   const t=selectedTimeMinutesForPaper(p);
-  $('startBrand').textContent = p.simulation ? 'Simulation test' : (p.group===3 ? 'Community mock' : p.title.split('·')[0].trim());
+  $('startBrand').textContent = p.simulation ? 'Simulation test' : (p.id==='customset1p2' ? 'Challenge set 1' : p.group===3 ? 'Community mock' : p.title.split('·')[0].trim());
   $('startTitle').textContent=p.title;
   $('startSub').textContent=paperDescription(p)+'.';
   $('startDifficulty').innerHTML='';$('startDifficulty').classList.add('hidden');
@@ -5080,7 +5083,7 @@ $('resumeBtn').addEventListener('click', ()=>{
 
 $('beginBothBtn').addEventListener('click', ()=>{
   const pair=pairedPapersFor(active);
-  const t=parseInt($('timeSelect').value,10);
+  const t=selectedTimeMinutesForPaper(pair?.p1);
   if(!pair || t===0) return;
   dualMode=true; dualPair=pair; dualStage=1; dualPaperSeconds=t*60; dualFirstResult=null;
   active=pair.p1; QUESTIONS=pair.p1.questions;
@@ -5999,6 +6002,7 @@ QUESTION_DIFFICULTY_RATINGS.setbr3p1=REVISED_SET_B_P1.map(q=>q.estimatedDifficul
 QUESTION_DIFFICULTY_RATINGS.setbr3p2=REVISED_SET_B_P2.map(q=>q.estimatedDifficulty);
 QUESTION_DIFFICULTY_RATINGS.setcr2p1=REVISED_SET_C_P1.map(q=>q.estimatedDifficulty);
 QUESTION_DIFFICULTY_RATINGS.setcr2p2=REVISED_SET_C_P2.map(q=>q.estimatedDifficulty);
+QUESTION_DIFFICULTY_RATINGS.customset1p2=CHALLENGE_SET_1_P2.map(q=>q.estimatedDifficulty);
 const SPREADSHEET_RATING_COLUMNS={"tmua2023p1":"B","tmua2023p2":"C","tmua2022p1":"D","tmua2022p2":"E","tmua2021p1":"F","tmua2021p2":"G","tmua2020p1":"H","tmua2020p2":"I","tmua2019p1":"J","tmua2019p2":"K","tmua2018p1":"L","tmua2018p2":"M","tmua2017p1":"N","tmua2017p2":"O"};
 PAPERS.forEach(p=>{if(p.mat||p.esat)return;const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
 /* Sources: user spreadsheet (280 official item ratings), user-supplied 2023
