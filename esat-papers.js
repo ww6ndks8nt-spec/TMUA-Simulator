@@ -8,5 +8,19 @@ const ESAT_ALL_PAPERS=ESAT_PAPER_DATA.map(p=>({...p,questions:p.items.map((x,i)=
  stem:'<div class="esat-question-reader"><p><b>'+p.title+' · Question '+x.number+'</b></p><p>Read question '+x.number+' on PDF page '+x.page+'. Select your answer below.'+(x.contextPage&&x.contextPage!==x.page?' Shared information begins on page '+x.contextPage+'.':'')+'</p><a class="official-solution-link" href="'+p.url+'#page='+x.page+'" target="_blank" rel="noopener noreferrer">Open question PDF in a new tab ↗</a><iframe title="'+p.title+' question '+x.number+'" src="'+p.url+'#page='+x.page+'&view=FitH" loading="lazy"></iframe><p class="study-muted">If your browser cannot display the PDF, use the link above. PDF scrolling does not change the selected question in the simulator.</p></div>',
  sol:'<a class="official-solution-link" href="'+p.solutionUrl+'" target="_blank" rel="noopener noreferrer">'+(p.keyArchive==='vantage'?'Archived answer key':'Official answer key')+' · PDF ↗</a>'
 }))}));
+// One continuous Section 1 sitting per ENGAA year; retain old part IDs for history.
+for(const year of [...new Set(ESAT_ALL_PAPERS.filter(p=>p.exam==='ENGAA').map(p=>p.year))]){
+ const parts=['A','B'].map(part=>ESAT_ALL_PAPERS.find(p=>!p.archived&&p.exam==='ENGAA'&&p.year===year&&p.section===1&&p.part===part));
+ if(parts.some(p=>!p))continue;
+ const [a,b]=parts;
+ const timerSeconds=a.timerSeconds+b.timerSeconds;
+ const id='esat-engaa-'+year+'-s1ab';
+ const questions=parts.flatMap(p=>p.questions.map(q=>({...q,sourcePart:p.part}))).map((q,i)=>({...q,n:i+1}));
+ ESAT_ALL_PAPERS.push({...a,id,title:'ENGAA '+year+' · Section 1 · Parts A and B',
+  sub:a.sub+' / '+b.sub,part:'A+B',questions,items:parts.flatMap(p=>p.items),
+  timerSeconds,minutes:timerSeconds/60,legacyId:undefined,replacementId:undefined,
+  note:'Parts A and B form one continuous sitting with a shared timer. Crossed-out questions remain excluded; the time is the sum of the adjusted part timings. Original PDF question numbers are retained.'});
+ parts.forEach(p=>{p.archived=true;p.combinedSittingId=id;});
+}
 const ESAT_PAPERS=ESAT_ALL_PAPERS.filter(p=>!p.archived);
 const ESAT_LEGACY_PAPERS=ESAT_ALL_PAPERS.filter(p=>p.archived);

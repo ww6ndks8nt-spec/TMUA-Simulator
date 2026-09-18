@@ -30,7 +30,7 @@
  $('bankEstimatedDifficulty').closest('label').hidden=true;
  $('downloadDifficulties').hidden=true;
  const info=doc.createElement('p');info.className='esat-archive-note';
- info.innerHTML='Crossed-out questions are excluded from practice and the affected timers are reduced proportionally. The source PDFs retain their original annotations. Unannotated historical papers may still contain advanced topics outside today’s specification. NSAA subject parts are offered separately; older ENGAA Section 2 written reasoning is not marked. <a href="https://esat-tmua.ac.uk/esat-preparation-materials/" target="_blank" rel="noopener noreferrer">Official preparation guidance ↗</a>';
+ info.innerHTML='Crossed-out questions are excluded from practice and the affected timers are reduced proportionally. The source PDFs retain their original annotations. Unannotated historical papers may still contain advanced topics outside today’s specification. ENGAA Section 1 Parts A and B are combined into one sitting per year. NSAA subject parts are offered separately; older ENGAA Section 2 written reasoning is not marked. <a href="https://esat-tmua.ac.uk/esat-preparation-materials/" target="_blank" rel="noopener noreferrer">Official preparation guidance ↗</a>';
  $('libraryScreen').querySelector('.lead').after(info);
  // Historical raw accuracy has no invented 1–9 conversion.
  dashboardAttemptGrade=(c,s)=>s?100*c/s:null;
