@@ -181,3 +181,6 @@ SR`For III, if f(x)-k has exactly two distinct real roots r and s, dividing its 
 SR`At a repeated root r, the cubic has form \((x-r)^2(x-s)\), or \((x-r)^3\). In the former case expanding and differentiating gives \(3x^2-2(s+2r)x+(2rs+r^2)\), which equals zero at x=r; the latter case also has derivative zero there. Thus any such level k must equal f(r) at a zero of f'.`,
 SR`The derivative is quadratic and has at most two real zeros, so there can be at most two corresponding level values k. Hence III holds. I and III, but not II, are true.`)
 ];
+
+// User calibration: reduce Paper 2 mean from 5.85 to approximately 4.50.
+REVISED_SET_C_P2.forEach(q=>{q.estimatedDifficulty=Math.round(q.estimatedDifficulty*10/13*100)/100;});

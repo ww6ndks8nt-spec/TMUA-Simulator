@@ -2924,6 +2924,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
         <div class="band"><span id="bandLabel">Estimated practice score</span>: <b id="bandText">—</b> <button type="button" id="showScoreConversion" class="linkback" aria-expanded="false" aria-controls="resultDifficulty">View score conversion</button></div>
         <p class="study-muted">Estimated conversion; not an official TMUA score.</p>
         <p class="band-note" id="bandNote"></p>
+        <p class="band" id="resultTotalTime"></p>
       </div>
     </div>
     <div class="hidden" id="dualFinalSummary"></div>
@@ -2979,7 +2980,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <script src="set_b_data.js?v=20260912-2"></script>
 <script src="set_b_revised.js?v=4"></script>
 <script src="practice_solutions.js?v=20260913-2"></script>
-<script src="set_c_revised.js?v=4"></script>
+<script src="set_c_revised.js?v=5"></script>
 <script src="challenge_set_1_p2.js?v=20260915-1"></script>
 <script>
 /* Cloud setup: publish database.rules.json from the accompanying package. */
@@ -3920,6 +3921,12 @@ function fmtQuestionTime(ms){
   const h=Math.floor(sec/3600), m=Math.floor((sec%3600)/60), s=sec%60;
   return h ? (h+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'))
            : (m+':'+String(s).padStart(2,'0'));
+}
+function resultTotalTimeLabel(times,count){
+  const recorded=(Array.isArray(times)?times:[]).slice(0,count).filter(t=>t!==null&&t!==undefined&&Number.isFinite(+t)&&+t>=0);
+  if(!recorded.length)return 'Total time spent: not recorded';
+  const total=recorded.reduce((sum,t)=>sum+(+t),0);
+  return 'Total time spent: '+fmtQuestionTime(total)+(recorded.length<count?' (partially recorded)':'');
 }
 async function hashPin(pin){
   const s='tmua:'+pin;
@@ -5565,6 +5572,7 @@ function showResults(){
   $('lbNote').textContent='';
   $('resBrand').textContent=(active.combined?'Combined result · ':'Result · ')+active.title;
   $('rawScore').textContent=correct;
+  $('resultTotalTime').textContent=resultTotalTimeLabel(questionTimesMs,QUESTIONS.length);
   $('dial').querySelector('.of').textContent='/ '+scored;
   $('pctText').textContent=scored ? (active.combined ? (correct+' / 40 overall · '+pct+'%') : (pct+'% correct'+(flawedN?' · '+flawedN+' flagged item'+(flawedN>1?'s':'')+' excluded':''))) : 'Practice completed · unscored';
   $('resultScreen').querySelector('.scoremeta > .study-muted').textContent=active.esat?'Answer choices checked · answer key PDF available in review.':active.mat?'Four marks per correct answer · solutions PDF available in review.':'Estimated conversion; not an official TMUA score.';
