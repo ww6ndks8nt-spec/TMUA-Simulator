@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-09-12.2">
+<meta name="ducktmua-build" content="2026-09-22.mallard-3">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='dark'?'dark':'light';}catch(e){document.documentElement.dataset.duckTheme='light';}
 </script>
@@ -2549,7 +2549,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-paper-head *{color:#49380e
 html[data-duck-theme="dark"] #reviewHubScreen .review-attempt,
 html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.unavailable){color:#fff!important}
 </style>
-<link rel="stylesheet" href="duck-redesign.css?v=20260914-1">
+<link rel="stylesheet" href="duck-redesign.css?v=20260920-2">
 <script src="esat-papers.js?v=20260918-1"></script>
 <link rel="stylesheet" href="esat.css?v=20260914-2">
 </head>
@@ -2581,7 +2581,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <div id="bankScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Targeted practice</div><h1>Question bank</h1></div></header><p class="lead">Browse individual questions and build short practice sessions. Filter by topic, source and estimated difficulty, then add your own rating after practising.</p>
 <div class="study-filters"><label>Search<input id="bankSearch" type="search" placeholder="Paper or question text"></label><label>Topic<select id="bankTopic"></select></label><label>Source<select id="bankSource"></select></label><label>Estimated difficulty<select id="bankEstimatedDifficulty"><option value="">All levels</option><option value="1,4">1.0–3.9</option><option value="4,5">4.0–4.9</option><option value="5,6">5.0–5.9</option><option value="6,7">6.0–6.9</option><option value="7,8">7.0–7.9</option><option value="8,9">8.0–8.9</option><option value="9,10">9.0+</option></select></label><label>Attempt status<select id="bankStatus"><option value="">All questions</option><option value="new">Not attempted</option><option value="attempted">Attempted</option><option value="wrong">Last answer incorrect</option><option value="correct">Last answer correct</option></select></label><label>Your rating<select id="bankDifficulty"><option value="">All ratings</option><option>Unrated</option><option>Easy</option><option>Moderate</option><option>Hard</option></select></label></div>
 <div class="study-actions"><button id="bankSelect" class="bigbtn ghost">Select this page</button><button id="bankClear" class="bigbtn ghost">Clear selection</button><button id="bankStart" class="bigbtn" disabled>Practise selected questions</button></div><p id="bankCount" class="study-muted" role="status"></p><p id="bankSessionSummary" role="status"></p><div id="bankResume" class="study-actions"></div><p class="study-muted"><button type="button" id="downloadDifficulties" class="linkback">Download difficulty ratings (CSV)</button></p><div id="bankList"></div><div class="study-actions"><button id="bankPrev" class="bigbtn ghost">Previous page</button><span id="bankPage"></span><button id="bankNext" class="bigbtn ghost">Next page</button></div></div></div><div id="bookmarksScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div class="duck-heading-copy"><span class="duck-logo" aria-hidden="true"></span><div><div class="studio-eyebrow">Return to the good ones</div><h1>Bookmarks</h1></div></div></header><p class="lead">Your saved questions, with a note about what makes each worth revisiting.</p><div id="bookmarksList"></div></div></div><div id="journalScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Review & reflect</div><h1>Mistake journal</h1></div></header><p class="lead">Turn incorrect answers into specific lessons. Marking a journal entry resolved does not remove it from wrong-answer practice.</p><div class="study-filters"><label>Status<select id="journalFilter"><option value="">All entries</option><option value="open">To review</option><option value="resolved">Resolved</option></select></label><label>Category<select id="journalCategoryFilter"></select></label></div><p id="journalCount" role="status" class="study-muted"></p><div id="journalList"></div></div></div><div id="plannerScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Make a plan</div><h1>Practice planner</h1></div></header><p class="lead">Plan a full paper or a focused topic session. Dates are saved with your profile; this planner does not send notifications.</p><form id="plannerForm" class="study-panel"><div class="study-filters"><label>Session type<select id="planKind"><option value="paper">Full paper</option><option value="topic">Topic practice</option></select></label><label>Paper or topic<select id="planTarget" required></select></label><label>Date<input id="planDate" type="date" required></label><label>Planned minutes<input id="planMinutes" type="number" min="5" max="600" value="75" required></label></div><button class="bigbtn" type="submit">Schedule session</button><span id="plannerSaved" role="status"></span><p class="study-muted">Planned minutes reserve study time. Full papers keep their existing exam timer settings.</p></form><section class="study-panel"><h2>Suggested topics</h2><p class="study-muted">Lowest accuracy in your completed papers, with at least three attempted questions per topic.</p><div id="plannerSuggestions" class="study-actions"></div></section><div id="plannerList"></div></div></div><div id="studyScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Question-bank practice</div><h1>Focused practice</h1></div></header><div class="study-actions"><button id="studyBack" class="bigbtn ghost">Save & return to bank</button><button id="studyBookmark" class="bigbtn ghost">Bookmark question</button></div><p id="studyPosition" class="study-muted"></p><section id="studyContent" class="study-panel"><h2 id="studyTitle"></h2><div id="studyStem" class="study-stem"></div><div id="studyOptions"></div><button id="studyCheck" class="bigbtn">Check answer</button><p id="studyFeedback" role="status"></p><div id="studySolution" class="study-solution hidden"></div></section><div class="study-actions"><button id="studyPrev" class="bigbtn ghost">Previous question</button><button id="studyNext" class="bigbtn ghost">Next question</button><button id="studyFinish" class="bigbtn">Finish session</button></div><details class="study-panel"><summary>Bookmark notes & mistake lesson</summary><div class="study-filters"><label>Your difficulty<select id="studyRating"><option>Unrated</option><option>Easy</option><option>Moderate</option><option>Hard</option></select></label><label>Mistake category<select id="studyCategory"></select></label></div><label class="study-field">Bookmark note<textarea id="studyBookmarkNote" maxlength="4000" placeholder="Adding a note also bookmarks this question."></textarea></label><label class="study-field">Lesson learned<textarea id="studyLesson" maxlength="4000" placeholder="What will you do differently next time?"></textarea></label><button id="studySaveDetails" class="bigbtn ghost">Save notes & lesson</button><span id="studySaved" role="status"></span></details></div></div>
-<div id="modernReviewScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Review & understand</div><h1>Answer review</h1></div><div class="study-actions"><button id="modernReviewBack" class="bigbtn ghost">Results summary</button><button id="modernReviewHistory" class="bigbtn ghost">Review history</button></div></header><p id="modernReviewPaper" class="lead"></p><div class="modern-review-layout"><aside class="study-panel modern-review-sidebar"><h2>Questions</h2><label class="study-field">Show<select id="modernReviewFilter"><option value="">All questions</option><option value="incorrect">Incorrect answers</option><option value="skipped">Not answered</option><option value="correct">Correct answers</option><option value="unscored">Unscored</option></select></label><p id="modernReviewFilterCount" class="study-muted"></p><div id="modernReviewNavigator"></div><p class="study-muted">Green: correct<br>Red: incorrect<br>Grey: not answered or unscored</p></aside><div id="modernReviewContent"><section class="study-panel"><div class="modern-review-heading"><h2 id="modernReviewQuestion"></h2><span id="modernReviewState"></span></div><p id="modernReviewTopic" class="study-muted"></p><div class="modern-review-metrics"><div><span>Your answer</span><b id="modernReviewYourAnswer"></b></div><div><span>Correct answer</span><b id="modernReviewCorrectAnswer"></b></div><div><span>Time spent</span><b id="modernReviewTime"></b></div></div><div id="modernReviewStem" class="study-stem"></div><div id="modernReviewOptions"></div></section><section class="study-panel modern-review-worked"><h2 id="modernReviewSolutionTitle">Worked solution</h2><p id="modernReviewSolutionNotice" class="modern-review-notice" role="status"></p><div id="modernReviewSolution"></div></section><div class="study-actions"><button id="modernReviewPrev" class="bigbtn ghost">Previous question</button><button id="modernReviewNext" class="bigbtn">Next question</button><button id="modernReviewBookmark" class="bigbtn ghost">Bookmark question</button><button id="modernReviewPractice" class="bigbtn ghost">Practise again</button></div><details class="study-panel"><summary>Add a lesson to your mistake journal</summary><label class="study-field">Category<select id="modernReviewCategory"></select></label><label class="study-field">Lesson<textarea id="modernReviewLesson" maxlength="4000" placeholder="What will you do differently next time?"></textarea></label><button id="modernReviewSaveLesson" class="bigbtn ghost">Save lesson</button><span id="modernReviewSaved" role="status"></span></details></div></div></div></div>
+<div id="modernReviewScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Review & understand</div><h1>Answer review</h1></div><div class="study-actions"><button id="modernReviewBack" class="bigbtn ghost">Results summary</button><button id="modernReviewHistory" class="bigbtn ghost">Review history</button></div></header><p id="modernReviewPaper" class="lead"></p><div class="modern-review-layout"><nav class="study-panel modern-review-navigation" aria-label="Review questions"><div id="modernReviewNavigator"></div></nav><div id="modernReviewContent"><section class="study-panel"><div class="modern-review-heading"><h2 id="modernReviewQuestion"></h2><span id="modernReviewState"></span></div><p id="modernReviewTopic" class="study-muted"></p><div class="modern-review-metrics"><div><span>Your answer</span><b id="modernReviewYourAnswer"></b></div><div><span>Correct answer</span><b id="modernReviewCorrectAnswer"></b></div><div><span>Time spent</span><b id="modernReviewTime"></b></div></div><div id="modernReviewStem" class="study-stem"></div><div id="modernReviewOptions"></div></section><section class="study-panel modern-review-worked"><h2 id="modernReviewSolutionTitle">Worked solution</h2><p id="modernReviewSolutionNotice" class="modern-review-notice" role="status"></p><div id="modernReviewSolution"></div></section><div class="study-actions"><button id="modernReviewPrev" class="bigbtn ghost">Previous question</button><button id="modernReviewNext" class="bigbtn">Next question</button><button id="modernReviewBookmark" class="bigbtn ghost">Bookmark question</button><button id="modernReviewPractice" class="bigbtn ghost">Practise again</button></div><details class="study-panel"><summary>Add a lesson to your mistake journal</summary><label class="study-field">Category<select id="modernReviewCategory"></select></label><label class="study-field">Lesson<textarea id="modernReviewLesson" maxlength="4000" placeholder="What will you do differently next time?"></textarea></label><button id="modernReviewSaveLesson" class="bigbtn ghost">Save lesson</button><span id="modernReviewSaved" role="status"></span></details></div></div></div></div>
 <!-- ============ LOGIN ============ -->
 <div class="screen modern-ui studio-ui" id="loginScreen">
   <aside class="studio-login-brand" aria-label="Duck TMUA Exam Simulator"><div class="studio-login-wordmark">Duck TMUA<span>Exam Simulator</span></div><div class="duck-login-mascot" role="img" aria-label="Duck TMUA yellow duck logo"></div><div class="studio-login-bottom">Test of Mathematics<br>for University Admission</div></aside><div class="card">
@@ -2761,11 +2761,11 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
     <div class="pre-scheme">
       <label for="preColorSchemeSelect">Colour scheme</label>
       <select id="preColorSchemeSelect" aria-label="Colour scheme">
-        <option value="standard">Standard</option>
-        <option value="white">White</option>
-        <option value="blue">Light Blue</option>
-        <option value="sepia">Sepia</option>
-        <option value="contrast">High Contrast</option>
+        <option value="standard">Color Scheme</option>
+        <option value="light-yellow">Black on Light Yellow</option>
+        <option value="salmon">Black on Salmon</option>
+        <option value="white">Black on White</option>
+        <option value="yellow">Black on Yellow</option>
       </select>
     </div>
   </div>
@@ -2804,7 +2804,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
       <li>Select the <b>one</b> correct option for each question. There is no penalty for a wrong answer, so <b>attempt every question</b>.</li>
       <li>Tick <b>Flag for review</b> to mark a question to return to. Open the <b>Review Screen</b> at any time to see the status of every question and jump between them.</li>
       <li>The timer runs continuously. When it reaches zero the paper is <b>submitted automatically</b>.</li>
-      <li>Keyboard: letter keys <b>A–J</b> or number keys <b>1–9/0</b> to answer · <b>← →</b> to move · <b>F</b> to flag · <b>R</b> for the Review Screen.</li>
+      <li>Keyboard: <b>A–J</b> or <b>1–9/0</b> to answer · <b>← →</b> to move · <b>Alt+F</b> to flag · <b>R</b> for the Navigator.</li>
     </ul>
 
     <div class="attempts hidden" id="attemptHist"></div>
@@ -2849,21 +2849,23 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <header class="bar hidden" id="topbar">
   <div class="title">Test of Mathematics for University Admission<small id="barSub">Practice simulation</small></div>
   <div class="spacer"></div>
-  <div class="timewrap" id="timeWrap"><span class="lbl">Time Remaining</span><span class="timer" id="timer">1:15:00</span></div>
-  <div class="qcount" id="topQCount">1 of 20</div>
+  <div class="exam-status">
+    <div class="timewrap" id="timeWrap"><span id="timerIcon" aria-hidden="true"></span><span class="lbl">Time Remaining</span><span class="timer" id="timer">75:00</span></div>
+    <button type="button" class="qcount" id="topQCount" aria-pressed="true" title="Hide question count">1 of 20</button>
+  </div>
 </header>
 
 <div class="substrip hidden" id="substrip">
-  <span class="sub-left"></span>
+  <button type="button" class="sub-left hidden" id="explainAnswerBtn" aria-controls="solution" aria-expanded="true">Explain Answer</button>
   <span class="hidden" aria-hidden="true"><b id="progNow">1</b><b id="progTot">20</b></span>
   <span class="spacer"></span>
-  <label class="flagwrap" id="flagWrap"><input type="checkbox" id="flagChk"><span class="flg" id="flagIcon">&#9872;</span> Flag for Review</label>
+  <label class="flagwrap" id="flagWrap" title="Flag for Review (Alt+F)"><input type="checkbox" id="flagChk"><span class="flg" id="flagIcon" aria-hidden="true"></span><span><u>F</u>lag for Review</span></label>
   <div class="scheme-wrap"><label for="colorSchemeSelect">Colour scheme</label><select id="colorSchemeSelect" aria-label="Colour scheme">
-    <option value="standard">Standard</option>
-    <option value="white">White</option>
-    <option value="blue">Light Blue</option>
-    <option value="sepia">Sepia</option>
-    <option value="contrast">High Contrast</option>
+    <option value="standard">Color Scheme</option>
+    <option value="light-yellow">Black on Light Yellow</option>
+    <option value="salmon">Black on Salmon</option>
+    <option value="white">Black on White</option>
+    <option value="yellow">Black on Yellow</option>
   </select><span class="scheme-caret">&#9660;</span></div>
 </div>
 
@@ -2871,26 +2873,26 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
   <div class="wrap">
     <div class="stem" id="stem"></div>
     <div class="question-topic hidden" id="questionTopic"></div>
-    <div class="options" id="options"></div>
+    <div class="options" id="options" role="radiogroup" aria-label="Answer choices"></div>
     <div class="solution hidden" id="solution"></div>
   </div>
 </main>
 
 <footer class="actions hidden" id="footbar">
-  <button class="pvbtn ghost" id="exitBtn">&#10534; End Exam</button>
+  <button type="button" class="pvbtn ghost" id="exitBtn" title="End Exam (Alt+E)">&#10534; End Exam</button>
   <div class="spacer"></div>
-  <button class="pvbtn" id="prevBtn">&#8592; Previous</button>
-  <button class="pvbtn" id="reviewBtn">&#9881; Navigator</button>
-  <button class="pvbtn" id="nextBtn">Next &#8594;</button>
+  <button type="button" class="pvbtn" id="prevBtn" title="Previous (Alt+P)">&#8592; Previous</button>
+  <button type="button" class="pvbtn" id="reviewBtn" aria-haspopup="dialog" aria-controls="navOver" title="Navigator (Alt+V)">&#9881; Navigator</button>
+  <button type="button" class="pvbtn" id="nextBtn" title="Next (Alt+N)">Next &#8594;</button>
 </footer>
 
 <!-- ============ FLOATING NAVIGATOR ============ -->
 <div class="navigator-shell hidden" id="navOver">
-  <section class="navigator-window" id="navWindow" aria-label="Navigator">
+  <section class="navigator-window" id="navWindow" role="dialog" aria-modal="true" aria-label="Navigator">
     <div class="navigator-title" id="navDragHandle"><span class="navgear">&#9881;</span> Navigator - select a question to go to it</div>
     <div class="navigator-table-wrap">
       <table class="navtable official-navtable">
-        <thead><tr><th style="width:31%">Question # <span class="sortarrow">&#9650;</span></th><th style="width:21%">Status</th><th>Flagged for Review</th></tr></thead>
+        <thead><tr><th style="width:31%" aria-sort="ascending"><button type="button" data-nav-sort="question">Question # <span class="sortarrow">&#9650;</span></button></th><th style="width:20.6%"><button type="button" data-nav-sort="status">Status</button></th><th><button type="button" data-nav-sort="flag">Flagged for Review</button></th></tr></thead>
         <tbody id="navTable"></tbody>
       </table>
     </div>
@@ -4876,7 +4878,8 @@ $('sideNavToggle').addEventListener('click', ()=>{
 
 
 function applyExamScheme(v){
-  const allowed=['standard','white','blue','sepia','contrast'];
+  const allowed=['standard','light-yellow','salmon','white','yellow'];
+  // Previously saved, non-reference themes fall back safely to the default.
   const scheme=allowed.includes(v)?v:'standard';
   document.body.dataset.examScheme=scheme;
   try{ localStorage.setItem('tmua-exam-scheme',scheme); }catch(e){}
@@ -5154,128 +5157,149 @@ function fmtTime(s){
   const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
   return h+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
 }
+function fmtExamTime(s){
+  const total=Math.max(0,Math.floor(Number(s)||0));
+  return Math.floor(total/60)+':'+String(total%60).padStart(2,'0');
+}
 function updateTimerDisplay(){
-  const el=$('timer'); el.textContent=fmtTime(Math.max(0,secondsLeft));
+  const el=$('timer'); el.textContent=fmtExamTime(secondsLeft);
   el.classList.toggle('warn', secondsLeft<300 && secondsLeft>60);
   el.classList.toggle('crit', secondsLeft<=60);
 }
 
-/* ---------------- render ---------------- */
+/* ---------------- reference-calibrated exam delivery ---------------- */
+let examQuestionCountVisible=true;
+function examIcon(name){
+  // Local, unmodified Pearson sprite: the same shapes as the reference controls.
+  const names=['flag','stack','clock','previous','next','exit','navigator','solution'];
+  return names.includes(name)?'<span class="pv-icon pv-icon-'+name+'" aria-hidden="true"></span>':'';
+}
+function renderExamChrome(){
+  $('topbar').querySelector('.title').firstChild.textContent=active?.esat?'Engineering and Science Admissions Test':'Test of Mathematics for University Admission';
+  $('topQCount').innerHTML=examIcon('stack')+'<span'+(examQuestionCountVisible?'':' class="hidden"')+'>'+(idx+1)+' of '+QUESTIONS.length+'</span>';
+  $('topQCount').classList.toggle('count-hidden',!examQuestionCountVisible);
+  $('topQCount').setAttribute('aria-pressed',String(examQuestionCountVisible));
+  $('topQCount').setAttribute('aria-label',(examQuestionCountVisible?'Hide':'Show')+' question count');
+  $('topQCount').title=(examQuestionCountVisible?'Hide':'Show')+' question count';
+  $('flagWrap').classList.toggle('hidden',reviewMode);
+  $('flagWrap').classList.toggle('on',!!flags[idx]);
+  $('flagChk').checked=!!flags[idx];
+  $('flagIcon').innerHTML=examIcon('flag');
+  $('timerIcon').innerHTML=examIcon('clock');
+  $('prevBtn').disabled=(idx===0);
+  $('prevBtn').innerHTML=examIcon('previous')+'<span><u>P</u>revious</span>';
+  $('reviewBtn').innerHTML=examIcon('navigator')+'<span>Na<u>v</u>igator</span>';
+  $('nextBtn').innerHTML=(reviewMode&&idx===QUESTIONS.length-1)?'Finish Review':'<span><u>N</u>ext</span>'+examIcon('next');
+  $('exitBtn').classList.remove('hidden');
+  $('exitBtn').innerHTML=examIcon('exit')+'<span><u>E</u>'+(reviewMode?'xit Review':'nd Exam')+'</span>';
+  // Pearson's Explain Answer is a review feature; never reveal a live answer key.
+  $('explainAnswerBtn').classList.toggle('hidden',!reviewMode);
+  $('explainAnswerBtn').innerHTML=examIcon('solution')+'<span>Explain Answer</span>';
+  $('explainAnswerBtn').setAttribute('aria-expanded','true');
+}
 function render(){
   if(!reviewMode && !submitted) startQuestionTiming(idx);
   if(!reviewMode && seen.length===QUESTIONS.length) seen[idx]=true;
   const q=QUESTIONS[idx];
   $('progNow').textContent=idx+1;
-  $('topQCount').textContent=(idx+1)+' of '+QUESTIONS.length;
-  $('stem').innerHTML='<b>Q'+(idx+1)+'.</b> '+richMathHtml(q.stem);
-  if(reviewMode){
-    $('questionTopic').textContent='Topic: '+questionTopic(q);
-    $('questionTopic').classList.remove('hidden');
-  } else {
-    $('questionTopic').textContent='';
-    $('questionTopic').classList.add('hidden');
-  }
-
-  const wrap=$('options'); wrap.innerHTML='';
-  const flawedNoAns = (q.correct===99);
-  if(q.companion){
-    wrap.className='options companion';
-    q.opts.forEach((o,i)=>{
-      const b=document.createElement('button'); b.setAttribute('type','button');
-      let cls='';
-      if(reviewMode){
-        if(!flawedNoAns && isCorrectOpt(q,i)) cls=' correct';
-        else if(answers[idx]===i) cls=' wrong';
-      } else if(answers[idx]===i){ cls=' sel'; }
-      b.className='copt'+cls;
-      b.textContent=LETTERS[i];
-      if(!reviewMode) b.addEventListener('click',()=>choose(i));
-      wrap.appendChild(b);
-    });
-    const sol=$('solution');
-    if(reviewMode){ sol.classList.remove('hidden'); sol.innerHTML='<h4>Review</h4>'+richMathHtml(q.sol); }
-    else { sol.classList.add('hidden'); sol.innerHTML=''; }
-    $('flagWrap').classList.toggle('hidden', reviewMode);
-    $('flagWrap').classList.toggle('on', flags[idx]);
-    $('flagChk').checked = !!flags[idx];
-    if($('flagIcon')) $('flagIcon').textContent=flags[idx]?'⚑':'⚐';
-    $('prevBtn').disabled=(idx===0);
-    const last=(idx===QUESTIONS.length-1);
-    $('nextBtn').textContent = last ? (reviewMode ? 'Finish Review' : 'Next →') : 'Next →';
-    $('exitBtn').classList.remove('hidden');
-    $('exitBtn').innerHTML = reviewMode ? '&#10005; Exit Review' : '&#10534; End Exam';
-    typeset($('testMain')); window.scrollTo(0,0);
-    snapshotProgress();
-    return;
-  }
-  wrap.className='options';
+  $('stem').innerHTML=richMathHtml(q.stem);
+  $('questionTopic').textContent=reviewMode?'Topic: '+questionTopic(q):'';
+  $('questionTopic').classList.toggle('hidden',!reviewMode);
+  const wrap=$('options');wrap.innerHTML='';
+  wrap.className='options'+(q.companion?' companion':'');
   q.opts.forEach((o,i)=>{
-    const b=document.createElement('button'); b.setAttribute('type','button');
-    let cls='';
-    if(reviewMode){
-      if(!flawedNoAns && isCorrectOpt(q,i)) cls=' correct';
-      else if(answers[idx]===i) cls=' wrong';
-    }
-    else if(answers[idx]===i){ cls=' sel'; }
-    b.className='opt'+cls;
-    let mark='';
-    if(reviewMode){
-      if(!flawedNoAns && isCorrectOpt(q,i)) mark='<span class="mark">Correct</span>';
-      else if(answers[idx]===i) mark='<span class="mark">Your answer</span>';
-    }
-    b.innerHTML='<span class="radio"></span><span class="letter">'+LETTERS[i]+'</span><span class="body">'+richMathHtml(o)+'</span>'+mark;
-    if(!reviewMode) b.addEventListener('click',()=>choose(i));
-    wrap.appendChild(b);
+    const label=document.createElement('label');
+    const correct=reviewMode&&q.correct!==99&&isCorrectOpt(q,i);
+    const wrong=reviewMode&&!correct&&answers[idx]===i;
+    label.className='opt'+(correct?' correct':wrong?' wrong':answers[idx]===i?' sel':'');
+    const radio=document.createElement('input');
+    radio.type='radio';radio.name='exam-answer';radio.id='examAnswer'+i;
+    radio.value=String(i);radio.className='exam-radio';
+    radio.checked=answers[idx]===i;radio.disabled=reviewMode;
+    radio.setAttribute('aria-label','Answer '+LETTERS[i]);
+    radio.setAttribute('aria-describedby','examAnswerText'+i);
+    radio.tabIndex=answers[idx]===i||(answers[idx]===null&&i===0)?0:-1;
+    radio.addEventListener('change',()=>choose(i,true));
+    label.appendChild(radio);
+    const body=document.createElement('span');body.className='body';body.id='examAnswerText'+i;
+    body.innerHTML=q.companion?LETTERS[i]:richMathHtml(o);label.appendChild(body);
+    if(correct||wrong){const mark=document.createElement('span');mark.className='mark';mark.textContent=correct?'Correct':'Your answer';label.appendChild(mark);}
+    wrap.appendChild(label);
   });
-
-  const sol=$('solution');
-  if(reviewMode){ sol.classList.remove('hidden'); sol.innerHTML='<h4>'+(q.unscored?'Review note':'Answer review')+'</h4>'+richMathHtml(q.sol); }
-  else { sol.classList.add('hidden'); sol.innerHTML=''; }
-
-  $('flagWrap').classList.toggle('hidden', reviewMode);
-  $('flagWrap').classList.toggle('on', flags[idx]);
-  $('flagChk').checked = !!flags[idx];
-  if($('flagIcon')) $('flagIcon').textContent=flags[idx]?'⚑':'⚐';
-
-  $('prevBtn').disabled=(idx===0);
-  const last=(idx===QUESTIONS.length-1);
-  $('nextBtn').textContent = last ? (reviewMode ? 'Finish Review' : 'Next →') : 'Next →';
-  $('exitBtn').classList.remove('hidden');
-    $('exitBtn').innerHTML = reviewMode ? '&#10005; Exit Review' : '&#10534; End Exam';
-
-  typeset($('testMain')); window.scrollTo(0,0);
+  const sol=$('solution');sol.classList.toggle('hidden',!reviewMode);
+  sol.innerHTML=reviewMode?'<h4>'+(q.unscored?'Review note':'Answer review')+'</h4>'+richMathHtml(q.sol):'';
+  renderExamChrome();
+  typeset($('testMain'));$('testMain').scrollTop=0;
   snapshotProgress();
 }
-
-function choose(i){ if(reviewMode) return; answers[idx]=(answers[idx]===i)?null:i; render(); }
-
-$('prevBtn').addEventListener('click', ()=>{ if(idx>0){ idx--; render(); } });
-$('nextBtn').addEventListener('click', ()=>{ if(idx<QUESTIONS.length-1){ idx++; render(); } else if(reviewMode){ backToResults(); } });
-$('flagChk').addEventListener('change', ()=>{ if(!reviewMode){ flags[idx]=$('flagChk').checked; render(); } });
+function choose(i,focusAnswer=false){
+  if(reviewMode||submitted||!Number.isInteger(i)||i<0||i>=QUESTIONS[idx].opts.length)return;
+  // Native radio behaviour: clicking the selected answer does not clear it.
+  answers[idx]=i;render();
+  if(focusAnswer)$('examAnswer'+i)?.focus();
+}
+$('prevBtn').addEventListener('click',()=>{if(idx>0){idx--;render();}});
+$('nextBtn').addEventListener('click',()=>{if(idx<QUESTIONS.length-1){idx++;render();}else if(reviewMode){backToResults();}else{openNav();}});
+$('flagChk').addEventListener('change',()=>{if(!reviewMode){flags[idx]=$('flagChk').checked;renderExamChrome();snapshotProgress();}});
+$('explainAnswerBtn').addEventListener('click',()=>{
+  if(!reviewMode)return;
+  const showing=$('solution').classList.contains('hidden');
+  $('solution').classList.toggle('hidden',!showing);$('explainAnswerBtn').setAttribute('aria-expanded',String(showing));
+  if(showing)$('solution').scrollIntoView({block:'nearest'});
+});
 
 /* ---------------- floating navigator ---------------- */
-$('reviewBtn').addEventListener('click', openNav);
-$('navClose').addEventListener('click', ()=>$('navOver').classList.add('hidden'));
-
-function openNav(){
-  $('endConfirm').classList.add('hidden');
-  const tb=$('navTable'); tb.innerHTML='';
-  QUESTIONS.forEach((q,i)=>{
-    const tr=document.createElement('tr');
-    tr.className='row'+(i===idx?' current':'');
-    const answered=answers[i]!==null;
-    const visited=!!seen[i];
-    const status=answered?'Complete':(visited?'Incomplete':'Unseen');
-    const statusClass=answered?'status-complete':(visited?'status-incomplete':'status-unseen');
-    tr.innerHTML='<td>Question '+(i+1)+'</td>'
-      +'<td class="'+statusClass+'">'+status+'</td>'
-      +'<td class="'+(flags[i]?'flagged':'')+'">'+(flags[i]?'Flagged':'')+'</td>';
-    tr.addEventListener('click',()=>{ idx=i; $('navOver').classList.add('hidden'); render(); });
+let navSort={key:'question',ascending:true},navReturnFocus=null;
+$('reviewBtn').addEventListener('click',openNav);
+$('topQCount').addEventListener('click',()=>{examQuestionCountVisible=!examQuestionCountVisible;renderExamChrome();});
+$('navClose').addEventListener('click',closeNav);
+function closeNav(){
+  $('navOver').classList.add('hidden');
+  (navReturnFocus&&navReturnFocus.isConnected?navReturnFocus:$('reviewBtn')).focus();
+}
+function navStatus(i){return answers[i]!==null?'Complete':seen[i]?'Incomplete':'Unseen';}
+function renderNavigator(){
+  const tb=$('navTable');tb.innerHTML='';
+  const order=QUESTIONS.map((_,i)=>i);
+  order.sort((a,b)=>{
+    const value=i=>navSort.key==='status'?navStatus(i):navSort.key==='flag'?Number(!!flags[i]):i;
+    const x=value(a),y=value(b);return (x<y?-1:x>y?1:a-b)*(navSort.ascending?1:-1);
+  });
+  order.forEach(i=>{
+    const tr=document.createElement('tr');tr.className='row'+(i===idx?' current':'');
+    const status=navStatus(i);
+    tr.innerHTML='<td><button type="button" class="nav-question" data-question="'+i+'"'+(i===idx?' aria-current="step"':'')+'>Question '+(i+1)+'</button></td>'
+      +'<td class="status-'+status.toLowerCase()+'">'+status+'</td>'
+      +'<td class="'+(flags[i]?'flagged':'')+'">'+(flags[i]?examIcon('flag')+'<span class="pv-sr-only">Flagged for Review</span>':'')+'</td>';
+    tr.addEventListener('click',()=>{idx=i;$('navOver').classList.add('hidden');render();$('examAnswer'+(answers[idx]??0))?.focus();});
     tb.appendChild(tr);
   });
-  const pending=QUESTIONS.reduce((n,q,i)=>n+(answers[i]===null?1:0),0);
-  $('navPendingCount').textContent=pending;
+  document.querySelectorAll('[data-nav-sort]').forEach(button=>{
+    const selected=button.dataset.navSort===navSort.key;
+    button.closest('th').setAttribute('aria-sort',selected?(navSort.ascending?'ascending':'descending'):'none');
+    const labels={question:'Question #',status:'Status',flag:'Flagged for Review'};
+    button.innerHTML=labels[button.dataset.navSort]+(selected?' <span class="sortarrow">'+(navSort.ascending?'▲':'▼')+'</span>':'');
+  });
+  $('navPendingCount').textContent=QUESTIONS.reduce((n,_,i)=>n+(answers[i]===null?1:0),0);
+}
+function openNav(){
+  if($('testMain').classList.contains('hidden'))return;
+  if($('navOver').classList.contains('hidden'))navReturnFocus=document.activeElement;
+  $('endConfirm').classList.add('hidden');renderNavigator();
+  $('navDragHandle').innerHTML=examIcon('navigator')+'<span>Navigator - <small>select a question to go to it</small></span>';
   $('navOver').classList.remove('hidden');
+  $('navTable').querySelector('tr.current .nav-question')?.focus();
+}
+document.querySelectorAll('[data-nav-sort]').forEach(button=>button.addEventListener('click',()=>{
+  navSort={key:button.dataset.navSort,ascending:navSort.key===button.dataset.navSort?!navSort.ascending:true};renderNavigator();button.focus();
+}));
+function trapExamFocus(event,container){
+  if(event.key!=='Tab')return;
+  const nodes=[...container.querySelectorAll('button,input,select,[tabindex="0"]')].filter(el=>!el.disabled&&!el.closest('.hidden'));
+  const first=nodes[0],last=nodes[nodes.length-1];
+  if(!first)return;
+  if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+  else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
 }
 
 function showEndConfirm(){
@@ -5290,8 +5314,9 @@ function showEndConfirm(){
     $('endConfirmQuestion').textContent='Are you sure you want to end this exam?';
   }
   $('endConfirm').classList.remove('hidden');
+  $('endNo').focus();
 }
-$('endNo').addEventListener('click', ()=>$('endConfirm').classList.add('hidden'));
+$('endNo').addEventListener('click', ()=>{$('endConfirm').classList.add('hidden');$('exitBtn').focus();});
 $('endYes').addEventListener('click', ()=>{ $('endConfirm').classList.add('hidden'); submit(); });
 
 // Drag the Navigator by its blue title bar. The bottom-right corner remains native-resizable.
@@ -5307,9 +5332,9 @@ $('endYes').addEventListener('click', ()=>{ $('endConfirm').classList.add('hidde
   });
   handle.addEventListener('pointermove',e=>{
     if(!dragging) return;
-    const maxL=Math.max(0,window.innerWidth-win.offsetWidth), maxT=Math.max(64,window.innerHeight-38-win.offsetHeight);
+    const maxL=Math.max(0,window.innerWidth-win.offsetWidth), maxT=Math.max(0,window.innerHeight-win.offsetHeight);
     win.style.left=Math.min(Math.max(0,e.clientX-dx),maxL)+'px';
-    win.style.top=Math.min(Math.max(64,e.clientY-dy),maxT)+'px';
+    win.style.top=Math.min(Math.max(0,e.clientY-dy),maxT)+'px';
   });
   const stop=e=>{ if(dragging){dragging=false; try{handle.releasePointerCapture(e.pointerId)}catch(_){}} };
   handle.addEventListener('pointerup',stop); handle.addEventListener('pointercancel',stop);
@@ -5681,21 +5706,34 @@ window.addEventListener('beforeunload', unloadSave);
 document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='hidden') unloadSave(); });
 
 /* ---------------- keyboard ---------------- */
-document.addEventListener('keydown', (e)=>{
-  if(!$('loginScreen').classList.contains('hidden')) return;
-  if(!$('libraryScreen').classList.contains('hidden')) return;
-  if(!$('startScreen').classList.contains('hidden')) return;
-  if(!$('resultScreen').classList.contains('hidden')) return;
-  if(!$('navOver').classList.contains('hidden')){ if(e.key==='Escape') $('navOver').classList.add('hidden'); return; }
-  if($('testMain').classList.contains('hidden')) return;
+document.addEventListener('keydown',e=>{
+  if($('testMain').classList.contains('hidden'))return;
+  if(!$('endConfirm').classList.contains('hidden')){
+    if(e.key==='Escape'){e.preventDefault();$('endNo').click();}else trapExamFocus(e,$('endConfirm'));return;
+  }
+  if(!$('navOver').classList.contains('hidden')){
+    if(e.key==='Escape'){e.preventDefault();closeNav();}else trapExamFocus(e,$('navWindow'));return;
+  }
   const k=e.key.toLowerCase();
-  if(['a','b','c','d','e','f','g','h','i','j'].includes(k)){ const i=LETTERS.indexOf(k.toUpperCase()); if(i<QUESTIONS[idx].opts.length && !reviewMode) choose(i); }
-  else if(k>='1'&&k<='9'){ const i=parseInt(k,10)-1; if(i<QUESTIONS[idx].opts.length && !reviewMode) choose(i); }
-  else if(k==='0'){ const i=9; if(i<QUESTIONS[idx].opts.length && !reviewMode) choose(i); }
-  else if(e.key==='ArrowRight'){ if(idx<QUESTIONS.length-1){ idx++; render(); } }
-  else if(e.key==='ArrowLeft'){ if(idx>0){ idx--; render(); } }
-  else if(k==='f'){ if(!reviewMode){ flags[idx]=!flags[idx]; render(); } }
-  else if(k==='r'){ openNav(); }
+  if(e.altKey&&!e.ctrlKey&&!e.metaKey){
+    const actions={f:()=>{if(!reviewMode){flags[idx]=!flags[idx];renderExamChrome();snapshotProgress();}},n:()=>$('nextBtn').click(),p:()=>$('prevBtn').click(),v:openNav,e:()=>$('exitBtn').click()};
+    if(actions[k]){e.preventDefault();actions[k]();}return;
+  }
+  if(e.ctrlKey||e.metaKey)return;
+  const target=e.target;
+  if(target?.matches('input,select,textarea,[contenteditable="true"]')){
+    if(target.classList.contains('exam-radio')&&['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)){
+      e.preventDefault();const d=['ArrowUp','ArrowLeft'].includes(e.key)?-1:1;
+      choose((Number(target.value)+d+QUESTIONS[idx].opts.length)%QUESTIONS[idx].opts.length,true);
+      return;
+    }
+    if(!target.classList.contains('exam-radio'))return;
+  }
+  if(k.length===1&&LETTERS.includes(k.toUpperCase())){const i=LETTERS.indexOf(k.toUpperCase());if(i<QUESTIONS[idx].opts.length&&!reviewMode){e.preventDefault();choose(i);}}
+  else if(/^[0-9]$/.test(k)){const i=k==='0'?9:Number(k)-1;if(i<QUESTIONS[idx].opts.length&&!reviewMode){e.preventDefault();choose(i);}}
+  else if(e.key==='ArrowRight'){e.preventDefault();$('nextBtn').click();}
+  else if(e.key==='ArrowLeft'){e.preventDefault();$('prevBtn').click();}
+  else if(k==='r'){e.preventDefault();openNav();}
 });
 
 /* Additional practice tools. Existing exam delivery and scoring stay separate. */
@@ -5924,8 +5962,7 @@ function modernReviewSource(i){
 function modernReviewStatus(i){const q=QUESTIONS[i],a=answers[i];return q.correct===99?'unscored':a===null||a===undefined?'skipped':isCorrectAns(q,a)?'correct':'incorrect';}
 function modernReviewLabel(status){return {correct:'Correct',incorrect:'Incorrect',skipped:'Not answered',unscored:'Unscored'}[status];}
 function modernReviewList(){
- const mode=$('modernReviewFilter').value;
- modernReviewIndices=QUESTIONS.map((_,i)=>i).filter(i=>!mode||modernReviewStatus(i)===mode);
+ modernReviewIndices=QUESTIONS.map((_,i)=>i);
  const host=$('modernReviewNavigator');host.innerHTML='';
  const groups=new Map();
  modernReviewIndices.forEach(i=>{
@@ -5938,8 +5975,6 @@ function modernReviewList(){
   if(i===idx)b.setAttribute('aria-current','true');
   b.addEventListener('click',()=>{idx=i;renderModernReview();});group.appendChild(b);
  });
- $('modernReviewFilterCount').textContent=modernReviewIndices.length+' of '+QUESTIONS.length+' questions';
- if(!modernReviewIndices.length){const p=document.createElement('p');p.className='study-muted';p.textContent='No questions match this filter.';host.appendChild(p);}
 }
 function renderModernReview(){
  if(!QUESTIONS.length)return;idx=Math.max(0,Math.min(QUESTIONS.length-1,idx));modernReviewList();
@@ -5987,12 +6022,11 @@ enterReview=function(){
  if(timerId)clearInterval(timerId);stopPreExamTimer();flushQuestionTiming(false);
  setSideNav('review');
  ['resultScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','navOver','endConfirm','paperGapScreen','reviewHubScreen','libraryScreen','dashboardScreen','wrongHubScreen'].forEach(id=>$(id).classList.add('hidden'));
- submitted=true;reviewMode=true;$('modernReviewFilter').value='';$('modernReviewScreen').classList.remove('hidden');renderModernReview();
+ submitted=true;reviewMode=true;$('modernReviewScreen').classList.remove('hidden');renderModernReview();
 };
 backToResults=function(){reviewMode=false;$('modernReviewScreen').classList.add('hidden');hideSideNav();['testMain','topbar','substrip','footbar'].forEach(id=>$(id).classList.add('hidden'));$('resultScreen').classList.remove('hidden');};
 $('modernReviewBack').addEventListener('click',backToResults);
 $('modernReviewHistory').addEventListener('click',()=>{reviewMode=false;showReviewHub();});
-$('modernReviewFilter').addEventListener('change',()=>{modernReviewList();if(modernReviewIndices.length&&!modernReviewIndices.includes(idx))idx=modernReviewIndices[0];renderModernReview();});
 $('modernReviewPrev').addEventListener('click',()=>{const p=modernReviewIndices.indexOf(idx);if(p>0){idx=modernReviewIndices[p-1];renderModernReview();}});
 $('modernReviewNext').addEventListener('click',()=>{const p=modernReviewIndices.indexOf(idx);if(p>=0&&p<modernReviewIndices.length-1){idx=modernReviewIndices[p+1];renderModernReview();}});
 $('modernReviewBookmark').addEventListener('click',()=>{const key=modernReviewSource(idx).key,d=studyData();if(d.bookmarks[key])delete d.bookmarks[key];else d.bookmarks[key]={t:Date.now(),note:''};studySave();$('modernReviewBookmark').textContent=d.bookmarks[key]?'Bookmarked — remove':'Bookmark question';});
@@ -6479,8 +6513,11 @@ if(duck){
 refreshAccountCircles();
 
 </script>
-<script src="duck-redesign.js?v=20260913-2"></script>
-<script src="esat.js?v=20260918-1"></script>
+<script src="duck-redesign.js?v=20260922-3"></script>
+<script src="esat.js?v=20260920-2"></script>
+<link rel="stylesheet" href="duck-airy.css?v=20260922-3">
+<script src="duck-airy.js?v=20260922-3"></script>
+<link rel="stylesheet" href="pearson-exam.css?v=20260922-2">
 <script>cloudBoot();</script>
 </body>
 </html>

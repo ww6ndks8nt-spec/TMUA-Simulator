@@ -75,11 +75,16 @@
   note.textContent=p.note+' Read the original question PDF in the question panel, then select a letter. Answer keys appear in review.';
  };
  const chooseOriginal=choose;
- choose=function(i){
-  if(!QUESTIONS[idx]?.esat)return chooseOriginal(i);
-  if(reviewMode||submitted||i<0||i>=QUESTIONS[idx].opts.length)return;
-  answers[idx]=answers[idx]===i?null:i;
-  $('options').querySelectorAll('.copt').forEach((b,j)=>{b.classList.toggle('sel',answers[idx]===j);b.setAttribute('aria-pressed',String(answers[idx]===j));});
+ choose=function(i,focusAnswer=false){
+  if(!QUESTIONS[idx]?.esat)return chooseOriginal(i,focusAnswer);
+  if(reviewMode||submitted||!Number.isInteger(i)||i<0||i>=QUESTIONS[idx].opts.length)return;
+  answers[idx]=i;
+  // Update the answer controls without reloading the embedded source PDF.
+  $('options').querySelectorAll('.exam-radio').forEach((radio,j)=>{
+   radio.checked=i===j;radio.tabIndex=i===j?0:-1;
+   radio.closest('.opt').classList.toggle('sel',i===j);
+  });
+  if(focusAnswer)$('examAnswer'+i)?.focus();
   snapshotProgress();
  };
  const meta=studyMeta;

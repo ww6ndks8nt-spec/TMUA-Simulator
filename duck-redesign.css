@@ -293,3 +293,83 @@ html body.duck-redesign #wrongHubScreen #wrongBuilder{background:var(--duck-grad
 html body.duck-redesign #wrongHubScreen #wrongBuilder :is(div,span,p,b,label,button){color:#49380e!important}
 html body.duck-redesign #wrongHubScreen #wrongBuilder :is(.wrong-statline,.wrong-controls){border:0!important;box-shadow:none!important}
 html body.duck-redesign #wrongHubScreen #wrongBuilder select,html body.duck-redesign #wrongHubScreen #wrongBuilder option{background:#fff8df!important;color:#49380e!important;border-color:#9a791c!important}
+
+/* September 2026 refresh: warm surfaces, crisp hierarchy and compact controls. */
+html body.duck-redesign{
+ --du-bg:#f5f4f0;--du-surface:#fffefa;--du-soft:#eeede7;
+ --du-ink:#252720;--du-muted:#65675c;--du-line:#e3e2da;
+ --du-yellow-ink:#705512;--du-shadow:0 8px 30px #2927190b;
+ --du-card-shadow:0 2px 5px #29271904,0 12px 32px #29271906;
+}
+html[data-duck-theme="dark"] body.duck-redesign{
+ --du-bg:#151715;--du-surface:#20231f;--du-soft:#2a2e27;
+ --du-ink:#f4f3eb;--du-muted:#bfc3b5;--du-line:#383d32;
+ --du-yellow-ink:#f5da82;--du-shadow:0 12px 36px #0003;
+ --du-card-shadow:0 3px 16px #0002;
+}
+html body.duck-redesign .modern-ui h1{font-size:clamp(28px,2.6vw,39px)!important;font-weight:700!important;letter-spacing:-1.4px!important;line-height:1.14!important}
+html body.duck-redesign .modern-ui .studio-heading{padding-bottom:22px!important;margin-bottom:22px!important;border-bottom:1px solid var(--du-line)}
+html body.duck-redesign .modern-ui .studio-eyebrow{font-size:10px!important;letter-spacing:1.8px!important;margin-bottom:7px}
+html body.duck-redesign .modern-ui .account-circle{width:39px!important;height:39px!important;min-width:39px!important;box-shadow:0 2px 5px #00000006!important}
+html body.duck-redesign .modern-ui :is(.bigbtn,.study-btn,.review-go){border-radius:11px!important;min-height:40px!important;letter-spacing:-.1px}
+html body.duck-redesign .modern-ui :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea){border-radius:11px!important}
+html body.duck-redesign .modern-ui :is(input,textarea):focus{border-color:#b58a16!important}
+html body.duck-redesign #sideNav .side-nav-item{border-radius:11px!important;transition:background .16s,color .16s}
+html body.duck-redesign #sideNav .side-nav-item.active{background:var(--duck-gradient)!important;color:#433613!important;box-shadow:0 3px 10px #b58a1614!important}
+html body.duck-redesign #sideNav .du-nav-caption{font-size:9px!important;letter-spacing:1.7px!important;margin-top:24px!important}
+html body.duck-redesign #sideNav .du-nav-search{border-radius:11px!important;background:var(--du-soft)!important}
+html body.duck-redesign #dashboardScreen :is(.dash-stat,.dash-panel,.mastery-card,.studio-benchmarks,.dash-split-card,.du-next){border-radius:18px!important;box-shadow:var(--du-card-shadow)!important}
+html body.duck-redesign #dashboardScreen .dash-stat{padding:20px!important}
+html body.duck-redesign #dashboardScreen .dash-stat .v{font-size:31px!important;letter-spacing:-1.2px!important;font-variant-numeric:tabular-nums}
+html body.duck-redesign #dashboardScreen .dash-stat .l{font-size:11px!important;letter-spacing:.1px}
+html body.duck-redesign #dashboardScreen .studio-dashboard-grid{gap:22px!important}
+html body.duck-redesign #dashboardScreen .mastery-card{padding:28px!important}
+html body.duck-redesign #dashboardScreen .mastery-number{font-size:64px!important;font-weight:700!important;letter-spacing:-3px!important}
+html body.duck-redesign #dashboardScreen .mastery-kicker{letter-spacing:.6px!important;font-size:11px!important;text-transform:uppercase!important}
+html body.duck-redesign #dashboardScreen .dash-range-toggle{border-radius:10px!important;padding:4px!important}
+html body.duck-redesign #dashboardScreen .dash-range-btn{border-radius:7px!important;min-height:30px}
+html body.duck-redesign #dashboardScreen .du-next-head{padding:18px 22px}
+html body.duck-redesign #dashboardScreen .du-next-item{padding:22px;gap:10px}
+html body.duck-redesign #dashboardScreen .topic-bar{height:7px!important;border-radius:99px!important;overflow:hidden}
+html body.duck-redesign #dashboardScreen .topic-fill{height:100%!important;border-radius:99px!important}
+html body.duck-redesign #libraryScreen .du-paper-filters{padding:18px;background:var(--du-surface);border:1px solid var(--du-line);border-radius:16px;box-shadow:var(--du-card-shadow)}
+html body.duck-redesign #libraryScreen .du-collection-tabs{gap:8px;margin:18px 0 12px}
+html body.duck-redesign #libraryScreen .du-collection-tab{border-radius:99px;padding:8px 15px;min-height:36px}
+html body.duck-redesign #libraryScreen .studio-collection{border-radius:18px!important;box-shadow:var(--du-card-shadow)!important;margin-bottom:20px!important}
+html body.duck-redesign #libraryScreen .collection-num{background:var(--du-yellow-soft)!important;color:var(--du-yellow-ink)!important;border-radius:10px}
+html body.duck-redesign #libraryScreen .collection-content{padding:12px 16px 16px!important}
+html body.duck-redesign #libraryScreen :is(.paper-grid,.mock-pair-row){gap:10px!important}
+html body.duck-redesign #libraryScreen .mock-pair-row{margin-top:10px!important}
+html body.duck-redesign #libraryScreen .paper.compact-paper{border:1px solid var(--du-line)!important;border-radius:12px!important;padding:12px 14px!important;min-height:68px!important;background:var(--du-surface)!important;transition:background .16s,border-color .16s,box-shadow .16s}
+html body.duck-redesign #libraryScreen .paper.compact-paper:is(:hover,:focus-visible):not(:disabled){background:var(--duck-gradient)!important;border-color:#c49d24!important;border-radius:12px!important}
+html body.duck-redesign #libraryScreen .paper.compact-paper::after{right:13px;top:12px}
+html body.duck-redesign #libraryScreen .paper.compact-paper .meta{font-size:11px!important;gap:10px!important}
+html body.duck-redesign :is(#reviewHubScreen,#wrongHubScreen) .review-paper{border-radius:18px!important;box-shadow:var(--du-card-shadow)!important;overflow:hidden}
+html body.duck-redesign :is(#bankScreen,#bookmarksScreen,#journalScreen,#plannerScreen,#studyScreen,#modernReviewScreen,#wrongHubScreen) :is(.study-panel,.study-plan,.wrong-builder,.study-solution){border-radius:18px!important;box-shadow:var(--du-card-shadow)!important}
+html body.duck-redesign #bankScreen #bankList .bank-question-row{border-radius:12px!important;padding:12px 15px!important;margin-bottom:9px!important}
+html body.duck-redesign #modernReviewScreen :is(.modern-review-sidebar,.modern-review-card){border-radius:18px!important}
+html body.duck-redesign #modernReviewScreen .modern-review-jump{border-radius:9px!important;font-variant-numeric:tabular-nums}
+html body.duck-redesign #resultScreen .scorehead{border-radius:20px!important;padding:30px!important}
+html body.duck-redesign #resultScreen #resultTotalTime{font-variant-numeric:tabular-nums;font-size:14px!important;margin-top:16px!important;font-weight:600}
+html body.duck-redesign #startScreen .spec{border:1px solid var(--du-line)!important;border-radius:14px!important}
+html body.duck-redesign #profileSettings,html body.duck-redesign #duckQuickFind{border-radius:22px!important}
+@media(min-width:851px){
+ html body.duck-redesign #sideNav{left:12px!important;top:12px!important;bottom:12px!important;height:calc(100dvh - 24px)!important;width:calc(var(--du-nav) - 12px)!important;border:1px solid var(--du-line)!important;border-radius:20px!important;box-shadow:var(--du-card-shadow)!important}
+ html body.duck-redesign #sideNav .side-nav-head{min-height:90px!important;padding-top:24px!important}
+ html body.duck-redesign .screen.modern-ui.nav-aware{padding-top:36px!important}
+}
+@media(max-width:600px){
+ html body.duck-redesign .modern-ui h1{font-size:27px!important;letter-spacing:-.9px!important}
+ html body.duck-redesign .modern-ui .studio-heading{padding-bottom:17px!important;gap:10px!important}
+ html body.duck-redesign .modern-ui .account-circle{width:33px!important;height:33px!important;min-width:33px!important}
+ html body.duck-redesign #dashboardScreen .dash-stat{padding:14px 10px!important}
+ html body.duck-redesign #dashboardScreen .dash-stat .v{font-size:25px!important}
+ html body.duck-redesign #dashboardScreen .mastery-card{padding:22px!important}
+ html body.duck-redesign #dashboardScreen .mastery-number{font-size:54px!important}
+ html body.duck-redesign #libraryScreen .du-paper-filters{padding:13px;gap:10px}
+ html body.duck-redesign #libraryScreen .collection-content{padding:10px!important}
+ html body.duck-redesign #resultScreen .scorehead{padding:22px!important}
+ html body.duck-redesign #sideNav{padding-bottom:calc(5px + env(safe-area-inset-bottom))!important;height:calc(66px + env(safe-area-inset-bottom))!important}
+ html body.duck-redesign .screen.modern-ui.nav-aware{padding-bottom:calc(92px + env(safe-area-inset-bottom))!important}
+}
+@media(prefers-reduced-motion:reduce){html body.duck-redesign :is(.modern-ui,#sideNav) *{transition:none!important;animation:none!important}}

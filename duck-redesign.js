@@ -7,7 +7,7 @@
  const make=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el;};
  const button=(label,fn,cls='bigbtn ghost')=>{const b=make('button',cls,label);b.type='button';b.addEventListener('click',fn);return b;};
  const visiblePapers=()=>PAPERS.filter(p=>!p.archived);
- const matchesTerms=(text,terms)=>{const lower=text.toLowerCase(),tokens=lower.split(/[^a-z0-9]+/);return terms.every(term=>term.length===1?tokens.includes(term):lower.includes(term));};
+ const matchesTerms=(text,terms)=>{const lower=text.toLowerCase(),tokens=lower.split(/[^a-z0-9]+/);return terms.every(term=>/^[a-z0-9]$/.test(term)?tokens.includes(term):lower.includes(term));};
  const collectionOf=p=>p.esat?(p.exam==='ENGAA'?'official':'mat'):p.mat?'mat':p.group===4?'official':p.group===3?'challenge':'practice';
  const safeNav=fn=>{if(typeof studyHide==='function')studyHide();fn();};
  function openPaper(p){
