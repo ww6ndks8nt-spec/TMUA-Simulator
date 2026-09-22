@@ -79,7 +79,10 @@
  const focus=make('section','airy-focus');analysis.after(focus);
  const topics=$('dashTopics').closest('.studio-analysis');topics.classList.add('airy-topics');topics.querySelector('h2').textContent='Topics';
  function wireCard(card,button){card.tabIndex=0;card.setAttribute('role','link');card.setAttribute('aria-label',card.querySelector('b')?.textContent||button.textContent);card.addEventListener('click',e=>{if(!e.target.closest('button,a,input,select,textarea'))button.click();});card.addEventListener('keydown',e=>{if(e.target===card&&(e.key==='Enter'||e.key===' ')){e.preventDefault();button.click();}});}
- function paperRating(mean){return '<span class="airy-paper-rating" aria-label="Estimated difficulty '+mean.toFixed(1)+'"><span class="airy-dots" aria-hidden="true">'+Array.from({length:5},(_,i)=>'<i'+(i<Math.ceil(mean/2)?' class="filled"':'')+'></i>').join('')+'</span><span>'+mean.toFixed(1)+'</span></span>';}
+ function paperRating(mean){
+  const dots=mean<4.5?1:mean<5.5?2:mean<6.5?3:mean<7.5?4:5;
+  return '<span class="airy-paper-rating" aria-label="Estimated difficulty '+mean.toFixed(1)+'"><span class="airy-dots" aria-hidden="true">'+Array.from({length:5},(_,i)=>'<i'+(i<dots?' class="filled"':'')+'></i>').join('')+'</span><span>'+mean.toFixed(1)+'</span></span>';
+ }
  function refreshPaperRows(){
   $('libraryScreen').querySelectorAll('.paper[data-paper-id]').forEach(button=>{
    const paper=paperById(button.dataset.paperId);if(!paper)return;

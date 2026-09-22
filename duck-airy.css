@@ -419,3 +419,5 @@ html body.duck-airy.duck-redesign #dashboardScreen :is(.dash-stat,.mastery-card,
 html body.duck-airy.duck-redesign #dashboardScreen .du-next-item>.airy-continue-arrow{position:absolute;z-index:3;}
 
 @media(max-width:700px){html body.duck-airy.duck-redesign #libraryScreen .paper-grid{grid-auto-rows:minmax(112px,auto)!important;}}
+html body.duck-airy.duck-redesign #startScreen .paper-timing-field{max-width:360px;margin:20px 0;}
+html body.duck-airy.duck-redesign #startScreen .paper-timing-field select{width:100%;}

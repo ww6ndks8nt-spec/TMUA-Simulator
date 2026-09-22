@@ -21,10 +21,6 @@
  [['grid4','ENGAA','Sections 1 and 2 · 2016–2023','01'],['gridMAT','NSAA','Section 1: 2016–2023 · Section 2: 2020–2023','02']].forEach(([id,name,sub,num])=>{
   const c=$(id).closest('.studio-collection');c.querySelector('.collection-name').innerHTML=name+'<small>'+sub+'</small>';c.querySelector('.collection-num').textContent=num;
  });
- $('timeSelect').innerHTML='<option value="75">Paper timing</option><option value="0">Untimed</option>';
- $('timeSelect').value='75';
- $('settingsDuration').innerHTML='<option value="75">Paper timing</option><option value="0">Untimed</option>';
- $('settingsDuration').value='75';
  $('duPaperSearch').placeholder='Try 2023, Physics or Chemistry…';
  $('duPaperType').innerHTML='<option value="">All sections</option><option value="1">Section 1</option><option value="2">Section 2</option>';
  $('bankEstimatedDifficulty').closest('label').hidden=true;
@@ -68,7 +64,7 @@
    delete STATE.inprogress[p.legacyId];persistNow();
   }
   start(p);if(!p.esat)return;
-  $('startTime').textContent=selectedTimeMinutesForPaper(p)===0?'Untimed':formatDurationCompact(p.timerSeconds)+' (historical practice timing)';
+  refreshStartTiming();
   const calc=[...doc.querySelectorAll('#startScreen .spec')].find(el=>el.querySelector('.k')?.textContent==='Calculator');
   if(calc)calc.querySelector('.v').textContent=p.calculator?'Permitted in this historical paper':'Not permitted';
   let note=$('esatPaperNote');if(!note){note=doc.createElement('p');note.id='esatPaperNote';note.className='esat-archive-note';$('stdInstructions').before(note);}

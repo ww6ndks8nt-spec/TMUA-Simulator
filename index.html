@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-09-22.mallard-3">
+<meta name="ducktmua-build" content="2026-09-22.timing-5">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='dark'?'dark':'light';}catch(e){document.documentElement.dataset.duckTheme='light';}
 </script>
@@ -2698,15 +2698,15 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <div class="screen hidden nav-aware modern-ui studio-ui" id="libraryScreen">
   <div class="card"><header class="studio-heading"><div class="duck-heading-copy"><span class="duck-logo" aria-hidden="true"></span><div><div class="studio-eyebrow">Paper collection</div><h1>Choose your next challenge</h1></div></div></header><p class="lead">Choose a collection, pick a paper, and begin your next sitting.</p><div class="libhead">
       <div class="group-label" style="margin:0">Available Papers</div>
-      <label class="timepick">Time allowed
+      <label class="timepick">Timing
         <select id="timeSelect">
-          <option value="75">75 minutes (exam)</option>
+          <option value="75">Standard</option><option value="extra">25% extra time</option><option value="challenge">Challenge mode</option>
           <option value="60">60 minutes</option>
           <option value="45">45 minutes</option>
           <option value="0">No timer</option>
         </select>
       </label>
-    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Custom, accessible tmua practice mocks</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Challenge sets<small>Extra-challenging practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote custom-set-note">These are made to be extra challenging, so a 120-minute timer is used instead of a 75 minute timer.</p><div class="paper-grid" id="gridCustom"></div></div></details><details class="studio-collection"><summary><span class="collection-num">04</span><span class="collection-name">MAT multiple choice questions<small>Helpful for extra Paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote">2007–2023 and two specimen sets · 190 questions. Questions and answer options are displayed directly in the simulator. Original diagrams are included where needed; solutions PDFs are linked in review. Each MAT set has a 60-minute practice timer.</p><div class="paper-grid" id="gridMAT"></div></div></details><p class="libnote" id="cloudDescription">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
+    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Custom, accessible tmua practice mocks</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Challenge sets<small>Extra-challenging practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote custom-set-note">Standard: 120 min · Challenge mode: 105 min.</p><div class="paper-grid" id="gridCustom"></div></div></details><details class="studio-collection"><summary><span class="collection-num">04</span><span class="collection-name">MAT multiple choice questions<small>Helpful for extra Paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote">2007–2023 and two specimen sets · 190 questions. Questions and answer options are displayed directly in the simulator. Original diagrams are included where needed; solutions PDFs are linked in review. Standard: 37 min 30 sec · Challenge mode: 30 min.</p><div class="paper-grid" id="gridMAT"></div></div></details><p class="libnote" id="cloudDescription">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
 </div>
 
 <!-- ============ REVIEW HUB ============ -->
@@ -2727,12 +2727,13 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
     <div class="wrong-builder" id="wrongBuilder">
       <div class="wrong-statline">
         <div><span class="wrong-big" id="wrongPoolCount">0</span><span> eligible questions</span></div>
-        <div class="wrong-time-rule"><b>Time:</b> 03:45 per question</div>
+        <div class="wrong-time-rule"><b>Standard time:</b> 03:45 per question</div>
       </div>
       <div class="wrong-controls">
         <label>Questions
           <select id="wrongCountSelect"></select>
         </label>
+        <label>Timing<select id="wrongTimingSelect"></select></label>
         <div class="wrong-total">Total time: <b id="wrongTotalTime">—</b></div>
         <button class="bigbtn" id="wrongGenerateBtn" type="button">Generate randomised paper</button>
       </div>
@@ -2785,6 +2786,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
     <div class="brandline" id="startBrand">Paper</div>
     <h1 id="startTitle">Paper</h1>
     <p class="lead" id="startSub"></p>
+    <label class="study-field paper-timing-field">Timing<select id="startTimingSelect"></select></label>
 
     <div class="specs">
       <div class="spec"><div class="k">Questions</div><div class="v" id="startCount">20</div></div>
@@ -2964,7 +2966,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <label>Study and review text size<select id="settingsTextSize"><option value="normal">Standard</option><option value="large">Large</option><option value="larger">Extra large</option></select></label>
 <label class="settings-check"><input id="settingsContrast" type="checkbox"><span>Higher contrast on study and review pages</span></label></fieldset>
 <fieldset><legend>Practice defaults</legend>
-<label>Default time per paper<select id="settingsDuration"><option value="75">75 minutes (exam)</option><option value="60">60 minutes</option><option value="45">45 minutes</option><option value="0">Untimed</option></select></label>
+<label>Default timing<select id="settingsDuration"><option value="75">Standard</option><option value="extra">25% extra time</option><option value="challenge">Challenge mode</option><option value="60">60 minutes</option><option value="45">45 minutes</option><option value="0">Untimed</option></select></label>
 <label class="settings-check"><input id="settingsTimerAlerts" type="checkbox"><span>Sound alerts at 5 minutes and 1 minute remaining</span></label>
 <p class="study-muted">Defaults apply to new paper selections. Saved sessions retain their own timing.</p></fieldset>
 <button id="saveProfileSettings" class="bigbtn" type="submit">Save changes</button>
@@ -3626,7 +3628,7 @@ const PAPERS = [
   { id:'setcr2p1', title:'Paper 1 · Set C', sub:'Applications of Mathematical Knowledge', type:1, group:1, questions:REVISED_SET_C_P1 },
   { id:'setcr2p2', title:'Paper 2 · Set C', sub:'Mathematical Reasoning', type:2, group:2, questions:REVISED_SET_C_P2 },
   { id:'customset1p1', title:"Challenge set 1 – Paper 1", sub:"Community-contributed full-length TMUA Paper 1 mock · high difficulty", type:1, group:3, questions:CUSTOM_SET1_P1 },
-  { id:'customset1p2', title:"Challenge set 1 – Paper 2", sub:"Extended Mathematical Reasoning · 20 original questions · 120 minutes · provisional difficulty ratings", type:2, group:3, questions:CHALLENGE_SET_1_P2 },
+  { id:'customset1p2', title:"Challenge set 1 – Paper 2", sub:"Extended Mathematical Reasoning · 20 original questions · provisional difficulty ratings", type:2, group:3, questions:CHALLENGE_SET_1_P2 },
   { id:'sim2024p1', title:"TMUA 2024 · Paper 1", sub:"Applications of Mathematical Knowledge", type:1, group:4, officialTyped:true, questions:SIM24P1 },
   { id:'sim2024p2', title:"TMUA 2024 · Paper 2", sub:"Mathematical Reasoning", type:2, group:4, officialTyped:true, questions:SIM24P2 },
   { id:'sim2025p1', title:"TMUA 2025 · Paper 1", sub:"Applications of Mathematical Knowledge", type:1, group:4, officialTyped:true, questions:SIM25P1 },
@@ -4096,7 +4098,7 @@ function setProfileSettingsBusy(busy){
 }
 function profilePreferences(uid=currentUser){
  const p=ROOT.profiles[uid]?.preferences||{};
- return {leaderboard:p.leaderboard!==false,publicName:p.publicName==='anonymous'?'anonymous':'profile',hideSolutions:!!p.hideSolutions,textSize:['large','larger'].includes(p.textSize)?p.textSize:'normal',contrast:!!p.contrast,duration:[0,45,60,75].includes(p.duration)?p.duration:75,timerAlerts:!!p.timerAlerts};
+ return {leaderboard:p.leaderboard!==false,publicName:p.publicName==='anonymous'?'anonymous':'profile',hideSolutions:!!p.hideSolutions,textSize:['large','larger'].includes(p.textSize)?p.textSize:'normal',contrast:!!p.contrast,duration:normaliseTimingChoice(p.duration),timerAlerts:!!p.timerAlerts};
 }
 function publicProfileName(uid=currentUser){return profilePreferences(uid).publicName==='anonymous'?'Anonymous':ROOT.profiles[uid]?.name||'Profile';}
 function applyProfilePreferences(){
@@ -4105,7 +4107,9 @@ function applyProfilePreferences(){
  document.querySelectorAll('[data-profile-name],#dashProfName').forEach(el=>el.textContent=name);
  document.querySelectorAll('.screen.modern-ui').forEach(el=>{el.dataset.textSize=prefs.textSize;el.classList.toggle('profile-high-contrast',prefs.contrast);});
  $('timeSelect').value=String(prefs.duration);
- if(active&&!$('startScreen').classList.contains('hidden')){$('startTime').textContent=prefs.duration===0?'Untimed':prefs.duration+' minutes';updateCombinedStartButton(active);}
+ $('wrongTimingSelect').value=paperTimingChoice({randomized:true},prefs.duration);
+ $('timeSelect').dispatchEvent(new Event('change'));
+ if(!$('wrongHubScreen').classList.contains('hidden'))$('wrongTimingSelect').onchange?.();
 }
 let practiceAudio=null;
 document.addEventListener('click',()=>{
@@ -4599,9 +4603,10 @@ function buildWrongHub(){
     : 'No eligible questions right now. Only attempted wrong answers from completed source papers enter this bank; unanswered questions are ignored. Questions answered correctly in randomised wrong-answer papers move to Resolved errors.';
   const refreshTime=()=>{
     const n=+sel.value||0;
-    $('wrongTotalTime').textContent=n?formatDurationCompact(n*WRONG_SECONDS_PER_QUESTION):'—';
+    const seconds=selectedTimeSecondsForPaper({randomized:true,questions:new Array(n)});
+    $('wrongTotalTime').textContent=n?(seconds?formatDurationCompact(seconds):'Untimed'):'—';
   };
-  sel.onchange=refreshTime; refreshTime();
+  sel.onchange=refreshTime; $('wrongTimingSelect').onchange=refreshTime; refreshTime();
 
   const resolved=resolvedErrorPool().sort((a,b)=>b.resolvedAt-a.resolvedAt);
   $('resolvedPoolCount').textContent=resolved.length;
@@ -4677,8 +4682,8 @@ $('wrongGenerateBtn').addEventListener('click',()=>{
   active=makeWrongRandomPaper(items,Date.now());
   QUESTIONS=active.questions;
   dualMode=false; dualPair=null; dualStage=0; dualFirstResult=null;
-  noTimer=false; secondsLeft=n*WRONG_SECONDS_PER_QUESTION;
-  sessionMode='03:45/question · randomised wrong-answer paper';
+  secondsLeft=selectedTimeSecondsForPaper(active);noTimer=secondsLeft===0;
+  sessionMode=paperSessionMode(active,secondsLeft)+' · randomised wrong-answer paper';
   $('wrongHubScreen').classList.add('hidden'); hideSideNav();
   beginExamIntroFlow();
 });
@@ -4762,10 +4767,59 @@ function openStoredAttempt(p,rec){
 }
 
 function selectedTimeMinutesForPaper(p){
-  if(p?.esat)return $('timeSelect').value==='0'?0:p.timerSeconds/60;
-  if(p?.mat) return 60;
-  if(p && (p.id==='customset1p1'||p.id==='customset1p2'||p.p1Id==='customset1p1')) return 120;
-  return parseInt($('timeSelect').value,10);
+  return selectedTimeSecondsForPaper(p)/60;
+}
+function isChallengePaper(p){
+  return !!p&&(p.id==='customset1p1'||p.id==='customset1p2'||p.p1Id==='customset1p1');
+}
+function normaliseTimingChoice(value){
+  const v=String(value);
+  return (ESAT_MODE?['75','extra','0']:['75','extra','challenge','60','45','0']).includes(v)?v:'75';
+}
+function paperTimingChoice(p,value){
+  let choice=normaliseTimingChoice(value===undefined?$(p?.randomized?'wrongTimingSelect':'timeSelect').value:value);
+  if(p?.esat&&['challenge','45','60'].includes(choice))choice='75';
+  if(p?.randomized&&['challenge','45','60'].includes(choice))choice='75';
+  if((p?.mat||isChallengePaper(p))&&['45','60'].includes(choice))choice='75';
+  return choice;
+}
+function standardPaperSeconds(p){
+  if(p?.randomized)return p.questions.length*WRONG_SECONDS_PER_QUESTION;
+  if(p?.esat)return p.timerSeconds;
+  if(p?.mat)return 37.5*60;
+  if(isChallengePaper(p))return 120*60;
+  return 75*60;
+}
+function selectedTimeSecondsForPaper(p,value){
+  const mode=paperTimingChoice(p,value),base=standardPaperSeconds(p);
+  if(mode==='0')return 0;
+  // The countdown uses whole seconds; never round away any extra allowance.
+  if(mode==='extra')return Math.ceil(base*1.25);
+  if(mode==='challenge')return (p?.mat?30:isChallengePaper(p)?105:60)*60;
+  if(mode==='45'||mode==='60')return Number(mode)*60;
+  return base;
+}
+function paperTimeLabel(seconds){
+  if(!seconds)return 'Untimed';
+  const mins=Math.floor(seconds/60),secs=seconds%60;
+  return mins+' min'+(secs?' '+secs+' sec':'');
+}
+function paperSessionMode(p,seconds,combined=false){
+  const choice=paperTimingChoice(p),label=choice==='extra'?' · 25% extra time':choice==='challenge'?' · Challenge mode':'';
+  return paperTimeLabel(seconds)+label+(combined?' · combined':'');
+}
+function timingOptions(p){
+  const rows=[['75','Standard'],['extra','25% extra time']];
+  if(!ESAT_MODE&&!p?.esat&&!p?.randomized)rows.push(['challenge','Challenge mode']);
+  rows.push(['0','Untimed']);
+  if(!ESAT_MODE&&!p?.esat&&!p?.mat&&!p?.randomized&&!isChallengePaper(p))rows.push(['60','60 min (TMUA practice)'],['45','45 min (TMUA practice)']);
+  return rows.map(([value,label])=>'<option value="'+value+'">'+label+(p&&!p.randomized&&value!=='0'?' · '+paperTimeLabel(selectedTimeSecondsForPaper(p,value)):'')+'</option>').join('');
+}
+function refreshStartTiming(){
+  if(!active)return;
+  const select=$('startTimingSelect');select.innerHTML=timingOptions(active);select.value=paperTimingChoice(active);
+  $('startTime').textContent=paperTimeLabel(selectedTimeSecondsForPaper(active));
+  updateCombinedStartButton(active);
 }
 
 function updateCombinedStartButton(p){
@@ -4782,7 +4836,7 @@ function updateCombinedStartButton(p){
     note.textContent='Choose a timed duration to use combined mode. Combined mode runs Paper 1, a 1-minute instruction interval, then Paper 2 automatically.';
   } else {
     btn.disabled=false;
-    btn.textContent='Sit both papers ('+t+' + 1 + '+t+' min)';
+    btn.textContent='Sit both papers ('+formatDurationCompact(Math.round(t*60))+' each)';
     note.textContent='Combined sitting: '+pair.p1.title+' followed by a 1-minute instruction interval, then '+pair.p2.title+'. Paper 2 starts automatically.';
   }
 }
@@ -4791,15 +4845,13 @@ function openStart(p){
   dualMode=false; dualPair=null; dualStage=0; dualFirstResult=null;
   hideSideNav(); reviewOriginHub=false;
   active=p; QUESTIONS=p.questions;
-  const t=selectedTimeMinutesForPaper(p);
   $('startBrand').textContent = p.simulation ? 'Simulation test' : (p.id==='customset1p2' ? 'Challenge set 1' : p.group===3 ? 'Community mock' : p.title.split('·')[0].trim());
   $('startTitle').textContent=p.title;
   $('startSub').textContent=paperDescription(p)+'.';
   $('startDifficulty').innerHTML='';$('startDifficulty').classList.add('hidden');
   $('startCount').textContent=p.questions.length;
   $('startMarking').textContent=p.mat?'4 marks each · no penalty':'1 mark each · no penalty';
-  $('startTime').textContent = t===0 ? 'Untimed' : t+' minutes';
-  updateCombinedStartButton(p);
+  refreshStartTiming();
 
   const cr=$('companionRow');
   if(p.companion){
@@ -4890,7 +4942,13 @@ $('colorSchemeSelect').addEventListener('change',e=>applyExamScheme(e.target.val
 $('preColorSchemeSelect').addEventListener('change',e=>applyExamScheme(e.target.value));
 try{ applyExamScheme(localStorage.getItem('tmua-exam-scheme')||'standard'); }catch(e){ applyExamScheme('standard'); }
 
-$('timeSelect').addEventListener('change',()=>{ if(active && !$('startScreen').classList.contains('hidden')) updateCombinedStartButton(active); });
+$('timeSelect').addEventListener('change',()=>{if(active&&!$('startScreen').classList.contains('hidden'))refreshStartTiming();});
+$('startTimingSelect').addEventListener('change',()=>{
+ $('timeSelect').value=$('startTimingSelect').value;
+ $('timeSelect').dispatchEvent(new Event('change'));
+});
+for(const id of ['timeSelect','settingsDuration']){$(id).innerHTML=timingOptions();$(id).value='75';}
+$('wrongTimingSelect').innerHTML=timingOptions({randomized:true,questions:[]});$('wrongTimingSelect').value='75';
 
 
 /* ---------------- official-style pre-exam flow ---------------- */
@@ -4907,13 +4965,13 @@ function prePaperLabel(p){
 function preTimeLabel(){
   if(noTimer) return 'Untimed';
   const sec=(dualMode?dualPaperSeconds:secondsLeft);
-  return Math.round(Math.max(0,sec)/60)+' minutes';
+  return paperTimeLabel(Math.max(0,sec));
 }
 function preSectionRows(){
   if(dualMode && dualPair && preExamStage==='general'){
     return [
-      {name:'Paper 1',n:dualPair.p1.questions.length,time:Math.round(dualPaperSeconds/60)+' minutes'},
-      {name:'Paper 2',n:dualPair.p2.questions.length,time:Math.round(dualPaperSeconds/60)+' minutes'}
+      {name:'Paper 1',n:dualPair.p1.questions.length,time:paperTimeLabel(dualPaperSeconds)},
+      {name:'Paper 2',n:dualPair.p2.questions.length,time:paperTimeLabel(dualPaperSeconds)}
     ];
   }
   return [{name:prePaperLabel(active),n:QUESTIONS.length,time:preTimeLabel()}];
@@ -5072,8 +5130,8 @@ $('beginBtn').addEventListener('click', ()=>{
   if(dualGapTimerId){ clearInterval(dualGapTimerId); dualGapTimerId=null; }
   delete STATE.inprogress[active.id]; persist();
   const t=selectedTimeMinutesForPaper(active);
-  noTimer=(t===0); secondsLeft=noTimer?0:t*60;
-  sessionMode = noTimer ? 'Untimed' : (t+' min');
+  noTimer=(t===0); secondsLeft=noTimer?0:Math.round(t*60);
+  sessionMode=paperSessionMode(active,secondsLeft);
   beginExamIntroFlow();
 });
 $('resumeBtn').addEventListener('click', ()=>{
@@ -5095,10 +5153,10 @@ $('beginBothBtn').addEventListener('click', ()=>{
   const pair=pairedPapersFor(active);
   const t=selectedTimeMinutesForPaper(pair?.p1);
   if(!pair || t===0) return;
-  dualMode=true; dualPair=pair; dualStage=1; dualPaperSeconds=t*60; dualFirstResult=null;
+  dualMode=true; dualPair=pair; dualStage=1; dualPaperSeconds=Math.round(t*60); dualFirstResult=null;
   active=pair.p1; QUESTIONS=pair.p1.questions;
   delete STATE.inprogress[pair.p1.id]; delete STATE.inprogress[pair.p2.id]; persist();
-  noTimer=false; secondsLeft=dualPaperSeconds; sessionMode=t+' min · combined';
+  noTimer=false; secondsLeft=dualPaperSeconds; sessionMode=paperSessionMode(active,dualPaperSeconds,true);
   beginExamIntroFlow();
 });
 
@@ -5108,14 +5166,14 @@ function startDualGap(){
   if(dualGapTimerId){ clearInterval(dualGapTimerId); dualGapTimerId=null; }
   dualStage=2;
   active=dualPair.p2; QUESTIONS=active.questions;
-  noTimer=false; secondsLeft=dualPaperSeconds; sessionMode=Math.round(dualPaperSeconds/60)+' min · combined';
+  noTimer=false; secondsLeft=dualPaperSeconds;
   showPaperInstructions();
 }
 
 function startDualSecondPaper(){
   if(!dualMode || !dualPair) return;
   dualStage=2; active=dualPair.p2; QUESTIONS=active.questions;
-  noTimer=false; secondsLeft=dualPaperSeconds; sessionMode=Math.round(dualPaperSeconds/60)+' min · combined';
+  noTimer=false; secondsLeft=dualPaperSeconds;
   showPaperInstructions();
 }
 
@@ -5673,18 +5731,18 @@ $('retakeBtn').addEventListener('click', ()=>{
     if(pool.length){
       const items=shuffleCopy(pool).slice(0,Math.min(n,pool.length));
       active=makeWrongRandomPaper(items,Date.now()); QUESTIONS=active.questions;
-      noTimer=false; secondsLeft=QUESTIONS.length*WRONG_SECONDS_PER_QUESTION; sessionMode='03:45/question · randomised wrong-answer paper';
+      secondsLeft=selectedTimeSecondsForPaper(active);noTimer=secondsLeft===0;sessionMode=paperSessionMode(active,secondsLeft)+' · randomised wrong-answer paper';
       $('resultScreen').classList.add('hidden'); beginExamIntroFlow(); return;
     }
   }
   if(active && active.combined){
     const p1=paperById(active.p1Id),p2=paperById(active.p2Id);
-    if(p1&&p2&&t>0){ dualMode=true;dualPair={p1,p2};dualStage=1;dualPaperSeconds=t*60;dualFirstResult=null;active=p1;QUESTIONS=p1.questions;noTimer=false;secondsLeft=dualPaperSeconds;sessionMode=t+' min · combined';$('resultScreen').classList.add('hidden');beginExamIntroFlow();return; }
+    if(p1&&p2&&t>0){ dualMode=true;dualPair={p1,p2};dualStage=1;dualPaperSeconds=Math.round(t*60);dualFirstResult=null;active=p1;QUESTIONS=p1.questions;noTimer=false;secondsLeft=dualPaperSeconds;sessionMode=paperSessionMode(active,dualPaperSeconds,true);$('resultScreen').classList.add('hidden');beginExamIntroFlow();return; }
   }
   dualMode=false; dualPair=null; dualStage=0; dualFirstResult=null;
   delete STATE.inprogress[active.id]; persist();
-  noTimer=(t===0); secondsLeft=noTimer?0:t*60;
-  sessionMode = noTimer ? 'Untimed' : (t+' min');
+  noTimer=(t===0); secondsLeft=noTimer?0:Math.round(t*60);
+  sessionMode=paperSessionMode(active,secondsLeft);
   $('resultScreen').classList.add('hidden'); beginExamIntroFlow();
 });
 
@@ -6144,8 +6202,16 @@ function flattenCloud(profile,state){
  const flat={};
  flat['profile/name']=profile.name;
  flat['profile/created']=profile.created||0;
- for(const [k,v] of Object.entries(profile.preferences||{}))if(v!==undefined)flat['profile/preferences/'+k]=v;
  const put=(path,v)=>{if(v!==undefined)flat['records/'+cloudKey(path)]=JSON.stringify(v);};
+ for(const [k,v] of Object.entries(profile.preferences||{}))if(v!==undefined){
+  if(k==='duration'){
+   // Keep the numeric field compatible with existing database rules. The full
+   // preset uses the same version-independent record store as other app data.
+   const choice=['75','extra','challenge','60','45','0'].includes(String(v))?String(v):'75';
+   flat['profile/preferences/duration']=['0','45','60','75'].includes(choice)?Number(choice):75;
+   put(['preferences','duration'],choice);
+  }else flat['profile/preferences/'+k]=v;
+ }
  for(const [pid,rows] of Object.entries(state.results||{}))for(const r of rows||[])put(['results',pid,cloudRecordId(r)],r);
  for(const key of ['combinedResults','randomResults'])for(const r of state[key]||[])put([key,cloudRecordId(r)],r);
  for(const key of ['inprogress','resolvedErrors'])for(const [id,r] of Object.entries(state[key]||{}))put([key,id],r);
@@ -6166,6 +6232,7 @@ function remoteCloudMap(remote){
 }
 function expandCloud(flat,fallbackName='Student'){
  const profile={name:fallbackName,created:Date.now(),preferences:{}},state=emptyCloudState();
+ let timingChoice;
  state.study={responses:[],plans:[],sessions:[],bookmarks:{},ratings:{},journal:{}};
  for(const [key,value] of Object.entries(flat)){
   if(value===null)continue;
@@ -6175,12 +6242,14 @@ function expandCloud(flat,fallbackName='Student'){
   if(!key.startsWith('records/'))continue;
   const path=cloudPath(key.slice(8));if(!Array.isArray(path)||path.some(k=>['__proto__','constructor','prototype'].includes(k)))throw Error('Invalid cloud record.');
   const r=JSON.parse(value),[a,b,c]=path;
-  if(a==='results'){(state.results[b]??=[]).push(r);}
+  if(a==='preferences'&&b==='duration'&&['75','extra','challenge','60','45','0'].includes(r))timingChoice=r;
+  else if(a==='results'){(state.results[b]??=[]).push(r);}
   else if(['combinedResults','randomResults'].includes(a))state[a].push(r);
   else if(['inprogress','resolvedErrors'].includes(a))state[a][b]=r;
   else if(a==='study'&&['responses','plans','sessions'].includes(b))state.study[b].push(r);
   else if(a==='study'&&['bookmarks','ratings','journal'].includes(b))state.study[b][c]=r;
  }
+ if(timingChoice!==undefined)profile.preferences.duration=timingChoice;
  const byTime=(a,b)=>(a.t||a.started||0)-(b.t||b.started||0);
  Object.values(state.results).forEach(rows=>rows.sort(byTime));
  state.combinedResults.sort(byTime);state.randomResults.sort(byTime);
@@ -6269,7 +6338,8 @@ async function cloudRefresh(){
  }catch(error){cloudStatus('Not synced — retry when online');}
 }
 function applyCloudAppearance(){
- const selected=$('timeSelect').value;applyProfilePreferences();$('timeSelect').value=selected;
+ const selected=$('timeSelect').value,wrongSelected=$('wrongTimingSelect').value;applyProfilePreferences();$('timeSelect').value=selected;$('wrongTimingSelect').value=wrongSelected;
+ $('timeSelect').dispatchEvent(new Event('change'));if(!$('wrongHubScreen').classList.contains('hidden'))$('wrongTimingSelect').onchange?.();
 }
 function cloudError(error){
  const messages={
@@ -6420,7 +6490,7 @@ $('profileSettingsForm').addEventListener('submit',async e=>{
   ROOT.profiles[user.uid]={...ROOT.profiles[user.uid],name,preferences:{
    leaderboard:$('settingsLeaderboard').checked,publicName:$('settingsPublicName').value,
    hideSolutions:$('settingsHideSolutions').checked,textSize:$('settingsTextSize').value,
-   contrast:$('settingsContrast').checked,duration:Number($('settingsDuration').value),timerAlerts:$('settingsTimerAlerts').checked
+   contrast:$('settingsContrast').checked,duration:normaliseTimingChoice($('settingsDuration').value),timerAlerts:$('settingsTimerAlerts').checked
   }};
   await CLOUD.sdk.updateProfile(user,{displayName:name});
   cloudCapture();await Store.writeLocal(ROOT);
@@ -6514,9 +6584,9 @@ refreshAccountCircles();
 
 </script>
 <script src="duck-redesign.js?v=20260922-3"></script>
-<script src="esat.js?v=20260920-2"></script>
-<link rel="stylesheet" href="duck-airy.css?v=20260922-3">
-<script src="duck-airy.js?v=20260922-3"></script>
+<script src="esat.js?v=20260922-5"></script>
+<link rel="stylesheet" href="duck-airy.css?v=20260922-5">
+<script src="duck-airy.js?v=20260922-4"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20260922-2">
 <script>cloudBoot();</script>
 </body>
