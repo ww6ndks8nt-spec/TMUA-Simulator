@@ -140,7 +140,7 @@
   const name=ROOT.profiles?.[currentUser]?.name||'';
   byId('duWelcomeTitle').textContent=name?'Welcome back, '+name+'.':'Make room for a little progress.';
   const host=next.querySelector('.du-next-list');host.replaceChildren();
-  const saved=Object.entries(STATE.inprogress||{}).map(([id,rec])=>({p:paperById(id),rec})).filter(x=>paperInCurrentPrep(x.p)&&!x.p.archived&&Array.isArray(x.rec.answers)&&x.rec.answers.length===x.p.questions.length).sort((a,b)=>(b.rec.savedAt||b.rec.t||0)-(a.rec.savedAt||a.rec.t||0));
+  const saved=Object.entries(STATE.inprogress||{}).map(([id,rec])=>({p:paperById(id),rec})).filter(x=>(paperInCurrentPrep(x.p)||(x.p?.resumeArchived&&!!x.p.esat===ESAT_MODE))&&Array.isArray(x.rec.answers)&&x.rec.answers.length===x.p.questions.length).sort((a,b)=>(b.rec.savedAt||b.rec.t||0)-(a.rec.savedAt||a.rec.t||0));
   const d=studyData(),session=d.sessions.filter(s=>!s.finished&&s.keys?.some(k=>studyMap.has(k))).slice(-1)[0];
   if(saved.length){const {p,rec}=saved[0],answered=rec.answers.filter(a=>a!==null&&a!==undefined).length;host.appendChild(nextCard('Continue','Saved: '+p.title,answered+' of '+p.questions.length+' questions answered.','Open saved paper',()=>openPaper(p)));}
   else if(session)host.appendChild(nextCard('Continue','Your focused session',session.keys.length+' questions in your saved practice session.','Resume practice',()=>resumeStudySession(session.id)));
