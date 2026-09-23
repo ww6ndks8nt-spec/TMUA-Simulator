@@ -2986,6 +2986,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <script src="practice_solutions.js?v=20260913-2"></script>
 <script src="set_c_revised.js?v=6"></script>
 <script src="challenge_set_1_p2.js?v=20260915-1"></script>
+<script src="mat_difficulty_data.js?v=20260923-1"></script>
 <script src="step_paper1_data.js?v=20260923-4"></script>
 <script>
 /* Cloud setup: publish database.rules.json from the accompanying package. */
@@ -4178,7 +4179,7 @@ function buildLibrary(){
   }).forEach(p=>{
     const hist=STATE.results[p.id]||[];
     const best=hist.length?Math.max(...hist.map(r=>Math.round(100*r.c/Math.max(1,r.s))))+'%':'—';
-    const mean=(p.mat||p.esat)?null:difficultyStats(p).mean;
+    const mean=p.esat?null:difficultyStats(p).mean;
     const difficulty=mean===null?'—':mean.toFixed(2);
     const b=document.createElement('button');
     b.type='button';
@@ -4851,7 +4852,7 @@ function openStart(p){
   $('startBrand').textContent = p.simulation ? 'Simulation test' : (p.id==='customset1p2' ? 'Challenge set 1' : p.group===3 ? 'Community mock' : p.title.split('·')[0].trim());
   $('startTitle').textContent=p.title;
   $('startSub').textContent=paperDescription(p)+'.';
-  $('startDifficulty').innerHTML='';$('startDifficulty').classList.add('hidden');
+  $('startDifficulty').innerHTML=p.mat?matDifficultySummary(p):'';$('startDifficulty').classList.toggle('hidden',!p.mat);$('startDifficulty').setAttribute('aria-label',p.mat?'MAT difficulty calibration':'Estimated score conversion');
   $('startCount').textContent=p.questions.length;
   $('startMarking').textContent=p.mat?'4 marks each · no penalty':'1 mark each · no penalty';
   refreshStartTiming();
@@ -5666,13 +5667,14 @@ function showResults(){
   $('resultDifficulty').innerHTML=active.randomized?'':difficultyPanel(active,false);
   $('resultDifficulty').classList.add('hidden');
   const conversionButton=$('showScoreConversion');
-  conversionButton.classList.toggle('hidden',!!active.randomized||!!active.mat||!!active.esat);
-  conversionButton.setAttribute('aria-expanded','false');conversionButton.textContent='View score conversion';
+  conversionButton.classList.toggle('hidden',!!active.randomized||!!active.esat);
+  conversionButton.setAttribute('aria-expanded','false');conversionButton.textContent=active.mat?'View difficulty calibration':'View score conversion';
+  $('resultDifficulty').setAttribute('aria-label',active.mat?'MAT difficulty calibration':'Estimated score conversion');
   conversionButton.onclick=()=>{
     const open=$('resultDifficulty').classList.contains('hidden');
     $('resultDifficulty').classList.toggle('hidden',!open);
     conversionButton.setAttribute('aria-expanded',String(open));
-    conversionButton.textContent=open?'Hide score conversion':'View score conversion';
+    conversionButton.textContent=active.mat?(open?'Hide difficulty calibration':'View difficulty calibration'):(open?'Hide score conversion':'View score conversion');
   };
   $('bandText').textContent=active.esat?pct+'%':active.mat?(correct*4)+' / '+(scored*4):scored ? (active.combined?overallGrade(correct,active):(active.randomized?'Wrong-answer drill':scaledBand(pct,active,correct))) : 'Not available';
   $('resultScreen').classList.toggle('combined-result',!!active.combined);
@@ -6040,12 +6042,17 @@ function modernReviewList(){
 function renderModernReview(){
  if(!QUESTIONS.length)return;idx=Math.max(0,Math.min(QUESTIONS.length-1,idx));modernReviewList();
  const q=QUESTIONS[idx],a=answers[idx],src=modernReviewSource(idx),status=modernReviewStatus(idx),d=studyData();
- $('modernReviewPaper').textContent=active.title+((active.mat||active.esat)?'':' · '+difficultyMeanLabel(active));
+ $('modernReviewPaper').textContent=active.title+(active.esat?'':' · '+difficultyMeanLabel(active));
  $('modernReviewQuestion').textContent='Question '+(q.esat?q.sourceNumber:q.mat?q.sourcePart:(src.index+1));
  $('modernReviewTopic').textContent=(paperById(src.id)?.title||active.title)+' · '+questionTopic(q);
  let ratingLabel=$('modernReviewDifficulty');
  if(!ratingLabel){ratingLabel=document.createElement('div');ratingLabel.id='modernReviewDifficulty';ratingLabel.style.marginTop='10px';$('modernReviewTopic').insertAdjacentElement('afterend',ratingLabel);}
- ratingLabel.innerHTML='Difficulty '+difficultyRatingMarkup(q.estimatedDifficulty);ratingLabel.hidden=!!q.mat||!!q.esat;
+ ratingLabel.innerHTML='Difficulty '+difficultyRatingMarkup(q.estimatedDifficulty);ratingLabel.hidden=!!q.esat;
+ let rationale=$('modernReviewDifficultyRationale');
+ if(!rationale){rationale=document.createElement('details');rationale.id='modernReviewDifficultyRationale';ratingLabel.insertAdjacentElement('afterend',rationale);}
+ rationale.open=false;rationale.hidden=q.difficultySource!=='mat-editorial-review';
+ rationale.innerHTML=rationale.hidden?'':'<summary>Difficulty rationale (contains solution hints)</summary><p>'+escapeHtml(q.difficultyRationale)+'</p>';
+
  $('modernReviewState').textContent=modernReviewLabel(status);$('modernReviewState').className='modern-review-status '+status;
  $('modernReviewYourAnswer').textContent=a===null||a===undefined?'Not answered':LETTERS[a];
  $('modernReviewCorrectAnswer').textContent=q.correct===99?'Unscored':LETTERS[q.correct]+(q.also?'/'+q.also.map(i=>LETTERS[i]).join('/'):'');
@@ -6109,7 +6116,7 @@ QUESTION_DIFFICULTY_RATINGS.setcr3p2=REVISED_SET_C_P2.map(q=>q.estimatedDifficul
 QUESTION_DIFFICULTY_RATINGS.customset1p2=CHALLENGE_SET_1_P2.map(q=>q.estimatedDifficulty);
 [...STEP_PAPER1_PAPERS,...STEP_LEGACY_PAPERS].forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
 const SPREADSHEET_RATING_COLUMNS={"tmua2023p1":"B","tmua2023p2":"C","tmua2022p1":"D","tmua2022p2":"E","tmua2021p1":"F","tmua2021p2":"G","tmua2020p1":"H","tmua2020p2":"I","tmua2019p1":"J","tmua2019p2":"K","tmua2018p1":"L","tmua2018p2":"M","tmua2017p1":"N","tmua2017p2":"O"};
-PAPERS.forEach(p=>{if(p.mat||p.esat)return;const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":q.difficultyReviewVersion?"step-editorial-review":"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
+PAPERS.forEach(p=>{if(p.esat)return;if(p.mat){const reviews=MAT_DIFFICULTY_REVIEWS[p.id];if(!reviews||reviews.length!==p.questions.length)throw new Error("Incomplete MAT difficulty review: "+p.id);p.questions.forEach((q,i)=>Object.assign(q,reviews[i]));return;}const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":q.difficultyReviewVersion?"step-editorial-review":"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
 /* Sources: user spreadsheet (280 official item ratings), user-supplied 2023
    conversion image and approximate digitisation of the attached 2023/2024 CDF.
    Estimated ratings are comparisons with supplied questions, not ability thresholds.
@@ -6146,7 +6153,7 @@ function referenceMeanDifficulty(p){
  return p?.type===1?5.9:p?.type===2?6:5.95;
 }
 function difficultyGrade(raw,p){
- if(p?.esat)return null;
+ if(p?.esat||p?.mat)return null;
  const stats=difficultyStats(p),n=stats.scored;if(!n||!Number.isFinite(Number(raw)))return null;
  const fraction=Math.max(0,Math.min(1,Number(raw)/n));
  const r=SCORE_CONVERSION_REFERENCE;
@@ -6168,15 +6175,21 @@ function difficultyRatingMarkup(value){
  const colour=value<=5.5?'green':value<7?'yellow':value<8?'orange':'red';
  return '<span class="difficulty-rating difficulty-rating-'+colour+'">'+value.toFixed(1)+'</span>';
 }
+function matDifficultySummary(p){
+ const s=difficultyStats(p);if(!s.count)return '';
+ const ratings=p.questions.map(q=>q.estimatedDifficulty);
+ return '<p><b>Estimated difficulty '+s.mean.toFixed(2)+'</b> · question range '+Math.min(...ratings).toFixed(1)+'–'+Math.max(...ratings).toFixed(1)+'</p><p class="study-muted">Compared individually with your rated official TMUA questions at the standard 37.5-minute pace (3.75 minutes per question). Editorial estimates; not an official MAT score conversion. Half-point ratings are approximate; close paper averages should not be treated as precise rankings.</p>';
+}
 function difficultyPanel(p){
  const s=difficultyStats(p);if(!s.count)return '';
+ if(p.mat)return matDifficultySummary(p)+'<div class="difficulty-scroll"><table class="difficulty-table"><caption>MAT question difficulty review</caption><thead><tr><th>Question</th><th>Difficulty</th><th>Rationale and comparator</th></tr></thead><tbody>'+p.questions.map((q,i)=>'<tr><th scope="row">'+(i+1)+'</th><td>'+difficultyRatingMarkup(q.estimatedDifficulty)+'</td><td><details><summary>Show rationale (contains solution hints)</summary>'+escapeHtml(q.difficultyRationale)+'</details></td></tr>').join('')+'</tbody></table></div>';
  let html='<div class="difficulty-scroll"><table class="difficulty-table"><caption>Estimated score conversion</caption><thead><tr><th scope="col">Raw mark</th><th scope="col">Score</th></tr></thead><tbody>';
  html+=Array.from({length:s.scored+1},(_,raw)=>'<tr><th scope="row">'+raw+' / '+s.scored+'</th><td>'+difficultyGradeText(raw,p)+'</td></tr>').join('');
  return html+'</tbody></table></div>';
 }
 function downloadDifficultyRatings(){
  const rows=[['Paper','Question','Difficulty','Paper mean','Scored mean','Scored','Source','Model version','Review rationale']];
- PAPERS.filter(p=>!p.mat&&!p.esat).forEach(p=>{const s=difficultyStats(p);p.questions.forEach((q,i)=>rows.push([p.title,i+1,q.estimatedDifficulty.toFixed(1),s.mean.toFixed(2),s.scoredMean?.toFixed(2)||'',q.correct!==99?'Yes':'No',q.difficultySource==='spreadsheet'?'User spreadsheet: '+q.difficultySourceCell:q.difficultySource==='step-editorial-review'?'Individual STEP MCQ editorial review':'Estimated against supplied official questions',q.difficultyReviewVersion||DIFFICULTY_MODEL_VERSION,q.difficultyRationale||'']));});
+ PAPERS.filter(p=>!p.esat).forEach(p=>{const s=difficultyStats(p);p.questions.forEach((q,i)=>rows.push([p.title,i+1,q.estimatedDifficulty.toFixed(1),s.mean.toFixed(2),s.scoredMean?.toFixed(2)||'',q.correct!==99?'Yes':'No',q.difficultySource==='spreadsheet'?'User spreadsheet: '+q.difficultySourceCell:q.difficultySource==='step-editorial-review'?'Individual STEP MCQ editorial review':q.difficultySource==='mat-editorial-review'?'Individual MAT MCQ editorial review':'Estimated against supplied official questions',q.difficultyReviewVersion||DIFFICULTY_MODEL_VERSION,q.difficultyRationale||'']));});
  const csv=rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n');
  const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='tmua_question_difficulties.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
@@ -6590,8 +6603,8 @@ refreshAccountCircles();
 </script>
 <script src="duck-redesign.js?v=step1-20260922-6"></script>
 <script src="esat.js?v=20260922-5"></script>
-<link rel="stylesheet" href="duck-airy.css?v=20260922-5">
-<script src="duck-airy.js?v=20260923-no-brows"></script>
+<link rel="stylesheet" href="duck-airy.css?v=20260923-button-fit">
+<script src="duck-airy.js?v=20260923-button-fit"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20260922-2">
 <script>cloudBoot();</script>
 </body>

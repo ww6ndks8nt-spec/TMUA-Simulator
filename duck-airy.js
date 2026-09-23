@@ -83,6 +83,7 @@
   const dots=mean<4.5?1:mean<5.5?2:mean<6.5?3:mean<7.5?4:5;
   return '<span class="airy-paper-rating" aria-label="Estimated difficulty '+mean.toFixed(1)+'"><span class="airy-dots" aria-hidden="true">'+Array.from({length:5},(_,i)=>'<i'+(i<dots?' class="filled"':'')+'></i>').join('')+'</span><span>'+mean.toFixed(1)+'</span></span>';
  }
+ function openPaperLabel(){return '<span class="airy-open-label">Open paper</span><svg class="airy-open-arrow" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';}
  function refreshPaperRows(){
   $('libraryScreen').querySelectorAll('.paper[data-paper-id]').forEach(button=>{
    const paper=paperById(button.dataset.paperId);if(!paper)return;
@@ -95,7 +96,7 @@
     +(mean===null?'<span class="airy-paper-rating airy-rating-empty" aria-hidden="true"></span>':paperRating(mean))
     +'<span class="airy-recent-score"><small>Best</small><span>'+(best?'<b>'+best.c+'</b> / '+best.s:'—')+'</span></span>'
     +'<span class="airy-recent-attempts"><small>Attempts</small><b>'+records.length+'</b></span>'
-    +'<span class="airy-paper-open">'+(button.disabled?'Unavailable':'Open paper →')+'</span>';
+    +'<span class="airy-paper-open">'+(button.disabled?'Unavailable':openPaperLabel())+'</span>';
   });
  }
  // Keep the original buttons, disabled state, filters and opening handlers.
@@ -112,7 +113,7 @@
    if(mean!==null&&!ESAT_MODE)el.insertAdjacentHTML('beforeend',paperRating(mean));
    const score=make('div','airy-recent-score');score.innerHTML='<small>Best</small><span>'+(best?'<b>'+best.c+'</b> / '+best.s:'—')+'</span>';el.appendChild(score);
    const tries=make('div','airy-recent-attempts');tries.innerHTML='<small>Attempts</small><b>'+records.length+'</b>';el.appendChild(tries);
-   const button=make('button','bigbtn','Open paper →');button.type='button';button.addEventListener('click',()=>openStart(row.p));el.appendChild(button);wireCard(el,button);host.appendChild(el);
+   const button=make('button','bigbtn airy-open-button');button.innerHTML=openPaperLabel();button.type='button';button.addEventListener('click',()=>openStart(row.p));el.appendChild(button);wireCard(el,button);host.appendChild(el);
   }
  }
  function refreshAiry(){
