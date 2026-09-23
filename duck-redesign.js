@@ -8,7 +8,7 @@
  const button=(label,fn,cls='bigbtn ghost')=>{const b=make('button',cls,label);b.type='button';b.addEventListener('click',fn);return b;};
  const visiblePapers=()=>PAPERS.filter(p=>!p.archived);
  const matchesTerms=(text,terms)=>{const lower=text.toLowerCase(),tokens=lower.split(/[^a-z0-9]+/);return terms.every(term=>/^[a-z0-9]$/.test(term)?tokens.includes(term):lower.includes(term));};
- const collectionOf=p=>p.esat?(p.exam==='ENGAA'?'official':'mat'):p.mat?'mat':p.group===4?'official':p.group===3?'challenge':'practice';
+ const collectionOf=p=>p.esat?(p.exam==='ENGAA'?'official':'mat'):p.mat?'mat':p.stepAdapted?'step':p.group===4?'official':p.group===3?'challenge':'practice';
  const safeNav=fn=>{if(typeof studyHide==='function')studyHide();fn();};
  function openPaper(p){
   safeNav(()=>{
@@ -90,12 +90,12 @@
  // resume, grading and history behaviour is preserved.
  const library=byId('libraryScreen');let chosenCollection='all';
  const collections=[...library.querySelectorAll('.studio-collection')];
- const categories=['official','practice','challenge','mat'];
+ const categories=['official','practice','challenge','mat','step'];
  collections.forEach((el,i)=>{el.dataset.collection=categories[i];const count=make('span','du-collection-count');el.querySelector('.collection-chevron').insertAdjacentElement('beforebegin',count);});
  const filters=make('section','du-library-tools');filters.setAttribute('aria-label','Filter papers');
  filters.innerHTML='<div class="du-paper-filters"><label>Search papers<input id="duPaperSearch" type="search" placeholder="Try 2025, Set B or MAT…"></label><label>Paper<select id="duPaperType"><option value="">All papers</option><option value="1">Paper 1</option><option value="2">Paper 2</option></select></label><label>Progress<select id="duPaperProgress"><option value="">Any progress</option><option value="new">Not attempted</option><option value="attempted">Completed before</option><option value="saved">Saved session</option></select></label></div><div class="du-collection-tabs" role="group" aria-label="Paper collection"></div><div class="du-filter-bottom"><span id="duPaperCount" role="status" aria-live="polite"></span><button id="duResetPapers" type="button">Reset filters</button></div>';
  const tabHost=filters.querySelector('.du-collection-tabs');
- (ESAT_MODE?[['all','All papers'],['official','ENGAA'],['mat','NSAA']]:[['all','All collections'],['official','Official'],['practice','Practice sets'],['challenge','Challenge'],['mat','MAT']]).forEach(([value,label])=>{const b=button(label,()=>{chosenCollection=value;filterPapers();},'du-collection-tab');b.dataset.collection=value;b.setAttribute('aria-pressed',String(value==='all'));tabHost.appendChild(b);});
+ (ESAT_MODE?[['all','All papers'],['official','ENGAA'],['mat','NSAA']]:[['all','All collections'],['official','Official'],['practice','Practice sets'],['challenge','Challenge'],['mat','MAT'],['step','STEP']]).forEach(([value,label])=>{const b=button(label,()=>{chosenCollection=value;filterPapers();},'du-collection-tab');b.dataset.collection=value;b.setAttribute('aria-pressed',String(value==='all'));tabHost.appendChild(b);});
  collections[0].insertAdjacentElement('beforebegin',filters);
  const noPapers=make('div','du-no-papers','No papers match these filters. Try a broader search or reset the filters.');noPapers.id='duNoPapers';noPapers.hidden=true;filters.insertAdjacentElement('afterend',noPapers);
  ['duPaperSearch','duPaperType','duPaperProgress'].forEach(id=>byId(id).addEventListener(id==='duPaperSearch'?'input':'change',filterPapers));
@@ -144,7 +144,7 @@
   const d=studyData(),session=d.sessions.filter(s=>!s.finished&&s.keys?.some(k=>studyMap.has(k))).slice(-1)[0];
   if(saved.length){const {p,rec}=saved[0],answered=rec.answers.filter(a=>a!==null&&a!==undefined).length;host.appendChild(nextCard('Continue','Saved: '+p.title,answered+' of '+p.questions.length+' questions answered.','Open saved paper',()=>openPaper(p)));}
   else if(session)host.appendChild(nextCard('Continue','Your focused session',session.keys.length+' questions in your saved practice session.','Resume practice',()=>resumeStudySession(session.id)));
-  else host.appendChild(nextCard('Start a session','A fresh paper awaits',visiblePapers().length+(ESAT_MODE?' historical paper parts across ENGAA and NSAA.':' papers across four collections.')+' Choose the pace that works for you.','Browse papers',()=>safeNav(showLibraryHub)));
+  else host.appendChild(nextCard('Start a session','A fresh paper awaits',visiblePapers().length+(ESAT_MODE?' historical paper parts across ENGAA and NSAA.':' papers across five collections.')+' Choose the pace that works for you.','Browse papers',()=>safeNav(showLibraryHub)));
   const topic=dashboardTopicStats().filter(t=>t.attempted>=3).sort((a,b)=>a.correct/a.attempted-b.correct/b.attempted)[0];
   if(topic)host.appendChild(nextCard('A useful focus',topic.topic,Math.round(topic.correct/topic.attempted*100)+'% accuracy across '+topic.attempted+' attempted questions.','Practise this topic',()=>focusTopic(topic.topic)));
   else host.appendChild(nextCard('Build understanding','One question at a time','Use the question bank for a short, focused session.','Explore questions',()=>studyNav('bank')));

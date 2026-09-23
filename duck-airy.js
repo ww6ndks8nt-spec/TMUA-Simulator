@@ -6,7 +6,7 @@
  const make=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el;};
  const paths={home:'<path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/>',paper:'<path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/>',bank:'<rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/>',chart:'<path d="M4 20V11M12 20V4M20 20V8"/>',journal:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v4H9zM9 11h6M9 15h6"/>',calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M7 3v4M17 3v4M7 14h3M14 14h3"/>',check:'<path d="m5 12 4 4L19 6"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 3"/>',arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>',more:'<path d="m6 9 6 6 6-6"/>',bookmark:'<path d="M6 3h12v18l-6-4-6 4z"/>',retry:'<path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/>'};
  const icon=name=>'<svg class="airy-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+paths[name]+'</svg>';
- const duck=()=>'<img src="duck-mascot-airy.png?v=20260922-3" alt="" width="240" height="240" draggable="false">';
+ const duck=()=>'<img src="duck-mascot-airy.png?v=20260923-no-brows" alt="" width="240" height="240" draggable="false">';
  const mascot=dash.querySelector('.duck-mascot');
  const egg=mascot?.querySelector('.duck-egg');
  if(egg)egg.innerHTML='<svg viewBox="0 0 32 44" aria-hidden="true" focusable="false"><defs><radialGradient id="airyEggShell" cx="32%" cy="28%" r="76%"><stop stop-color="#ffffff"/><stop offset=".48" stop-color="#fffdf5"/><stop offset=".86" stop-color="#e9e2d1"/><stop offset="1" stop-color="#cfc5af"/></radialGradient></defs><path d="M16 1.5C9 1.5 2 19 2 28C2 37 7.5 42 16 42S30 37 30 28C30 19 23 1.5 16 1.5Z" fill="url(#airyEggShell)" stroke="#c9c0ac" stroke-width=".7"/></svg>';
@@ -20,7 +20,7 @@
  nav.classList.add('duck-topbar');
  document.querySelectorAll('.screen.modern-ui.nav-aware').forEach(screen=>{
   const garden=make('div','duck-garden');garden.setAttribute('aria-hidden','true');garden.setAttribute('inert','');
-  garden.innerHTML='<img class="duck-garden-left" src="duck-pond-garden.png?v=20260922-3" alt="" width="1024" height="1536" decoding="async" draggable="false"><img class="duck-garden-right" src="duck-pond-garden.png?v=20260922-3" alt="" width="1024" height="1536" decoding="async" draggable="false">';
+  garden.innerHTML='<img class="duck-garden-left" src="duck-pond-garden.png?v=20260923-no-brows" alt="" width="1024" height="1536" decoding="async" draggable="false"><img class="duck-garden-right" src="duck-pond-garden.png?v=20260923-no-brows" alt="" width="1024" height="1536" decoding="async" draggable="false">';
   screen.prepend(garden);
  });
  const items=nav.querySelector('.side-nav-items');
