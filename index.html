@@ -4777,8 +4777,8 @@ function isChallengePaper(p){
   return !!p&&(p.id==='customset1p1'||p.id==='customset1p2'||p.p1Id==='customset1p1');
 }
 function normaliseTimingChoice(value){
-  const v=String(value);
-  return (ESAT_MODE?['75','extra','0']:['75','extra','challenge','60','45','0']).includes(v)?v:'75';
+  const v=String(value)==='60'?'challenge':String(value);
+  return (ESAT_MODE?['75','extra','0']:['75','extra','challenge','45','0']).includes(v)?v:'75';
 }
 function paperTimingChoice(p,value){
   let choice=normaliseTimingChoice(value===undefined?$(p?.randomized?'wrongTimingSelect':'timeSelect').value:value);
@@ -4809,14 +4809,14 @@ function paperTimeLabel(seconds){
   return mins+' min'+(secs?' '+secs+' sec':'');
 }
 function paperSessionMode(p,seconds,combined=false){
-  const choice=paperTimingChoice(p),label=choice==='extra'?' · 25% extra time':choice==='challenge'?' · Challenge mode':'';
+  const choice=paperTimingChoice(p),label=choice==='extra'?' · 25% extra time':choice==='challenge'?' · Challenge mode':choice==='45'?' · Speedrun mode':'';
   return paperTimeLabel(seconds)+label+(combined?' · combined':'');
 }
 function timingOptions(p){
   const rows=[['75','Standard'],['extra','25% extra time']];
   if(!ESAT_MODE&&!p?.esat&&!p?.randomized)rows.push(['challenge','Challenge mode']);
   rows.push(['0','Untimed']);
-  if(!ESAT_MODE&&!p?.esat&&!p?.mat&&!p?.randomized&&!isChallengePaper(p))rows.push(['60','60 min (TMUA practice)'],['45','45 min (TMUA practice)']);
+  if(!ESAT_MODE&&!p?.esat&&!p?.mat&&!p?.randomized&&!isChallengePaper(p))rows.push(['45','Speedrun mode']);
   return rows.map(([value,label])=>'<option value="'+value+'">'+label+(p&&!p.randomized&&value!=='0'?' · '+paperTimeLabel(selectedTimeSecondsForPaper(p,value)):'')+'</option>').join('');
 }
 function refreshStartTiming(){
@@ -4852,7 +4852,7 @@ function openStart(p){
   $('startBrand').textContent = p.simulation ? 'Simulation test' : (p.id==='customset1p2' ? 'Challenge set 1' : p.group===3 ? 'Community mock' : p.title.split('·')[0].trim());
   $('startTitle').textContent=p.title;
   $('startSub').textContent=paperDescription(p)+'.';
-  $('startDifficulty').innerHTML=p.mat?matDifficultySummary(p):'';$('startDifficulty').classList.toggle('hidden',!p.mat);$('startDifficulty').setAttribute('aria-label',p.mat?'MAT difficulty calibration':'Estimated score conversion');
+  $('startDifficulty').innerHTML='';$('startDifficulty').classList.add('hidden');
   $('startCount').textContent=p.questions.length;
   $('startMarking').textContent=p.mat?'4 marks each · no penalty':'1 mark each · no penalty';
   refreshStartTiming();
@@ -6604,7 +6604,7 @@ refreshAccountCircles();
 <script src="duck-redesign.js?v=step1-20260922-6"></script>
 <script src="esat.js?v=20260922-5"></script>
 <link rel="stylesheet" href="duck-airy.css?v=20260923-button-fit">
-<script src="duck-airy.js?v=20260923-button-fit"></script>
+<script src="duck-airy.js?v=20260924-mat-preview"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20260922-2">
 <script>cloudBoot();</script>
 </body>

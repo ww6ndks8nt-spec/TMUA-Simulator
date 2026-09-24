@@ -88,7 +88,7 @@
   $('libraryScreen').querySelectorAll('.paper[data-paper-id]').forEach(button=>{
    const paper=paperById(button.dataset.paperId);if(!paper)return;
    const records=STATE.results[paper.id]||[],best=records.filter(r=>r.s>0).slice().sort((a,b)=>b.c/b.s-a.c/a.s)[0];
-   const mean=(paper.esat||paper.mat)?null:difficultyStats(paper).mean,minutes=selectedTimeMinutesForPaper(paper);
+   const mean=paper.esat?null:difficultyStats(paper).mean,minutes=selectedTimeMinutesForPaper(paper);
    const timing=minutes>0?formatDurationCompact(Math.round(minutes*60)):'Untimed';
    button.classList.add('airy-library-row');
    button.innerHTML='<span class="airy-paper-icon" aria-hidden="true">'+icon('paper')+'</span>'
