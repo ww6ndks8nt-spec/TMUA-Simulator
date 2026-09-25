@@ -2706,7 +2706,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
           <option value="0">No timer</option>
         </select>
       </label>
-    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Custom, accessible tmua practice mocks</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Challenge sets<small>Extra-challenging practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote custom-set-note">Standard: 120 min · Challenge mode: 105 min.</p><div class="paper-grid" id="gridCustom"></div></div></details><details class="studio-collection"><summary><span class="collection-num">04</span><span class="collection-name">MAT multiple choice questions<small>Helpful for extra Paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote">2007–2023 and two specimen sets · 190 questions. Questions and answer options are displayed directly in the simulator. Original diagrams are included where needed; solutions PDFs are linked in review. Standard: 37 min 30 sec · Challenge mode: 30 min.</p><div class="paper-grid" id="gridMAT"></div></div></details><details class="studio-collection" id="stepPracticeCollection"><summary><span class="collection-num">05</span><span class="collection-name">STEP adaptation papers<small>Mixed difficulty · Paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote">13 practice years · 20 questions and 75 minutes per paper. Worked solutions and STEP source references appear in review. Related source parts are kept in different years. These are independent practice papers; difficulty and solving times are editorial estimates.</p><div class="paper-grid" id="gridSTEP"></div></div></details><p class="libnote" id="cloudDescription">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
+    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Custom, accessible tmua practice mocks</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Challenge sets<small>Extra-challenging practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote custom-set-note">Standard: 120 min · Challenge mode: 105 min.</p><div class="paper-grid" id="gridCustom"></div></div></details><details class="studio-collection"><summary><span class="collection-num">04</span><span class="collection-name">MAT multiple choice questions<small>Helpful for extra Paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote">2007–2023 and two specimen sets · 190 questions. Questions and answer options are displayed directly in the simulator. Original diagrams are included where needed; solutions PDFs are linked in review. Standard: 37 min 30 sec · Challenge mode: 30 min.</p><div class="paper-grid" id="gridMAT"></div></div></details><details class="studio-collection" id="stepPracticeCollection"><summary><span class="collection-num">05</span><span class="collection-name">STEP adaptation papers<small>Mixed difficulty · Paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote">13 practice years · 20 questions and 75 minutes per paper. Worked solutions and STEP source references appear in review. Related source parts are kept in different years. These are independent practice papers; difficulty and solving times are editorial estimates.</p><div class="paper-grid" id="gridSTEP"></div></div></details><details class="studio-collection" id="communityPapersCollection"><summary><span class="collection-num">06</span><span class="collection-name">Community papers<small>Contributed and transcribed mock papers</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCommunity"></div></div></details><p class="libnote" id="cloudDescription">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
 </div>
 
 <!-- ============ REVIEW HUB ============ -->
@@ -2986,7 +2986,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <script src="practice_solutions.js?v=20260913-2"></script>
 <script src="set_c_revised.js?v=6"></script>
 <script src="challenge_set_1_p2.js?v=20260915-1"></script>
-<script src="qiuyun_mock01.js?v=20260925-1"></script>
+<script src="qiuyun_mock01.js?v=20260925-3"></script>
 <script src="mat_difficulty_data.js?v=20260923-1"></script>
 <script src="step_paper1_data.js?v=20260923-4"></script>
 <script>
@@ -4168,7 +4168,7 @@ function validateProfileBackup(b){
 
 /* ---------------- library ---------------- */
 function buildLibrary(){
-  const grids={4:$('grid4'),5:$('gridMAT'),6:$('gridSTEP')};
+  const grids={4:$('grid4'),5:$('gridMAT'),6:$('gridSTEP'),7:$('gridCommunity')};
   Object.values(grids).forEach(g=>g.innerHTML='');
   $('gridCustom').innerHTML='';
   $('grid12pairs').innerHTML='';
@@ -4231,7 +4231,7 @@ function dashboardSourceWeight(p){
   if(!p) return 0.75;
   if(p.group===4) return 1.00;
   if(p.simulation) return 0.90;
-  if(p.group===3) return 0.85;
+  if(p.group===3||p.group===7) return 0.85;
   return 0.75;
 }
 function dashboardAttemptGrade(c,s,p){
@@ -4852,7 +4852,7 @@ function openStart(p){
   dualMode=false; dualPair=null; dualStage=0; dualFirstResult=null;
   hideSideNav(); reviewOriginHub=false;
   active=p; QUESTIONS=p.questions;
-  $('startBrand').textContent = p.simulation ? 'Simulation test' : (p.id==='customset1p2' ? 'Challenge set 1' : p.group===3 ? 'Community mock' : p.title.split('·')[0].trim());
+  $('startBrand').textContent = p.simulation ? 'Simulation test' : (p.id==='customset1p2' ? 'Challenge set 1' : (p.group===3||p.group===7) ? 'Community mock' : p.title.split('·')[0].trim());
   $('startTitle').textContent=p.title;
   $('startSub').textContent=paperDescription(p)+'.';
   $('startDifficulty').innerHTML='';$('startDifficulty').classList.add('hidden');
@@ -6120,7 +6120,7 @@ QUESTION_DIFFICULTY_RATINGS.customset1p2=CHALLENGE_SET_1_P2.map(q=>q.estimatedDi
 [...STEP_PAPER1_PAPERS,...STEP_LEGACY_PAPERS].forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
 QIUYUN_MOCK01_PAPERS.forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
 const SPREADSHEET_RATING_COLUMNS={"tmua2023p1":"B","tmua2023p2":"C","tmua2022p1":"D","tmua2022p2":"E","tmua2021p1":"F","tmua2021p2":"G","tmua2020p1":"H","tmua2020p2":"I","tmua2019p1":"J","tmua2019p2":"K","tmua2018p1":"L","tmua2018p2":"M","tmua2017p1":"N","tmua2017p2":"O"};
-PAPERS.forEach(p=>{if(p.esat)return;if(p.mat){const reviews=MAT_DIFFICULTY_REVIEWS[p.id];if(!reviews||reviews.length!==p.questions.length)throw new Error("Incomplete MAT difficulty review: "+p.id);p.questions.forEach((q,i)=>Object.assign(q,reviews[i]));return;}const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":q.difficultyReviewVersion?"step-editorial-review":"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
+PAPERS.forEach(p=>{if(p.esat)return;if(p.mat){const reviews=MAT_DIFFICULTY_REVIEWS[p.id];if(!reviews||reviews.length!==p.questions.length)throw new Error("Incomplete MAT difficulty review: "+p.id);p.questions.forEach((q,i)=>Object.assign(q,reviews[i]));return;}const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":q.difficultyReviewVersion?(p.id.startsWith("qiuyunmock01")?"community-editorial-review":"step-editorial-review"):"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
 /* Sources: user spreadsheet (280 official item ratings), user-supplied 2023
    conversion image and approximate digitisation of the attached 2023/2024 CDF.
    Estimated ratings are comparisons with supplied questions, not ability thresholds.
@@ -6193,7 +6193,7 @@ function difficultyPanel(p){
 }
 function downloadDifficultyRatings(){
  const rows=[['Paper','Question','Difficulty','Paper mean','Scored mean','Scored','Source','Model version','Review rationale']];
- PAPERS.filter(p=>!p.esat).forEach(p=>{const s=difficultyStats(p);p.questions.forEach((q,i)=>rows.push([p.title,i+1,q.estimatedDifficulty.toFixed(1),s.mean.toFixed(2),s.scoredMean?.toFixed(2)||'',q.correct!==99?'Yes':'No',q.difficultySource==='spreadsheet'?'User spreadsheet: '+q.difficultySourceCell:q.difficultySource==='step-editorial-review'?'Individual STEP MCQ editorial review':q.difficultySource==='mat-editorial-review'?'Individual MAT MCQ editorial review':'Estimated against supplied official questions',q.difficultyReviewVersion||DIFFICULTY_MODEL_VERSION,q.difficultyRationale||'']));});
+ PAPERS.filter(p=>!p.esat).forEach(p=>{const s=difficultyStats(p);p.questions.forEach((q,i)=>rows.push([p.title,i+1,q.estimatedDifficulty.toFixed(1),s.mean.toFixed(2),s.scoredMean?.toFixed(2)||'',q.correct!==99?'Yes':'No',q.difficultySource==='spreadsheet'?'User spreadsheet: '+q.difficultySourceCell:q.difficultySource==='step-editorial-review'?'Individual STEP MCQ editorial review':q.difficultySource==='mat-editorial-review'?'Individual MAT MCQ editorial review':q.difficultySource==='community-editorial-review'?'Individual community mock editorial review':'Estimated against supplied official questions',q.difficultyReviewVersion||DIFFICULTY_MODEL_VERSION,q.difficultyRationale||'']));});
  const csv=rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n');
  const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='tmua_question_difficulties.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
@@ -6605,7 +6605,7 @@ if(duck){
 refreshAccountCircles();
 
 </script>
-<script src="duck-redesign.js?v=step1-20260922-6"></script>
+<script src="duck-redesign.js?v=20260925-community"></script>
 <script src="esat.js?v=20260922-5"></script>
 <link rel="stylesheet" href="duck-airy.css?v=20260923-button-fit">
 <script src="duck-airy.js?v=20260924-mat-preview"></script>

@@ -5,7 +5,7 @@ const QIUYUN_MOCK01_PAPERS=[
     "title": "湫云数竞 Mock 01 · Paper 1",
     "sub": "Original Mock Examination 01 · Transcribed from the supplied student edition · independently derived solutions",
     "type": 1,
-    "group": 3,
+    "group": 7,
     "companion": false,
     "url": "papers/tmuamock1.pdf#page=1",
     "questions": [
@@ -21,9 +21,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 1,
         "sol": "<p><b>Independently derived solution.</b></p>The left side is \\(-2x\\) for \\(x<-2\\), \\(4\\) for \\(-2\\le x\\le2\\), and \\(2x\\) for \\(x>2\\). The valid distinct roots are \\(-2\\) and \\(6\\), whose product is \\(-12\\).",
-        "estimatedDifficulty": 5,
+        "estimatedDifficulty": 5.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 3
+        "sourcePage": 3,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Three modulus regions, with a boundary root counted only once; short enough that the existing rating should remain. Comparator: TMUA 2020 Paper 1 Q2 (4.5, user spreadsheet H4).",
+        "difficultyComparator": {
+          "paperId": "tmua2020p1",
+          "question": 2,
+          "rating": 4.5,
+          "sourceCell": "H4"
+        }
       },
       {
         "n": 2,
@@ -37,9 +46,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 0,
         "sol": "<p><b>Independently derived solution.</b></p>Both the whole progression and its odd-position subsequence have the same mean, namely the middle term. Their sum ratio is therefore \\((N+1)/(2N)=5/9\\). Hence \\(9N+9=10N\\), so \\(N=9\\). The non-zero sum permits cancellation of the common mean.",
-        "estimatedDifficulty": 5,
+        "estimatedDifficulty": 5.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 4
+        "sourcePage": 4,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "The candidate must discover that the odd-position subsequence has the same mean as the full progression; the ratio is not a routine sum substitution. Comparator: TMUA 2018 Paper 1 Q8 (5.0, user spreadsheet L10).",
+        "difficultyComparator": {
+          "paperId": "tmua2018p1",
+          "question": 8,
+          "rating": 5,
+          "sourceCell": "L10"
+        }
       },
       {
         "n": 3,
@@ -53,9 +71,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 2,
         "sol": "<p><b>Independently derived solution.</b></p>Let their distances from the centre be \\(u\\ge v\\ge0\\). Then \\(u^2+9=v^2+16\\), so \\((u-v)(u+v)=7\\). They cannot be on the same side: \\(u-v=7\\) would give \\(u+v=1\\). Thus \\(u+v=7\\), \\(u-v=1\\), giving \\(u=4,v=3\\). The radius is \\(\\sqrt{4^2+3^2}=5\\).",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 5
+        "sourcePage": 5,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "The diagram is not supplied, and both same-side and opposite-side chord configurations need consideration before the radius follows. Comparator: TMUA 2020 Paper 1 Q16 (6.5, user spreadsheet H18).",
+        "difficultyComparator": {
+          "paperId": "tmua2020p1",
+          "question": 16,
+          "rating": 6.5,
+          "sourceCell": "H18"
+        }
       },
       {
         "n": 4,
@@ -71,7 +98,16 @@ const QIUYUN_MOCK01_PAPERS=[
         "sol": "<p><b>Independently derived solution.</b></p>Modulo \\(14\\), \\(3x\\equiv6\\), so \\(x\\equiv2\\pmod{14}\\). Positivity gives \\(x\\le31\\), leaving \\(x=2,16,30\\). Since \\(x+y=(1000-17x)/14\\), choose \\(x=30\\); then \\(y=5\\), and the minimum is \\(35\\).",
         "estimatedDifficulty": 5.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 6
+        "sourcePage": 6,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "A small congruence plus positivity identifies the largest admissible x; the existing rating already allows for that insight. Comparator: TMUA 2023 Paper 1 Q6 (6.0, user spreadsheet B8).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p1",
+          "question": 6,
+          "rating": 6,
+          "sourceCell": "B8"
+        }
       },
       {
         "n": 5,
@@ -87,7 +123,16 @@ const QIUYUN_MOCK01_PAPERS=[
         "sol": "<p><b>Independently derived solution.</b></p>The roots satisfy \\(u+v=\\pi\\), so \\(uv=3\\pi^2/16\\). They are \\(\\pi/4\\) and \\(3\\pi/4\\). Hence \\(k=\\sqrt2/2\\).",
         "estimatedDifficulty": 5.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 7
+        "sourcePage": 7,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Root symmetry gives u+v=pi and a quadratic determines the two angles; this is a manageable pair of standard steps. Comparator: TMUA 2020 Paper 1 Q9 (6.0, user spreadsheet H11).",
+        "difficultyComparator": {
+          "paperId": "tmua2020p1",
+          "question": 9,
+          "rating": 6,
+          "sourceCell": "H11"
+        }
       },
       {
         "n": 6,
@@ -101,9 +146,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 2,
         "sol": "<p><b>Independently derived solution.</b></p>Put \\(t=\\log_2 x\\); the domain is \\(0<t<4\\), and \\(t(4-t)=2^k\\). The two roots in \\(t\\) sum to \\(4\\) and differ by \\(\\log_2 4=2\\), so they are \\(1,3\\). Their product is \\(3\\), giving \\(k=\\log_2 3\\).",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 8
+        "sourcePage": 8,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Nested logarithms require a domain check and a new variable; the ratio of the original roots must then be translated into a difference of transformed roots. Comparator: TMUA 2020 Paper 1 Q15 (6.0, user spreadsheet H17).",
+        "difficultyComparator": {
+          "paperId": "tmua2020p1",
+          "question": 15,
+          "rating": 6,
+          "sourceCell": "H17"
+        }
       },
       {
         "n": 7,
@@ -117,9 +171,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 0,
         "sol": "<p><b>Independently derived solution.</b></p>Choose the two matching transitions in \\(\\binom52=10\\) ways. Once the first toss is chosen, all subsequent tosses are forced by the match/change pattern. There are \\(2\\times10=20\\) suitable sequences out of \\(64\\), giving \\(5/16\\).",
-        "estimatedDifficulty": 6.5,
+        "estimatedDifficulty": 7.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 9
+        "sourcePage": 9,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Counting overlapping equal-adjacent events needs a change to match/change patterns; a short binomial answer conceals the main modelling difficulty. Comparator: TMUA 2022 Paper 1 Q19 (7.0, user spreadsheet D21).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p1",
+          "question": 19,
+          "rating": 7,
+          "sourceCell": "D21"
+        }
       },
       {
         "n": 8,
@@ -133,9 +196,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 1,
         "sol": "<p><b>Independently derived solution.</b></p>Reciprocal roots give the four distinct roots \\(2,1/2,-3,-1/3\\). Monicity fixes \\(p(x)=(x-2)(x-1/2)(x+3)(x+1/3)\\), so \\(p(1)=(-1)(1/2)(4)(4/3)=-8/3\\).",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 10
+        "sourcePage": 10,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "The reciprocal-root property must be extracted from a functional identity before monicity determines the polynomial; slightly harder than direct root transformations. Comparator: TMUA 2020 Paper 1 Q9 (6.0, user spreadsheet H11).",
+        "difficultyComparator": {
+          "paperId": "tmua2020p1",
+          "question": 9,
+          "rating": 6,
+          "sourceCell": "H11"
+        }
       },
       {
         "n": 9,
@@ -149,9 +221,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 4,
         "sol": "<p><b>Independently derived solution.</b></p>Every difference is either \\(1\\) or \\(2\\). The sum telescopes to \\(\\lfloor100\\sqrt2\\rfloor=141\\), since \\(141^2<20000<142^2\\). If \\(m\\) terms are \\(2\\), the sum is \\(100+m\\); hence \\(m=41\\).",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 11
+        "sourcePage": 11,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "The recurrence is not explicit: establish the two possible increments, telescope the floor differences and convert the total into a count. Comparator: TMUA 2017 Paper 1 Q11 (5.0, user spreadsheet N13).",
+        "difficultyComparator": {
+          "paperId": "tmua2017p1",
+          "question": 11,
+          "rating": 5,
+          "sourceCell": "N13"
+        }
       },
       {
         "n": 10,
@@ -165,9 +246,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 3,
         "sol": "<p><b>Independently derived solution.</b></p>Write \\(u=g(t),v=g(8-t)\\). Then \\(u+v=2\\) and \\(u^3+v^3+u+v=8\\). Thus \\(8-6uv+2=8\\), so \\(uv=1/3\\).",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 12
+        "sourcePage": 12,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Naming the two inverse values avoids solving a cubic, after which a standard symmetric identity finishes the task; retain the existing rating. Comparator: TMUA 2020 Paper 1 Q9 (6.0, user spreadsheet H11).",
+        "difficultyComparator": {
+          "paperId": "tmua2020p1",
+          "question": 9,
+          "rating": 6,
+          "sourceCell": "H11"
+        }
       },
       {
         "n": 11,
@@ -181,9 +271,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 1,
         "sol": "<p><b>Independently derived solution.</b></p>The monic quartic \\(f(x)-x^2\\) vanishes at \\(0,1,2,3\\), so it equals \\(x(x-1)(x-2)(x-3)\\). Therefore \\(f(4)=16+24=40\\).",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 13
+        "sourcePage": 13,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Subtracting x squared is an unprompted interpolation insight; otherwise a candidate may spend time on four coefficient equations. Comparator: TMUA 2020 Paper 1 Q2 (4.5, user spreadsheet H4).",
+        "difficultyComparator": {
+          "paperId": "tmua2020p1",
+          "question": 2,
+          "rating": 4.5,
+          "sourceCell": "H4"
+        }
       },
       {
         "n": 12,
@@ -199,7 +298,16 @@ const QIUYUN_MOCK01_PAPERS=[
         "sol": "<p><b>Independently derived solution.</b></p>We have \\(2a+b=3\\). The required coefficient is \\(6a^2+4ab=12a-2a^2=18-2(a-3)^2\\). Its maximum is \\(18\\), attained at \\(a=3,b=-3\\).",
         "estimatedDifficulty": 5.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 14
+        "sourcePage": 14,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Only two low-order coefficients and one concave quadratic are involved; the existing rating is sufficient. Comparator: TMUA 2021 Paper 1 Q16 (6.5, user spreadsheet F18).",
+        "difficultyComparator": {
+          "paperId": "tmua2021p1",
+          "question": 16,
+          "rating": 6.5,
+          "sourceCell": "F18"
+        }
       },
       {
         "n": 13,
@@ -213,9 +321,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 3,
         "sol": "<p><b>Independently derived solution.</b></p>The condition restricts \\(\\theta\\) to \\(45^\\circ,60^\\circ,75^\\circ,90^\\circ,105^\\circ,120^\\circ,135^\\circ\\). Of these, the five from \\(75^\\circ\\) onwards satisfy the strict cosine inequality. Thus the probability is \\(5/7\\).",
-        "estimatedDifficulty": 5,
+        "estimatedDifficulty": 5.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 15
+        "sourcePage": 15,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "A seven-angle conditional sample space with strict endpoints is substantially simpler than the official interval-sign comparison. Comparator: TMUA 2019 Paper 1 Q17 (7.0, user spreadsheet J19).",
+        "difficultyComparator": {
+          "paperId": "tmua2019p1",
+          "question": 17,
+          "rating": 7,
+          "sourceCell": "J19"
+        }
       },
       {
         "n": 14,
@@ -229,9 +346,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 0,
         "sol": "<p><b>Independently derived solution.</b></p>Put \\(u=x+y,v=x-y\\). Completing squares gives \\(1\\le u\\le9\\) and \\(2\\le v\\le8\\). Integers \\(x=(u+v)/2,y=(u-v)/2\\) require matching parity. There are \\(4\\times4\\) even-even pairs and \\(5\\times3\\) odd-odd pairs, totalling \\(31\\).",
-        "estimatedDifficulty": 6.5,
+        "estimatedDifficulty": 7.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 16
+        "sourcePage": 16,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Complete two squares in coupled variables, transform to a rectangle and impose a parity constraint; counting all transformed lattice points is a plausible trap. Comparator: TMUA 2022 Paper 1 Q20 (8.0, user spreadsheet D22).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p1",
+          "question": 20,
+          "rating": 8,
+          "sourceCell": "D22"
+        }
       },
       {
         "n": 15,
@@ -245,9 +371,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 4,
         "sol": "<p><b>Independently derived solution.</b></p>At abscissa \\(a\\), the tangent is \\(y=3a^2x-2a^3\\). Its intersections obey \\((x-a)^2(x+2a)=0\\); hence the next distinct abscissa is \\(-2a\\). The three abscissae are \\(a,-2a,4a\\). Since \\(a>0\\), \\(4a-a=3\\) implies \\(a=1\\). The gradient is \\(3a^2=3\\).",
-        "estimatedDifficulty": 6.5,
+        "estimatedDifficulty": 7.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 17
+        "sourcePage": 17,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Derive the tangent intersection map from a repeated cubic root, apply it twice and then use the displacement condition. Comparator: TMUA 2023 Paper 1 Q14 (6.0, user spreadsheet B16).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p1",
+          "question": 14,
+          "rating": 6,
+          "sourceCell": "B16"
+        }
       },
       {
         "n": 16,
@@ -261,9 +396,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 1,
         "sol": "<p><b>Independently derived solution.</b></p>On the interval \\([j,j+1]\\), substitute \\(x=t+j\\). Since \\(f(t+j)=f(t)+j\\), its squared integral is \\(2+2j+j^2\\). For \\(j=0,1,2\\), these are \\(2,5,10\\), whose sum is \\(17\\).",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 18
+        "sourcePage": 18,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Recognise the shift relation must be applied to the square, not merely to f, and combine three interval integrals with cross terms. Comparator: TMUA 2018 Paper 1 Q12 (5.0, user spreadsheet L14).",
+        "difficultyComparator": {
+          "paperId": "tmua2018p1",
+          "question": 12,
+          "rating": 5,
+          "sourceCell": "L14"
+        }
       },
       {
         "n": 17,
@@ -277,9 +421,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 0,
         "sol": "<p><b>Independently derived solution.</b></p>Let \\(a_4=t\\). Pairing the sines around \\(t\\) gives total \\(\\sin t[1+2(\\cos(\\pi/3)+\\cos(2\\pi/3)+\\cos\\pi)]=-\\sin t\\). Thus \\(7t-\\sin t=7\\pi\\). This expression is strictly increasing because its derivative is at least \\(6\\), so \\(t=\\pi\\). Therefore \\([f(t)]^2-(t-2\\pi/3)(t+2\\pi/3)=4\\pi^2/9\\).",
-        "estimatedDifficulty": 7,
+        "estimatedDifficulty": 7.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 19
+        "sourcePage": 19,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Both progression symmetry and trigonometric cancellation are needed, followed by uniqueness of a scalar equation; more insight layers than the sine-square pairing anchor. Comparator: TMUA 2018 Paper 1 Q20 (6.0, user spreadsheet L22).",
+        "difficultyComparator": {
+          "paperId": "tmua2018p1",
+          "question": 20,
+          "rating": 6,
+          "sourceCell": "L22"
+        }
       },
       {
         "n": 18,
@@ -293,9 +446,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 4,
         "sol": "<p><b>Independently derived solution.</b></p>Write \\(f'(x)=A(x-u)(x-v)\\) and \\(d=v-u\\ne0\\). Its average over the interval is \\(-Ad^2/6\\), the chord gradient. At the midpoint the derivative is \\(-Ad^2/4\\), which is \\(3/2\\) times the chord gradient. Hence it is \\(-6\\).",
-        "estimatedDifficulty": 7,
+        "estimatedDifficulty": 7.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 20
+        "sourcePage": 20,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "The chord-to-midpoint gradient relation is not supplied; deriving it for a general cubic while eliminating the stationary-point locations takes significant setup. Comparator: TMUA 2023 Paper 1 Q14 (6.0, user spreadsheet B16).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p1",
+          "question": 14,
+          "rating": 6,
+          "sourceCell": "B16"
+        }
       },
       {
         "n": 19,
@@ -309,9 +471,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 3,
         "sol": "<p><b>Independently derived solution.</b></p>Cancel to obtain \\(f(x)=x^2+cx+c^2\\). Horizontality gives \\(a^2+ca=0\\), so \\(a=-c\\). For a monic quadratic, the area between its graph and the chord over a horizontal span \\(L\\) is \\(\\int_0^L t(L-t)\\,dt=L^3/6\\). Thus \\(a^3=8(3-a)^3\\), giving \\(a=2\\) and \\(c=-2\\).",
-        "estimatedDifficulty": 7,
+        "estimatedDifficulty": 7.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 21
+        "sourcePage": 21,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Reduce the rational expression to a parabola, infer its parameter from a horizontal chord and derive or recognise the cubic area-scaling law for two separate spans. Comparator: TMUA 2022 Paper 1 Q15 (7.0, user spreadsheet D17).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p1",
+          "question": 15,
+          "rating": 7,
+          "sourceCell": "D17"
+        }
       },
       {
         "n": 20,
@@ -325,9 +496,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 2,
         "sol": "<p><b>Independently derived solution.</b></p>Intersecting chords give \\(BE\\cdot EC=AE\\cdot ED=8\\). As \\(BE+EC=6\\), the two segments are \\(2,4\\); interchange B and C if needed. Set \\(E=(0,0),B=(-2,0),C=(4,0),A=(t,h)\\). Then \\(t^2+h^2=1\\). The angle-bisector theorem gives \\(AB/AC=1/2\\), hence \\((5+4t)/(17-8t)=1/4\\). This gives \\(t=-1/8\\) and \\(|h|=3\\sqrt7/8\\). Area \\(=6|h|/2=9\\sqrt7/8\\).",
-        "estimatedDifficulty": 7.5,
+        "estimatedDifficulty": 8.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 22
+        "sourcePage": 22,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Power of a point, the angle-bisector ratio and altitude reconstruction must be linked without a diagram; multiple geometry steps remain even after the first insight. Comparator: TMUA 2023 Paper 1 Q16 (7.5, user spreadsheet B18).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p1",
+          "question": 16,
+          "rating": 7.5,
+          "sourceCell": "B18"
+        }
       }
     ]
   },
@@ -336,7 +516,7 @@ const QIUYUN_MOCK01_PAPERS=[
     "title": "湫云数竞 Mock 01 · Paper 2",
     "sub": "Original Mock Examination 01 · Transcribed from the supplied student edition · independently derived solutions",
     "type": 2,
-    "group": 3,
+    "group": 7,
     "companion": false,
     "url": "papers/tmuamock1.pdf#page=25",
     "questions": [
@@ -354,7 +534,16 @@ const QIUYUN_MOCK01_PAPERS=[
         "sol": "<p><b>Independently derived solution.</b></p>For every integer \\(n\\), \\(n(n-1)\\ge0\\), but \\(x(x-1)<0\\) for \\(0<x<1\\). The other polynomials are nonnegative everywhere.",
         "estimatedDifficulty": 4.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 27
+        "sourcePage": 27,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "One quadratic counterexample has to satisfy the integer hypothesis and fail between consecutive integers; the existing rating is adequate. Comparator: TMUA 2022 Paper 2 Q3 (4.0, user spreadsheet E5).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p2",
+          "question": 3,
+          "rating": 4,
+          "sourceCell": "E5"
+        }
       },
       {
         "n": 2,
@@ -370,7 +559,16 @@ const QIUYUN_MOCK01_PAPERS=[
         "sol": "<p><b>Independently derived solution.</b></p>Changing bases and multiplying by \\(\\ln a\\ln b\\) gives \\((\\ln b)^2+\\ln a\\ln c=0\\). Since \\(b\\ne1\\), the product \\(\\ln a\\ln c\\) is strictly negative. Thus exactly one of \\(a,c\\) exceeds \\(1\\).",
         "estimatedDifficulty": 5.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 28
+        "sourcePage": 28,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "A change of base gives a sign condition on a product of logarithms; comparable to the official logarithm-relation anchor. Comparator: TMUA 2022 Paper 2 Q15 (5.5, user spreadsheet E17).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p2",
+          "question": 15,
+          "rating": 5.5,
+          "sourceCell": "E17"
+        }
       },
       {
         "n": 3,
@@ -387,9 +585,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 6,
         "sol": "<p><b>Independently derived solution.</b></p>The centre is \\((2,t)\\), and the radius squared is \\(4+t^2\\). I gives \\(t=\\pm\\sqrt5\\), two circles. II gives \\(t=2\\), one circle. III gives \\(t=0\\), one circle. Therefore II and III only are individually sufficient.",
-        "estimatedDifficulty": 5,
+        "estimatedDifficulty": 5.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 29
+        "sourcePage": 29,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Three independent uniqueness checks add work beyond identifying the circle centre, but each follows from a simple one-parameter description. Comparator: TMUA 2022 Paper 2 Q4 (4.0, user spreadsheet E6).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p2",
+          "question": 4,
+          "rating": 4,
+          "sourceCell": "E6"
+        }
       },
       {
         "n": 4,
@@ -403,9 +610,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 3,
         "sol": "<p><b>Independently derived solution.</b></p>The left side is \\(b+(a-b)\\sin^2x\\). It equals one identically if two distinct values of \\(\\sin^2x\\) give one, forcing \\(a=b=1\\). Only D gives distinct squared sine values, \\(1/4\\) and \\(3/4\\).",
-        "estimatedDifficulty": 5,
+        "estimatedDifficulty": 5.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 30
+        "sourcePage": 30,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "The candidate needs two distinct squared-sine values; the rest is a short linear-independence check, so no increase is justified. Comparator: TMUA 2023 Paper 2 Q5 (5.0, user spreadsheet C7).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p2",
+          "question": 5,
+          "rating": 5,
+          "sourceCell": "C7"
+        }
       },
       {
         "n": 5,
@@ -421,7 +637,16 @@ const QIUYUN_MOCK01_PAPERS=[
         "sol": "<p><b>Independently derived solution.</b></p>If all measurements were less than \\(10\\), the batch would pass and be green. The contrapositive therefore implies that not all measurements are less than \\(10\\): at least one is \\(\\ge10\\). Equality cannot be excluded.",
         "estimatedDifficulty": 4.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 31
+        "sourcePage": 31,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "A direct contrapositive and negation of a universal inequality; preserve the strict-versus-nonstrict endpoint distinction without overrating it. Comparator: TMUA 2022 Paper 2 Q3 (4.0, user spreadsheet E5).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p2",
+          "question": 3,
+          "rating": 4,
+          "sourceCell": "E5"
+        }
       },
       {
         "n": 6,
@@ -435,9 +660,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 2,
         "sol": "<p><b>Independently derived solution.</b></p>Let \\(AP=a,CP=c,BP=b,DP=d\\), all positive. The equal-area equations give \\(ab=cd\\) and \\(ad=bc\\), because their included angles have equal sine. Dividing gives \\(b/d=d/b\\), hence \\(b=d\\) and then \\(a=c\\). The diagonals bisect each other, so the quadrilateral is a parallelogram; a generic parallelogram need have none of the other properties.",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 32
+        "sourcePage": 32,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Two area equalities reduce to positive segment products and bisection of diagonals; this is harder than one geometric condition but still compact. Comparator: TMUA 2022 Paper 2 Q11 (5.0, user spreadsheet E13).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p2",
+          "question": 11,
+          "rating": 5,
+          "sourceCell": "E13"
+        }
       },
       {
         "n": 7,
@@ -454,9 +688,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 4,
         "sol": "<p><b>Independently derived solution.</b></p>The required index is \\(b_n=1+(n-1)a/d+n(n-1)/2\\). For \\(n=2\\), integrality forces \\(d\\mid a\\); conversely that condition makes every displayed index a positive integer. Subtraction gives \\(b_{n+1}-b_n=a/d+n\\), which varies with \\(n\\). Thus I and II are true, III false.",
-        "estimatedDifficulty": 7,
+        "estimatedDifficulty": 7.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 33
+        "sourcePage": 33,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Parse an unfamiliar definition, solve for an integer index, prove both directions of divisibility and check successive differences; substantially more work than spotting one invariant. Comparator: TMUA 2023 Paper 2 Q16 (6.5, user spreadsheet C18).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p2",
+          "question": 16,
+          "rating": 6.5,
+          "sourceCell": "C18"
+        }
       },
       {
         "n": 8,
@@ -473,9 +716,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 7,
         "sol": "<p><b>Independently derived solution.</b></p>If \\(x\\) were rational, \\(1/x=\\sqrt{n+1}+\\sqrt n\\) would also be rational, making \\(\\sqrt n=(1/x-x)/2\\) rational, a contradiction. This also proves II. Moreover \\(x^2=2n+1-2\\sqrt{n(n+1)}\\). Since \\(n^2<n(n+1)<(n+1)^2\\), the integer \\(n(n+1)\\) is not a square, so III holds.",
-        "estimatedDifficulty": 6.5,
+        "estimatedDifficulty": 7.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 34
+        "sourcePage": 34,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Three irrationality claims require separate justification; the squared expression needs the extra consecutive-square argument, not just conjugate rationalisation. Comparator: TMUA 2023 Paper 2 Q3 (4.0, user spreadsheet C5).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p2",
+          "question": 3,
+          "rating": 4,
+          "sourceCell": "C5"
+        }
       },
       {
         "n": 9,
@@ -492,9 +744,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 7,
         "sol": "<p><b>Independently derived solution.</b></p>Reversing the coefficient list makes the leading coefficient of \\(q\\) equal to the nonzero constant \\(p(0)\\), proving I and III. A factor \\((x-r)^m\\) becomes a factor \\((1-rx)^m\\); the remaining factor is nonzero at \\(1/r\\), so the multiplicity is preserved. II also holds.",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 35
+        "sourcePage": 35,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Coefficient reversal is quick, but the degree, nonzero constant term and exact root multiplicity must all be tracked to certify three statements. Comparator: TMUA 2023 Paper 2 Q18 (7.0, user spreadsheet C20).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p2",
+          "question": 18,
+          "rating": 7,
+          "sourceCell": "C20"
+        }
       },
       {
         "n": 10,
@@ -508,9 +769,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 1,
         "sol": "<p><b>Independently derived solution.</b></p>For B, the left side is strictly increasing, and \\(x=0\\) gives \\(f(0)+f(1)=2\\). Thus exactly one solution exists without needing continuity. A and D both hold at \\(x=0,1\\); C holds at \\(x=0,-1\\). E would require \\(f(x)=1\\), which need not be in the range: for example, \\(f(x)=x\\) for \\(x<1\\) and \\(f(x)=x+1\\) for \\(x\\ge1\\) satisfies the assumptions but never equals one.",
-        "estimatedDifficulty": 6.5,
+        "estimatedDifficulty": 7.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 36
+        "sourcePage": 36,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Separate uniqueness from existence and resist importing continuity into strict monotonicity; the guaranteed solution is easy only after choosing the right expression. Comparator: TMUA 2022 Paper 2 Q9 (6.0, user spreadsheet E11).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p2",
+          "question": 9,
+          "rating": 6,
+          "sourceCell": "E11"
+        }
       },
       {
         "n": 11,
@@ -527,9 +797,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 7,
         "sol": "<p><b>Independently derived solution.</b></p>For positive \\(t\\), \\((t+1/t)/2\\ge1\\), proving I and giving the lower bound for all later terms. If \\(t\\ge1\\), then \\((t+1/t)/2\\le t\\), proving II. The tail is monotone and bounded, so has a limit \\(L\\ge1\\). Passing to the limit gives \\(2L=L+1/L\\), hence \\(L=1\\).",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 37
+        "sourcePage": 37,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "A lower bound, tail monotonicity and convergence to the positive fixed point are three linked checks; merely solving the fixed-point equation is insufficient. Comparator: TMUA 2023 Paper 2 Q16 (6.5, user spreadsheet C18).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p2",
+          "question": 16,
+          "rating": 6.5,
+          "sourceCell": "C18"
+        }
       },
       {
         "n": 12,
@@ -543,9 +822,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 3,
         "sol": "<p><b>Independently derived solution.</b></p>The converse is \\(ab\\le1\\Rightarrow a+b\\le2\\); the inverse is \\(a+b>2\\Rightarrow ab>1\\). Both fail when \\(a+b>2\\) but \\(ab\\le1\\). The pair \\((1/2,2)\\) has sum \\(5/2\\) and product \\(1\\).",
-        "estimatedDifficulty": 5,
+        "estimatedDifficulty": 5.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 38
+        "sourcePage": 38,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Converse and inverse have the same counterexample condition; the offered pairs make the arithmetic immediate, so retain the existing rating. Comparator: TMUA 2022 Paper 2 Q5 (5.0, user spreadsheet E7).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p2",
+          "question": 5,
+          "rating": 5,
+          "sourceCell": "E7"
+        }
       },
       {
         "n": 13,
@@ -559,9 +847,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 1,
         "sol": "<p><b>Independently derived solution.</b></p>Write the roots as \\(0<a<b<c\\). The derivatives at the roots have signs \\(+,-,+\\), since they are respectively \\((a-b)(a-c),(b-a)(b-c),(c-a)(c-b)\\). The tangent intercept at a positive root \\(r\\) is \\(-r p'(r)\\), so only the middle-root tangent has positive intercept.",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 39
+        "sourcePage": 39,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Link derivative signs at three ordered positive roots to the sign of the tangent intercept; graph shape alone does not finish the question. Comparator: TMUA 2023 Paper 1 Q14 (6.0, user spreadsheet B16).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p1",
+          "question": 14,
+          "rating": 6,
+          "sourceCell": "B16"
+        }
       },
       {
         "n": 14,
@@ -578,9 +875,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 4,
         "sol": "<p><b>Independently derived solution.</b></p>I follows by expanding the product of \\((x-r)\\) factors with positive roots: every elementary symmetric sum is positive. For II, at \\(x=-t\\), \\(t>0\\), all the polynomial terms have the same sign, so their sum cannot vanish. III is false: \\(x^2-x+1\\) has alternating nonzero coefficients but no real roots.",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 40
+        "sourcePage": 40,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "General coefficient signs, exclusion of negative roots and a complex-root counterexample must be distinguished; two true implications do not establish the third. Comparator: TMUA 2023 Paper 2 Q18 (7.0, user spreadsheet C20).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p2",
+          "question": 18,
+          "rating": 7,
+          "sourceCell": "C20"
+        }
       },
       {
         "n": 15,
@@ -597,9 +903,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 4,
         "sol": "<p><b>Independently derived solution.</b></p>The number of gaps doubles each time, so \\(L_n\\) has \\(2^n+1\\) entries, proving I. The inserted means sum to \\(x_n-(1+3)/2=x_n-2\\), proving II. The first sums are \\(x_0=4,x_1=6,x_2=10\\), giving \\(y_0=3,y_1=5,y_2=9\\), whose successive ratios differ. III is false.",
-        "estimatedDifficulty": 6,
+        "estimatedDifficulty": 6.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 41
+        "sourcePage": 41,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Track growth in list length and derive the sum recurrence with endpoint corrections, then notice that the stated shift does not produce a geometric progression. Comparator: TMUA 2023 Paper 2 Q16 (6.5, user spreadsheet C18).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p2",
+          "question": 16,
+          "rating": 6.5,
+          "sourceCell": "C18"
+        }
       },
       {
         "n": 16,
@@ -613,9 +928,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 2,
         "sol": "<p><b>Independently derived solution.</b></p>The integral of \\((f-g)(f+g)\\) is negative. As \\(f-g\\ge0\\), it is impossible for \\(f+g\\) to be nonnegative everywhere. Thus C holds. For instance \\(f=0,g=-1\\) disproves A. Taking \\(g=x-3/4\\) and \\(f=g+1/10\\) gives squared-integral difference \\(-1/25<0\\), yet g is positive near one and f is greater than -g there, disproving B and D. E contradicts \\(f\\ge g\\).",
-        "estimatedDifficulty": 6.5,
+        "estimatedDifficulty": 7.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 42
+        "sourcePage": 42,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Factor the squared-integral difference and infer a pointwise existential conclusion; this is more subtle than ordering everywhere-positive integrands. Comparator: TMUA 2022 Paper 2 Q12 (6.0, user spreadsheet E14).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p2",
+          "question": 12,
+          "rating": 6,
+          "sourceCell": "E14"
+        }
       },
       {
         "n": 17,
@@ -629,9 +953,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 2,
         "sol": "<p><b>Independently derived solution.</b></p>Write \\(f(x)=1-x+A x(x-1)\\). Remaining in \\([0,1]\\) near the endpoints requires \\(-1\\le A\\le1\\); this is also sufficient, since it places f between \\((1-x)^2\\) and \\(1-x^2\\). Thus at a fixed point, \\((1-c)^2\\le c\\le1-c^2\\), giving \\((3-\\sqrt5)/2\\le c\\le(\\sqrt5-1)/2\\). Conversely, for any c in this interval, choosing \\(A=(1-2c)/(c(1-c))\\) lies in \\([-1,1]\\) and gives \\(f(c)=c\\), so every point is attainable, including endpoints.",
-        "estimatedDifficulty": 7.5,
+        "estimatedDifficulty": 8.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 43
+        "sourcePage": 43,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Parameterise every admissible quadratic, establish the full parameter range and find all attainable fixed points, with endpoints included; a complete-set problem with several necessary checks. Comparator: TMUA 2022 Paper 1 Q20 (8.0, user spreadsheet D22).",
+        "difficultyComparator": {
+          "paperId": "tmua2022p1",
+          "question": 20,
+          "rating": 8,
+          "sourceCell": "D22"
+        }
       },
       {
         "n": 18,
@@ -645,9 +978,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 3,
         "sol": "<p><b>Independently derived solution.</b></p>The first nonconstant term at zero must have even degree at least four and positive coefficient. Degree four would give \\(p=p(0)+ax^4\\), \\(a>0\\), which is not stationary at one. In degree five, write \\(p=p(0)+ax^4+bx^5\\), \\(a>0\\). Stationarity at one gives \\(b=-4a/5\\), but then \\(p(1)-p(0)=a/5>0\\). Degree six is possible: \\(p(x)=x^6/6-3x^5/10+x^4/8\\) has derivative \\(x^3(x-1/2)(x-1)\\), a strict minimum at zero, second derivative zero there, and \\(p(1)=-1/120<0\\).",
-        "estimatedDifficulty": 8,
+        "estimatedDifficulty": 8.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 44
+        "sourcePage": 44,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Prove impossibility in each lower degree and construct a degree-six example satisfying both local and global inequalities; root-count intuition alone is insufficient. Comparator: TMUA 2023 Paper 2 Q19 (7.5, user spreadsheet C21).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p2",
+          "question": 19,
+          "rating": 7.5,
+          "sourceCell": "C21"
+        }
       },
       {
         "n": 19,
@@ -661,9 +1003,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 0,
         "sol": "<p><b>Independently derived solution.</b></p>The continuous nonnegative function \\(f(1-f)\\) has zero integral on \\([0,1]\\), so it vanishes there. Continuity then makes f identically zero or identically one on that interval. In the first case the integral over \\([1,2]\\) must be one, forcing f identically one there; in the second it must be zero, forcing f identically zero there. Both contradict continuity at one. No such function exists.",
-        "estimatedDifficulty": 7.5,
+        "estimatedDifficulty": 8.0,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 45
+        "sourcePage": 45,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "A zero integral of a nonnegative function forces a discrete-valued restriction, continuity makes it constant, and the second integral forces a contradiction at the join. Comparator: TMUA 2023 Paper 2 Q20 (8.0, user spreadsheet C22).",
+        "difficultyComparator": {
+          "paperId": "tmua2023p2",
+          "question": 20,
+          "rating": 8,
+          "sourceCell": "C22"
+        }
       },
       {
         "n": 20,
@@ -677,9 +1028,18 @@ const QIUYUN_MOCK01_PAPERS=[
         ],
         "correct": 3,
         "sol": "<p><b>Independently derived solution.</b></p>The coefficient ratio is \\(c_{r+1}/c_r=a(n-r)/(r+1)\\), strictly decreasing with r. Equality \\(c_3/c_2=1\\) gives \\(a=3/(n-2)\\). The coefficients increase up to \\(c_2=c_3\\) and then decrease, proving D. The ratio \\(c_4/c_1=9(n-1)(n-3)/(8(n-2)^2)\\) is less than one at n=4 and greater at n=6, so A–C are not universal. At n=6, \\(c_6=(3/4)^6<c_0=1\\), disproving E.",
-        "estimatedDifficulty": 7,
+        "estimatedDifficulty": 7.5,
         "source": "湫云数竞 · Original Mock Examination 01",
-        "sourcePage": 46
+        "sourcePage": 46,
+        "difficultySource": "community-editorial-review",
+        "difficultyReviewVersion": "qiuyun-timed-review-2026-09-25",
+        "difficultyRationale": "Equality of two coefficients must be extended to a global unimodality argument using consecutive ratios; the problem asks about every coefficient, not just adjacent ones. Comparator: TMUA 2021 Paper 1 Q16 (6.5, user spreadsheet F18).",
+        "difficultyComparator": {
+          "paperId": "tmua2021p1",
+          "question": 16,
+          "rating": 6.5,
+          "sourceCell": "F18"
+        }
       }
     ]
   }
