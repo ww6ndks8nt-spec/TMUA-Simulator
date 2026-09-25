@@ -2986,6 +2986,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <script src="practice_solutions.js?v=20260913-2"></script>
 <script src="set_c_revised.js?v=6"></script>
 <script src="challenge_set_1_p2.js?v=20260915-1"></script>
+<script src="qiuyun_mock01.js?v=20260925-1"></script>
 <script src="mat_difficulty_data.js?v=20260923-1"></script>
 <script src="step_paper1_data.js?v=20260923-4"></script>
 <script>
@@ -3690,6 +3691,7 @@ MAT_PAPERS_METADATA.forEach(p=>PAPERS.push({
 }));
 
 PAPERS.push(...STEP_PAPER1_PAPERS,...STEP_LEGACY_PAPERS);
+PAPERS.push(...QIUYUN_MOCK01_PAPERS);
 const ALL_PAPERS=[...PAPERS,...ESAT_ALL_PAPERS];
 if(ESAT_MODE) PAPERS.splice(0,PAPERS.length,...ESAT_PAPERS);
 function paperById(id){ return ALL_PAPERS.find(p=>p.id===id) || null; }
@@ -3705,6 +3707,7 @@ function paperDescription(p){
 function pairedPapersFor(p){
   if(!p) return null;
   const map={
+    qiuyunmock01p1:['qiuyunmock01p1','qiuyunmock01p2'], qiuyunmock01p2:['qiuyunmock01p1','qiuyunmock01p2'],
     setajp1:['setajp1','setajp2'], setajp2:['setajp1','setajp2'],
     setbjp1:['setbjp1','setbjp2'], setbjp2:['setbjp1','setbjp2'],
     setbr3p1:['setbr3p1','setbr3p2'], setbr3p2:['setbr3p1','setbr3p2'],
@@ -6115,6 +6118,7 @@ QUESTION_DIFFICULTY_RATINGS.setcr2p2=LEGACY_SET_C_P2.map(q=>q.estimatedDifficult
 QUESTION_DIFFICULTY_RATINGS.setcr3p2=REVISED_SET_C_P2.map(q=>q.estimatedDifficulty);
 QUESTION_DIFFICULTY_RATINGS.customset1p2=CHALLENGE_SET_1_P2.map(q=>q.estimatedDifficulty);
 [...STEP_PAPER1_PAPERS,...STEP_LEGACY_PAPERS].forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
+QIUYUN_MOCK01_PAPERS.forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
 const SPREADSHEET_RATING_COLUMNS={"tmua2023p1":"B","tmua2023p2":"C","tmua2022p1":"D","tmua2022p2":"E","tmua2021p1":"F","tmua2021p2":"G","tmua2020p1":"H","tmua2020p2":"I","tmua2019p1":"J","tmua2019p2":"K","tmua2018p1":"L","tmua2018p2":"M","tmua2017p1":"N","tmua2017p2":"O"};
 PAPERS.forEach(p=>{if(p.esat)return;if(p.mat){const reviews=MAT_DIFFICULTY_REVIEWS[p.id];if(!reviews||reviews.length!==p.questions.length)throw new Error("Incomplete MAT difficulty review: "+p.id);p.questions.forEach((q,i)=>Object.assign(q,reviews[i]));return;}const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":q.difficultyReviewVersion?"step-editorial-review":"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
 /* Sources: user spreadsheet (280 official item ratings), user-supplied 2023
