@@ -10,7 +10,7 @@
  const mascot=dash.querySelector('.duck-mascot');
  const egg=mascot?.querySelector('.duck-egg');
  if(egg)egg.innerHTML='<svg viewBox="0 0 32 44" aria-hidden="true" focusable="false"><defs><radialGradient id="airyEggShell" cx="32%" cy="28%" r="76%"><stop stop-color="#ffffff"/><stop offset=".48" stop-color="#fffdf5"/><stop offset=".86" stop-color="#e9e2d1"/><stop offset="1" stop-color="#cfc5af"/></radialGradient></defs><path d="M16 1.5C9 1.5 2 19 2 28C2 37 7.5 42 16 42S30 37 30 28C30 19 23 1.5 16 1.5Z" fill="url(#airyEggShell)" stroke="#c9c0ac" stroke-width=".7"/></svg>';
- if(mascot){const art=mascot.querySelector('.duck-logo');art.classList.add('airy-duck-art');art.innerHTML=duck();dash.querySelector('.studio-heading').appendChild(mascot);}
+ if(mascot){const art=mascot.querySelector('.duck-logo');art.classList.add('airy-duck-art');art.innerHTML='<img src="duck-mascot-female.png?v=20260930-1" alt="" width="240" height="240" draggable="false">';mascot.querySelector('.duck-play').setAttribute('aria-label','Female mallard: click to quack; click three times quickly for a surprise');dash.querySelector('.studio-heading').appendChild(mascot);}
  const brandDuck=nav.querySelector('.duck-logo');brandDuck.classList.add('airy-duck-art');brandDuck.innerHTML=duck();
  document.querySelectorAll('.modern-ui .duck-logo:not(.airy-duck-art)').forEach(el=>{el.classList.add('airy-duck-art');el.innerHTML=duck();});
  const brandCopy=make('span','airy-brand-copy');brandCopy.append(nav.querySelector('.duck-brand-word'),nav.querySelector('.side-nav-brand>span:last-child'));nav.querySelector('.side-nav-brand').appendChild(brandCopy);
@@ -20,7 +20,7 @@
  nav.classList.add('duck-topbar');
  document.querySelectorAll('.screen.modern-ui.nav-aware').forEach(screen=>{
   const garden=make('div','duck-garden');garden.setAttribute('aria-hidden','true');garden.setAttribute('inert','');
-  garden.innerHTML='<img class="duck-garden-left" src="duck-pond-garden.png?v=20260923-no-brows" alt="" width="1024" height="1536" decoding="async" draggable="false"><img class="duck-garden-right" src="duck-pond-garden.png?v=20260923-no-brows" alt="" width="1024" height="1536" decoding="async" draggable="false">';
+  garden.innerHTML='<img class="duck-garden-left" src="duck-pond-sirquacksalot-left.png?v=20260930-1" alt="" width="1024" height="1536" decoding="async" draggable="false"><img class="duck-garden-right" src="duck-pond-sirquacksalot-right.png?v=20260930-1" alt="" width="1024" height="1536" decoding="async" draggable="false">';
   screen.prepend(garden);
  });
  const items=nav.querySelector('.side-nav-items');
