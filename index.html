@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-09-30.sirquacksalot-ponds">
+<meta name="ducktmua-build" content="2026-10-01.email-verification">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='dark'?'dark':'light';}catch(e){document.documentElement.dataset.duckTheme='light';}
 </script>
@@ -2587,7 +2587,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
   <aside class="studio-login-brand" aria-label="Duck TMUA Exam Simulator"><div class="studio-login-wordmark">Duck TMUA<span>Exam Simulator</span></div><div class="duck-login-mascot" role="img" aria-label="Duck TMUA yellow duck logo"></div><div class="studio-login-bottom">Test of Mathematics<br>for University Admission</div></aside><div class="card">
     <div class="brandline">Test of Mathematics for University Admission</div>
     <h1 id="authTitle">Sign in</h1>
-    <p class="lead">Sign in with your email address and password, or register a new account. Your progress, question history and resumable sessions sync across devices.</p>
+    <p class="lead" id="authLead">Sign in with your email address and password, or register a new account. Your progress, question history and resumable sessions sync across devices.</p>
 
     <div id="signinView">
       <div class="newprof">
@@ -2606,12 +2606,23 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
       <div class="newprof">
         <input class="txt" id="rgPin" aria-label="New password" type="password" maxlength="128" style="width:170px" placeholder="Choose a password" autocomplete="new-password">
         <input class="txt" id="rgPin2" aria-label="Repeat password" type="password" maxlength="128" style="width:170px" placeholder="Repeat password" autocomplete="new-password">
-        <button class="bigbtn" id="rgBtn">Create &amp; sign in</button>
+        <button class="bigbtn" id="rgBtn">Create account</button>
       </div>
       <p class="switchline">Already have an account? <button class="linkbtn" id="toSignin">Sign in</button></p>
     </div>
 
-    <div class="formerr" id="loginErr"></div>
+    <section id="verificationView" class="hidden" aria-labelledby="authTitle">
+      <p class="lead">Verify your email address to open your account and sync your practice.</p>
+      <p class="verification-address" id="verificationEmail"></p>
+      <p>Open the verification link in your inbox, then return here and click <b>I’ve verified my email</b>. Check your spam folder too.</p>
+      <div class="verification-actions">
+        <button type="button" class="bigbtn" id="verificationCheckBtn">I’ve verified my email</button>
+        <button type="button" class="bigbtn ghost" id="verificationSendBtn">Send verification email</button>
+      </div>
+      <p id="verificationStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+      <p class="switchline">Wrong email or another account? <button type="button" class="linkbtn" id="verificationSignOutBtn">Sign out</button></p>
+    </section>
+    <div class="formerr" id="loginErr" role="status" aria-live="polite"></div>
     <p class="libnote">Sign in with the same email and password on any device to access your practice history. You can import an old local profile using its backup file in Settings.</p>
   </div>
 </div>
@@ -3991,6 +4002,8 @@ function richMathHtml(str){
 function showLogin(){
   ['siName','siPin','rgEmail','rgName','rgPin','rgPin2'].forEach(id=>{ $(id).value=''; });
   $('loginErr').textContent='';
+  $('verificationView').classList.add('hidden');
+  $('authLead').classList.remove('hidden');
   $('registerView').classList.add('hidden');
   $('signinView').classList.remove('hidden');
   $('authTitle').textContent='Sign in';
@@ -6235,7 +6248,7 @@ const firebaseConfig={
  projectId:"tmua-leaderboard",storageBucket:"tmua-leaderboard.firebasestorage.app",
  messagingSenderId:"522075367738",appId:"1:522075367738:web:764342a9e489d8efc7c803"
 };
-const CLOUD={sdk:null,auth:null,uid:null,ready:false,busy:false,observed:{},pending:{},queue:Promise.resolve(),poll:null,deleting:false};
+const CLOUD={sdk:null,auth:null,uid:null,ready:false,busy:false,observed:{},pending:{},queue:Promise.resolve(),poll:null,deleting:false,verificationUid:null,verificationTimer:null,verificationNextSend:0,authStatePending:false};
 function emptyCloudState(){return {results:{},inprogress:{},combinedResults:[],randomResults:[],resolvedErrors:{}};}
 function cloudKey(path){return btoa(unescape(encodeURIComponent(JSON.stringify(path)))).replaceAll('+','-').replaceAll('/','_').replaceAll('=','');}
 function cloudPath(key){return JSON.parse(decodeURIComponent(escape(atob(key.replaceAll('-','+').replaceAll('_','/')))));}
@@ -6405,30 +6418,122 @@ function cloudError(error){
  };
  return messages[error.code]||error.message||'The request could not be completed.';
 }
-function cloudAuthControls(disabled){['siBtn','rgBtn','resetPasswordBtn'].forEach(id=>$(id).disabled=disabled);}
+function cloudVerificationControls(disabled=CLOUD.busy){
+ const seconds=Math.max(0,Math.ceil((CLOUD.verificationNextSend-Date.now())/1000));
+ const active=!!CLOUD.verificationUid&&CLOUD.auth?.currentUser?.uid===CLOUD.verificationUid;
+ $('verificationCheckBtn').disabled=disabled||!active;
+ $('verificationSignOutBtn').disabled=disabled||!active;
+ $('verificationSendBtn').disabled=disabled||!active||seconds>0;
+ $('verificationSendBtn').textContent=seconds?'Resend in '+seconds+'s':(CLOUD.verificationNextSend?'Resend verification email':'Send verification email');
+}
+function cloudAuthControls(disabled){
+ ['siBtn','rgBtn','resetPasswordBtn','toRegister','toSignin','finishDeletionBtn'].forEach(id=>$(id).disabled=disabled);
+ cloudVerificationControls(disabled);
+ if(!disabled&&!CLOUD.busy&&CLOUD.authStatePending){
+  CLOUD.authStatePending=false;
+  const actualUid=CLOUD.auth?.currentUser?.uid||null,shownUid=CLOUD.verificationUid||CLOUD.uid;
+  if(actualUid!==shownUid)queueMicrotask(()=>cloudHandleAuthState(CLOUD.auth.currentUser));
+ }
+}
+function cloudStopVerification(){
+ clearInterval(CLOUD.verificationTimer);CLOUD.verificationTimer=null;CLOUD.verificationUid=null;CLOUD.verificationNextSend=0;
+ $('verificationView').classList.add('hidden');$('verificationEmail').textContent='';$('verificationStatus').textContent='';
+}
+function cloudShowVerification(user){
+ cloudLeaveUI();CLOUD.verificationUid=user.uid;
+ try{CLOUD.verificationNextSend=Number(localStorage.getItem('ducktmua-verification:'+user.uid))||0;}catch(error){}
+ // The local cooldown is a usability limit; Firebase also rate-limits email requests.
+ CLOUD.verificationNextSend=Math.min(CLOUD.verificationNextSend,Date.now()+60000);
+ $('signinView').classList.add('hidden');$('registerView').classList.add('hidden');$('authLead').classList.add('hidden');
+ $('verificationView').classList.remove('hidden');$('verificationEmail').textContent=user.email||'';
+ $('authTitle').textContent='Verify your email';$('authTitle').tabIndex=-1;$('authTitle').focus();
+ $('verificationStatus').textContent='Click Send verification email to request a link. Your existing practice history will be available after verification.';
+ cloudVerificationControls();CLOUD.verificationTimer=setInterval(cloudVerificationControls,1000);
+}
+async function cloudSendVerificationEmail(user){
+ if(!user||user.uid!==CLOUD.verificationUid||CLOUD.auth?.currentUser?.uid!==user.uid)return false;
+ if(Date.now()<CLOUD.verificationNextSend){$('verificationStatus').textContent='Please wait for the resend countdown to finish.';return false;}
+ const previous=CLOUD.verificationNextSend;
+ const saveCooldown=value=>{CLOUD.verificationNextSend=value;try{localStorage.setItem('ducktmua-verification:'+user.uid,String(value));}catch(error){}cloudVerificationControls();};
+ saveCooldown(Date.now()+60000);$('verificationStatus').textContent='Sending verification email…';
+ try{
+  await CLOUD.sdk.sendEmailVerification(user);
+  if(CLOUD.auth?.currentUser?.uid!==user.uid)return false;
+  $('verificationStatus').textContent='Verification email sent. Open its link, then return here and click “I’ve verified my email”.';return true;
+ }catch(error){
+  if(error.code!=='auth/too-many-requests')saveCooldown(previous);
+  $('verificationStatus').textContent='The email could not be sent. '+cloudError(error);return false;
+ }
+}
+async function cloudSendVerification(){
+ if(CLOUD.busy||!CLOUD.verificationUid)return;
+ CLOUD.busy=true;cloudAuthControls(true);
+ try{await cloudSendVerificationEmail(CLOUD.auth.currentUser);}
+ finally{CLOUD.busy=false;cloudAuthControls(false);}
+}
+async function cloudCheckVerification(){
+ if(CLOUD.busy||!CLOUD.verificationUid)return;
+ CLOUD.busy=true;cloudAuthControls(true);$('verificationStatus').textContent='Checking your email verification…';
+ try{
+  const opened=await cloudOpenUser(CLOUD.auth.currentUser);
+  if(!opened&&CLOUD.verificationUid)$('verificationStatus').textContent='Your email is not verified yet. Open the link in your email, then try again.';
+ }catch(error){
+  if(CLOUD.verificationUid)$('verificationStatus').textContent=cloudError(error);
+  else authErr(cloudError(error));
+ }finally{CLOUD.busy=false;cloudAuthControls(false);}
+}
+async function cloudVerificationSignOut(){
+ if(CLOUD.busy||!CLOUD.verificationUid)return;
+ CLOUD.busy=true;cloudAuthControls(true);
+ try{await CLOUD.sdk.signOut(CLOUD.auth);cloudLeaveUI();authErr('Signed out.');}
+ catch(error){$('verificationStatus').textContent=cloudError(error);}
+ finally{CLOUD.busy=false;cloudAuthControls(false);}
+}
+$('verificationSendBtn').onclick=cloudSendVerification;
+$('verificationCheckBtn').onclick=cloudCheckVerification;
+$('verificationSignOutBtn').onclick=cloudVerificationSignOut;
 async function cloudOpenUser(user){
+ if(!user||CLOUD.auth.currentUser?.uid!==user.uid)return false;
+ await CLOUD.sdk.reload(user);
+ if(CLOUD.auth.currentUser?.uid!==user.uid)return false;
+ // Tombstone access is owner-only and remains available to finish account deletion.
  const deleted=await cloudRequest('/deletedAccounts/'+user.uid+'.json');
- if(deleted){$('finishDeletionBtn').classList.remove('hidden');throw Error('This account has a pending deletion. Enter your password and use Finish deleting my account.');}
+ if(CLOUD.auth.currentUser?.uid!==user.uid)return false;
+ if(deleted){cloudLeaveUI();$('siName').value=user.email||'';$('finishDeletionBtn').classList.remove('hidden');throw Error('This account has a pending deletion. Enter your password and use Finish deleting my account.');}
  $('finishDeletionBtn').classList.add('hidden');
+ if(!user.emailVerified){cloudShowVerification(user);return false;}
+ // Refresh the signed claim before any protected data request.
+ await user.getIdToken(true);
+ if(CLOUD.auth.currentUser?.uid!==user.uid)return false;
  const remote=await cloudRequest('/users/'+user.uid+'.json');
- if(CLOUD.auth.currentUser?.uid!==user.uid)return;
+ if(CLOUD.auth.currentUser?.uid!==user.uid)return false;
  if(remote?.deleting)throw Error('Account deletion is incomplete. Contact the site owner to finish removing this account.');
  CLOUD.uid=user.uid;CLOUD.pending=ROOT.cloudSync?.[user.uid]?.pending||{};
  const values=expandCloud(cloudOverlay(remoteCloudMap(remote),CLOUD.pending),user.displayName||'Student');
  ROOT.profiles[user.uid]=values.profile;ROOT.data[user.uid]=values.state;
  CLOUD.observed=remoteCloudMap(remote);
- currentUser=user.uid;STATE=values.state;CLOUD.ready=true;
+ currentUser=user.uid;STATE=values.state;CLOUD.ready=true;cloudStopVerification();
  signIn(user.uid);
  cloudCapture();await Store.writeLocal(ROOT);await cloudFlush();
  clearInterval(CLOUD.poll);CLOUD.poll=setInterval(cloudRefresh,15000);
+ return true;
 }
 function cloudLeaveUI(){
+ cloudStopVerification();
  clearTimeout(saveDebounce);clearInterval(CLOUD.poll);clearInterval(timerId);
  CLOUD.ready=false;CLOUD.uid=null;CLOUD.pending={};CLOUD.observed={};
  currentUser=null;STATE=emptyCloudState();studySession=null;studyOwner=null;studyTick=0;
  hideSideNav();$('profileSettings').close();
  document.querySelectorAll('.screen').forEach(el=>el.classList.add('hidden'));
  showLogin();$('loginScreen').classList.remove('hidden');
+}
+async function cloudHandleAuthState(user){
+ if(CLOUD.busy){CLOUD.authStatePending=true;return;}
+ if(!user){cloudLeaveUI();return;}
+ if(CLOUD.uid&&CLOUD.uid!==user.uid){cloudCapture();await Store.writeLocal(ROOT);cloudLeaveUI();}
+ CLOUD.busy=true;cloudAuthControls(true);
+ try{await cloudOpenUser(user);}catch(error){if(!CLOUD.verificationUid)cloudLeaveUI();authErr(cloudError(error));}
+ finally{CLOUD.busy=false;cloudAuthControls(false);}
 }
 async function cloudBoot(){
  showLogin();cloudAuthControls(true);
@@ -6441,14 +6546,7 @@ async function cloudBoot(){
   CLOUD.sdk=authSDK;CLOUD.auth=authSDK.getAuth(appSDK.initializeApp(firebaseConfig));
   const cached=await Store.readKey(SAVE_KEY);
   if(cached?.profiles&&cached?.data){ROOT=cached;ROOT.cloudSync=ROOT.cloudSync||{};}
-  authSDK.onAuthStateChanged(CLOUD.auth,async user=>{
-   if(CLOUD.busy)return;
-   if(!user){cloudLeaveUI();return;}
-   if(CLOUD.uid&&CLOUD.uid!==user.uid){cloudCapture();await Store.writeLocal(ROOT);cloudLeaveUI();}
-   CLOUD.busy=true;cloudAuthControls(true);
-   try{await cloudOpenUser(user);}catch(error){cloudLeaveUI();authErr(cloudError(error));}
-   finally{CLOUD.busy=false;cloudAuthControls(false);}
-  });
+  authSDK.onAuthStateChanged(CLOUD.auth,cloudHandleAuthState);
   cloudAuthControls(false);
   window.addEventListener('online',cloudRefresh);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)cloudRefresh();else if(CLOUD.ready){cloudCapture();Store.writeLocal(ROOT);cloudFlush();}});
@@ -6479,6 +6577,7 @@ async function doRegister(){
   const result=await CLOUD.sdk.createUserWithEmailAndPassword(CLOUD.auth,email,password);
   await CLOUD.sdk.updateProfile(result.user,{displayName:name});
   await cloudOpenUser(result.user);authErr('');
+  if(CLOUD.verificationUid===result.user.uid)await cloudSendVerificationEmail(result.user);
  }catch(error){authErr(cloudError(error));}
  finally{CLOUD.busy=false;cloudAuthControls(false);}
 }
@@ -6634,7 +6733,7 @@ refreshAccountCircles();
 </script>
 <script src="duck-redesign.js?v=20260925-community"></script>
 <script src="esat.js?v=20260922-5"></script>
-<link rel="stylesheet" href="duck-airy.css?v=20260923-button-fit">
+<link rel="stylesheet" href="duck-airy.css?v=20261001-email-verification">
 <script src="duck-airy.js?v=20260930-sirquacksalot-ponds"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20260922-2">
 <script>cloudBoot();</script>

@@ -310,6 +310,12 @@ html body.duck-airy.duck-redesign :is(#bankScreen,#dashboardScreen) :is(#bankLis
 html body.duck-airy.duck-redesign :is(#bankScreen,#dashboardScreen) :is(#bankList,#dashboardTiming) .study-clickable-row:is(:hover,:focus-within) :is(.study-row-body,b,p,.bigbtn){color:var(--du-gradient-ink)!important;}
 
 /* Artwork occupies only unused side margins and never receives clicks. */
+html body.duck-airy #verificationView{line-height:1.6;}
+html body.duck-airy #verificationView .verification-address{overflow-wrap:anywhere;padding:12px 16px;background:var(--du-soft);border:1px solid var(--du-line);border-radius:12px;font-weight:600;}
+html body.duck-airy #verificationView .verification-actions{display:flex;flex-direction:column;gap:10px;margin:20px 0 12px;}
+html body.duck-airy #verificationView .verification-actions .bigbtn{width:100%;white-space:normal;min-height:44px;}
+html body.duck-airy #verificationStatus{min-height:3em;font-size:14px;color:var(--du-muted);}
+html body.duck-airy #verificationView .switchline{margin-top:18px;}
 html body.duck-airy .duck-garden{display:none;pointer-events:none;user-select:none;}
 html body.duck-airy .duck-garden img{position:fixed;bottom:45px;width:min(260px,calc((100vw - var(--du-content-max))/2 - 20px));height:auto;pointer-events:none;opacity:.94;}
 html body.duck-airy .duck-garden-left{left:8px;}
