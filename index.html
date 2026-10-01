@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-01.delete-account-fix">
+<meta name="ducktmua-build" content="2026-10-01.set-a-p2-user-ratings">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='dark'?'dark':'light';}catch(e){document.documentElement.dataset.duckTheme='light';}
 </script>
@@ -3007,7 +3007,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <script src="qiuyun_mock01.js?v=20260925-3"></script>
 <script src="mat_difficulty_data.js?v=20260923-1"></script>
 <script src="step_paper1_data.js?v=20260923-4"></script>
-<script src="practice_set_a_p2.js?v=20260930-1"></script>
+<script src="practice_set_a_p2.js?v=20261001-user-ratings"></script>
 <script>
 /* Cloud setup: publish database.rules.json from the accompanying package. */
 const LEADERBOARD_URL = 'https://tmua-leaderboard-default-rtdb.europe-west1.firebasedatabase.app';
@@ -6256,7 +6256,24 @@ const firebaseConfig={
  projectId:"tmua-leaderboard",storageBucket:"tmua-leaderboard.firebasestorage.app",
  messagingSenderId:"522075367738",appId:"1:522075367738:web:764342a9e489d8efc7c803"
 };
-const CLOUD={sdk:null,auth:null,uid:null,ready:false,busy:false,observed:{},pending:{},queue:Promise.resolve(),poll:null,deleting:false,verificationUid:null,verificationTimer:null,verificationNextSend:0,authStatePending:false};
+const CLOUD={sdk:null,auth:null,recaptchaReady:null,uid:null,ready:false,busy:false,observed:{},pending:{},queue:Promise.resolve(),poll:null,deleting:false,verificationUid:null,verificationTimer:null,verificationNextSend:0,authStatePending:false};
+function cloudPrepareRecaptcha(){
+ // Load the provider configuration before password requests, including in AUDIT.
+ // The SDK generates the actual token for each operation after this step.
+ if(!CLOUD.recaptchaReady){
+  const sdk=CLOUD.sdk,auth=CLOUD.auth;
+  const pending=Promise.resolve().then(()=>sdk.initializeRecaptchaConfig(auth));
+  CLOUD.recaptchaReady=pending;
+  pending.catch(()=>{if(CLOUD.recaptchaReady===pending)CLOUD.recaptchaReady=null;});
+ }
+ let timer;
+ const timeout=new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Security configuration timed out. Check your connection and reload the page.')),12000);});
+ // A wait timeout does not cancel the SDK call. Retain it to avoid duplicate loads;
+ // a late result only prepares a future user action and never retries an auth action.
+ return Promise.race([CLOUD.recaptchaReady,timeout]).catch(()=>{
+  throw new Error('Could not load the security check. Check your connection and any content blocker, then try again or reload the page.');
+ }).finally(()=>clearTimeout(timer));
+}
 function emptyCloudState(){return {results:{},inprogress:{},combinedResults:[],randomResults:[],resolvedErrors:{}};}
 function cloudKey(path){return btoa(unescape(encodeURIComponent(JSON.stringify(path)))).replaceAll('+','-').replaceAll('/','_').replaceAll('=','');}
 function cloudPath(key){return JSON.parse(decodeURIComponent(escape(atob(key.replaceAll('-','+').replaceAll('_','/')))));}
@@ -6556,6 +6573,7 @@ async function cloudBoot(){
    import('https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js')
   ]);
   CLOUD.sdk=authSDK;CLOUD.auth=authSDK.getAuth(appSDK.initializeApp(firebaseConfig));
+  cloudPrepareRecaptcha().catch(()=>{});
   const cached=await Store.readKey(SAVE_KEY);
   if(cached?.profiles&&cached?.data){ROOT=cached;ROOT.cloudSync=ROOT.cloudSync||{};}
   authSDK.onAuthStateChanged(CLOUD.auth,cloudHandleAuthState);
@@ -6571,6 +6589,7 @@ async function doSignIn(){
  if(!email||!password){authErr('Enter your email and password.');return;}
  CLOUD.busy=true;cloudAuthControls(true);authErr('Signing in…');
  try{
+  await cloudPrepareRecaptcha();
   await CLOUD.sdk.setPersistence(CLOUD.auth,$('rememberAccount').checked?CLOUD.sdk.browserLocalPersistence:CLOUD.sdk.browserSessionPersistence);
   const result=await CLOUD.sdk.signInWithEmailAndPassword(CLOUD.auth,email,password);
   await cloudOpenUser(result.user);authErr('');
@@ -6585,6 +6604,7 @@ async function doRegister(){
  if(password.length<6){authErr('Use a password of at least 6 characters.');return;}
  CLOUD.busy=true;cloudAuthControls(true);authErr('Creating account…');
  try{
+  await cloudPrepareRecaptcha();
   await CLOUD.sdk.setPersistence(CLOUD.auth,CLOUD.sdk.browserLocalPersistence);
   const result=await CLOUD.sdk.createUserWithEmailAndPassword(CLOUD.auth,email,password);
   await CLOUD.sdk.updateProfile(result.user,{displayName:name});
@@ -6600,7 +6620,7 @@ $('resetPasswordBtn').onclick=async()=>{
  if(!email||!input.checkValidity()){authErr('Enter a valid email address above, then click Forgot password?');input.focus();return;}
  CLOUD.busy=true;cloudAuthControls(true);authErr('Sending password-reset email…');
  const message='If that email has an account, a password-reset email will be sent. Check your inbox and spam folder.';
- try{await CLOUD.sdk.sendPasswordResetEmail(CLOUD.auth,email);authErr(message);}
+ try{await cloudPrepareRecaptcha();await CLOUD.sdk.sendPasswordResetEmail(CLOUD.auth,email);authErr(message);}
  catch(error){authErr(error.code==='auth/user-not-found'?message:cloudError(error));}
  finally{CLOUD.busy=false;cloudAuthControls(false);}
 };
@@ -6615,6 +6635,8 @@ $('signOutBtn').addEventListener('click',async()=>{
 async function reauthenticateCloud(password){
  const user=CLOUD.auth.currentUser;
  if(!user||!password)throw Error('Enter your current password to continue.');
+ await cloudPrepareRecaptcha();
+ if(CLOUD.auth.currentUser?.uid!==user.uid)throw Error('The signed-in account changed. Please try again from the correct account.');
  await CLOUD.sdk.reauthenticateWithCredential(user,CLOUD.sdk.EmailAuthProvider.credential(user.email,password));
 }
 function cloudResetDeleteAccount(){
