@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-01.email-verification">
+<meta name="ducktmua-build" content="2026-10-01.delete-account-fix">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='dark'?'dark':'light';}catch(e){document.documentElement.dataset.duckTheme='light';}
 </script>
@@ -2960,7 +2960,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <p class="study-muted">Your account and practice history sync across devices. Use the same email and password wherever you sign in.</p>
 <label>Profile name<input id="settingsName" class="txt" required maxlength="60" autocomplete="username"></label>
 <label>Current password<input id="settingsCurrentPin" class="txt" type="password" maxlength="128" autocomplete="current-password"></label>
-<p class="study-muted">Required when changing your password or deleting your account.</p>
+<p class="study-muted">Required when changing your password. Account deletion asks for your password below.</p>
 <label>New password<input id="settingsNewPin" class="txt" type="password" maxlength="128" autocomplete="new-password" placeholder="Leave blank to keep it"></label>
 <label>Confirm new password<input id="settingsConfirmPin" class="txt" type="password" maxlength="128" autocomplete="new-password"></label>
 <label class="settings-check"><input id="settingsSyncName" type="checkbox" checked><span>Update my existing leaderboard entries with this name</span></label>
@@ -2989,8 +2989,14 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <p id="backupStatus" role="status"></p></section>
 <section class="settings-tools"><h3>Profile actions</h3>
 <button type="button" id="signOutBtn" class="bigbtn ghost">Sign out</button>
-<button type="button" id="deleteProfileBtn" class="bigbtn ghost settings-danger">Delete account</button>
+<button type="button" id="deleteProfileBtn" class="bigbtn ghost settings-danger" aria-expanded="false" aria-controls="deleteAccountForm">Delete account</button>
 <p class="study-muted">Deleting permanently removes your cloud account, its practice history and leaderboard entries linked to this account.</p>
+<form id="deleteAccountForm" class="hidden" novalidate>
+<p>Delete the account for <b id="deleteAccountEmail"></b>? This cannot be undone. Download a backup above first if you want to keep your history.</p>
+<label for="deleteAccountPassword">Current password<input id="deleteAccountPassword" class="txt" type="password" maxlength="128" autocomplete="current-password" aria-describedby="deleteAccountStatus" required></label>
+<div class="delete-account-actions"><button type="submit" id="confirmDeleteAccountBtn" class="bigbtn settings-danger">Permanently delete account</button><button type="button" id="cancelDeleteAccountBtn" class="bigbtn ghost">Cancel</button></div>
+</form>
+<p id="deleteAccountStatus" role="status" aria-live="polite" aria-atomic="true"></p>
 </section></dialog>
 <script src="set_b_data.js?v=20260912-2"></script>
 <script src="set_b_revised.js?v=4"></script>
@@ -4105,6 +4111,7 @@ $('openProfileSettings').addEventListener('click',()=>{
  $('settingsDuration').value=String(prefs.duration);
  $('settingsTimerAlerts').checked=prefs.timerAlerts;
  $('backupStatus').textContent='';
+ cloudResetDeleteAccount();
  $('profileSettingsStatus').textContent='';$('profileSettings').showModal();$('settingsName').focus();
 });
 
@@ -4118,7 +4125,8 @@ function setDuckAppearance(value){
 $('settingsTheme').addEventListener('change',event=>setDuckAppearance(event.target.value));
 
 $('closeProfileSettings').addEventListener('click',()=>{$('profileSettings').close();});
-$('profileSettings').addEventListener('close',()=>{if(studySession&&!$('studyScreen').classList.contains('hidden'))studyTick=Date.now();['settingsCurrentPin','settingsNewPin','settingsConfirmPin'].forEach(id=>$(id).value='');});
+$('profileSettings').addEventListener('close',()=>{if(studySession&&!$('studyScreen').classList.contains('hidden'))studyTick=Date.now();['settingsCurrentPin','settingsNewPin','settingsConfirmPin'].forEach(id=>$(id).value='');cloudResetDeleteAccount();});
+$('profileSettings').addEventListener('cancel',event=>{if(CLOUD.deleting)event.preventDefault();});
 document.addEventListener('click',e=>{document.querySelectorAll('.profile-menu[open]').forEach(el=>{if(!el.contains(e.target))el.open=false;});});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.profile-menu[open]').forEach(el=>el.open=false);});
 async function syncProfileLeaderboardName(uid,name){
@@ -6345,14 +6353,17 @@ async function cloudPersist(obj){
  cloudStatus(Object.keys(CLOUD.pending).length?'Saving…':'Cloud saved');
  cloudFlush();return cached;
 }
-async function cloudRequest(path,opts={}){
- if(!CLOUD.auth?.currentUser)throw Error('Please sign in again.');
- const token=await CLOUD.auth.currentUser.getIdToken();
+async function cloudRequest(path,opts={},expectedUid=null){
+ const requestUser=CLOUD.auth?.currentUser;
+ if(!requestUser)throw Error('Please sign in again.');
+ if(expectedUid&&requestUser.uid!==expectedUid)throw Error('The signed-in account changed. Please try again from the correct account.');
+ const token=await requestUser.getIdToken();
+ if(expectedUid&&CLOUD.auth?.currentUser?.uid!==expectedUid)throw Error('The signed-in account changed. Please try again from the correct account.');
  const ctrl=new AbortController(),timeout=setTimeout(()=>ctrl.abort(),10000);
  try{
   const url=firebaseConfig.databaseURL+path+(path.includes('?')?'&':'?')+'auth='+encodeURIComponent(token);
   const res=await fetch(url,{...opts,headers:{'Content-Type':'application/json',...opts.headers},signal:ctrl.signal});
-  if(!res.ok)throw Error(res.status===401||res.status===403?'Cloud access denied. Check that the supplied database rules are published.':'Cloud request failed ('+res.status+').');
+  if(!res.ok){const error=Error(res.status===401||res.status===403?'Cloud access denied. Check that the supplied database rules are published.':'Cloud request failed ('+res.status+').');error.status=res.status;throw error;}
   return await res.json();
  }finally{clearTimeout(timeout);}
 }
@@ -6406,6 +6417,7 @@ function applyCloudAppearance(){
 function cloudError(error){
  const messages={
   'auth/invalid-credential':'The email or password is incorrect.',
+  'auth/wrong-password':'The current password is incorrect. Try again.',
   'auth/email-already-in-use':'An account already uses that email. Sign in or reset its password.',
   'auth/invalid-email':'Enter a valid email address.',
   'auth/weak-password':'Choose a stronger password (at least 6 characters).',
@@ -6605,25 +6617,88 @@ async function reauthenticateCloud(password){
  if(!user||!password)throw Error('Enter your current password to continue.');
  await CLOUD.sdk.reauthenticateWithCredential(user,CLOUD.sdk.EmailAuthProvider.credential(user.email,password));
 }
-async function cloudDeleteAccount(fromLogin=false){
- const user=CLOUD.auth?.currentUser;if(!user)return;
- const status=fromLogin?$('loginErr'):$('profileSettingsStatus');
- if(!confirm('Permanently delete this account, its cloud practice history and its linked leaderboard entries? Download a backup first if you want to keep your history.'))return;
- setProfileSettingsBusy(true);cloudAuthControls(true);CLOUD.busy=true;
- try{
-  await reauthenticateCloud(fromLogin?$('siPin').value:$('settingsCurrentPin').value);
-  await CLOUD.queue;CLOUD.deleting=true;
-  const patch={};patch['users/'+user.uid]=null;patch['deletedAccounts/'+user.uid]=true;
-  const pids=new Set([...PAPERS.map(p=>p.id),...Object.keys(ROOT.data[user.uid]?.results||{})]);
-  for(const pid of pids)patch['leaderboards/'+pid+'/'+user.uid]=null;
-  await cloudRequest('/.json',{method:'PATCH',body:JSON.stringify(patch)});
-  await CLOUD.sdk.deleteUser(user);
-  delete ROOT.profiles[user.uid];delete ROOT.data[user.uid];if(ROOT.cloudSync)delete ROOT.cloudSync[user.uid];
-  await Store.writeLocal(ROOT);cloudLeaveUI();$('finishDeletionBtn').classList.add('hidden');authErr('Account deleted.');
- }catch(error){status.textContent=cloudError(error)+' If data deletion already completed, use Delete account again to finish.';}
- finally{CLOUD.busy=false;CLOUD.deleting=false;setProfileSettingsBusy(false);cloudAuthControls(false);}
+function cloudResetDeleteAccount(){
+ $('deleteAccountForm').reset();$('deleteAccountForm').classList.add('hidden');delete $('deleteAccountForm').dataset.uid;
+ $('deleteAccountEmail').textContent='';$('deleteAccountPassword').removeAttribute('aria-invalid');$('deleteAccountStatus').textContent='';
+ $('deleteProfileBtn').classList.remove('hidden');$('deleteProfileBtn').setAttribute('aria-expanded','false');
 }
-$('deleteProfileBtn').addEventListener('click',()=>cloudDeleteAccount(false));
+function cloudShowDeleteAccount(){
+ if(CLOUD.busy||CLOUD.deleting)return;
+ const user=CLOUD.auth?.currentUser;
+ if(!user){$('deleteAccountStatus').textContent='Please sign in again before deleting your account.';return;}
+ cloudResetDeleteAccount();$('deleteAccountForm').dataset.uid=user.uid;
+ $('deleteAccountEmail').textContent=user.email||'this account';
+ $('deleteAccountPassword').value=$('settingsCurrentPin').value;
+ $('deleteAccountForm').classList.remove('hidden');$('deleteProfileBtn').classList.add('hidden');$('deleteProfileBtn').setAttribute('aria-expanded','true');
+ $('deleteAccountForm').scrollIntoView({block:'nearest'});$('deleteAccountPassword').focus();
+}
+async function cloudForgetDeletedUser(uid){
+ delete ROOT.profiles[uid];delete ROOT.data[uid];if(ROOT.cloudSync)delete ROOT.cloudSync[uid];
+ if(ROOT.lastUser===uid)delete ROOT.lastUser;
+ try{localStorage.removeItem('duck-avatar:'+uid);localStorage.removeItem('ducktmua-verification:'+uid);}catch(error){}
+ await Store.writeLocal(ROOT);
+}
+async function cloudDeleteAccount(fromLogin=false){
+ if(CLOUD.busy||CLOUD.deleting)return;
+ const user=CLOUD.auth?.currentUser,status=fromLogin?$('loginErr'):$('deleteAccountStatus');
+ if(!user){status.textContent='Please sign in again before deleting your account.';return;}
+ if(!fromLogin&&($('deleteAccountForm').classList.contains('hidden')||$('deleteAccountForm').dataset.uid!==user.uid)){cloudShowDeleteAccount();return;}
+ const input=fromLogin?$('siPin'):$('deleteAccountPassword'),password=input.value;
+ if(!password){status.textContent='Enter your current password to delete this account.';input.setAttribute('aria-invalid','true');input.focus();input.scrollIntoView({block:'nearest'});return;}
+ input.removeAttribute('aria-invalid');
+ if(fromLogin&&!confirm('Finish permanently deleting '+(user.email||'this account')+'? This cannot be undone.'))return;
+ const assertSameUser=()=>{if(CLOUD.auth?.currentUser?.uid!==user.uid)throw Error('The signed-in account changed. Please try again from the correct account.');};
+ let stage='password',dataRemoved=false,authRemoved=false;
+ CLOUD.busy=true;CLOUD.deleting=true;setProfileSettingsBusy(true);cloudAuthControls(true);
+ status.textContent='Checking your password…';status.scrollIntoView({block:'nearest'});
+ try{
+  await reauthenticateCloud(password);assertSameUser();stage='session';
+  await user.getIdToken(true);assertSameUser();
+  await CLOUD.queue.catch(()=>false);assertSameUser();
+  stage='data';status.textContent='Deleting your saved history and leaderboard entries…';
+  const patch={};patch['users/'+user.uid]=null;patch['deletedAccounts/'+user.uid]=true;
+  const pids=new Set([...ALL_PAPERS.map(p=>p.id),...Object.keys(ROOT.data[user.uid]?.results||{})]);
+  for(const pid of pids)patch['leaderboards/'+pid+'/'+user.uid]=null;
+  await cloudRequest('/.json',{method:'PATCH',body:JSON.stringify(patch)},user.uid);dataRemoved=true;
+  CLOUD.ready=false;clearInterval(CLOUD.poll);
+  stage='account';status.textContent='Removing your sign-in account…';assertSameUser();
+  await CLOUD.sdk.deleteUser(user);authRemoved=true;
+  await cloudForgetDeletedUser(user.uid);
+  if(!CLOUD.auth.currentUser||CLOUD.auth.currentUser.uid===user.uid){cloudLeaveUI();$('finishDeletionBtn').classList.add('hidden');authErr('Account deleted.');}
+  else CLOUD.authStatePending=true;
+ }catch(error){
+  if(dataRemoved){
+   CLOUD.ready=false;clearInterval(CLOUD.poll);
+   try{await cloudForgetDeletedUser(user.uid);}catch(localError){}
+   if(CLOUD.auth?.currentUser?.uid===user.uid){
+    cloudLeaveUI();$('siName').value=user.email||'';$('finishDeletionBtn').classList.remove('hidden');
+    authErr('Your saved data has been removed, but deleting your sign-in account did not finish. Enter your password and click Finish deleting my account. '+cloudError(error));
+   }else if(!CLOUD.auth?.currentUser){
+    cloudLeaveUI();$('finishDeletionBtn').classList.add('hidden');
+    authErr(authRemoved?'Account deleted. Local cleanup could not be saved; clear this site’s browser data on this device.':'Your saved data has been removed. Sign in again to finish deleting the account.');
+   }else CLOUD.authStatePending=true;
+  }else if(stage==='data'&&!(error.status>=400&&error.status<500)){
+   // A dropped response can hide a successful atomic deletion. Do not resume sync.
+   CLOUD.ready=false;clearInterval(CLOUD.poll);
+   if(CLOUD.auth?.currentUser?.uid===user.uid){
+    cloudLeaveUI();CLOUD.authStatePending=false;$('siName').value=user.email||'';$('finishDeletionBtn').classList.remove('hidden');
+    authErr('We could not confirm whether deletion finished. Your account has not been reopened. Reconnect, enter your password and click Finish deleting my account to retry. '+cloudError(error));
+   }else if(!CLOUD.auth?.currentUser){cloudLeaveUI();authErr('Deletion could not be confirmed. Reconnect and sign in again to check or finish deleting your account.');}
+   else CLOUD.authStatePending=true;
+  }else{
+   status.textContent=(stage==='password'?'Password check failed. ':'Deletion did not finish. ')+cloudError(error);
+   status.scrollIntoView({block:'nearest'});
+   if(stage==='password'){input.setAttribute('aria-invalid','true');}
+  }
+ }finally{
+  CLOUD.busy=false;CLOUD.deleting=false;setProfileSettingsBusy(false);cloudAuthControls(false);
+  if(!dataRemoved&&input.getAttribute('aria-invalid')==='true'){input.focus();input.select();}
+  else input.value='';
+ }
+}
+$('deleteProfileBtn').addEventListener('click',cloudShowDeleteAccount);
+$('deleteAccountForm').addEventListener('submit',event=>{event.preventDefault();cloudDeleteAccount(false);});
+$('cancelDeleteAccountBtn').onclick=()=>{if(CLOUD.busy)return;cloudResetDeleteAccount();$('deleteProfileBtn').focus();};
 $('finishDeletionBtn').onclick=()=>cloudDeleteAccount(true);
 $('profileSettingsForm').addEventListener('submit',async e=>{
  e.preventDefault();const user=CLOUD.auth.currentUser;if(!user||currentUser!==user.uid)return;
@@ -6733,7 +6808,7 @@ refreshAccountCircles();
 </script>
 <script src="duck-redesign.js?v=20260925-community"></script>
 <script src="esat.js?v=20260922-5"></script>
-<link rel="stylesheet" href="duck-airy.css?v=20261001-email-verification">
+<link rel="stylesheet" href="duck-airy.css?v=20261001-delete-account-fix">
 <script src="duck-airy.js?v=20260930-sirquacksalot-ponds"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20260922-2">
 <script>cloudBoot();</script>

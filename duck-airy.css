@@ -310,6 +310,13 @@ html body.duck-airy.duck-redesign :is(#bankScreen,#dashboardScreen) :is(#bankLis
 html body.duck-airy.duck-redesign :is(#bankScreen,#dashboardScreen) :is(#bankList,#dashboardTiming) .study-clickable-row:is(:hover,:focus-within) :is(.study-row-body,b,p,.bigbtn){color:var(--du-gradient-ink)!important;}
 
 /* Artwork occupies only unused side margins and never receives clicks. */
+html body.duck-airy #deleteAccountForm{margin-top:16px;padding:16px;border:1px solid var(--du-line);border-radius:12px;background:var(--du-soft);}
+html body.duck-airy #deleteAccountEmail{overflow-wrap:anywhere;}
+html body.duck-airy #deleteAccountForm label{display:block;margin:14px 0;}
+html body.duck-airy #deleteAccountPassword{display:block;width:100%;box-sizing:border-box;margin-top:6px;}
+html body.duck-airy .delete-account-actions{display:flex;flex-wrap:wrap;gap:10px;}
+html body.duck-airy .delete-account-actions .bigbtn{white-space:normal;min-height:44px;}
+html body.duck-airy #deleteAccountStatus:not(:empty){margin:12px 0 0;line-height:1.5;}
 html body.duck-airy #verificationView{line-height:1.6;}
 html body.duck-airy #verificationView .verification-address{overflow-wrap:anywhere;padding:12px 16px;background:var(--du-soft);border:1px solid var(--du-line);border-radius:12px;font-weight:600;}
 html body.duck-airy #verificationView .verification-actions{display:flex;flex-direction:column;gap:10px;margin:20px 0 12px;}
