@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-02.category-copy">
+<meta name="ducktmua-build" content="2026-10-02.paper-preview-style">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='dark'?'dark':'light';}catch(e){document.documentElement.dataset.duckTheme='light';}
 </script>
@@ -2629,6 +2629,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
       <div class="newprof">
         <input class="txt" id="siName" type="email" aria-label="Email" maxlength="254" placeholder="Email address" autocomplete="username">
         <input class="txt" id="siPin" aria-label="Password" type="password" maxlength="128" style="width:170px" placeholder="Password" autocomplete="current-password">
+        <label class="leaderboard-optin"><input id="siLeaderboardOptIn" type="checkbox"><span>Publish my eligible first-attempt scores and chosen display name on the public leaderboard. <small>Optional. You can withdraw in Settings. Leaving this unticked does not change an existing saved choice.</small></span></label>
         <button class="bigbtn" id="siBtn">Sign in</button>
       </div>
       <label class="cloud-remember"><input id="rememberAccount" type="checkbox" checked> Remember me on this device</label><p><button type="button" id="resetPasswordBtn" class="linkbtn">Forgot password?</button></p><button type="button" id="finishDeletionBtn" class="bigbtn ghost hidden">Finish deleting my account</button><p class="switchline">New here? <button class="linkbtn" id="toRegister">Register a profile</button></p>
@@ -2642,6 +2643,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
       <div class="newprof">
         <input class="txt" id="rgPin" aria-label="New password" type="password" maxlength="128" style="width:170px" placeholder="Choose a password" autocomplete="new-password">
         <input class="txt" id="rgPin2" aria-label="Repeat password" type="password" maxlength="128" style="width:170px" placeholder="Repeat password" autocomplete="new-password">
+        <label class="leaderboard-optin"><input id="rgLeaderboardOptIn" type="checkbox"><span>Publish my eligible first-attempt scores and chosen display name on the public leaderboard. <small>Optional. Your private progress still syncs. You can withdraw in Settings.</small></span></label>
         <button class="bigbtn" id="rgBtn">Create account</button>
       </div>
       <p class="switchline">Already have an account? <button class="linkbtn" id="toSignin">Sign in</button></p>
@@ -2753,7 +2755,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
           <option value="0">No timer</option>
         </select>
       </label>
-    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025</small><small>The 2024 and 2025 papers were supplied by Qiuyun (qiuyunshujing in mandarin)</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Practice sets made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Challenge sets<small>Challenge sets made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCustom"></div></div></details><details class="studio-collection"><summary><span class="collection-num">04</span><span class="collection-name">MAT multiple choice questions<small>Useful additional paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridMAT"></div></div></details><details class="studio-collection" id="stepPracticeCollection"><summary><span class="collection-num">05</span><span class="collection-name">STEP adaptation papers<small>Useful additional paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridSTEP"></div></div></details><details class="studio-collection" id="communityPapersCollection"><summary><span class="collection-num">06</span><span class="collection-name">Community papers<small>Public community papers not made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCommunity"></div></div></details><p class="libnote" id="cloudDescription">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
+    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025</small><small>The 2024 and 2025 papers were supplied by Qiuyun (湫云数竞)</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Practice sets made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Challenge sets<small>Challenge sets made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCustom"></div></div></details><details class="studio-collection"><summary><span class="collection-num">04</span><span class="collection-name">MAT multiple choice questions<small>Useful additional paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridMAT"></div></div></details><details class="studio-collection" id="stepPracticeCollection"><summary><span class="collection-num">05</span><span class="collection-name">STEP adaptation papers<small>Useful additional paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridSTEP"></div></div></details><details class="studio-collection" id="communityPapersCollection"><summary><span class="collection-num">06</span><span class="collection-name">Community papers<small>Public community papers not made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCommunity"></div></div></details><p class="libnote" id="cloudDescription">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
 </div>
 
 <!-- ============ REVIEW HUB ============ -->
@@ -3003,9 +3005,10 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <p class="study-muted">An internet connection is needed for leaderboard updates. Your scores and attempts stay attached to the same profile.</p>
 
 <fieldset><legend>Leaderboard privacy</legend>
-<label class="settings-check"><input id="settingsLeaderboard" type="checkbox"><span>Submit future first-attempt scores</span></label>
+<label class="settings-check"><input id="settingsLeaderboard" type="checkbox"><span>Publish my eligible first-attempt scores and chosen display name on the public leaderboard.</span></label>
 <label>Public name<select id="settingsPublicName"><option value="profile">Use profile name</option><option value="anonymous">Anonymous</option></select></label>
-<p class="study-muted">Turning submissions off keeps future scores local. Existing public entries remain; use the name-update option above to change their displayed name.</p></fieldset>
+<p class="study-muted">Your practice history still syncs privately. Turn submission off and save to withdraw consent and remove public scores. Existing users need to opt in explicitly before future submissions. You can also remove existing public scores below.</p></fieldset>
+<button type="button" class="bigbtn ghost" id="removeLeaderboardEntries">Withdraw consent and remove public scores</button><p id="leaderboardRemovalStatus" class="study-muted" role="status"></p>
 <fieldset><legend>Review and appearance</legend>
 <label>Colour mode<select id="settingsTheme"><option value="light">Bright (default)</option><option value="dark">Dark</option></select></label>
 <p class="study-muted">Applies immediately and is remembered on this device. Exam screens keep their own appearance.</p>
@@ -4043,6 +4046,7 @@ function richMathHtml(str){
 
 function showLogin(){
   ['siName','siPin','rgEmail','rgName','rgPin','rgPin2'].forEach(id=>{ $(id).value=''; });
+  $('siLeaderboardOptIn').checked=false;$('rgLeaderboardOptIn').checked=false;
   $('loginErr').textContent='';
   $('verificationView').classList.add('hidden');
   $('authLead').classList.remove('hidden');
@@ -4187,7 +4191,7 @@ function setProfileSettingsBusy(busy){
 }
 function profilePreferences(uid=currentUser){
  const p=ROOT.profiles[uid]?.preferences||{};
- return {leaderboard:p.leaderboard!==false,publicName:p.publicName==='anonymous'?'anonymous':'profile',hideSolutions:!!p.hideSolutions,textSize:['large','larger'].includes(p.textSize)?p.textSize:'normal',contrast:!!p.contrast,duration:normaliseTimingChoice(p.duration),timerAlerts:!!p.timerAlerts};
+ return {leaderboard:p.leaderboard===true&&ROOT.data[uid]?.leaderboardConsent?.version===1&&ROOT.data[uid]?.leaderboardConsent?.enabled===true,publicName:p.publicName==='anonymous'?'anonymous':'profile',hideSolutions:!!p.hideSolutions,textSize:['large','larger'].includes(p.textSize)?p.textSize:'normal',contrast:!!p.contrast,duration:normaliseTimingChoice(p.duration),timerAlerts:!!p.timerAlerts};
 }
 function publicProfileName(uid=currentUser){return profilePreferences(uid).publicName==='anonymous'?'Anonymous':ROOT.profiles[uid]?.name||'Profile';}
 function applyProfilePreferences(){
@@ -6345,6 +6349,7 @@ function flattenCloud(profile,state){
  flat['profile/name']=profile.name;
  flat['profile/created']=profile.created||0;
  const put=(path,v)=>{if(v!==undefined)flat['records/'+cloudKey(path)]=JSON.stringify(v);};
+ if(state.leaderboardConsent)put(['preferences','leaderboardConsent'],state.leaderboardConsent);
  for(const [k,v] of Object.entries(profile.preferences||{}))if(v!==undefined){
   if(k==='duration'){
    // Keep the numeric field compatible with existing database rules. The full
@@ -6385,6 +6390,7 @@ function expandCloud(flat,fallbackName='Student'){
   const path=cloudPath(key.slice(8));if(!Array.isArray(path)||path.some(k=>['__proto__','constructor','prototype'].includes(k)))throw Error('Invalid cloud record.');
   const r=JSON.parse(value),[a,b,c]=path;
   if(a==='preferences'&&b==='duration'&&['75','extra','challenge','60','45','0'].includes(r))timingChoice=r;
+  else if(a==='preferences'&&b==='leaderboardConsent'&&r&&r.version===1&&typeof r.enabled==='boolean')state.leaderboardConsent=r;
   else if(a==='results'){(state.results[b]??=[]).push(r);}
   else if(['combinedResults','randomResults'].includes(a))state[a].push(r);
   else if(['inprogress','resolvedErrors'].includes(a))state[a][b]=r;
@@ -6511,7 +6517,7 @@ function cloudVerificationControls(disabled=CLOUD.busy){
  $('verificationSendBtn').textContent=seconds?'Resend in '+seconds+'s':(CLOUD.verificationNextSend?'Resend verification email':'Send verification email');
 }
 function cloudAuthControls(disabled){
- ['siBtn','rgBtn','resetPasswordBtn','toRegister','toSignin','finishDeletionBtn'].forEach(id=>$(id).disabled=disabled);
+ ['siBtn','rgBtn','resetPasswordBtn','toRegister','toSignin','finishDeletionBtn','siLeaderboardOptIn','rgLeaderboardOptIn'].forEach(id=>$(id).disabled=disabled);
  cloudVerificationControls(disabled);
  if(!disabled&&!CLOUD.busy&&CLOUD.authStatePending){
   CLOUD.authStatePending=false;
@@ -6594,6 +6600,7 @@ async function cloudOpenUser(user){
  if(remote?.deleting)throw Error('Account deletion is incomplete. Contact the site owner to finish removing this account.');
  CLOUD.uid=user.uid;CLOUD.pending=ROOT.cloudSync?.[user.uid]?.pending||{};
  const values=expandCloud(cloudOverlay(remoteCloudMap(remote),CLOUD.pending),user.displayName||'Student');
+ applyPendingLeaderboardOptIn(user.uid,values);
  ROOT.profiles[user.uid]=values.profile;ROOT.data[user.uid]=values.state;
  CLOUD.observed=remoteCloudMap(remote);
  currentUser=user.uid;STATE=values.state;CLOUD.ready=true;cloudStopVerification();
@@ -6638,6 +6645,40 @@ async function cloudBoot(){
  }catch(error){authErr('Could not load cloud sign-in. Check your connection and reload.');}
 }
 
+
+const pendingLeaderboardChoices=new Map();
+function makeLeaderboardConsent(enabled,source){return {version:1,enabled:!!enabled,t:Date.now(),source,notice:'2026-10-02'};}
+function rememberLeaderboardOptIn(uid,source){
+ const choice=makeLeaderboardConsent(true,source);pendingLeaderboardChoices.set(uid,choice);
+ try{localStorage.setItem('ducktmua-leaderboard-optin:'+uid,JSON.stringify(choice));}catch(e){}
+}
+function applyPendingLeaderboardOptIn(uid,values){
+ let choice=pendingLeaderboardChoices.get(uid);
+ if(!choice)try{choice=JSON.parse(localStorage.getItem('ducktmua-leaderboard-optin:'+uid)||'null');}catch(e){}
+ if(choice?.version===1&&choice.enabled===true&&Number.isFinite(choice.t)){
+  values.state.leaderboardConsent=choice;values.profile.preferences.leaderboard=true;
+  pendingLeaderboardChoices.delete(uid);try{localStorage.removeItem('ducktmua-leaderboard-optin:'+uid);}catch(e){}
+ }else if(values.state.leaderboardConsent?.version!==1||values.state.leaderboardConsent.enabled!==true){
+  values.profile.preferences.leaderboard=false;
+ }
+}
+async function removeProfileLeaderboardEntries(uid){
+ const ids=new Set([...ALL_PAPERS.map(p=>p.id),...Object.keys(ROOT.data[uid]?.results||{})]);
+ const patch={};for(const pid of ids)patch['leaderboards/'+pid+'/'+uid]=null;
+ await cloudRequest('/.json',{method:'PATCH',body:JSON.stringify(patch)},uid);
+}
+$('removeLeaderboardEntries').onclick=async()=>{
+ if(CLOUD.busy||!CLOUD.ready)return;const uid=currentUser,status=$('leaderboardRemovalStatus');
+ CLOUD.busy=true;setProfileSettingsBusy(true);status.textContent='Removing public scores…';
+ try{
+  STATE.leaderboardConsent=makeLeaderboardConsent(false,'settings');ROOT.profiles[uid].preferences.leaderboard=false;
+  $('settingsLeaderboard').checked=false;cloudCapture();await Store.writeLocal(ROOT);
+  if(!await cloudFlush())throw Error('Your choice is saved on this device. Reconnect and retry to update the cloud and remove public scores.');
+  await removeProfileLeaderboardEntries(uid);status.textContent='Consent withdrawn and public scores removed. Your private practice history is unchanged.';
+ }catch(error){status.textContent=cloudError(error)+' You can retry this button.';}
+ finally{CLOUD.busy=false;setProfileSettingsBusy(false);}
+};
+
 async function doSignIn(){
  if(CLOUD.busy||!CLOUD.sdk)return;
  const email=$('siName').value.trim(),password=$('siPin').value;
@@ -6647,6 +6688,8 @@ async function doSignIn(){
   await cloudPrepareRecaptcha();
   await CLOUD.sdk.setPersistence(CLOUD.auth,$('rememberAccount').checked?CLOUD.sdk.browserLocalPersistence:CLOUD.sdk.browserSessionPersistence);
   const result=await CLOUD.sdk.signInWithEmailAndPassword(CLOUD.auth,email,password);
+  if($('siLeaderboardOptIn').checked)rememberLeaderboardOptIn(result.user.uid,'sign-in');
+  $('siLeaderboardOptIn').checked=false;
   await cloudOpenUser(result.user);authErr('');
  }catch(error){authErr(cloudError(error));}
  finally{CLOUD.busy=false;cloudAuthControls(false);}
@@ -6662,6 +6705,8 @@ async function doRegister(){
   await cloudPrepareRecaptcha();
   await CLOUD.sdk.setPersistence(CLOUD.auth,CLOUD.sdk.browserLocalPersistence);
   const result=await CLOUD.sdk.createUserWithEmailAndPassword(CLOUD.auth,email,password);
+  if($('rgLeaderboardOptIn').checked)rememberLeaderboardOptIn(result.user.uid,'registration');
+  $('rgLeaderboardOptIn').checked=false;
   await CLOUD.sdk.updateProfile(result.user,{displayName:name});
   await cloudOpenUser(result.user);authErr('');
   if(CLOUD.verificationUid===result.user.uid)await cloudSendVerificationEmail(result.user);
@@ -6712,7 +6757,7 @@ function cloudShowDeleteAccount(){
 async function cloudForgetDeletedUser(uid){
  delete ROOT.profiles[uid];delete ROOT.data[uid];if(ROOT.cloudSync)delete ROOT.cloudSync[uid];
  if(ROOT.lastUser===uid)delete ROOT.lastUser;
- try{localStorage.removeItem('duck-avatar:'+uid);localStorage.removeItem('ducktmua-verification:'+uid);}catch(error){}
+ try{localStorage.removeItem('duck-avatar:'+uid);localStorage.removeItem('ducktmua-verification:'+uid);localStorage.removeItem('ducktmua-leaderboard-optin:'+uid);localStorage.removeItem('ducktmua.mental.settings.'+uid);}catch(error){}
  await Store.writeLocal(ROOT);
 }
 async function cloudDeleteAccount(fromLogin=false){
@@ -6787,6 +6832,9 @@ $('profileSettingsForm').addEventListener('submit',async e=>{
  let passwordChanged=false;
  try{
   if(password){await reauthenticateCloud($('settingsCurrentPin').value);await CLOUD.sdk.updatePassword(user,password);passwordChanged=true;}
+  const wasPublic=profilePreferences(user.uid).leaderboard;
+  const isPublic=$('settingsLeaderboard').checked;
+  if(isPublic!==wasPublic||!STATE.leaderboardConsent)STATE.leaderboardConsent=makeLeaderboardConsent(isPublic,'settings');
   ROOT.profiles[user.uid]={...ROOT.profiles[user.uid],name,preferences:{
    leaderboard:$('settingsLeaderboard').checked,publicName:$('settingsPublicName').value,
    hideSolutions:$('settingsHideSolutions').checked,textSize:$('settingsTextSize').value,
@@ -6798,7 +6846,10 @@ $('profileSettingsForm').addEventListener('submit',async e=>{
   if(!$('modernReviewScreen').classList.contains('hidden'))renderModernReview();
   ['settingsCurrentPin','settingsNewPin','settingsConfirmPin'].forEach(id=>$(id).value='');
   status.textContent=synced?'Account settings saved.':'Settings saved on this device; cloud sync is pending.';
-  if(synced&&$('settingsSyncName').checked){
+  if(synced&&wasPublic&&!isPublic){
+   await removeProfileLeaderboardEntries(user.uid);status.textContent='Settings saved. Leaderboard consent withdrawn and public scores removed.';
+  }
+  if(synced&&!(wasPublic&&!isPublic)&&$('settingsSyncName').checked){
    const result=await syncProfileLeaderboardName(user.uid,publicProfileName());
    status.textContent=result.failed?'Account settings saved. Some leaderboard names could not be updated; save again to retry.':'Account settings and leaderboard names saved.';
   }
@@ -6815,6 +6866,8 @@ $('restoreProfile').onchange=async e=>{
   if(!confirm('Import this backup into your cloud account? Existing attempts will be kept. Imported preferences and matching bookmarks or journal entries will replace those values. Your name and password stay the same.'))return;
   cloudCapture();
   const imported=flattenCloud({...ROOT.profiles[uid],preferences:backup.preferences||ROOT.profiles[uid].preferences},backup.data);
+  delete imported['records/'+cloudKey(['preferences','leaderboardConsent'])];
+  delete imported['profile/preferences/leaderboard'];
   const merged=expandCloud({...CLOUD.observed,...imported},ROOT.profiles[uid].name);
   ROOT.profiles[uid]=merged.profile;ROOT.data[uid]=STATE=merged.state;
   studyOwner=null;studySession=null;studyTick=0;studySelected.clear();
@@ -6892,7 +6945,9 @@ refreshAccountCircles();
 <script src="mental-maths-engine.js?v=20261002-fractions-decimals"></script>
 <script src="mental-maths.js?v=20261002-fractions-decimals"></script>
 <link rel="stylesheet" href="dark-hover.css?v=20261002-2">
-<link rel="stylesheet" href="ui-polish.css?v=20261002-glow-topics">
+<link rel="stylesheet" href="ui-polish.css?v=20261002-paper-preview">
 <script>cloudBoot();</script>
+<link rel="stylesheet" href="site-footer.css?v=20261002-1">
+<script src="site-footer.js?v=20261002-1"></script>
 </body>
 </html>

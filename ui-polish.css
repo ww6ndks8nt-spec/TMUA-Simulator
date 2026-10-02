@@ -109,7 +109,7 @@ html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen #dash
 /* Shared black-and-gold content panels throughout the dark workspace. */
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign
 :is(#dashboardScreen,#libraryScreen,#reviewHubScreen,#wrongHubScreen,#bankScreen,#bookmarksScreen,#journalScreen,#plannerScreen,#studyScreen,#modernReviewScreen,#mentalScreen,#startScreen,#resultScreen)
-:is(.dash-panel,.studio-chart,.studio-benchmarks,.dash-split-card,.airy-recent,.airy-analysis,.study-panel,.study-list-row,.study-plan,.study-solution,.modern-review-card,.modern-review-sidebar,.mm-panel,.mm-stats>div,.du-paper-filters,.paper,.airy-library-row,.review-attempt,.wrong-empty,.resolved-error-list,.spec,.pinbox,.leaderboard):not(.airy-recent>.dash-panel),
+:is(.dash-panel,.studio-chart,.studio-benchmarks,.dash-split-card,.airy-recent,.airy-analysis,.study-panel,.study-list-row:not(.bank-question-row),.study-plan,.study-solution,.modern-review-card,.modern-review-sidebar,.mm-panel,.mm-stats>div,.du-paper-filters,.wrong-empty,.resolved-error-list,.spec,.pinbox,.leaderboard):not(.airy-recent>.dash-panel),
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#startScreen,#resultScreen,#loginScreen)>.card,
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#profileSettings,#duckQuickFind){
  background:var(--du-bg)!important;color:var(--du-ink)!important;
@@ -148,4 +148,46 @@ html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen #dash
  html body.duck-airy.duck-redesign #dashboardScreen #dashTopics{min-width:720px!important;}
  html body.duck-airy.duck-redesign #dashboardScreen #dashTopics .topic-row{grid-template-columns:minmax(145px,1.3fr) minmax(150px,2fr) 70px 100px 100px!important;}
  html body.duck-airy.duck-redesign #dashboardScreen #dashTopics :is(.topic-attempts,.topic-time){display:block!important;}
+}
+
+/* Individual rows and paper controls glow only on interaction. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign
+:is(#libraryScreen,#bankScreen,#reviewHubScreen,#wrongHubScreen)
+:is(.paper,.airy-library-row,.studio-collection>summary,.bank-question-row,.review-paper-head,.review-attempt,.review-go,.resolved-error-list){
+ background:var(--du-bg)!important;border:1px solid var(--du-line)!important;
+ box-shadow:none!important;border-radius:16px!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign
+:is(#libraryScreen,#bankScreen,#reviewHubScreen,#wrongHubScreen)
+:is(.paper,.airy-library-row,.studio-collection>summary,.bank-question-row,.review-attempt,.review-go):not(:disabled):not(.locked):is(:hover,:focus-visible,:has(:focus-visible)){
+ border-color:#d8bd52!important;
+ box-shadow:0 0 0 1px rgba(255,220,90,.88),0 0 14px rgba(255,210,60,.26)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#reviewHubScreen,#wrongHubScreen) .review-go{
+ padding:9px 15px!important;border-radius:10px!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #wrongHubScreen .resolved-error-list{padding:8px;}
+
+/* Paper preview: unboxed instructions and black history/leaderboard panels. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen :is(#stdInstructions,#companionInstructions){
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen :is(#attemptHist,#lbCard){
+ background:var(--du-bg)!important;color:var(--du-ink)!important;
+ border:1px solid var(--du-line)!important;border-radius:16px!important;overflow:hidden;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen :is(#attemptHist,#lbCard) :is(.ahead,.arow,.arow.me,.md){
+ background:var(--du-bg)!important;color:var(--du-ink)!important;border-color:var(--du-line)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen #attemptHist,
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen #attemptHist .arow{
+ box-shadow:none!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen #lbCard{
+ border-color:#d8bd52!important;
+ box-shadow:0 0 12px rgba(255,210,60,.18),inset 0 0 0 1px rgba(255,220,90,.08)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen #attemptHist:is(:hover,:focus-within){
+ border-color:#d8bd52!important;
+ box-shadow:0 0 0 1px rgba(255,220,90,.88),0 0 14px rgba(255,210,60,.26)!important;
 }
