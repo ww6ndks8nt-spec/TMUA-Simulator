@@ -46,6 +46,7 @@
  const destinations=[
   {label:'Overview',detail:'Workspace',run:()=>safeNav(showDashboardHub)},
   {label:'Paper library',detail:'Practice',run:()=>safeNav(showLibraryHub)},
+ {label:'Mental maths',detail:'Endless arithmetic and modular arithmetic',run:()=>safeNav(window.showMentalMaths)},
   {label:'Question bank',detail:'Practice',run:()=>studyNav('bank')},
   {label:'Attempt history',detail:'Review',run:()=>safeNav(showReviewHub)},
   {label:'Wrong-answer practice',detail:'Review',run:()=>safeNav(showWrongHub)},

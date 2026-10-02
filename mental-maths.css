@@ -1,0 +1,70 @@
+/* Mental maths uses the site's colour tokens and stays outside exam styling. */
+#mentalScreen{color:var(--du-ink,#111323)}
+#mentalScreen [hidden]{display:none!important}
+#mentalScreen .mm-modes{display:flex;gap:8px;flex-wrap:wrap;margin:0 16px 24px;padding:5px;background:var(--du-soft,#f6f6f8);border-radius:18px;width:fit-content}
+#mentalScreen .mm-modes button{padding:12px 20px;border:0;border-radius:14px;background:transparent;color:var(--du-muted,#707184);font:inherit;font-weight:650;cursor:pointer}
+#mentalScreen .mm-modes button[aria-pressed="true"]{background:var(--duck-gradient,#ffdd46);color:#30260b;box-shadow:0 3px 10px #48370e10}
+#mentalScreen .mm-layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:24px;margin:0 16px;align-items:start;max-width:1180px}
+#mentalScreen .mm-panel{background:var(--du-surface,#fff);border:1px solid var(--du-line,#eeedf1);border-radius:22px;padding:26px;box-shadow:var(--du-card-shadow,0 6px 25px #00000004)}
+#mentalScreen .mm-settings h2{font-size:20px!important;letter-spacing:-.5px!important;margin:0 0 10px}
+#mentalScreen .mm-muted{color:var(--du-muted,#707184)!important;line-height:1.6}
+#mentalScreen .mm-small{font-size:12px}
+#mentalScreen fieldset{border:0;padding:0;margin:20px 0}
+#mentalScreen .mm-category{display:flex;gap:10px;align-items:center;line-height:1.4;padding:10px 0;cursor:pointer;font-size:14px}
+#mentalScreen input[type=checkbox]{accent-color:#aa8100;width:17px;height:17px;flex:0 0 17px}
+#mentalScreen .mm-range{font-size:12px;line-height:1.8;color:var(--du-muted,#707184);border-top:1px solid var(--du-line,#eee);padding-top:16px}
+#mentalScreen .mm-timer-setting{display:flex;align-items:center;gap:10px;font-size:14px;margin-top:24px}
+#mentalScreen .mm-workspace{min-width:0;display:grid;gap:18px}
+#mentalScreen .mm-question-card{padding:30px clamp(18px,3vw,42px)}
+#mentalScreen .mm-question-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px}
+#mentalScreen .mm-skill{background:var(--du-soft,#f6f6f8);border-radius:20px;padding:7px 12px;font-weight:650}
+#mentalScreen .mm-clock{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--du-muted,#707184)}
+#mentalScreen h2.mm-prompt{font-size:clamp(29px,4vw,54px)!important;line-height:1.25!important;letter-spacing:-1.5px!important;font-weight:700!important;margin:36px 0 14px!important;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+#mentalScreen .mm-label{display:block;font-size:13px;font-weight:650;margin:20px 0 9px}
+#mentalScreen .mm-answer-row{display:flex;gap:9px;align-items:stretch}
+#mentalScreen #mmAnswer{min-width:0;width:100%;flex:1;padding:15px 16px;border:1px solid var(--du-line,#ddd);border-radius:13px;background:var(--du-bg,#fcfcfd);color:var(--du-ink,#111323);font:inherit;font-size:23px!important;line-height:1.3}
+#mentalScreen #mmAnswer[aria-invalid=true]{border-color:#b85440}
+#mentalScreen .mm-primary{border:0;border-radius:13px;background:var(--duck-gradient,#ffdd46);color:#30260b;padding:14px 22px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+#mentalScreen .mm-sign{border:1px solid var(--du-line,#ddd);border-radius:13px;background:var(--du-soft,#f6f6f8);color:var(--du-ink,#111323);font:inherit;padding:8px 12px;cursor:pointer}
+#mentalScreen button:disabled{opacity:.55;cursor:default}
+#mentalScreen :is(input,select,button):focus-visible{outline:3px solid #d2a700;outline-offset:3px}
+#mentalScreen select{width:100%;border:1px solid var(--du-line,#ddd);border-radius:12px;padding:12px;font:inherit;background:var(--du-bg,#fff);color:var(--du-ink,#111323)}
+#mentalScreen .mm-feedback{min-height:27px;margin-top:14px;font-size:14px;font-weight:600;line-height:1.5}
+#mentalScreen .mm-feedback[data-tone=correct]{color:#197052}
+#mentalScreen .mm-feedback[data-tone=wrong]{color:#a44332}
+html[data-duck-theme=dark] #mentalScreen .mm-feedback[data-tone=correct]{color:#7cddb1}
+html[data-duck-theme=dark] #mentalScreen .mm-feedback[data-tone=wrong]{color:#ffac98}
+#mentalScreen .mm-help-actions{display:flex;gap:24px;flex-wrap:wrap}
+#mentalScreen .mm-text-button{background:none;border:0;padding:4px 0;color:var(--du-ink,#111323);font:inherit;font-size:13px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+#mentalScreen .mm-hint,#mentalScreen .mm-example{background:var(--du-soft,#f6f6f8);border-radius:12px;padding:16px;line-height:1.7;font-size:14px}
+#mentalScreen .mm-explanation{border-top:1px solid var(--du-line,#eee);padding-top:14px;margin-top:20px;line-height:1.75;font-size:15px}
+#mentalScreen .mm-explanation h3{font-size:14px;margin:0}
+#mentalScreen .mm-lesson{border-left:4px solid #e4bc35}
+#mentalScreen .mm-lesson h2{font-size:22px!important;margin:0 0 10px}
+#mentalScreen .mm-lesson p{line-height:1.7;font-size:14px}
+#mentalScreen .mm-eyebrow{text-transform:uppercase;letter-spacing:1.5px;font-size:10px!important;font-weight:750;color:var(--du-muted,#707184);margin:0 0 8px}
+#mentalScreen .mm-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#mentalScreen .mm-stats>div{background:var(--du-surface,#fff);border:1px solid var(--du-line,#eee);border-radius:16px;padding:19px 15px}
+#mentalScreen .mm-stats span{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+#mentalScreen .mm-stats p{font-size:12px;color:var(--du-muted,#707184);margin:6px 0 0;line-height:1.4}
+#mentalScreen .mm-session-footer{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+#mentalScreen .mm-sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:850px){#mentalScreen .mm-layout{grid-template-columns:1fr}#mentalScreen #mmCategories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}#mentalScreen .mm-settings{padding:20px}#mentalScreen .mm-range{display:none}}
+@media(max-width:480px){#mentalScreen .mm-layout,#mentalScreen .mm-modes{margin-left:0;margin-right:0}#mentalScreen .mm-modes{width:100%;box-sizing:border-box}#mentalScreen .mm-modes button{flex:1;padding:12px 9px;font-size:13px}#mentalScreen .mm-stats{grid-template-columns:repeat(2,minmax(0,1fr))}#mentalScreen .mm-answer-row{flex-wrap:wrap}#mentalScreen #mmAnswer{flex:1 1 calc(100% - 64px)}#mentalScreen .mm-primary{width:100%}#mentalScreen h2.mm-prompt{letter-spacing:-.6px!important;margin-top:24px!important}}
+/* Keep settings compact and the signed-answer control readable on phones. */
+html body.duck-airy #mentalScreen .mm-category{margin:0!important;min-height:0!important;padding:9px 0!important;font-weight:500!important;color:var(--du-ink)!important}
+#mentalScreen :is(input,button,select){box-sizing:border-box}
+#mentalScreen #mmSettingsSummary{display:none;font-weight:650;cursor:pointer}
+html body.duck-airy #mentalScreen .mm-sign{background:var(--du-soft)!important;color:var(--du-ink)!important;border:1px solid var(--du-line)!important}
+#mentalScreen .mm-question-card{scroll-margin-top:160px}
+@media(max-width:850px){#mentalScreen #mmSettingsSummary{display:list-item;padding:2px 0}#mentalScreen .mm-settings-body{padding-top:20px}#mentalScreen{scroll-padding-top:145px}}
+@media(max-width:480px){#mentalScreen .mm-answer-row{display:grid;grid-template-columns:minmax(0,1fr) 48px}#mentalScreen #mmAnswer{width:100%}#mentalScreen .mm-primary{grid-column:1/-1}#mentalScreen .mm-sign{padding:6px}}
+/* The additional destination needs the two-row header on small desktops. */
+@media(min-width:1101px) and (max-width:1350px){
+ html body.duck-airy.duck-redesign #sideNav.duck-topbar{flex-wrap:wrap!important;justify-content:space-between;height:134px!important;gap:8px!important;padding:8px 14px!important}
+ html body.duck-airy.duck-redesign #sideNav.duck-topbar .side-nav-head{flex:1!important;order:0}
+ html body.duck-airy.duck-redesign #sideNav.duck-topbar .airy-header-account{order:1}
+ html body.duck-airy.duck-redesign #sideNav.duck-topbar .side-nav-items{flex:0 0 100%!important;order:2;justify-content:center!important}
+ html body.duck-airy.duck-redesign .screen.modern-ui.nav-aware{padding-top:174px!important}
+}
+html body.duck-airy #mentalScreen input[type="checkbox"]{width:17px!important;height:17px!important;min-width:17px!important;min-height:17px!important;max-height:17px!important;margin:0!important;padding:0!important;box-shadow:none!important}
