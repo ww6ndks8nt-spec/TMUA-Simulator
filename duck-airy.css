@@ -15,7 +15,7 @@ html body.duck-airy #sideNav :is(.du-nav-caption,.side-nav-foot,.side-nav-toggle
 html body.duck-airy #sideNav .side-nav-item{display:flex!important;flex-direction:row!important;align-items:center;justify-content:center;gap:10px!important;flex:0 0 auto!important;width:auto!important;min-height:44px!important;max-width:none!important;padding:10px 12px!important;margin:0!important;border:0!important;border-radius:999px!important;white-space:nowrap;color:var(--du-ink)!important;background:transparent!important;font-size:14px!important;font-weight:400!important;}
 html body.duck-airy #sideNav .side-nav-label{display:block!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important;}
 html body.duck-airy #sideNav .side-nav-icon{display:inline-flex!important;align-items:center;justify-content:center;width:20px!important;height:20px!important;margin:0!important;color:inherit;}
-html body.duck-airy #sideNav .side-nav-item.active,html body.duck-airy #sideNav .side-nav-item:hover{background:var(--duck-gradient)!important;color:#211b09!important;}
+html body.duck-airy #sideNav .side-nav-item.active,html body.duck-airy #sideNav .side-nav-item:hover:where(html:not([data-duck-theme="dark"]) *){background:var(--duck-gradient)!important;color:#211b09!important;}
 html body.duck-airy .airy-icon{width:22px;height:22px;display:block;flex-shrink:0;}
 html body.duck-airy .airy-nav-more{position:relative;flex:0 0 32px;}
 html body.duck-airy .airy-nav-more>summary{display:flex;align-items:center;justify-content:center;list-style:none;width:32px;height:40px;border-radius:50%;cursor:pointer;}
@@ -44,7 +44,7 @@ html body.duck-airy #sideNav .airy-brand-copy b{color:var(--du-ink);}
 html body.duck-airy #sideNav .side-nav-brand .duck-brand-word{font-size:21px!important;}
 html body.duck-airy #sideNav .airy-more-menu #duFindButton{display:flex!important;align-items:center;gap:10px;width:100%;padding:12px!important;margin:0!important;border:0;border-radius:12px;background:transparent;color:var(--du-ink);font-size:14px;}
 html body.duck-airy #sideNav .airy-more-menu #duFindButton span{display:block!important;}
-html body.duck-airy #sideNav .airy-more-menu #duFindButton:hover{background:var(--duck-gradient);color:#211b09;}
+html body.duck-airy #sideNav .airy-more-menu #duFindButton:hover:where(html:not([data-duck-theme="dark"]) *){background:var(--duck-gradient);color:#211b09;}
 html body.duck-airy #sideNav .side-nav-items{flex:1!important;}
 html body.duck-airy #sideNav .side-nav-item{height:44px!important;}
 html body.duck-airy #sideNav .side-nav-label{flex-shrink:0;}
@@ -74,7 +74,7 @@ html body.duck-airy .airy-dashboard{display:grid;grid-template-columns:minmax(23
 html body.duck-airy .airy-stats{grid-column:1;grid-row:1/3;display:flex;flex-direction:column;gap:16px;min-width:0;}
 html body.duck-airy #dashboardScreen .dash-stats{display:flex!important;flex-direction:column!important;gap:16px!important;margin:0!important;padding:0!important;background:transparent!important;}
 html body.duck-airy #dashboardScreen :is(.dash-stat,.mastery-card){display:flex!important;flex-direction:row!important;align-items:center;gap:22px!important;min-height:124px!important;height:124px;padding:24px 20px!important;margin:0!important;border:1px solid var(--du-line)!important;border-radius:25px!important;background:var(--du-surface)!important;box-shadow:var(--du-card-shadow)!important;overflow:hidden;}
-html body.duck-airy .airy-stat-icon{flex:0 0 62px;display:flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#fff9e5,#fff0bd);color:#f3ad00;}
+html body.duck-airy .airy-stat-icon{flex:0 0 62px;display:flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:50%;background:var(--duck-soft-gradient);color:#f3ad00;}
 html body.duck-airy .airy-stat-icon .airy-icon{width:32px;height:32px;stroke-width:2;}
 html body.duck-airy .airy-stat-copy{min-width:0;}
 html body.duck-airy #dashboardScreen .dash-stat .l,html body.duck-airy #dashboardScreen .mastery-kicker{font-size:14px!important;line-height:1.3!important;font-weight:400!important;color:var(--du-muted)!important;text-transform:none!important;letter-spacing:0!important;margin:0 0 6px!important;}
@@ -100,7 +100,7 @@ html body.duck-airy .airy-activity text{fill:var(--du-muted);font:12px Inter,"Se
 html body.duck-airy .airy-chart-grid{stroke:var(--du-line);stroke-width:1;}
 html body.duck-airy .airy-chart-total{position:absolute;right:0;top:0;padding:5px 10px;font-size:12px;border:1px solid var(--du-line);border-radius:11px;background:var(--du-surface);box-shadow:0 3px 8px #00000007;}
 html body.duck-airy .airy-activity-column rect{transition:filter .2s,opacity .2s;}
-html body.duck-airy .airy-activity-column:hover rect{filter:saturate(1.5) brightness(.98);}
+html body.duck-airy .airy-activity-column:hover:where(html:not([data-duck-theme="dark"]) *) rect{filter:saturate(1.5) brightness(.98);}
 html body.duck-airy .airy-chart-empty{position:absolute;inset:50% 0 auto;text-align:center;font-size:13px;color:var(--du-muted);}
 html body.duck-airy .studio-chart[data-chart-view="activity"] :is(#dashMasteryChart,.dash-chart-head){display:none!important;}
 html body.duck-airy .studio-chart[data-chart-view="performance"] .airy-activity{display:none!important;}
@@ -122,7 +122,7 @@ html body.duck-airy .airy-recent-title{font-size:14px;line-height:1.3;font-weigh
 html body.duck-airy .airy-paper-rating{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--du-muted);}
 html body.duck-airy .airy-dots{display:flex;gap:3px;}
 html body.duck-airy .airy-dots i{width:9px;height:9px;border-radius:50%;background:var(--du-line);}
-html body.duck-airy .airy-dots i.filled{background:linear-gradient(130deg,#ffe472,#ffbd05);}
+html body.duck-airy .airy-dots i.filled{background:var(--duck-accent-gradient);}
 html body.duck-airy :is(.airy-recent-score,.airy-recent-attempts){display:flex;flex-direction:column;gap:4px;padding-left:10px;border-left:1px solid var(--du-line);font-size:13px;white-space:nowrap;}
 html body.duck-airy :is(.airy-recent-score,.airy-recent-attempts) small{font-size:11px;color:var(--du-muted);}
 html body.duck-airy .airy-recent-row .bigbtn{font-size:12px!important;padding:10px 12px!important;min-height:39px!important;border:0!important;color:#28200b!important;background:var(--duck-gradient)!important;}
@@ -168,9 +168,9 @@ html body.duck-airy .modern-ui :is(.bigbtn,.study-btn,.review-go){border-radius:
 html body.duck-airy .modern-ui :is(.paper,.study-clickable-row){border-radius:18px!important;}
 html body.duck-airy :is(.modern-ui,#sideNav) :is(button,summary,[role="link"]):focus-visible{outline:2px solid #b89013;outline-offset:3px;}
 html body.duck-airy :is(.modern-ui,#sideNav) :is(.paper,.study-clickable-row,.airy-recent-row,.bigbtn,.account-circle,.side-nav-item){transition:transform .2s ease,box-shadow .2s ease,background .2s ease!important;}
-html body.duck-airy .modern-ui :is(.paper,.study-clickable-row,.airy-recent-row):hover{transform:translateY(-2px);box-shadow:0 8px 25px #bc981318;}
-html body.duck-airy .modern-ui :is(.paper,.study-clickable-row):hover{background:var(--duck-gradient)!important;color:#30260b!important;}
-html body.duck-airy .modern-ui .airy-recent-row:hover{border-color:#edcf69;}
+html body.duck-airy .modern-ui :is(.paper,.study-clickable-row,.airy-recent-row):hover:where(html:not([data-duck-theme="dark"]) *){transform:translateY(-2px);box-shadow:0 8px 25px #bc981318;}
+html body.duck-airy .modern-ui :is(.paper,.study-clickable-row):hover:where(html:not([data-duck-theme="dark"]) *){background:var(--duck-gradient)!important;color:#30260b!important;}
+html body.duck-airy .modern-ui .airy-recent-row:hover:where(html:not([data-duck-theme="dark"]) *){border-color:#edcf69;}
 html body.duck-airy .modern-ui :is(.bigbtn,.account-circle):active{transform:scale(.96);}
 html body.duck-airy .du-esat-back{position:absolute;right:6px;top:82px;font-size:12px!important;}
 html[data-duck-theme="dark"] body.duck-airy #dashboardScreen .studio-heading::after{opacity:.12;}
@@ -254,13 +254,13 @@ html[data-duck-theme="dark"] body.duck-airy #dashboardScreen .studio-heading::af
  html body.duck-airy #dashboardScreen .airy-focus>.du-next-item button{grid-column:2;grid-row:2/4;max-width:125px;}
 }
 
-/* One bright yellow gradient in both themes, and one stationary top bar. */
+/* Shared yellow gradients, with a softer dark-mode palette. */
 html body.duck-airy.duck-redesign{
  --duck-gradient:linear-gradient(120deg,#fff083 0%,#ffdd46 48%,#ffce28 100%);
  --du-gradient-ink:#111;--du-content-max:1380px;
 }
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign{
- --duck-gradient:linear-gradient(120deg,#fff083 0%,#ffdd46 48%,#ffce28 100%);
+ --duck-gradient:linear-gradient(120deg,#e3cc66 0%,#d9b735 48%,#cda51d 100%);
  --du-gradient-ink:#111;
 }
 html body.duck-airy.duck-redesign #sideNav.duck-topbar{
@@ -274,8 +274,8 @@ html body.duck-airy.duck-redesign #sideNav.duck-topbar .side-nav-items{backgroun
 html body.duck-airy.duck-redesign #sideNav.duck-topbar .side-nav-head{flex-basis:205px;}
 html body.duck-airy.duck-redesign #sideNav.duck-topbar .airy-header-account{padding-left:16px;border-left:1px solid var(--du-line);flex-basis:158px;}
 html body.duck-airy.duck-redesign #sideNav.duck-topbar .side-nav-item{padding:10px!important;gap:7px!important;}
-html body.duck-airy.duck-redesign #sideNav.duck-topbar :is(.side-nav-item.active,.side-nav-item:hover,.account-circle:hover,.airy-nav-more[open]>summary,.airy-nav-more:has(.active)>summary,.account-sign,.airy-search-menu:hover){background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;}
-html body.duck-airy.duck-redesign #sideNav.duck-topbar :is(.side-nav-item.active,.side-nav-item:hover) :is(span,svg){color:var(--du-gradient-ink)!important;}
+html body.duck-airy.duck-redesign #sideNav.duck-topbar :is(.side-nav-item.active,.side-nav-item:hover:where(html:not([data-duck-theme="dark"]) *),.account-circle:hover:where(html:not([data-duck-theme="dark"]) *),.airy-nav-more[open]>summary,.airy-nav-more:has(.active)>summary,.account-sign,.airy-search-menu:hover:where(html:not([data-duck-theme="dark"]) *)){background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;}
+html body.duck-airy.duck-redesign #sideNav.duck-topbar :is(.side-nav-item.active,.side-nav-item:hover:where(html:not([data-duck-theme="dark"]) *)) :is(span,svg){color:var(--du-gradient-ink)!important;}
 html body.duck-airy.duck-redesign .modern-ui .account-circles{display:none!important;}
 
 /* Readable text on every gold card, in both colour modes. */
@@ -286,7 +286,7 @@ html body.duck-airy.duck-redesign :is(#dashboardScreen,#reviewHubScreen,#resultS
 html body.duck-airy.duck-redesign :is(#dashboardScreen,#reviewHubScreen,#resultScreen,#wrongHubScreen) :is(.dash-stat,.mastery-card,.du-next-item,.review-paper-head,.scorehead,#wrongBuilder) :is(h2,h3,p,b,strong,small,span,div,label,a,button){color:var(--du-gradient-ink)!important;}
 html body.duck-airy.duck-redesign #dashboardScreen :is(.dash-stat,.mastery-card,.du-next-item) :is(.airy-stat-icon,.airy-paper-icon){background:#ffffff1f;color:var(--du-gradient-ink);}
 html body.duck-airy.duck-redesign #dashboardScreen .du-next-item :is(button,.bigbtn){background:#0000000c!important;color:var(--du-gradient-ink)!important;border:1px solid currentColor!important;}
-html body.duck-airy.duck-redesign #dashboardScreen .du-next-item button:hover{background:#00000018!important;}
+html body.duck-airy.duck-redesign #dashboardScreen .du-next-item button:hover:where(html:not([data-duck-theme="dark"]) *){background:#00000018!important;}
 html body.duck-airy.duck-redesign #dashboardScreen .airy-card-duck{width:230px;height:270px;bottom:-42px;right:-14px;transform:rotate(-4deg);}
 html body.duck-airy.duck-redesign #dashboardScreen .airy-card-duck img{object-fit:contain;}
 html body.duck-airy.duck-redesign #wrongHubScreen #wrongBuilder :is(select,option){background:var(--du-surface)!important;color:var(--du-ink)!important;}
@@ -295,19 +295,19 @@ html[data-duck-theme="dark"] body.duck-airy.duck-redesign #wrongHubScreen #wrong
 
 /* Category headers receive the same treatment on hover and keyboard focus. */
 html body.duck-airy.duck-redesign #libraryScreen .studio-collection>summary{border-radius:23px;transition:background .18s,box-shadow .18s;}
-html body.duck-airy.duck-redesign #libraryScreen .studio-collection>summary:is(:hover,:focus-visible){background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;box-shadow:0 6px 20px #98700018;}
-html body.duck-airy.duck-redesign #libraryScreen .studio-collection>summary:is(:hover,:focus-visible) :is(span,small,b){color:var(--du-gradient-ink)!important;}
-html body.duck-airy.duck-redesign #libraryScreen .studio-collection>summary:is(:hover,:focus-visible) .collection-num{background:#ffffff1f!important;}
+html body.duck-airy.duck-redesign #libraryScreen .studio-collection>summary:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)){background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;box-shadow:0 6px 20px #98700018;}
+html body.duck-airy.duck-redesign #libraryScreen .studio-collection>summary:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)) :is(span,small,b){color:var(--du-gradient-ink)!important;}
+html body.duck-airy.duck-redesign #libraryScreen .studio-collection>summary:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)) .collection-num{background:#ffffff1f!important;}
 
 /* Apply the requested text colour to existing gradient buttons and hover cards. */
 html body.duck-airy.duck-redesign .modern-ui :is(.bigbtn,.study-btn,.review-go,a.official-solution-link){background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;}
-html body.duck-airy.duck-redesign .modern-ui :is(.bigbtn,.study-btn,.review-go,a.official-solution-link):is(:hover,:focus-visible,:visited){color:var(--du-gradient-ink)!important;}
+html body.duck-airy.duck-redesign .modern-ui :is(.bigbtn,.study-btn,.review-go,a.official-solution-link):is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *),:visited){color:var(--du-gradient-ink)!important;}
 html body.duck-airy.duck-redesign #dashboardScreen .airy-recent-row .bigbtn{background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;}
 html body.duck-airy.duck-redesign #libraryScreen .du-collection-tab[aria-pressed="true"]{color:var(--du-gradient-ink)!important;}
-html body.duck-airy.duck-redesign #libraryScreen .paper:is(:hover,:focus-visible):not(:disabled){background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;}
-html body.duck-airy.duck-redesign #libraryScreen .paper:is(:hover,:focus-visible):not(:disabled) :is(.pn,.meta,.meta span),html body.duck-airy.duck-redesign #libraryScreen .paper.compact-paper:is(:hover,:focus-visible)::after{color:var(--du-gradient-ink)!important;}
-html body.duck-airy.duck-redesign :is(#bankScreen,#dashboardScreen) :is(#bankList,#dashboardTiming) .study-clickable-row:is(:hover,:focus-within){background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;}
-html body.duck-airy.duck-redesign :is(#bankScreen,#dashboardScreen) :is(#bankList,#dashboardTiming) .study-clickable-row:is(:hover,:focus-within) :is(.study-row-body,b,p,.bigbtn){color:var(--du-gradient-ink)!important;}
+html body.duck-airy.duck-redesign #libraryScreen .paper:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)):not(:disabled){background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;}
+html body.duck-airy.duck-redesign #libraryScreen .paper:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)):not(:disabled) :is(.pn,.meta,.meta span),html body.duck-airy.duck-redesign #libraryScreen .paper.compact-paper:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *))::after{color:var(--du-gradient-ink)!important;}
+html body.duck-airy.duck-redesign :is(#bankScreen,#dashboardScreen) :is(#bankList,#dashboardTiming) .study-clickable-row:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-within:where(html:not([data-duck-theme="dark"]) *)){background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;}
+html body.duck-airy.duck-redesign :is(#bankScreen,#dashboardScreen) :is(#bankList,#dashboardTiming) .study-clickable-row:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-within:where(html:not([data-duck-theme="dark"]) *)) :is(.study-row-body,b,p,.bigbtn){color:var(--du-gradient-ink)!important;}
 
 /* Artwork occupies only unused side margins and never receives clicks. */
 html body.duck-airy #deleteAccountForm{margin-top:16px;padding:16px;border:1px solid var(--du-line);border-radius:12px;background:var(--du-soft);}
@@ -372,7 +372,7 @@ html body.duck-airy.duck-redesign .duck-mascot .duck-egg{
  background:transparent!important;box-shadow:none;filter:drop-shadow(0 2px 2px #0002);
 }
 html body.duck-airy.duck-redesign .duck-mascot .duck-egg svg{display:block;width:100%;height:100%;}
-html body.duck-airy.duck-redesign .duck-mascot .duck-egg:hover{box-shadow:none;filter:drop-shadow(0 0 4px #e4bd32);}
+html body.duck-airy.duck-redesign .duck-mascot .duck-egg:hover:where(html:not([data-duck-theme="dark"]) *){box-shadow:none;filter:drop-shadow(0 0 4px #e4bd32);}
 html body.duck-airy.duck-redesign #dashboardScreen .airy-card-duck{width:220px;height:220px;bottom:-12px;right:-4px;transform:none;}
 
 /* Every paper uses the same compact title, difficulty and score row. */
@@ -394,11 +394,14 @@ html body.duck-airy.duck-redesign #libraryScreen .airy-paper-icon{width:36px;hei
 html body.duck-airy.duck-redesign #libraryScreen .airy-paper-open{
  display:block;padding:12px 13px;border-radius:24px;background:var(--duck-gradient);color:var(--du-gradient-ink);font-size:12px;font-weight:650;text-align:center;white-space:nowrap;
 }
-html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover,:focus-visible):not(:disabled){background:var(--duck-gradient)!important;border-color:#dfbe37!important;}
-html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover,:focus-visible):not(:disabled) :is(span,small,b,svg){color:var(--du-gradient-ink)!important;}
-html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover,:focus-visible):not(:disabled) .airy-paper-open{background:#ffffff66;}
-html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover,:focus-visible) .airy-dots i.filled{background:#715705;}
-html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover,:focus-visible) :is(.airy-recent-score,.airy-recent-attempts){border-color:#1112;}
+html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)):not(:disabled){background:var(--duck-gradient)!important;border-color:#dfbe37!important;}
+html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)):not(:disabled) :is(span,small,b,svg){color:var(--du-gradient-ink)!important;}
+/* Pair the icon colour with its badge background in both themes. */
+html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)):not(:disabled) .airy-paper-icon{background:#fff!important;color:#30260b!important;}
+html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)):not(:disabled) .airy-paper-icon svg{color:#30260b!important;}
+html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)):not(:disabled) .airy-paper-open{background:#ffffff66;}
+html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)) .airy-dots i.filled{background:#715705;}
+html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)) :is(.airy-recent-score,.airy-recent-attempts){border-color:#1112;}
 html body.duck-airy.duck-redesign #libraryScreen .airy-library-row:focus-visible{outline:3px solid #b48b00;outline-offset:3px;}
 
 /* Review navigation sits above the full-width question and solution. */
@@ -421,7 +424,7 @@ html body.duck-airy.duck-redesign #modernReviewScreen #modernReviewContent{min-w
  html body.duck-airy.duck-redesign #modernReviewScreen .modern-review-navigation{padding:12px!important;}
  html body.duck-airy.duck-redesign #modernReviewScreen .modern-review-question-group{gap:7px;}
 }
-@media(prefers-reduced-motion:reduce){html body.duck-airy :is(.modern-ui,#sideNav) *{animation:none!important;transition:none!important;}html body.duck-airy .modern-ui :is(.paper,.study-clickable-row,.airy-recent-row):hover{transform:none!important;}}
+@media(prefers-reduced-motion:reduce){html body.duck-airy :is(.modern-ui,#sideNav) *{animation:none!important;transition:none!important;}html body.duck-airy .modern-ui :is(.paper,.study-clickable-row,.airy-recent-row):hover:where(html:not([data-duck-theme="dark"]) *){transform:none!important;}}
 
 
 @media(max-width:1100px){html body.duck-airy.duck-redesign #modernReviewScreen .modern-review-question-group{grid-template-columns:repeat(10,minmax(0,1fr));}}
@@ -448,3 +451,9 @@ html body.duck-airy.duck-redesign :is(.airy-paper-open,.airy-open-button) .airy-
 html body.duck-airy.duck-redesign :is(.airy-paper-open,.airy-open-button) .airy-open-arrow{
  display:block;flex:0 0 16px;width:16px!important;height:16px!important;min-width:16px;position:static;transform:none;
 }
+
+/* Secondary yellow accents follow the same theme as buttons and cards. */
+html body.duck-airy.duck-redesign{--duck-accent-gradient:linear-gradient(130deg,#ffe472,#ffbd05);--duck-soft-gradient:linear-gradient(135deg,#fff9e5,#fff0bd);}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign{--duck-accent-gradient:linear-gradient(130deg,#d9bf59,#c29508);--duck-soft-gradient:linear-gradient(135deg,#51482c,#67552c);}
+html[data-duck-theme="dark"] body.duck-airy #dashboardScreen .studio-heading::after{background:radial-gradient(ellipse at 92% 27%,#bca15640 0%,#9b84301f 10%,transparent 25%),linear-gradient(172deg,transparent 61%,#7c693322 62%,#937a291c 100%);}
+html[data-duck-theme="dark"] body.duck-airy #dashboardScreen .studio-heading>.duck-mascot::before{background:linear-gradient(145deg,#ad934040,#8b742000);}

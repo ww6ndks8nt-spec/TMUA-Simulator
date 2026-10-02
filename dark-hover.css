@@ -1,0 +1,13 @@
+/* Dark mode keeps each control's resting fill and adds a yellow glow.
+   Legacy hover paints are limited to light mode at their original rules,
+   so active tabs and selected options retain their normal state colours. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign
+:is(#sideNav,.screen,dialog,#duckQuickFind,#profileSettings,#topbar,#substrip,#footbar,#navWindow,#endConfirm)
+:is(button,summary,[role="button"],[role="link"],.official-solution-link,.review-link,.mat-pdf-actions a,.mat-load-pdf,.study-clickable-row,.airy-recent-row,.arow.clickable):not(:disabled):not([aria-disabled="true"]):not(.locked):is(:hover,:focus-visible){
+ box-shadow:0 0 0 1px rgba(255,220,90,.88),0 0 14px rgba(255,210,60,.26)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign
+:is(#sideNav,.screen,dialog,#duckQuickFind,#profileSettings,#topbar,#substrip,#footbar,#navWindow,#endConfirm)
+:is(button,summary,[role="button"],[role="link"],.official-solution-link,.review-link,.mat-pdf-actions a,.mat-load-pdf,.study-clickable-row,.airy-recent-row,.arow.clickable):not(:disabled):not([aria-disabled="true"]):not(.locked):focus-visible{
+ outline:2px solid #ffdc5a!important;outline-offset:3px!important;
+}
