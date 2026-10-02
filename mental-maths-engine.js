@@ -1,8 +1,10 @@
 /* Pure question generation and marking; shared by the UI and regression checks. */
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.MentalMathsEngine=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
-const categories={multiply:'Multiplication',addsubtract:'Addition & subtraction',squares:'Squares',cubes:'Cubes',powers:'Powers',tricks:'Useful shortcuts',division:'Exact division',percent:'Percentages',surds:'Surds'};
+const categories={multiply:'Multiplication',addsubtract:'Addition & subtraction',squares:'Squares',cubes:'Cubes',powers:'Powers',tricks:'Useful shortcuts',division:'Exact division',percent:'Percentages',surds:'Surds',fractions:'Fractions',decimals:'Decimals'};
+const difficultyLevels=['easy','medium','hard'];
 const difficulties={
+ mixed:{label:'Mixed',description:'A balanced mix of Easy, Medium and Hard questions.',range:'Includes all three difficulty levels across your selected skills.',modRange:'Includes the full range of modular questions.'},
  easy:{label:'Easy',description:'Build confidence with small, mostly positive numbers.',range:'Multiplication: 0–12 · addition/subtraction: 0–100 (non-negative answers) · squares: 0–12 · cubes: 0–5 · surds: square-root basics.',modRange:'Moduli 2–5, small numbers up to 30, and short last-digit powers.',multiply:12,add:100,square:12,extraSquares:[],cube:5,powers:{2:5,3:3,5:2,10:3,11:2},division:12,divisors:[2,3,4,5,10],percent:[10,25,50],percentSteps:10,modulus:5,remainder:30,negative:20,modOperand:20,cycle:8},
  medium:{label:'Medium',description:'Practise signed numbers and useful everyday shortcuts.',range:'Multiplication: −25 to 25 · addition/subtraction: −500 to 500 · squares: 0–20, 25 and 30 · cubes: −7 to 7 · surds: simplify, multiply and divide.',modRange:'Moduli 2–9, numbers up to 120, and last-digit powers up to 20.',multiply:25,add:500,square:20,extraSquares:[25,30],cube:7,powers:{2:8,3:4,5:3,10:4,11:3},division:25,divisors:[2,3,4,5,6,7,8,9,10,11,12],percent:[1,5,10,20,25,50,75],percentSteps:20,modulus:9,remainder:120,negative:75,modOperand:60,cycle:20},
  hard:{label:'Hard',description:'The original full-range practice, including larger powers and shortcuts.',range:'Multiplication: −50 to 50 · addition/subtraction: −2000 to 2000 · squares: 0–32 and useful larger values · cubes: −10 to 10 · surds: combine, rationalise and use conjugates.',modRange:'Moduli 2–12, numbers up to 250, and last-digit powers up to 30.',multiply:50,add:2000,square:32,extraSquares:[35,40,45,50,60,70,80,90,100],cube:10,powers:{2:12,3:6,5:5,10:6,11:5},division:50,divisors:[2,3,4,5,6,7,8,9,10,11,12,25],percent:[1,5,10,12.5,20,25,50,75],percentSteps:40,modulus:12,remainder:250,negative:150,modOperand:120,cycle:30}
@@ -26,6 +28,53 @@ function mark(raw,q){
  if(value===null)return {valid:false,correct:false,message:'Type a number, decimal or simple fraction, such as −24, 12.5 or 1/2.'};
  if(q.modulus&&(!Number.isInteger(value)||value<0||value>=q.modulus))return {valid:false,correct:false,message:'Give the least non-negative remainder: an integer from 0 to '+(q.modulus-1)+'.'};
  return {valid:true,correct:Math.abs(value-q.answer)<1e-9,value};
+}
+function fractionText(n,d){
+ if(d<0){n=-n;d=-d;}let a=Math.abs(n),b=d;while(b){[a,b]=[b,a%b];}
+ return d/a===1?fmt(n/a):fmt(n/a)+'/'+(d/a);
+}
+function generateFraction(level,rng){
+ const int=(a,b)=>a+Math.floor(rng()*(b-a+1)),pick=a=>a[int(0,a.length-1)];
+ const easy=level==='easy',hard=level==='hard';
+ let b=pick(easy?[2,3,4,5,10]:hard?[3,4,5,6,7,8,9,10,12,15,16]:[2,3,4,5,6,8,10,12]),d=easy?b:pick([2,3,4,5,6,8,10,12]);
+ let a=int(1,hard?2*b:b-1),c=int(1,hard?2*d:d-1);if(hard&&rng()<.4)a=-a;if(hard&&rng()<.4)c=-c;
+ const op=pick(easy?['+','−']:['+','−','×','÷']);if(easy&&op==='−'&&a<c)[a,c]=[c,a];
+ let n,den,hint,method;
+ if(op==='+'||op==='−'){
+  let x=b,y=d;while(y){[x,y]=[y,x%y];}den=b*d/x;const left=a*(den/b),right=c*(den/d);n=op==='+'?left+right:left-right;
+  hint=b===d?'The denominators already match. Combine the numerators and keep the denominator.':'Find a common denominator, rewrite both fractions, then combine the numerators.';
+  method=operand(left)+'/'+den+' '+op+' '+operand(right)+'/'+den+' = '+operand(n)+'/'+den;
+ }else if(op==='×'){
+  n=a*c;den=b*d;hint='Cancel common factors across the two fractions, then multiply the numerators and denominators.';method='('+operand(a)+' × '+operand(c)+') / ('+b+' × '+d+') = '+operand(n)+'/'+den;
+ }else{
+  n=a*d;den=b*c;hint='Dividing by a non-zero fraction means multiplying by its reciprocal.';method=operand(a)+'/'+b+' × '+d+'/'+operand(c)+' = '+operand(n)+'/'+operand(den);
+ }
+ const answerDisplay=fractionText(n,den);
+ return {difficulty:level,category:'fractions',label:'Fractions',prompt:operand(a)+'/'+b+' '+op+' '+operand(c)+'/'+d,answer:n/den,answerDisplay,hint,explanation:method+'. In simplest form: '+answerDisplay+'.',answerHelp:'Type a fraction such as 3/4, or an equivalent number. Equivalent fractions are accepted.'};
+}
+function generateDecimal(level,rng){
+ const int=(a,b)=>a+Math.floor(rng()*(b-a+1)),pick=a=>a[int(0,a.length-1)];
+ const easy=level==='easy',hard=level==='hard',scale=easy?10:100;
+ const dec=n=>fmt(Number(n.toFixed(6)));
+ const literal=n=>{const text=dec(n);return text.includes('.')?text:text+'.0';};
+ let a=int(1,easy?99:hard?2500:999),b=int(1,easy?99:hard?2500:999);if(hard&&rng()<.4)a=-a;if(hard&&rng()<.4)b=-b;
+ const op=pick(easy?['+','−']:['+','−','×','÷']);let left,right,n,den,hint,explanation;
+ if(op==='+'||op==='−'){
+  if(easy&&op==='−'&&a<b)[a,b]=[b,a];left=a/scale;right=b/scale;n=op==='+'?a+b:a-b;den=scale;
+  hint='Line up the decimal places. You can work in '+(scale===10?'tenths':'hundredths')+' first.';
+  explanation=operand(a)+' '+op+' '+operand(b)+' = '+fmt(n)+' '+(scale===10?'tenths':'hundredths')+'. Dividing by '+scale+' gives '+dec(n/den)+'.';
+ }else if(op==='×'){
+  const unit=hard?100:10;a=int(1,hard?299:99);b=int(1,hard?299:99);if(hard&&rng()<.4)a=-a;if(hard&&rng()<.4)b=-b;
+  left=a/unit;right=b/unit;n=a*b;den=unit*unit;
+  hint='Multiply as integers, then put back '+(hard?'four':'two')+' decimal places in total.';
+  explanation=operand(a)+' × '+operand(b)+' = '+fmt(n)+'. Divide by '+den+' to get '+dec(n/den)+'.';
+ }else{
+  const q=int(1,hard?199:50),divisor=pick([2,4,5,8,10,20,25]);const sign=hard&&rng()<.5?-1:1;
+  left=sign*q*divisor/(scale*10);right=divisor/10;n=sign*q;den=scale;
+  hint='Multiply both numbers by 10 to make the divisor a whole number, then divide.';
+  explanation=dec(left)+' ÷ '+dec(right)+' = '+dec(left*10)+' ÷ '+divisor+' = '+dec(n/den)+'.';
+ }
+ return {difficulty:level,category:'decimals',label:'Decimals',prompt:(left<0?'('+literal(left)+')':literal(left))+' '+op+' '+(right<0?'('+literal(right)+')':literal(right)),answer:n/den,answerDisplay:dec(n/den),hint,explanation,answerHelp:'Type the decimal answer using a decimal point, for example 0.75. Equivalent fractions are accepted.'};
 }
 function generateSurd(level,rng){
  levelSettings(level);
@@ -71,6 +120,10 @@ function generateSurd(level,rng){
  return {difficulty:level,category:'surds',label:'Surds',kind,prompt,answer,answerDisplay,hint,explanation,answerHelp};
 }
 function generate(category,rng=Math.random,level='hard'){
+ if(level==='mixed')level=difficultyLevels[Math.floor(rng()*difficultyLevels.length)];
+ levelSettings(level);
+ if(category==='fractions')return generateFraction(level,rng);
+ if(category==='decimals')return generateDecimal(level,rng);
  if(category==='surds')return generateSurd(level,rng);
  const d=levelSettings(level),easy=level==='easy';
  const int=(a,b)=>a+Math.floor(rng()*(b-a+1));
@@ -129,6 +182,7 @@ const lessons=[
  {id:'cycles',title:'6 · Powers and last digits',text:'For powers, keep multiplying by the base and reducing. Remainders often repeat in a cycle. The last digit is the remainder modulo 10.',example:'Powers of 3 end in 3, 9, 7, 1, then repeat. Since 14 = 3 × 4 + 2, the last digit of 3¹⁴ is the second in the cycle: 9.',tip:'If the exponent is an exact multiple of the cycle length, use the last entry of the cycle, not the first.'}
 ];
 function generateMod(lesson,rng=Math.random,level='hard'){
+ if(level==='mixed')level=difficultyLevels[Math.floor(rng()*difficultyLevels.length)];
  const d=levelSettings(level);
  if(!lessons.some(l=>l.id===lesson))throw new Error('Unknown modular lesson: '+lesson);
  const int=(a,b)=>a+Math.floor(rng()*(b-a+1)),pick=a=>a[int(0,a.length-1)];
@@ -152,5 +206,5 @@ function generateMod(lesson,rng=Math.random,level='hard'){
  return {difficulty:level,category:lesson,label:lessons.find(l=>l.id===lesson)?.title.split(' · ')[1]||'Modular arithmetic',prompt,answer,hint,explanation,modulus:m,operands:[a,b].filter(x=>x!==undefined),operation:op};
 }
 function shuffle(a,rng=Math.random){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-return {categories,difficulties,lessons,generate,generateMod,parseAnswer,mark,mod,fmt,shuffle};
+return {categories,difficulties,difficultyLevels,lessons,generate,generateMod,parseAnswer,mark,mod,fmt,shuffle};
 });

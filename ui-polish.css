@@ -60,3 +60,92 @@ html[data-duck-theme="dark"] body.duck-airy.duck-redesign #studyScreen .study-an
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign #testMain .opt.sel:not(.correct):not(.wrong){
  background:rgba(255,220,90,.13)!important;box-shadow:inset 4px 0 0 #d1a719!important;
 }
+
+/* Extend the dark home-card treatment to review, mistakes and results. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #mentalScreen.modern-ui{
+ background:var(--du-bg)!important;color:var(--du-ink)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#reviewHubScreen,#wrongHubScreen,#resultScreen) :is(.review-paper-head,.scorehead),
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #wrongHubScreen #wrongBuilder{
+ --du-ink:#f4f5fb;--du-muted:#b5bac8;--du-gradient-ink:#f4f5fb;
+ background:var(--du-bg)!important;color:var(--du-ink)!important;
+ border:1px solid #d8bd52!important;
+ box-shadow:0 0 12px rgba(255,210,60,.18),inset 0 0 0 1px rgba(255,220,90,.08)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#reviewHubScreen,#wrongHubScreen,#resultScreen) :is(.review-paper-head,.scorehead) :is(h2,h3,p,b,strong,small,span,div,label,a,button),
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #wrongHubScreen #wrongBuilder :is(h2,h3,p,b,strong,small,span,div,label,a,button){color:var(--du-ink)!important;}
+/* Keep the header's outer glow visible along its straight edges. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#reviewHubScreen,#wrongHubScreen) .review-paper{
+ overflow:visible!important;background:transparent!important;border:0!important;box-shadow:none!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#reviewHubScreen,#wrongHubScreen) .review-paper-head{border-radius:18px!important;}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #reviewHubScreen .review-attempt{border-radius:12px;margin-top:8px;}
+/* Filled actions use the same black-and-gold treatment as their panels. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#reviewHubScreen,#wrongHubScreen,#resultScreen) :is(.bigbtn,.study-btn,.review-go,a.official-solution-link),
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #wrongHubScreen #wrongBuilder :is(.bigbtn,.study-btn,.review-go){
+ background:var(--du-bg)!important;color:#f4f5fb!important;border:1px solid #d8bd52!important;
+ box-shadow:0 0 12px rgba(255,210,60,.18),inset 0 0 0 1px rgba(255,220,90,.08)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#reviewHubScreen,#wrongHubScreen,#resultScreen) :is(.bigbtn,.study-btn,.review-go):disabled,
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #wrongHubScreen #wrongBuilder button:disabled{box-shadow:none!important;}
+/* Neutral backgrounds for both populated and empty mistake-history boxes. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #wrongHubScreen :is(.wrong-empty,.review-attempt,.resolved-error-list,.wrong-row,.random-row,.resolved-row){
+ background:var(--du-bg)!important;color:var(--du-ink)!important;border-color:var(--du-line)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #wrongHubScreen #wrongBuilder :is(select,option){
+ --du-ink:#f4f5fb;background:var(--du-bg)!important;color:var(--du-ink)!important;border-color:var(--du-line)!important;
+}
+
+/* Bright, softly glowing performance line in dark mode only. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen #dashMasteryChart path[stroke]{
+ stroke:#ffdc5a!important;stroke-width:2.5;
+ filter:drop-shadow(0 0 2px rgba(255,220,90,.8)) drop-shadow(0 0 6px rgba(255,210,60,.4));
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen #dashMasteryChart circle{
+ fill:#ffdc5a!important;stroke:var(--du-surface)!important;
+ filter:drop-shadow(0 0 3px rgba(255,210,60,.5));
+}
+
+/* Shared black-and-gold content panels throughout the dark workspace. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign
+:is(#dashboardScreen,#libraryScreen,#reviewHubScreen,#wrongHubScreen,#bankScreen,#bookmarksScreen,#journalScreen,#plannerScreen,#studyScreen,#modernReviewScreen,#mentalScreen,#startScreen,#resultScreen)
+:is(.dash-panel,.studio-chart,.studio-benchmarks,.dash-split-card,.airy-recent,.airy-analysis,.study-panel,.study-list-row,.study-plan,.study-solution,.modern-review-card,.modern-review-sidebar,.mm-panel,.mm-stats>div,.du-paper-filters,.paper,.airy-library-row,.review-attempt,.wrong-empty,.resolved-error-list,.spec,.pinbox,.leaderboard):not(.airy-recent>.dash-panel),
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#startScreen,#resultScreen,#loginScreen)>.card,
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign :is(#profileSettings,#duckQuickFind){
+ background:var(--du-bg)!important;color:var(--du-ink)!important;
+ border:1px solid #d8bd52!important;
+ box-shadow:0 0 12px rgba(255,210,60,.18),inset 0 0 0 1px rgba(255,220,90,.08)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #libraryScreen .studio-collection>summary{
+ background:var(--du-bg)!important;border:1px solid #d8bd52!important;
+ box-shadow:0 0 12px rgba(255,210,60,.18),inset 0 0 0 1px rgba(255,220,90,.08)!important;
+}
+/* Clickable column headings retain keyboard focus and announce sort direction. */
+html body.duck-airy.duck-redesign #dashboardScreen #dashTopics .topic-sort{
+ appearance:none;display:inline-flex;align-items:center;gap:5px;padding:6px 2px;
+ border:0;background:transparent;color:inherit;font:inherit;text-transform:inherit;
+ letter-spacing:inherit;cursor:pointer;white-space:nowrap;border-radius:5px;
+}
+html body.duck-airy.duck-redesign #dashboardScreen #dashTopics .topic-sort:focus-visible{outline:2px solid #d8b638;outline-offset:3px;}
+html body.duck-airy.duck-redesign #dashboardScreen #dashTopics [role="columnheader"]:nth-child(n+3){text-align:right;}
+html body.duck-airy.duck-redesign #dashboardScreen #dashTopics [role="columnheader"][aria-sort]:not([aria-sort="none"]) .topic-sort{font-weight:800;}
+/* A luminous accuracy line, with its endpoint centred on the exact percentage. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen #dashTopics .topic-bar{
+ height:3px!important;background:#333943!important;overflow:visible!important;position:relative;border-radius:99px!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen #dashTopics .topic-fill{
+ height:3px!important;position:relative;background:#ffdc5a!important;
+ box-shadow:0 0 5px rgba(255,220,90,.75),0 0 11px rgba(255,210,60,.35);
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen #dashTopics .topic-fill::after{
+ content:"";position:absolute;right:0;top:50%;transform:translate(50%,-50%);
+ width:10px;height:10px;box-sizing:border-box;border-radius:50%;
+ background:var(--du-bg);border:2px solid #ffdc5a;
+ box-shadow:0 0 5px rgba(255,220,90,.85),0 0 11px rgba(255,210,60,.4);
+}
+@media(max-width:900px){
+ html body.duck-airy.duck-redesign #dashboardScreen .airy-topics>.dash-panel{overflow-x:auto!important;}
+ html body.duck-airy.duck-redesign #dashboardScreen #dashTopics{min-width:720px!important;}
+ html body.duck-airy.duck-redesign #dashboardScreen #dashTopics .topic-row{grid-template-columns:minmax(145px,1.3fr) minmax(150px,2fr) 70px 100px 100px!important;}
+ html body.duck-airy.duck-redesign #dashboardScreen #dashTopics :is(.topic-attempts,.topic-time){display:block!important;}
+}

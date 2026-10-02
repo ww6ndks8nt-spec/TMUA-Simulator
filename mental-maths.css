@@ -43,7 +43,7 @@ html[data-duck-theme=dark] #mentalScreen .mm-feedback[data-tone=wrong]{color:#ff
 #mentalScreen .mm-lesson h2{font-size:22px!important;margin:0 0 10px}
 #mentalScreen .mm-lesson p{line-height:1.7;font-size:14px}
 #mentalScreen .mm-eyebrow{text-transform:uppercase;letter-spacing:1.5px;font-size:10px!important;font-weight:750;color:var(--du-muted,#707184);margin:0 0 8px}
-#mentalScreen .mm-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#mentalScreen .mm-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
 #mentalScreen .mm-stats>div{background:var(--du-surface,#fff);border:1px solid var(--du-line,#eee);border-radius:16px;padding:19px 15px}
 #mentalScreen .mm-stats span{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
 #mentalScreen .mm-stats p{font-size:12px;color:var(--du-muted,#707184);margin:6px 0 0;line-height:1.4}
@@ -68,3 +68,5 @@ html body.duck-airy #mentalScreen .mm-sign{background:var(--du-soft)!important;c
  html body.duck-airy.duck-redesign .screen.modern-ui.nav-aware{padding-top:174px!important}
 }
 html body.duck-airy #mentalScreen input[type="checkbox"]{width:17px!important;height:17px!important;min-width:17px!important;min-height:17px!important;max-height:17px!important;margin:0!important;padding:0!important;box-shadow:none!important}
+
+@media(max-width:480px){#mentalScreen .mm-stats>div:last-child{grid-column:1/-1}}

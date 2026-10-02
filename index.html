@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-02.mental-surds">
+<meta name="ducktmua-build" content="2026-10-02.category-copy">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='dark'?'dark':'light';}catch(e){document.documentElement.dataset.duckTheme='light';}
 </script>
@@ -2585,7 +2585,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
   <div class="mm-modes" role="group" aria-label="Training mode"><button id="mmPracticeMode" type="button" aria-pressed="true">Mental maths practice</button><button id="mmModMode" type="button" aria-pressed="false">Learn modular arithmetic</button></div>
   <div class="mm-layout">
    <aside class="mm-panel mm-settings" aria-label="Practice settings"><details id="mmSettingsDetails" open><summary id="mmSettingsSummary">Practice settings</summary><div class="mm-settings-body">
-    <label class="mm-label" for="mmDifficulty">Difficulty</label><select id="mmDifficulty" aria-describedby="mmDifficultyHelp"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select><p id="mmDifficultyHelp" class="mm-muted mm-small"></p>
+    <label class="mm-label" for="mmDifficulty">Difficulty</label><select id="mmDifficulty" aria-describedby="mmDifficultyHelp"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option><option value="mixed">Mixed</option></select><p id="mmDifficultyHelp" class="mm-muted mm-small"></p>
     <div id="mmArithmeticSettings"><h2>Choose your mix</h2><p class="mm-muted">Practise everything, or focus on a skill.</p><fieldset id="mmCategories"><legend class="mm-sr">Question types</legend></fieldset><p class="mm-range" id="mmRange"></p></div>
     <div id="mmModSettings" hidden><h2>Learn, then practise</h2><label class="mm-label" for="mmLesson">Topic</label><select id="mmLesson"></select><p class="mm-muted">Start with remainders and work down the topics. Each topic generates fresh questions.</p></div>
     <label class="mm-timer-setting"><input type="checkbox" id="mmAutoCheck" checked> Automatically check correct answers</label><p class="mm-muted mm-small">Correct answers are recognised after a brief typing pause. Wrong or unfinished input is only marked when you press Check answer.</p>
@@ -2607,8 +2607,8 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
      <div id="mmExplanation" class="mm-explanation" hidden><h3>How to work it out</h3><p id="mmExplanationText"></p></div>
      <p id="mmKeyboardHelp" class="mm-muted mm-small"></p>
     </section>
-    <section class="mm-stats" aria-label="This session"><div><span id="mmCompleted">0</span><p>Completed</p></div><div><span id="mmAccuracy">—</span><p>First-check accuracy</p></div><div><span id="mmStreak">0</span><p>Current streak</p></div><div><span id="mmBest">0</span><p>Best streak</p></div></section>
-    <div class="mm-session-footer"><p class="mm-muted mm-small">This session · separate totals for each mode and difficulty</p><button id="mmReset" type="button" class="mm-text-button">Start a fresh session</button></div>
+    <section class="mm-stats" aria-label="This session"><div><span id="mmCompleted">0</span><p>Completed</p></div><div><span id="mmAccuracy">—</span><p>First-check accuracy</p></div><div><span id="mmStreak">0</span><p>Current streak</p></div><div><span id="mmBest">0</span><p>Best streak</p></div><div><span id="mmAverageTime">—</span><p>Average time / question</p></div></section>
+    <div class="mm-session-footer"><p class="mm-muted mm-small">This session · separate totals for each mode and difficulty. Average time includes completed and revealed questions; time away from this tab is excluded.</p><button id="mmReset" type="button" class="mm-text-button">Start a fresh session</button></div>
    </div>
   </div>
  </div>
@@ -2753,7 +2753,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
           <option value="0">No timer</option>
         </select>
       </label>
-    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Custom, accessible tmua practice mocks</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Challenge sets<small>Extra-challenging practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote custom-set-note">Standard: 120 min · Challenge mode: 105 min.</p><div class="paper-grid" id="gridCustom"></div></div></details><details class="studio-collection"><summary><span class="collection-num">04</span><span class="collection-name">MAT multiple choice questions<small>Helpful for extra Paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote">2007–2023 and two specimen sets · 190 questions. Questions and answer options are displayed directly in the simulator. Original diagrams are included where needed; solutions PDFs are linked in review. Standard: 37 min 30 sec · Challenge mode: 30 min.</p><div class="paper-grid" id="gridMAT"></div></div></details><details class="studio-collection" id="stepPracticeCollection"><summary><span class="collection-num">05</span><span class="collection-name">STEP adaptation papers<small>Mixed difficulty · Paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><p class="libnote">13 practice years · 20 questions and 75 minutes per paper. Worked solutions and STEP source references appear in review. Related source parts are kept in different years. These are independent practice papers; difficulty and solving times are editorial estimates.</p><div class="paper-grid" id="gridSTEP"></div></div></details><details class="studio-collection" id="communityPapersCollection"><summary><span class="collection-num">06</span><span class="collection-name">Community papers<small>Contributed and transcribed mock papers</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCommunity"></div></div></details><p class="libnote" id="cloudDescription">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
+    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025</small><small>The 2024 and 2025 papers were supplied by Qiuyun (qiuyunshujing in mandarin)</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Practice sets made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Challenge sets<small>Challenge sets made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCustom"></div></div></details><details class="studio-collection"><summary><span class="collection-num">04</span><span class="collection-name">MAT multiple choice questions<small>Useful additional paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridMAT"></div></div></details><details class="studio-collection" id="stepPracticeCollection"><summary><span class="collection-num">05</span><span class="collection-name">STEP adaptation papers<small>Useful additional paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridSTEP"></div></div></details><details class="studio-collection" id="communityPapersCollection"><summary><span class="collection-num">06</span><span class="collection-name">Community papers<small>Public community papers not made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCommunity"></div></div></details><p class="libnote" id="cloudDescription">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
 </div>
 
 <!-- ============ REVIEW HUB ============ -->
@@ -4467,6 +4467,41 @@ function renderDashboardChart(firstRows){
     +'<text x="14" y="'+((y0+y1)/2)+'" transform="rotate(-90 14 '+((y0+y1)/2)+')" text-anchor="middle" font-size="11" fill="#747985">Estimated score</text>'
     +'</svg>';
 }
+let dashboardTopicSort={owner:null,key:'accuracy',direction:'descending',lastClicked:null};
+function renderDashboardTopics(focusKey=null){
+ const host=$('dashTopics');host.innerHTML='';host.setAttribute('role','table');host.setAttribute('aria-label','Topic performance');
+ if(dashboardTopicSort.owner!==currentUser)dashboardTopicSort={owner:currentUser,key:'accuracy',direction:'descending',lastClicked:null};
+ const state=dashboardTopicSort;
+ const value=z=>state.key==='topic'?z.topic:state.key==='attempted'?z.attempted:state.key==='time'?(z.timed?z.timeMs/z.timed:null):z.correct/Math.max(1,z.attempted);
+ const rows=dashboardTopicStats().slice().sort((a,b)=>{
+  const av=value(a),bv=value(b);if(av===null||bv===null)return av===bv?a.topic.localeCompare(b.topic):av===null?1:-1;
+  const cmp=typeof av==='string'?av.localeCompare(bv):av-bv;
+  return (state.direction==='descending'?-cmp:cmp)||a.topic.localeCompare(b.topic);
+ });
+ if(!rows.length){host.innerHTML='<div class="dash-chart-empty" style="height:120px">No attempted questions yet.</div>';return;}
+ const head=document.createElement('div');head.className='topic-row topic-head';head.setAttribute('role','row');
+ for(const [key,label,className] of [['topic','Topic',''],['accuracy','Accuracy',''],['score','Score',''],['attempted','Attempted','topic-attempts'],['time','Avg time','topic-time']]){
+  const cell=document.createElement('div');cell.className=className;cell.setAttribute('role','columnheader');
+  const active=state.key===key;cell.setAttribute('aria-sort',active?state.direction:'none');
+  const button=document.createElement('button');button.type='button';button.className='topic-sort';button.dataset.topicSort=key;
+  const next=state.lastClicked===key&&state.direction==='descending'?'ascending':'descending';
+  button.setAttribute('aria-label',label+': sort '+next);button.title='Sort '+next;
+  button.append(document.createTextNode(label+' '));const arrow=document.createElement('span');arrow.setAttribute('aria-hidden','true');arrow.textContent=active?(state.direction==='descending'?'↓':'↑'):'↕';button.appendChild(arrow);
+  button.addEventListener('click',()=>{state.key=key;state.direction=next;state.lastClicked=key;renderDashboardTopics(key);});cell.appendChild(button);head.appendChild(cell);
+ }
+ host.appendChild(head);
+ for(const z of rows){
+  const exact=100*z.correct/Math.max(1,z.attempted),pct=Math.round(exact);
+  const row=document.createElement('div');row.className='topic-row';row.setAttribute('role','row');row.dataset.topic=z.topic;
+  row.innerHTML='<div class="topic-name" role="cell">'+escapeHtml(z.topic)+'</div>'
+   +'<div role="cell"><div class="topic-bar" role="meter" aria-label="'+escapeHtml(z.topic)+' accuracy" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+exact.toFixed(4)+'" aria-valuetext="'+pct+'%"><div class="topic-fill" style="width:'+exact.toFixed(4)+'%"></div></div></div>'
+   +'<div class="topic-num" role="cell">'+pct+'%</div>'
+   +'<div class="topic-num topic-attempts" role="cell">'+z.attempted+'</div>'
+   +'<div class="topic-num topic-time" role="cell">'+(z.timed?fmtQuestionTime(z.timeMs/z.timed):'—')+'</div>';
+  host.appendChild(row);
+ }
+ if(focusKey)host.querySelector('[data-topic-sort="'+focusKey+'"]').focus({preventScroll:true});
+}
 function buildDashboard(){
   const first=dashboardFirstAttempts();
   const all=dashboardAllAttemptRows();
@@ -4514,25 +4549,7 @@ function buildDashboard(){
   renderDashboardChart(first);
   document.querySelectorAll('#dashRangeToggle .dash-range-btn').forEach(b=>b.classList.toggle('active',b.dataset.range===dashboardRange));
 
-  const topicHost=$('dashTopics');topicHost.innerHTML='';
-  const topicStats=dashboardTopicStats();
-  if(!topicStats.length){
-    topicHost.innerHTML='<div class="dash-chart-empty" style="height:120px">No attempted questions yet.</div>';
-  }else{
-    const head=document.createElement('div');head.className='topic-row topic-head';
-    head.innerHTML='<div>Topic</div><div>Accuracy</div><div>Score</div><div class="topic-attempts">Attempted</div><div class="topic-time">Avg time</div>';
-    topicHost.appendChild(head);
-    topicStats.forEach(z=>{
-      const pct=Math.round(100*z.correct/Math.max(1,z.attempted));
-      const row=document.createElement('div');row.className='topic-row';
-      row.innerHTML='<div class="topic-name">'+escapeHtml(z.topic)+'</div>'
-        +'<div class="topic-bar"><div class="topic-fill" style="width:'+pct+'%"></div></div>'
-        +'<div class="topic-num">'+pct+'%</div>'
-        +'<div class="topic-num topic-attempts">'+z.attempted+'</div>'
-        +'<div class="topic-num topic-time">'+(z.timed?fmtQuestionTime(z.timeMs/z.timed):'—')+'</div>';
-      topicHost.appendChild(row);
-    });
-  }
+  renderDashboardTopics();
 
   const recentHost=$('dashRecent');recentHost.innerHTML='';
   const recentRows=all.slice(0,10);
@@ -6871,11 +6888,11 @@ refreshAccountCircles();
 <link rel="stylesheet" href="duck-airy.css?v=20261002-ui-polish">
 <script src="duck-airy.js?v=20261002-ui-polish"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20261002-dark-glow">
-<link rel="stylesheet" href="mental-maths.css?v=20261002-1">
-<script src="mental-maths-engine.js?v=20261002-surds"></script>
-<script src="mental-maths.js?v=20261002-surds"></script>
+<link rel="stylesheet" href="mental-maths.css?v=20261002-fractions-decimals">
+<script src="mental-maths-engine.js?v=20261002-fractions-decimals"></script>
+<script src="mental-maths.js?v=20261002-fractions-decimals"></script>
 <link rel="stylesheet" href="dark-hover.css?v=20261002-2">
-<link rel="stylesheet" href="ui-polish.css?v=20261002-1">
+<link rel="stylesheet" href="ui-polish.css?v=20261002-glow-topics">
 <script>cloudBoot();</script>
 </body>
 </html>
