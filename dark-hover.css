@@ -3,7 +3,7 @@
    so active tabs and selected options retain their normal state colours. */
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign
 :is(#sideNav,.screen,dialog,#duckQuickFind,#profileSettings,#topbar,#substrip,#footbar,#navWindow,#endConfirm)
-:is(button,summary,[role="button"],[role="link"],.official-solution-link,.review-link,.mat-pdf-actions a,.mat-load-pdf,.study-clickable-row,.airy-recent-row,.arow.clickable):not(:disabled):not([aria-disabled="true"]):not(.locked):is(:hover,:focus-visible){
+:is(button,summary,[role="button"],[role="link"],.official-solution-link,.review-link,.mat-pdf-actions a,.mat-load-pdf,.study-clickable-row,.airy-recent-row,.arow.clickable):not(:disabled):not([aria-disabled="true"]):not(.locked):not(.duck-play):not(.duck-egg):not(.side-nav-brand):not(details.study-panel>summary):is(:hover,:focus-visible){
  box-shadow:0 0 0 1px rgba(255,220,90,.88),0 0 14px rgba(255,210,60,.26)!important;
 }
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign

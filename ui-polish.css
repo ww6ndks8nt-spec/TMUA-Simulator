@@ -1,0 +1,62 @@
+/* Dropdown headers are complete controls with room for their outer glow. */
+html body.duck-airy.duck-redesign #libraryScreen .studio-collection{
+ overflow:visible!important;background:transparent!important;border:0!important;box-shadow:none!important;
+}
+html body.duck-airy.duck-redesign #libraryScreen .studio-collection>summary{
+ border:1px solid var(--du-line)!important;border-radius:24px!important;
+}
+html body.duck-airy.duck-redesign #libraryScreen .collection-content{border-top:0!important;}
+
+/* The journal disclosure's hit area includes the whole padded header. */
+html body.duck-airy.duck-redesign :is(#modernReviewScreen,#studyScreen) details.study-panel{padding:0!important;overflow:visible;}
+html body.duck-airy.duck-redesign :is(#modernReviewScreen,#studyScreen) details.study-panel>summary{
+ padding:20px 24px;cursor:pointer;border-radius:inherit;list-style-position:inside;
+}
+html body.duck-airy.duck-redesign :is(#modernReviewScreen,#studyScreen) details.study-panel[open]{padding-bottom:20px!important;}
+html body.duck-airy.duck-redesign :is(#modernReviewScreen,#studyScreen) details.study-panel>:not(summary){margin-left:24px;margin-right:24px;}
+html body.duck-airy.duck-redesign :is(#modernReviewScreen,#studyScreen) details.study-panel>label{display:block;}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign
+:is(#modernReviewScreen,#studyScreen) details.study-panel:has(>summary:is(:hover,:focus-visible)){
+ box-shadow:0 0 0 1px rgba(255,220,90,.88),0 0 14px rgba(255,210,60,.26)!important;
+}
+
+/* Reserve separate bottom-left and bottom-right spaces for action and artwork. */
+html body.duck-airy.duck-redesign #dashboardScreen .du-next-list>.du-next-item:first-child{
+ height:auto!important;min-height:352px!important;padding-bottom:178px!important;
+}
+html body.duck-airy.duck-redesign #dashboardScreen .du-next-item>.airy-continue-arrow{
+ left:24px;right:auto;top:auto;bottom:26px;
+}
+html body.duck-airy.duck-redesign #dashboardScreen .du-next-item>.airy-card-duck{
+ width:min(48%,160px);height:146px;right:14px;bottom:14px;transform:none;
+}
+
+/* Dark home-page cards have permanent yellow borders, not gold fills. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen :is(.dash-stat,.mastery-card,.du-next-item),
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen .du-next-list>.du-next-item:first-child{
+ --du-ink:#f4f5fb;--du-muted:#b5bac8;--du-gradient-ink:#f4f5fb;
+ background:var(--du-bg)!important;color:#f4f5fb!important;
+ border:1px solid #d8bd52!important;
+ box-shadow:0 0 12px rgba(255,210,60,.18),inset 0 0 0 1px rgba(255,220,90,.08)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen :is(.dash-stat,.mastery-card,.du-next-item) :is(h2,h3,p,b,strong,small,span,div,label,a),
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen .du-next-list>.du-next-item:first-child>:is(b,p,small){color:#f4f5fb!important;}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen :is(.dash-stat,.mastery-card,.du-next-item) :is(.airy-stat-icon,.airy-paper-icon){background:#292d37!important;color:#ffdc5a!important;}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen .du-next-item :is(button,.bigbtn){background:var(--du-bg)!important;color:#f4f5fb!important;border-color:#d8bd52!important;}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen .studio-heading::after,
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen .studio-heading>.duck-mascot::before{display:none!important;}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #dashboardScreen #dashboardTiming :is(.study-list-row,.study-clickable-row,th){background:var(--du-bg)!important;color:var(--du-ink)!important;border-color:var(--du-line)!important;}
+
+/* A selected option remains visibly selected after the pointer moves away. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #studyScreen .study-answer.selected:not(.correct):not(.incorrect){
+ background:#343a46!important;color:#fff!important;border:2px solid #ffdc5a!important;
+ box-shadow:inset 5px 0 0 #ffdc5a!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #studyScreen .study-answer.selected:not(.correct):not(.incorrect)>b{
+ background:#ffdc5a!important;color:#191b23!important;border-radius:5px;padding:0 7px;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #studyScreen .study-answer.correct{background:#203d2c!important;border:2px solid #72c58a!important;color:#c7f4d1!important;}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #studyScreen .study-answer.incorrect{background:#482b28!important;border:2px solid #e08781!important;color:#ffd0cb!important;}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #testMain .opt.sel:not(.correct):not(.wrong){
+ background:rgba(255,220,90,.13)!important;box-shadow:inset 4px 0 0 #d1a719!important;
+}

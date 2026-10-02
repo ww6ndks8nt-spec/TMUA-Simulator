@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-02.dark-hover-glow">
+<meta name="ducktmua-build" content="2026-10-02.mental-surds">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='dark'?'dark':'light';}catch(e){document.documentElement.dataset.duckTheme='light';}
 </script>
@@ -2585,14 +2585,16 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
   <div class="mm-modes" role="group" aria-label="Training mode"><button id="mmPracticeMode" type="button" aria-pressed="true">Mental maths practice</button><button id="mmModMode" type="button" aria-pressed="false">Learn modular arithmetic</button></div>
   <div class="mm-layout">
    <aside class="mm-panel mm-settings" aria-label="Practice settings"><details id="mmSettingsDetails" open><summary id="mmSettingsSummary">Practice settings</summary><div class="mm-settings-body">
-    <div id="mmArithmeticSettings"><h2>Choose your mix</h2><p class="mm-muted">Practise everything, or focus on a skill.</p><fieldset id="mmCategories"><legend class="mm-sr">Question types</legend></fieldset><p class="mm-range">Multiplication: −50 to 50<br>Addition &amp; subtraction: −2000 to 2000<br>Squares: 0–32 and useful larger values<br>Cubes: −10 to 10</p></div>
+    <label class="mm-label" for="mmDifficulty">Difficulty</label><select id="mmDifficulty" aria-describedby="mmDifficultyHelp"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select><p id="mmDifficultyHelp" class="mm-muted mm-small"></p>
+    <div id="mmArithmeticSettings"><h2>Choose your mix</h2><p class="mm-muted">Practise everything, or focus on a skill.</p><fieldset id="mmCategories"><legend class="mm-sr">Question types</legend></fieldset><p class="mm-range" id="mmRange"></p></div>
     <div id="mmModSettings" hidden><h2>Learn, then practise</h2><label class="mm-label" for="mmLesson">Topic</label><select id="mmLesson"></select><p class="mm-muted">Start with remainders and work down the topics. Each topic generates fresh questions.</p></div>
+    <label class="mm-timer-setting"><input type="checkbox" id="mmAutoCheck" checked> Automatically check correct answers</label><p class="mm-muted mm-small">Correct answers are recognised after a brief typing pause. Wrong or unfinished input is only marked when you press Check answer.</p>
     <label class="mm-timer-setting"><input type="checkbox" id="mmTimerToggle"> Show question timer</label><p class="mm-muted mm-small">Untimed by default. Accuracy comes first.</p>
    </div></details></aside>
    <div class="mm-workspace">
     <section id="mmLessonCard" class="mm-panel mm-lesson" hidden aria-labelledby="mmLessonTitle"><p class="mm-eyebrow">The idea</p><h2 id="mmLessonTitle"></h2><p id="mmLessonText"></p><div class="mm-example" id="mmLessonExample"></div><p class="mm-muted" id="mmLessonTip"></p></section>
     <section class="mm-panel mm-question-card" aria-label="Current question">
-     <div class="mm-question-top"><span id="mmSkill" class="mm-skill"></span><span id="mmCounter" class="mm-muted">Question 1</span><span id="mmTimer" class="mm-clock" hidden>0.0 s</span></div>
+     <div class="mm-question-top"><span id="mmSkill" class="mm-skill"></span><span id="mmLevelBadge" class="mm-skill"></span><span id="mmCounter" class="mm-muted">Question 1</span><span id="mmTimer" class="mm-clock" hidden>0.0 s</span></div>
      <h2 id="mmPrompt" class="mm-prompt" aria-live="polite" aria-atomic="true"></h2>
      <p id="mmAnswerHelp" class="mm-muted">Type your answer. Decimals and simple fractions are accepted.</p>
      <form id="mmAnswerForm" novalidate autocomplete="off">
@@ -2603,10 +2605,10 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
      <div class="mm-help-actions"><button id="mmHintButton" class="mm-text-button" type="button" aria-expanded="false" aria-controls="mmHint">Show hint</button><button id="mmReveal" class="mm-text-button" type="button">Reveal answer</button></div>
      <p id="mmHint" class="mm-hint" hidden></p>
      <div id="mmExplanation" class="mm-explanation" hidden><h3>How to work it out</h3><p id="mmExplanationText"></p></div>
-     <p class="mm-muted mm-small">Press Enter to check your answer, then Enter again for the next question.</p>
+     <p id="mmKeyboardHelp" class="mm-muted mm-small"></p>
     </section>
-    <section class="mm-stats" aria-label="This session"><div><span id="mmCompleted">0</span><p>Completed</p></div><div><span id="mmAccuracy">—</span><p>First-try accuracy</p></div><div><span id="mmStreak">0</span><p>Current streak</p></div><div><span id="mmBest">0</span><p>Best streak</p></div></section>
-    <div class="mm-session-footer"><p class="mm-muted mm-small">This session · separate totals for each mode</p><button id="mmReset" type="button" class="mm-text-button">Start a fresh session</button></div>
+    <section class="mm-stats" aria-label="This session"><div><span id="mmCompleted">0</span><p>Completed</p></div><div><span id="mmAccuracy">—</span><p>First-check accuracy</p></div><div><span id="mmStreak">0</span><p>Current streak</p></div><div><span id="mmBest">0</span><p>Best streak</p></div></section>
+    <div class="mm-session-footer"><p class="mm-muted mm-small">This session · separate totals for each mode and difficulty</p><button id="mmReset" type="button" class="mm-text-button">Start a fresh session</button></div>
    </div>
   </div>
  </div>
@@ -6866,13 +6868,14 @@ refreshAccountCircles();
 </script>
 <script src="duck-redesign.js?v=20261002-mental-maths"></script>
 <script src="esat.js?v=20260922-5"></script>
-<link rel="stylesheet" href="duck-airy.css?v=20261002-dark-glow">
-<script src="duck-airy.js?v=20261002-duck-art"></script>
+<link rel="stylesheet" href="duck-airy.css?v=20261002-ui-polish">
+<script src="duck-airy.js?v=20261002-ui-polish"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20261002-dark-glow">
 <link rel="stylesheet" href="mental-maths.css?v=20261002-1">
-<script src="mental-maths-engine.js?v=20261002-1"></script>
-<script src="mental-maths.js?v=20261002-1"></script>
-<link rel="stylesheet" href="dark-hover.css?v=20261002-1">
+<script src="mental-maths-engine.js?v=20261002-surds"></script>
+<script src="mental-maths.js?v=20261002-surds"></script>
+<link rel="stylesheet" href="dark-hover.css?v=20261002-2">
+<link rel="stylesheet" href="ui-polish.css?v=20261002-1">
 <script>cloudBoot();</script>
 </body>
 </html>

@@ -279,11 +279,11 @@ html body.duck-airy.duck-redesign #sideNav.duck-topbar :is(.side-nav-item.active
 html body.duck-airy.duck-redesign .modern-ui .account-circles{display:none!important;}
 
 /* Readable text on every gold card, in both colour modes. */
-html body.duck-airy.duck-redesign :is(#dashboardScreen,#reviewHubScreen,#resultScreen,#wrongHubScreen) :is(.dash-stat,.mastery-card,.du-next-item,.review-paper-head,.scorehead,#wrongBuilder){
+html body.duck-airy.duck-redesign :is(#dashboardScreen,#reviewHubScreen,#resultScreen,#wrongHubScreen) :is(.dash-stat,.mastery-card,.du-next-item,.review-paper-head,.scorehead,:where(#wrongBuilder)){
  background:var(--duck-gradient)!important;color:var(--du-gradient-ink)!important;border-color:transparent!important;
  --du-ink:var(--du-gradient-ink);--du-muted:var(--du-gradient-ink);
 }
-html body.duck-airy.duck-redesign :is(#dashboardScreen,#reviewHubScreen,#resultScreen,#wrongHubScreen) :is(.dash-stat,.mastery-card,.du-next-item,.review-paper-head,.scorehead,#wrongBuilder) :is(h2,h3,p,b,strong,small,span,div,label,a,button){color:var(--du-gradient-ink)!important;}
+html body.duck-airy.duck-redesign :is(#dashboardScreen,#reviewHubScreen,#resultScreen,#wrongHubScreen) :is(.dash-stat,.mastery-card,.du-next-item,.review-paper-head,.scorehead,:where(#wrongBuilder)) :is(h2,h3,p,b,strong,small,span,div,label,a,button){color:var(--du-gradient-ink)!important;}
 html body.duck-airy.duck-redesign #dashboardScreen :is(.dash-stat,.mastery-card,.du-next-item) :is(.airy-stat-icon,.airy-paper-icon){background:#ffffff1f;color:var(--du-gradient-ink);}
 html body.duck-airy.duck-redesign #dashboardScreen .du-next-item :is(button,.bigbtn){background:#0000000c!important;color:var(--du-gradient-ink)!important;border:1px solid currentColor!important;}
 html body.duck-airy.duck-redesign #dashboardScreen .du-next-item button:hover:where(html:not([data-duck-theme="dark"]) *){background:#00000018!important;}
