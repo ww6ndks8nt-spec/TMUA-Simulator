@@ -191,3 +191,48 @@ html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen #attemptH
  border-color:#d8bd52!important;
  box-shadow:0 0 0 1px rgba(255,220,90,.88),0 0 14px rgba(255,210,60,.26)!important;
 }
+
+/* Results detail: readable instructions, luminous history grid and quiet rows. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen :is(#stdInstructions,#companionInstructions),
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen :is(#stdInstructions,#companionInstructions) *{
+ color:#fff!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen #qGrid{
+ background:var(--du-bg)!important;border:1px solid #d8bd52!important;border-radius:12px!important;
+ box-shadow:0 0 12px rgba(255,210,60,.22),inset 0 0 0 1px rgba(255,220,90,.08)!important;
+ scrollbar-color:#d8bd52 var(--du-bg);
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen #qGrid :is(table,th,td){
+ background:var(--du-bg)!important;color:#fff!important;border-color:rgba(255,220,90,.22)!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen #qGrid th{
+ border-bottom:1px solid #d8bd52!important;box-shadow:inset 0 -1px 5px rgba(255,210,60,.10);
+}
+html body.duck-airy.duck-redesign #startScreen #lbCard .arow{
+ border-top:1px solid var(--du-line)!important;border-bottom:0!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #startScreen #lbCard .arow{
+ border-top-color:rgba(255,220,90,.20)!important;
+}
+/* The extra difficulty field wraps naturally for narrow and combined results. */
+html body.duck-airy.duck-redesign #resultScreen .brow{flex-wrap:wrap;}
+html body.duck-airy.duck-redesign #resultScreen .brow .qdifficulty{
+ width:105px;flex-shrink:0;font-size:12.5px;white-space:nowrap;color:var(--du-ink);
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #resultScreen #breakdown{
+ background:var(--du-bg)!important;border:0!important;box-shadow:none!important;
+ padding:12px;margin:10px -12px;border-radius:0!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #resultScreen #breakdown .brow{
+ background:var(--du-bg)!important;color:#fff!important;
+ border:1px solid var(--du-line)!important;border-radius:12px!important;margin:8px 0!important;
+ box-shadow:none!important;transition:border-color .16s ease,box-shadow .16s ease;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #resultScreen #breakdown .brow :is(.qn,.ans,.topic,.qtime,.qdifficulty,.paperref){color:#fff!important;}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign #resultScreen #breakdown .brow:is(:hover,:focus-visible){
+ border-color:#d8bd52!important;
+ box-shadow:0 0 0 1px rgba(255,220,90,.88),0 0 12px rgba(255,210,60,.26)!important;
+}
+@media(prefers-reduced-motion:reduce){
+ html[data-duck-theme="dark"] body.duck-airy.duck-redesign #resultScreen #breakdown .brow{transition:none;}
+}

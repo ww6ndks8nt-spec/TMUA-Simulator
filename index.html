@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-02.paper-preview-style">
+<meta name="ducktmua-build" content="2026-10-03.results-dark-style">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='dark'?'dark':'light';}catch(e){document.documentElement.dataset.duckTheme='light';}
 </script>
@@ -5810,10 +5810,13 @@ function showResults(){
       +'<span class="ans">Your answer: <b>'+your+'</b></span>'
       +'<span class="ans">Correct: <b>'+corr+'</b></span>'
       +'<span class="topic">Topic: <b>'+escapeHtml(topic)+'</b></span>'
+      +'<span class="qdifficulty" title="'+escapeHtml(difficultyLabel(q))+'">Difficulty: <b>'+difficultyRatingMarkup(q.estimatedDifficulty)+'</b></span>'
       +'<span class="qtime">Time: <b>'+qtime+'</b></span>'
       +'<span class="res">'+label+'</span>';
     row.style.cursor='pointer'; row.title='Open in review';
+    row.tabIndex=0; row.setAttribute('role','button');
     row.addEventListener('click',()=>{ idx=i; enterReview(); });
+    row.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();row.click();}});
     bd.appendChild(row);
   });
 
@@ -6945,7 +6948,7 @@ refreshAccountCircles();
 <script src="mental-maths-engine.js?v=20261002-fractions-decimals"></script>
 <script src="mental-maths.js?v=20261002-fractions-decimals"></script>
 <link rel="stylesheet" href="dark-hover.css?v=20261002-2">
-<link rel="stylesheet" href="ui-polish.css?v=20261002-paper-preview">
+<link rel="stylesheet" href="ui-polish.css?v=20261003-results-dark">
 <script>cloudBoot();</script>
 <link rel="stylesheet" href="site-footer.css?v=20261002-1">
 <script src="site-footer.js?v=20261002-1"></script>
