@@ -1,0 +1,17 @@
+#registerView .registration-security { flex: 1 0 100%; width: 100%; min-width: 0; margin: 4px 0 10px; }
+#registrationTurnstile { width: 100%; max-width: 340px; min-height: 65px; }
+#registrationSecurityStatus { margin: 8px 0 4px; font-size: 13px; line-height: 1.5; }
+#registerView .registration-notice { font-size: 12px; line-height: 1.5; margin: 6px 0; }
+#registerView .registration-notice a { color: inherit; text-decoration: underline; }
+#registerView #rgBtn:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+html[data-duck-theme="dark"] #registerView .registration-security { background: transparent; color: #fff; }
+/* The extra challenge must not push the beginning of a tall form off-screen. */
+html body.duck-airy.duck-redesign #loginScreen:has(#registerView:not(.hidden)) { align-items: start !important; overflow-y: auto; }
+html body.duck-airy.duck-redesign #loginScreen:has(#registerView:not(.hidden)) > .card { align-self: start !important; }
+@media (max-width: 850px) {
+  html body.duck-airy.duck-redesign #loginScreen:has(#registerView:not(.hidden)) {
+    grid-template-rows: max-content max-content !important;
+    align-content: start;
+    gap: 20px;
+  }
+}

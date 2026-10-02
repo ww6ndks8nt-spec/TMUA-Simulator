@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-03.results-dark-style">
+<meta name="ducktmua-build" content="2026-10-03.turnstile-registration">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='dark'?'dark':'light';}catch(e){document.documentElement.dataset.duckTheme='light';}
 </script>
@@ -2552,6 +2552,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <link rel="stylesheet" href="duck-redesign.css?v=20261002-dark-glow">
 <script src="esat-papers.js?v=20260918-1"></script>
 <link rel="stylesheet" href="esat.css?v=20261002-dark-glow">
+<link rel="stylesheet" href="registration-security.css?v=20261003-1">
 </head>
 <body class="duck-redesign">
 
@@ -2644,7 +2645,13 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
         <input class="txt" id="rgPin" aria-label="New password" type="password" maxlength="128" style="width:170px" placeholder="Choose a password" autocomplete="new-password">
         <input class="txt" id="rgPin2" aria-label="Repeat password" type="password" maxlength="128" style="width:170px" placeholder="Repeat password" autocomplete="new-password">
         <label class="leaderboard-optin"><input id="rgLeaderboardOptIn" type="checkbox"><span>Publish my eligible first-attempt scores and chosen display name on the public leaderboard. <small>Optional. Your private progress still syncs. You can withdraw in Settings.</small></span></label>
-        <button class="bigbtn" id="rgBtn">Create account</button>
+        <div class="registration-security" aria-label="Registration security check">
+          <div id="registrationTurnstile"></div>
+          <p id="registrationSecurityStatus" role="status" aria-live="polite">Complete the security check to create your account.</p>
+          <button type="button" class="linkbtn" id="registrationRetry" hidden>Retry security check</button>
+          <p class="registration-notice">Protected by Cloudflare Turnstile. <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Privacy</a> · <a href="https://www.cloudflare.com/website-terms/" target="_blank" rel="noopener noreferrer">Terms</a></p>
+        </div>
+        <button class="bigbtn" id="rgBtn" disabled>Create account</button>
       </div>
       <p class="switchline">Already have an account? <button class="linkbtn" id="toSignin">Sign in</button></p>
     </div>
@@ -3037,6 +3044,8 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 </form>
 <p id="deleteAccountStatus" role="status" aria-live="polite" aria-atomic="true"></p>
 </section></dialog>
+<script src="registration-config.js?v=20261003-1"></script>
+<script src="registration-security.js?v=20261003-1"></script>
 <script src="set_b_data.js?v=20260912-2"></script>
 <script src="set_b_revised.js?v=4"></script>
 <script src="practice_solutions.js?v=20260913-2"></script>
@@ -4045,6 +4054,7 @@ function richMathHtml(str){
 }
 
 function showLogin(){
+  window.DuckRegistration?.unmount();
   ['siName','siPin','rgEmail','rgName','rgPin','rgPin2'].forEach(id=>{ $(id).value=''; });
   $('siLeaderboardOptIn').checked=false;$('rgLeaderboardOptIn').checked=false;
   $('loginErr').textContent='';
@@ -4058,6 +4068,7 @@ function authErr(m){ $('loginErr').textContent=m; }
 $('toRegister').addEventListener('click', ()=>{
   $('signinView').classList.add('hidden'); $('registerView').classList.remove('hidden');
   $('authTitle').textContent='Register'; authErr(''); $('rgName').focus();
+  window.DuckRegistration?.mount();
 });
 $('toSignin').addEventListener('click', ()=>{ showLogin(); $('siName').focus(); });
 
@@ -6310,7 +6321,7 @@ function downloadDifficultyRatings(){
 
 $('downloadDifficulties').addEventListener('click',downloadDifficultyRatings);
 $('downloadDifficulties').textContent='Download estimated difficulty ratings (CSV)';
-/* Cloud account adapter. Only Firebase Authentication handles passwords. */
+/* Cloud account adapter. Registration passes credentials transiently through the protected Firebase Function to Firebase Authentication. Never persist or log passwords. */
 const firebaseConfig={
  apiKey:"AIzaSyB7I7lVrNPOO8lM_jOz3gigG5DHKkcT3GE",
  authDomain:"tmua-leaderboard.firebaseapp.com",
@@ -6521,6 +6532,7 @@ function cloudVerificationControls(disabled=CLOUD.busy){
 }
 function cloudAuthControls(disabled){
  ['siBtn','rgBtn','resetPasswordBtn','toRegister','toSignin','finishDeletionBtn','siLeaderboardOptIn','rgLeaderboardOptIn'].forEach(id=>$(id).disabled=disabled);
+ window.DuckRegistration?.setBusy(disabled);
  cloudVerificationControls(disabled);
  if(!disabled&&!CLOUD.busy&&CLOUD.authStatePending){
   CLOUD.authStatePending=false;
@@ -6533,6 +6545,7 @@ function cloudStopVerification(){
  $('verificationView').classList.add('hidden');$('verificationEmail').textContent='';$('verificationStatus').textContent='';
 }
 function cloudShowVerification(user){
+ window.DuckRegistration?.unmount();
  cloudLeaveUI();CLOUD.verificationUid=user.uid;
  try{CLOUD.verificationNextSend=Number(localStorage.getItem('ducktmua-verification:'+user.uid))||0;}catch(error){}
  // The local cooldown is a usability limit; Firebase also rate-limits email requests.
@@ -6700,21 +6713,36 @@ async function doSignIn(){
 async function doRegister(){
  if(CLOUD.busy||!CLOUD.sdk)return;
  const email=$('rgEmail').value.trim(),name=$('rgName').value.trim(),password=$('rgPin').value;
- if(!name||!email){authErr('Enter your display name and email.');return;}
+ if(!name||!email||!$('rgEmail').checkValidity()){authErr('Enter your display name and a valid email.');return;}
  if(password!==$('rgPin2').value){authErr('The passwords do not match.');return;}
- if(password.length<6){authErr('Use a password of at least 6 characters.');return;}
+ if(password.length<6||password.length>128){authErr('Use a password of 6–128 characters.');return;}
+ if(!window.DuckRegistration?.hasToken()){authErr('Complete the security check before creating your account.');return;}
+ const leaderboardOptIn=$('rgLeaderboardOptIn').checked;
+ let created=false;
  CLOUD.busy=true;cloudAuthControls(true);authErr('Creating account…');
  try{
+  // Prepare sign-in before consuming the one-use Turnstile token.
   await cloudPrepareRecaptcha();
   await CLOUD.sdk.setPersistence(CLOUD.auth,CLOUD.sdk.browserLocalPersistence);
-  const result=await CLOUD.sdk.createUserWithEmailAndPassword(CLOUD.auth,email,password);
-  if($('rgLeaderboardOptIn').checked)rememberLeaderboardOptIn(result.user.uid,'registration');
+  const registration=await window.DuckRegistration.register({email,password,name});
+  created=true;
+  if(leaderboardOptIn)rememberLeaderboardOptIn(registration.uid,'registration');
   $('rgLeaderboardOptIn').checked=false;
-  await CLOUD.sdk.updateProfile(result.user,{displayName:name});
+  $('rgPin').value='';$('rgPin2').value='';
+  // Admin-created accounts are unverified. Normal password sign-in still uses
+  // Firebase reCAPTCHA, then the existing verification gate controls access.
+  const result=await CLOUD.sdk.signInWithEmailAndPassword(CLOUD.auth,email,password);
   await cloudOpenUser(result.user);authErr('');
   if(CLOUD.verificationUid===result.user.uid)await cloudSendVerificationEmail(result.user);
- }catch(error){authErr(cloudError(error));}
- finally{CLOUD.busy=false;cloudAuthControls(false);}
+ }catch(error){
+  if(created){
+   showLogin();$('siName').value=email;
+   authErr('Your account was created, but sign-in did not finish. Sign in above to continue email verification.');
+  }else authErr(cloudError(error));
+ }finally{
+  CLOUD.busy=false;cloudAuthControls(false);
+  if(!$('registerView').classList.contains('hidden'))window.DuckRegistration?.mount();
+ }
 }
 $('resetPasswordBtn').onclick=async()=>{
  if(CLOUD.busy)return;
