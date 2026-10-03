@@ -3,7 +3,7 @@
 const E=window.MentalMathsEngine,screen=document.getElementById('mentalScreen');
 if(!E||!screen)return;
 const el=id=>document.getElementById(id),fresh=()=>({completed:0,totalTimeMs:0,attempted:0,correct:0,streak:0,best:0,number:0});
-const freshStats=()=>Object.fromEntries(['arithmetic','modular','quadratic','polynomial','trig'].flatMap(m=>Object.keys(E.difficulties).map(d=>[m+':'+d,fresh()])));
+const freshStats=()=>Object.fromEntries(['arithmetic','modular','quadratic','polynomial','trig','pythagorean'].flatMap(m=>Object.keys(E.difficulties).map(d=>[m+':'+d,fresh()])));
 let composing=false,firstCorrect=false,usedHint=false;
 let owner=null,difficulty='medium',mode='arithmetic',lesson='remainders',selected=Object.keys(E.categories),bag=[],levelBag=[],question=null,closed=false,checked=false,elapsed=0,tickingAt=null,lastPrompt='',stats=freshStats();
 const user=()=>typeof currentUser==='undefined'?'guest':currentUser||'guest';
@@ -21,6 +21,7 @@ function difficultyCopy(){
  const d=E.difficulties[difficulty];
  el('mmDifficultyHelp').textContent=factorMode()?(difficulty==='mixed'?'A balanced mix of Medium and Hard factorisations.':mode==='quadratic'?(difficulty==='medium'?'Small integer factors; leading coefficients up to 3.':'Larger integer factors; leading coefficients up to 7.'):(difficulty==='medium'?'Cubic polynomials with a given monic linear factor.':'Degree 4–5 polynomials, including non-monic linear factors.')):d.description+(mode==='modular'?' '+d.modRange:'');
  if(mode==='trig')el('mmDifficultyHelp').textContent=({easy:'Reference angles from 0° to 90° (0 to π/2).',medium:'Standard angles from 0° to 360° (0 to 2π).',hard:'The full range: −360° to 360° (−2π to 2π).',mixed:'A mix of all three levels, including the full signed angle range.'})[difficulty];
+ if(mode==='pythagorean')el('mmDifficultyHelp').textContent=E.pythagoreanDescriptions[difficulty];
  el('mmRange').textContent=d.range;el('mmLevelBadge').textContent=difficulty==='mixed'&&question?'Mixed · '+E.difficulties[question.difficulty].label:d.label;
  el('mmKeyboardHelp').textContent=factorMode()?(el('mmAutoCheck').checked?'Use Tab or Enter between boxes. A correct complete factorisation instantly starts the next question.':'Use Tab or Enter between boxes, then Enter in the last box to check. Correct answers instantly start the next question.'):(el('mmAutoCheck').checked?'Correct answers instantly move you to the next question. Press Enter to check manually.':'Press Enter to check your answer. Correct answers instantly move you to the next question.');
 }
@@ -72,17 +73,17 @@ function lessonCopy(){
 }
 function drawMode(){
  const modular=mode==='modular',factor=factorMode();
- for(const [id,m] of [['mmPracticeMode','arithmetic'],['mmModMode','modular'],['mmQuadraticMode','quadratic'],['mmPolynomialMode','polynomial'],['mmTrigMode','trig']])el(id).setAttribute('aria-pressed',String(mode===m));
+ for(const [id,m] of [['mmPracticeMode','arithmetic'],['mmModMode','modular'],['mmQuadraticMode','quadratic'],['mmPolynomialMode','polynomial'],['mmTrigMode','trig'],['mmTriplesMode','pythagorean']])el(id).setAttribute('aria-pressed',String(mode===m));
  el('mmDifficulty').querySelector('[value="easy"]').disabled=factor;
- el('mmTrigSettings').hidden=mode!=='trig';el('mmArithmeticSettings').hidden=mode!=='arithmetic';el('mmModSettings').hidden=!modular;el('mmLessonCard').hidden=!modular;el('mmFactorSettings').hidden=!factor;
+ el('mmTriplesSettings').hidden=mode!=='pythagorean';el('mmTrigSettings').hidden=mode!=='trig';el('mmArithmeticSettings').hidden=mode!=='arithmetic';el('mmModSettings').hidden=!modular;el('mmLessonCard').hidden=!modular;el('mmFactorSettings').hidden=!factor;
  if(factor){el('mmFactorTitle').textContent=E.factorModes[mode];el('mmFactorCopy').textContent=mode==='quadratic'?'Factorise ax² + bx + c into two linear factors. Every question has an integer factorisation.':'Use the given linear factor to find the remaining polynomial mentally. Every division is exact, with no remainder.';}
  lessonCopy();difficultyCopy();
 }
 function chooseQuestion(){
- const factor=factorMode(),pool=mode==='trig'?(el('mmTrigFunction').value==='mixed'?['sin','cos','tan']:[el('mmTrigFunction').value]):mode==='arithmetic'?selected:factor?[mode]:lesson==='mixed'?E.lessons.map(x=>x.id):[lesson];
+ const factor=factorMode(),pool=mode==='pythagorean'?['leg','hypotenuse']:mode==='trig'?(el('mmTrigFunction').value==='mixed'?['sin','cos','tan']:[el('mmTrigFunction').value]):mode==='arithmetic'?selected:factor?[mode]:lesson==='mixed'?E.lessons.map(x=>x.id):[lesson];
  if(!bag.length)bag=E.shuffle(pool);
  const cat=bag.pop();let level=difficulty;if(difficulty==='mixed'){if(!levelBag.length)levelBag=E.shuffle(factor?['medium','hard']:E.difficultyLevels);level=levelBag.pop();}let q;
- for(let n=0;n<15;n++){q=mode==='trig'?E.generateTrig(cat,Math.random,level,el('mmTrigUnits').value):factor?E.generateFactorisation(mode,Math.random,level):mode==='arithmetic'?E.generate(cat,Math.random,level):E.generateMod(cat,Math.random,level);if(q.prompt!==lastPrompt)break;}
+ for(let n=0;n<15;n++){q=mode==='pythagorean'?E.generatePythagorean(cat,Math.random,level):mode==='trig'?E.generateTrig(cat,Math.random,level,el('mmTrigUnits').value):factor?E.generateFactorisation(mode,Math.random,level):mode==='arithmetic'?E.generate(cat,Math.random,level):E.generateMod(cat,Math.random,level);if(q.prompt!==lastPrompt)break;}
  return q;
 }
 function next(focus=true){
@@ -127,6 +128,7 @@ el('navMental').addEventListener('click',window.showMentalMaths);
 el('mmPracticeMode').addEventListener('click',()=>switchMode('arithmetic'));el('mmModMode').addEventListener('click',()=>switchMode('modular'));
 el('mmQuadraticMode').addEventListener('click',()=>switchMode('quadratic'));el('mmPolynomialMode').addEventListener('click',()=>switchMode('polynomial'));
 el('mmTrigMode').addEventListener('click',()=>switchMode('trig'));
+el('mmTriplesMode').addEventListener('click',()=>switchMode('pythagorean'));
 for(const id of ['mmTrigFunction','mmTrigUnits'])el(id).addEventListener('change',()=>{bag=[];levelBag=[];save();next(false);});
 el('mmUndefined').addEventListener('click',()=>{if(closed||!question?.trig)return;el('mmAnswer').value='undefined';el('mmAnswerForm').requestSubmit();});
 el('mmLesson').addEventListener('change',()=>{lesson=el('mmLesson').value;bag=[];levelBag=[];lessonCopy();save();next(false);});

@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-03.mental-trig">
+<meta name="ducktmua-build" content="2026-10-03.mental-triples">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='light'?'light':'dark';}catch(e){document.documentElement.dataset.duckTheme='dark';}
 </script>
@@ -2583,12 +2583,13 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <section id="mentalScreen" class="screen hidden nav-aware modern-ui studio-ui" aria-labelledby="mentalTitle">
  <div class="card">
   <div class="studio-heading"><div><p class="studio-eyebrow">A little practice, every day</p><h1 id="mentalTitle">Mental maths</h1><p class="lead">Build fluency one calculation at a time. No calculator, no finish line.</p></div></div>
-  <div class="mm-modes" role="group" aria-label="Training mode"><button id="mmPracticeMode" type="button" aria-pressed="true">Mental maths practice</button><button id="mmModMode" type="button" aria-pressed="false">Learn modular arithmetic</button><button id="mmQuadraticMode" type="button" aria-pressed="false">Factorise quadratics</button><button id="mmPolynomialMode" type="button" aria-pressed="false">Factorise polynomials</button><button id="mmTrigMode" type="button" aria-pressed="false">Common trig values</button></div>
+  <div class="mm-modes" role="group" aria-label="Training mode"><button id="mmPracticeMode" type="button" aria-pressed="true">Mental maths practice</button><button id="mmModMode" type="button" aria-pressed="false">Learn modular arithmetic</button><button id="mmQuadraticMode" type="button" aria-pressed="false">Factorise quadratics</button><button id="mmPolynomialMode" type="button" aria-pressed="false">Factorise polynomials</button><button id="mmTrigMode" type="button" aria-pressed="false">Common trig values</button><button id="mmTriplesMode" type="button" aria-pressed="false">Pythagorean triples</button></div>
   <div class="mm-layout">
    <aside class="mm-panel mm-settings" aria-label="Practice settings"><details id="mmSettingsDetails" open><summary id="mmSettingsSummary">Practice settings</summary><div class="mm-settings-body">
     <label class="mm-label" for="mmDifficulty">Difficulty</label><select id="mmDifficulty" aria-describedby="mmDifficultyHelp"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option><option value="mixed">Mixed</option></select><p id="mmDifficultyHelp" class="mm-muted mm-small"></p>
     <div id="mmArithmeticSettings"><h2>Choose your mix</h2><p class="mm-muted">Practise everything, or focus on a skill.</p><fieldset id="mmCategories"><legend class="mm-sr">Question types</legend></fieldset><p class="mm-range" id="mmRange"></p></div>
     <div id="mmModSettings" hidden><h2>Learn, then practise</h2><label class="mm-label" for="mmLesson">Topic</label><select id="mmLesson"></select><p class="mm-muted">Start with remainders and work down the topics. Each topic generates fresh questions.</p></div>
+    <div id="mmTriplesSettings" hidden><h2>Recognise the triple</h2><p class="mm-muted">Fill the missing side in a² + b² = c². Here a and b are the perpendicular sides, and c is the hypotenuse.</p><p class="mm-muted mm-small">Every question uses positive integer side lengths from a common Pythagorean triple or one of its multiples. Questions include both missing legs and missing hypotenuses.</p></div>
     <div id="mmTrigSettings" hidden><h2>Common trig values</h2><label class="mm-label" for="mmTrigFunction">Function</label><select id="mmTrigFunction"><option value="mixed">Sine, cosine and tangent</option><option value="sin">Sine only</option><option value="cos">Cosine only</option><option value="tan">Tangent only</option></select><label class="mm-label" for="mmTrigUnits">Angle units</label><select id="mmTrigUnits"><option value="mixed">Degrees and radians</option><option value="degrees">Degrees only</option><option value="radians">Radians only</option></select><p class="mm-muted mm-small">Standard angles based on 30°, 45° and 90°, including negative angles and full turns. Tangent is undefined at odd multiples of 90° (π/2).</p></div>
     <div id="mmFactorSettings" hidden><h2 id="mmFactorTitle"></h2><p id="mmFactorCopy" class="mm-muted"></p><p class="mm-muted mm-small">Medium and Hard only. Mixed alternates these two levels. Press Tab or Enter to move between coefficient boxes.</p></div>
     <label class="mm-timer-setting"><input type="checkbox" id="mmAutoCheck" checked> Automatically check correct answers</label><p class="mm-muted mm-small">Correct answers are recognised instantly and advance to the next question. Wrong or unfinished input is only marked when you press Check answer.</p>
@@ -6984,12 +6985,13 @@ refreshAccountCircles();
 <link rel="stylesheet" href="duck-airy.css?v=20261003-heading-alignment">
 <script src="duck-airy.js?v=20261002-ui-polish"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20261002-dark-glow">
-<link rel="stylesheet" href="mental-maths.css?v=20261003-trig">
+<link rel="stylesheet" href="mental-maths.css?v=20261003-triples">
 <script src="mental-maths-engine.js?v=20261003-no-zero"></script>
 <script src="mental-maths-factorisation.js?v=20261003-1"></script>
 <script src="mental-maths-trig.js?v=20261003-1"></script>
-<script src="mental-maths-tracking.js?v=20261003-trig"></script>
-<script src="mental-maths.js?v=20261003-trig"></script>
+<script src="mental-maths-triples.js?v=20261003-1"></script>
+<script src="mental-maths-tracking.js?v=20261003-triples"></script>
+<script src="mental-maths.js?v=20261003-triples"></script>
 <link rel="stylesheet" href="dark-hover.css?v=20261002-2">
 <link rel="stylesheet" href="ui-polish.css?v=20261003-results-dark">
 <script>cloudBoot();</script>
