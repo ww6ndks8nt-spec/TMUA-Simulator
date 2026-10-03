@@ -93,6 +93,12 @@
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
+        if (data.code === 'rate-limited') {
+          const seconds = Number.isFinite(data.retryAfterSeconds) ? Math.max(1, Math.min(3600, data.retryAfterSeconds)) : 60;
+          const minutes = Math.ceil(seconds / 60);
+          const reason = data.scope === 'ip' ? 'Too many registration attempts from this network.' : 'The site has reached its registration limit.';
+          throw new Error(reason + ' Try again in ' + minutes + (minutes === 1 ? ' minute.' : ' minutes.'));
+        }
         const messages = {
           'invalid-input': 'Check your name, email and password (6–128 characters).',
           'verification-failed': 'The security check expired or could not be verified. Please complete a new check.',
