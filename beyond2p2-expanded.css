@@ -1,0 +1,7 @@
+.bh-expanded-solution p{margin:1em 0;}
+.bh-count-table{max-width:100%;overflow-x:auto;margin:1.25em 0;}
+.bh-count-table table{border-collapse:collapse;width:100%;max-width:34rem;color:inherit;background:transparent;}
+.bh-count-table caption{text-align:left;font-weight:600;margin-bottom:.6em;}
+.bh-count-table th,.bh-count-table td{padding:.55em .8em;text-align:center;border:1px solid #9b9271;}
+html[data-duck-theme="dark"] .bh-count-table th,html[data-duck-theme="dark"] .bh-count-table td{background:#000;color:#fff;border-color:#756326;}
+.bh-expanded-solution mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;}
