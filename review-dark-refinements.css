@@ -1,0 +1,20 @@
+/* Dark-mode review notices and difficulty badges. Light mode is unchanged. */
+html[data-duck-theme="dark"] body #modernReviewScreen .modern-review-notice{
+ background:#000!important;
+ color:#e5e7eb!important;
+ border:1px solid #756326!important;
+ box-shadow:none!important;
+ text-shadow:none!important;
+}
+html[data-duck-theme="dark"] body .difficulty-rating-green{--rating-glow:74,222,128;}
+html[data-duck-theme="dark"] body .difficulty-rating-yellow{--rating-glow:250,204,21;}
+html[data-duck-theme="dark"] body .difficulty-rating-orange{--rating-glow:251,146,60;}
+html[data-duck-theme="dark"] body .difficulty-rating-red{--rating-glow:248,113,113;}
+html[data-duck-theme="dark"] body .difficulty-rating{
+ background:#000!important;
+ background-image:none!important;
+ color:rgb(var(--rating-glow))!important;
+ border:1px solid rgba(var(--rating-glow),.72)!important;
+ box-shadow:0 0 7px rgba(var(--rating-glow),.24),inset 0 0 4px rgba(var(--rating-glow),.08)!important;
+ text-shadow:0 0 6px rgba(var(--rating-glow),.38)!important;
+}
