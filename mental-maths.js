@@ -4,7 +4,7 @@ const E=window.MentalMathsEngine,screen=document.getElementById('mentalScreen');
 if(!E||!screen)return;
 const el=id=>document.getElementById(id),fresh=()=>({completed:0,totalTimeMs:0,attempted:0,correct:0,streak:0,best:0,number:0});
 const freshStats=()=>Object.fromEntries(['arithmetic','modular'].flatMap(m=>Object.keys(E.difficulties).map(d=>[m+':'+d,fresh()])));
-let autoCheckTimer=null,composing=false;
+let composing=false;
 let owner=null,difficulty='medium',mode='arithmetic',lesson='remainders',selected=Object.keys(E.categories),bag=[],levelBag=[],question=null,closed=false,checked=false,elapsed=0,tickingAt=null,lastPrompt='',stats=freshStats();
 const user=()=>typeof currentUser==='undefined'?'guest':currentUser||'guest';
 function save(){try{localStorage.setItem('ducktmua.mental.settings.'+owner,JSON.stringify({categoriesVersion:2,selected,lesson,difficulty,autoCheck:el('mmAutoCheck').checked,timer:el('mmTimerToggle').checked}));}catch(e){}}
@@ -21,21 +21,24 @@ function difficultyCopy(){
  const d=E.difficulties[difficulty];
  el('mmDifficultyHelp').textContent=d.description+(mode==='modular'?' '+d.modRange:'');
  el('mmRange').textContent=d.range;el('mmLevelBadge').textContent=difficulty==='mixed'&&question?'Mixed · '+E.difficulties[question.difficulty].label:d.label;
- el('mmKeyboardHelp').textContent=el('mmAutoCheck').checked?'Correct answers are checked automatically. Press Enter to check manually, or to move on after a correct answer.':'Press Enter to check your answer, then Enter again for the next question.';
+ el('mmKeyboardHelp').textContent=el('mmAutoCheck').checked?'Correct answers instantly move you to the next question. Press Enter to check manually.':'Press Enter to check your answer. Correct answers instantly move you to the next question.';
 }
-function cancelAutoCheck(){clearTimeout(autoCheckTimer);autoCheckTimer=null;}
-function scheduleAutoCheck(){
- cancelAutoCheck();el('mmAnswer').removeAttribute('aria-invalid');
+function checkAnswerOnInput(){
+ el('mmAnswer').removeAttribute('aria-invalid');
  if(!closed){el('mmFeedback').textContent='';el('mmFeedback').removeAttribute('data-tone');}
- if(closed||composing||!question||!el('mmAutoCheck').checked)return;
- const pendingQuestion=question;
- autoCheckTimer=setTimeout(()=>{
-  autoCheckTimer=null;
-  if(closed||composing||question!==pendingQuestion||screen.classList.contains('hidden')||document.hidden||!el('mmAutoCheck').checked)return;
-  const result=E.mark(el('mmAnswer').value,question);
-  if(result.valid&&result.correct){recordFirst(true);finish();}
- },450);
+ if(closed||composing||!question||!el('mmAutoCheck').checked||screen.classList.contains('hidden')||document.hidden)return;
+ const result=E.mark(el('mmAnswer').value,question);
+ if(result.valid&&result.correct){recordFirst(true);finish();}
 }
+function flashCorrect(){
+ const card=screen.querySelector('.mm-question-card');
+ card.classList.remove('mm-correct-flash');
+ void card.offsetWidth;
+ card.classList.add('mm-correct-flash');
+}
+screen.querySelector('.mm-question-card').addEventListener('animationend',event=>{
+ if(event.animationName==='mm-correct-glow')event.currentTarget.classList.remove('mm-correct-flash');
+});
 function lessonCopy(){
  const l=E.lessons.find(x=>x.id===lesson);
  el('mmLessonTitle').textContent=l?l.title:'Mixed modular practice';
@@ -55,7 +58,7 @@ function chooseQuestion(){
  return q;
 }
 function next(focus=true){
- cancelAutoCheck();composing=false;pause();elapsed=0;question=chooseQuestion();lastPrompt=question.prompt;closed=false;checked=false;stats[mode+':'+difficulty].number++;
+ composing=false;pause();elapsed=0;question=chooseQuestion();lastPrompt=question.prompt;closed=false;checked=false;stats[mode+':'+difficulty].number++;
  el('mmLevelBadge').textContent=(difficulty==='mixed'?'Mixed · ':'')+E.difficulties[question.difficulty].label;el('mmSkill').textContent=question.label;el('mmCounter').textContent='Question '+stats[mode+':'+difficulty].number;el('mmPrompt').textContent=question.prompt;
  el('mmAnswerHelp').textContent=question.answerHelp||(question.modulus?'Give an integer from 0 to '+(question.modulus-1)+' (the least non-negative remainder).':'Type your answer. Decimals and simple fractions are accepted.');
  el('mmAnswer').value='';el('mmAnswer').disabled=false;el('mmSign').disabled=false;el('mmAnswer').removeAttribute('aria-invalid');
@@ -65,10 +68,15 @@ function next(focus=true){
 }
 function recordFirst(correct){if(checked)return;checked=true;const s=stats[mode+':'+difficulty];s.attempted++;if(correct){s.correct++;s.streak++;s.best=Math.max(s.best,s.streak);}else s.streak=0;renderStats();}
 function finish(revealed=false){
- if(closed)return;cancelAutoCheck();closed=true;pause();stats[mode+':'+difficulty].completed++;stats[mode+':'+difficulty].totalTimeMs+=elapsed;el('mmAnswer').disabled=true;el('mmSign').disabled=true;el('mmHintButton').disabled=true;el('mmReveal').disabled=true;
+ if(closed)return;closed=true;pause();stats[mode+':'+difficulty].completed++;stats[mode+':'+difficulty].totalTimeMs+=elapsed;
+ if(!revealed){
+  const answer=question.answerDisplay||E.fmt(question.answer);
+  next();flashCorrect();el('mmFeedback').textContent='Correct — '+answer+'.';el('mmFeedback').dataset.tone='correct';
+  return;
+ }
+ el('mmAnswer').disabled=true;el('mmSign').disabled=true;el('mmHintButton').disabled=true;el('mmReveal').disabled=true;
  el('mmCheck').textContent='Next question →';el('mmExplanationText').textContent=question.explanation;el('mmExplanation').hidden=false;
- if(revealed){el('mmFeedback').textContent='Answer: '+(question.answerDisplay||E.fmt(question.answer))+'. Read the method, then try another.';el('mmFeedback').removeAttribute('data-tone');}
- else{el('mmFeedback').textContent='Correct — '+(question.answerDisplay||E.fmt(question.answer))+'.';el('mmFeedback').dataset.tone='correct';}
+ el('mmFeedback').textContent='Answer: '+(question.answerDisplay||E.fmt(question.answer))+'. Read the method, then try another.';el('mmFeedback').removeAttribute('data-tone');
  renderStats();timer();el('mmCheck').focus({preventScroll:true});
 }
 function switchMode(value){if(mode===value)return;pause();mode=value;bag=[];levelBag=[];drawMode();next(false);screen.scrollTo(0,0);if(smallScreen.matches)el('mmSettingsDetails').open=false;}
@@ -88,15 +96,15 @@ Object.entries(E.categories).forEach(([value,label])=>{const row=document.create
 el('navMental').addEventListener('click',window.showMentalMaths);
 el('mmPracticeMode').addEventListener('click',()=>switchMode('arithmetic'));el('mmModMode').addEventListener('click',()=>switchMode('modular'));
 el('mmLesson').addEventListener('change',()=>{lesson=el('mmLesson').value;bag=[];levelBag=[];lessonCopy();save();next(false);});
-el('mmAnswerForm').addEventListener('submit',event=>{event.preventDefault();cancelAutoCheck();if(composing)return;if(closed){next();return;}const result=E.mark(el('mmAnswer').value,question);el('mmAnswer').setAttribute('aria-invalid',String(!result.valid||!result.correct));if(!result.valid){el('mmFeedback').textContent=result.message;el('mmFeedback').dataset.tone='wrong';return;}recordFirst(result.correct);if(result.correct)finish();else{el('mmFeedback').textContent='Not quite. Try again, use a hint, or reveal the answer.';el('mmFeedback').dataset.tone='wrong';el('mmAnswer').focus();el('mmAnswer').select();}});
-el('mmAnswer').addEventListener('input',scheduleAutoCheck);
-el('mmAnswer').addEventListener('compositionstart',()=>{composing=true;cancelAutoCheck();});
-el('mmAnswer').addEventListener('compositionend',()=>{composing=false;scheduleAutoCheck();});
-el('mmSign').addEventListener('click',()=>{const field=el('mmAnswer'),v=field.value.trim().replace(/^−/,'-');field.value=v.startsWith('-')?v.slice(1):'-'+v.replace(/^\+/,'');field.focus();scheduleAutoCheck();});
+el('mmAnswerForm').addEventListener('submit',event=>{event.preventDefault();if(composing)return;if(closed){next();return;}const result=E.mark(el('mmAnswer').value,question);el('mmAnswer').setAttribute('aria-invalid',String(!result.valid||!result.correct));if(!result.valid){el('mmFeedback').textContent=result.message;el('mmFeedback').dataset.tone='wrong';return;}recordFirst(result.correct);if(result.correct)finish();else{el('mmFeedback').textContent='Not quite. Try again, use a hint, or reveal the answer.';el('mmFeedback').dataset.tone='wrong';el('mmAnswer').focus();el('mmAnswer').select();}});
+el('mmAnswer').addEventListener('input',checkAnswerOnInput);
+el('mmAnswer').addEventListener('compositionstart',()=>{composing=true;});
+el('mmAnswer').addEventListener('compositionend',()=>{composing=false;checkAnswerOnInput();});
+el('mmSign').addEventListener('click',()=>{const field=el('mmAnswer'),v=field.value.trim().replace(/^−/,'-');field.value=v.startsWith('-')?v.slice(1):'-'+v.replace(/^\+/,'');field.focus();checkAnswerOnInput();});
 el('mmHintButton').addEventListener('click',()=>{const visible=el('mmHint').hidden;el('mmHint').textContent=question.hint;el('mmHint').hidden=!visible;el('mmHintButton').setAttribute('aria-expanded',String(visible));el('mmHintButton').textContent=visible?'Hide hint':'Show hint';});
 el('mmReveal').addEventListener('click',()=>{recordFirst(false);finish(true);});
 el('mmDifficulty').addEventListener('change',()=>{difficulty=el('mmDifficulty').value;bag=[];levelBag=[];difficultyCopy();save();next(false);});
-el('mmAutoCheck').addEventListener('change',()=>{cancelAutoCheck();save();difficultyCopy();if(el('mmAutoCheck').checked)scheduleAutoCheck();});
+el('mmAutoCheck').addEventListener('change',()=>{save();difficultyCopy();if(el('mmAutoCheck').checked)checkAnswerOnInput();});
 el('mmTimerToggle').addEventListener('change',()=>{save();timer();});
 el('mmReset').addEventListener('click',()=>{stats[mode+':'+difficulty]=fresh();bag=[];levelBag=[];next();});
 new MutationObserver(syncClock).observe(screen,{attributes:true,attributeFilter:['class']});document.addEventListener('visibilitychange',syncClock);setInterval(()=>{if(!screen.classList.contains('hidden'))timer();},200);

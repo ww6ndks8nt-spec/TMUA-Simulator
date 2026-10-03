@@ -70,3 +70,15 @@ html body.duck-airy #mentalScreen .mm-sign{background:var(--du-soft)!important;c
 html body.duck-airy #mentalScreen input[type="checkbox"]{width:17px!important;height:17px!important;min-width:17px!important;min-height:17px!important;max-height:17px!important;margin:0!important;padding:0!important;box-shadow:none!important}
 
 @media(max-width:480px){#mentalScreen .mm-stats>div:last-child{grid-column:1/-1}}
+
+/* Feedback overlays the existing border while the next question is already usable. */
+#mentalScreen .mm-question-card{position:relative}
+#mentalScreen .mm-question-card.mm-correct-flash::after{
+ content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;
+ border:2px solid #4ade80;box-shadow:0 0 16px #4ade8099,inset 0 0 8px #4ade8040;
+ animation:mm-correct-glow 550ms ease-out forwards;
+}
+@keyframes mm-correct-glow{0%,35%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){
+ #mentalScreen .mm-question-card.mm-correct-flash::after{animation-timing-function:steps(1,end)}
+}
