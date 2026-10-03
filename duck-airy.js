@@ -30,7 +30,7 @@
  const moreToggle=make('summary');moreToggle.innerHTML=icon('more');moreToggle.setAttribute('aria-label','More pages');moreToggle.title='More pages';
  const moreMenu=make('div','airy-more-menu');
  const find=$('duFindButton');find.classList.add('airy-search-menu');find.querySelector('kbd').remove();find.addEventListener('click',()=>{more.open=false;});moreMenu.appendChild(find);
- [['navWrong','Wrong answers','retry'],['navBookmarks','Bookmarks','bookmark']].forEach(([id,label,key])=>{const el=$(id);el.querySelector('.side-nav-label').textContent=label;el.querySelector('.side-nav-icon').innerHTML=icon(key);el.addEventListener('click',()=>{more.open=false;});moreMenu.appendChild(el);});
+ [['navWrong','Wrong answers','retry'],['navBookmarks','Bookmarks','bookmark'],['navFormulae','Formulae list','journal']].forEach(([id,label,key])=>{const el=$(id);el.querySelector('.side-nav-label').textContent=label;el.querySelector('.side-nav-icon').innerHTML=icon(key);el.addEventListener('click',()=>{more.open=false;});moreMenu.appendChild(el);});
  more.append(moreToggle,moreMenu);items.appendChild(more);
  document.addEventListener('click',e=>{if(!more.contains(e.target))more.open=false;});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&more.open){more.open=false;moreToggle.focus();}});

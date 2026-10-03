@@ -1,0 +1,26 @@
+#formulaeScreen [hidden]{display:none!important}
+#formulaeScreen .formula-intro,#formulaeScreen .formula-controls,#formulaeScreen .formula-card{background:var(--du-surface,#fff);border:1px solid var(--du-line,#e4e4e7);border-radius:18px;padding:22px}
+#formulaeScreen .formula-intro{line-height:1.7;font-size:14px;margin:22px 0}
+#formulaeScreen .formula-intro p:first-child{margin-top:0}
+#formulaeScreen .formula-intro p:last-child{margin-bottom:0}
+#formulaeScreen .formula-intro a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+#formulaeScreen .formula-controls{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:15px;align-items:end}
+#formulaeScreen .formula-controls label{font-size:13px;font-weight:600;min-width:0}
+#formulaeScreen .formula-controls :is(input,select){display:block;box-sizing:border-box;width:100%;min-width:0;margin-top:7px;padding:12px;border:1px solid var(--du-line,#ddd);border-radius:11px;background:var(--du-bg,#fff);color:var(--du-ink,#111);font:inherit}
+#formulaeScreen .formula-topic{margin:32px 0}
+#formulaeScreen .formula-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+#formulaeScreen .formula-card{min-width:0;overflow:hidden}
+#formulaeScreen .formula-card h3{font-size:18px;line-height:1.35;margin:12px 0 16px;color:var(--du-ink,#111)}
+#formulaeScreen .formula-card p{font-size:14px;line-height:1.7;margin:16px 0 0;color:var(--du-muted,#626574)}
+#formulaeScreen .formula-badge{display:inline-block;padding:5px 9px;border:1px solid var(--du-line,#ddd);border-radius:8px;font-size:11px;font-weight:600;color:var(--du-muted,#626574)}
+#formulaeScreen .formula-math{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:10px 0;color:var(--du-ink,#111)}
+#formulaeScreen mjx-container[display=true]{margin:0!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaeScreen :is(.formula-intro,.formula-controls,.formula-card){background:#000!important;border-color:#9d8737!important;box-shadow:0 0 9px #facc1524!important}
+html[data-duck-theme=dark] #formulaeScreen .formula-badge{border-color:#88732c;color:#f6db6b}
+html[data-duck-theme=dark] #formulaeScreen .formula-card[data-kind=shortcut] .formula-badge{color:#93c5fd;border-color:#315a89}
+html[data-duck-theme=dark] #formulaeScreen .formula-card[data-kind=provided] .formula-badge{color:#c4b5fd;border-color:#6e5894}
+@media(max-width:1000px){#formulaeScreen .formula-controls{grid-template-columns:1fr 1fr}#formulaeScreen .formula-controls label:first-child{grid-column:1/-1}}
+@media(max-width:700px){#formulaeScreen .formula-grid{grid-template-columns:1fr}#formulaeScreen .formula-card{padding:18px}#formulaeScreen .formula-controls{padding:18px;gap:12px}#formulaeScreen .formula-controls button{grid-column:1/-1}}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaeScreen{background:#000!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaClear{background:#000!important;color:#f6db6b!important;border:1px solid #9d8737!important;box-shadow:none!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaClear:is(:hover,:focus-visible){box-shadow:0 0 12px #facc1555!important}
