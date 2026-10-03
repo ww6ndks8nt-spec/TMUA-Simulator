@@ -52,11 +52,11 @@ html body.duck-airy #sideNav .airy-header-account{flex:0 0 148px;}
 html body.duck-airy .modern-ui .studio-heading>.account-circles{display:none!important;}
 html body.duck-airy .screen.modern-ui.nav-aware{left:0!important;padding:120px 28px 60px!important;background:var(--du-bg)!important;}
 html body.duck-airy .screen.modern-ui.nav-aware>.card{max-width:1544px!important;margin:0 auto!important;padding:0!important;}
-html body.duck-airy .modern-ui .studio-heading{border:0!important;min-height:104px!important;margin:0 0 22px!important;padding:16px 16px 0!important;display:flex!important;align-items:center;justify-content:space-between;}
+html body.duck-airy .modern-ui .studio-heading{border:0!important;min-height:104px!important;margin:0 0 22px!important;padding:16px 0 0!important;display:flex!important;align-items:center;justify-content:space-between;text-align:left;}
 html body.duck-airy .modern-ui h1{font-size:36px!important;line-height:1.15!important;font-weight:700!important;letter-spacing:-1.2px!important;margin:0!important;}
 html body.duck-airy .modern-ui h2{font-size:22px!important;line-height:1.25!important;font-weight:650!important;letter-spacing:-.8px!important;}
 html body.duck-airy .modern-ui .lead{font-size:15px!important;color:var(--du-muted)!important;}
-html body.duck-airy #dashboardScreen .studio-heading{position:relative;height:166px!important;min-height:166px!important;align-items:center;margin-bottom:20px!important;padding:0 24px!important;isolation:isolate;}
+html body.duck-airy #dashboardScreen .studio-heading{position:relative;height:166px!important;min-height:166px!important;align-items:center;margin-bottom:20px!important;padding:0!important;isolation:isolate;}
 html body.duck-airy #dashboardScreen .studio-heading::after{content:"";position:absolute;z-index:-1;inset:0 -6px -20px 0;background:radial-gradient(ellipse at 92% 27%,#fff4c180 0%,#fff8e33b 10%,transparent 25%),linear-gradient(172deg,transparent 61%,#faf5e644 62%,#fff1c231 100%);border-radius:70% 20% 0 0/60% 80% 0 0;pointer-events:none;}
 html body.duck-airy #dashboardScreen .studio-heading>.duck-mascot{position:absolute;right:64px;bottom:0;width:184px;height:184px;z-index:2;}
 html body.duck-airy #dashboardScreen .studio-heading>.duck-mascot::before{content:"";position:absolute;right:-26px;top:5px;width:105px;height:105px;border-radius:50%;background:linear-gradient(145deg,#fff7d99c,#fffef300);z-index:-1;}
@@ -223,7 +223,7 @@ html[data-duck-theme="dark"] body.duck-airy #dashboardScreen .studio-heading::af
  html body.duck-airy .screen.modern-ui.nav-aware{padding:138px 16px 36px!important;}
  html body.duck-airy .modern-ui .studio-heading{padding:8px 0!important;min-height:86px!important;}
  html body.duck-airy .modern-ui h1{font-size:30px!important;}
- html body.duck-airy #dashboardScreen .studio-heading{height:134px!important;min-height:134px!important;padding:0 6px!important;margin-bottom:15px!important;}
+ html body.duck-airy #dashboardScreen .studio-heading{height:134px!important;min-height:134px!important;padding:0!important;margin-bottom:15px!important;}
  html body.duck-airy #dashboardScreen .studio-heading>.duck-mascot{transform:scale(.67);transform-origin:bottom right;right:4px;}
  html body.duck-airy .airy-dashboard{display:flex;flex-direction:column;gap:16px;}
  html body.duck-airy .airy-stats{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
@@ -457,3 +457,6 @@ html body.duck-airy.duck-redesign{--duck-accent-gradient:linear-gradient(130deg,
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign{--duck-accent-gradient:linear-gradient(130deg,#d9bf59,#c29508);--duck-soft-gradient:linear-gradient(135deg,#51482c,#67552c);}
 html[data-duck-theme="dark"] body.duck-airy #dashboardScreen .studio-heading::after{background:radial-gradient(ellipse at 92% 27%,#bca15640 0%,#9b84301f 10%,transparent 25%),linear-gradient(172deg,transparent 61%,#7c693322 62%,#937a291c 100%);}
 html[data-duck-theme="dark"] body.duck-airy #dashboardScreen .studio-heading>.duck-mascot::before{background:linear-gradient(145deg,#ad934040,#8b742000);}
+
+/* Keep decorative heading art after the title, so text shares the content edge. */
+html body.duck-airy #bookmarksScreen .duck-heading-copy>.duck-logo{order:1;}

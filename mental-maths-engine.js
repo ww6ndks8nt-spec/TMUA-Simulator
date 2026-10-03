@@ -5,9 +5,9 @@ const categories={multiply:'Multiplication',addsubtract:'Addition & subtraction'
 const difficultyLevels=['easy','medium','hard'];
 const difficulties={
  mixed:{label:'Mixed',description:'A balanced mix of Easy, Medium and Hard questions.',range:'Includes all three difficulty levels across your selected skills.',modRange:'Includes the full range of modular questions.'},
- easy:{label:'Easy',description:'Build confidence with small, mostly positive numbers.',range:'Multiplication: 0–12 · addition/subtraction: 0–100 (non-negative answers) · squares: 0–12 · cubes: 0–5 · surds: square-root basics.',modRange:'Moduli 2–5, small numbers up to 30, and short last-digit powers.',multiply:12,add:100,square:12,extraSquares:[],cube:5,powers:{2:5,3:3,5:2,10:3,11:2},division:12,divisors:[2,3,4,5,10],percent:[10,25,50],percentSteps:10,modulus:5,remainder:30,negative:20,modOperand:20,cycle:8},
- medium:{label:'Medium',description:'Practise signed numbers and useful everyday shortcuts.',range:'Multiplication: −25 to 25 · addition/subtraction: −500 to 500 · squares: 0–20, 25 and 30 · cubes: −7 to 7 · surds: simplify, multiply and divide.',modRange:'Moduli 2–9, numbers up to 120, and last-digit powers up to 20.',multiply:25,add:500,square:20,extraSquares:[25,30],cube:7,powers:{2:8,3:4,5:3,10:4,11:3},division:25,divisors:[2,3,4,5,6,7,8,9,10,11,12],percent:[1,5,10,20,25,50,75],percentSteps:20,modulus:9,remainder:120,negative:75,modOperand:60,cycle:20},
- hard:{label:'Hard',description:'The original full-range practice, including larger powers and shortcuts.',range:'Multiplication: −50 to 50 · addition/subtraction: −2000 to 2000 · squares: 0–32 and useful larger values · cubes: −10 to 10 · surds: combine, rationalise and use conjugates.',modRange:'Moduli 2–12, numbers up to 250, and last-digit powers up to 30.',multiply:50,add:2000,square:32,extraSquares:[35,40,45,50,60,70,80,90,100],cube:10,powers:{2:12,3:6,5:5,10:6,11:5},division:50,divisors:[2,3,4,5,6,7,8,9,10,11,12,25],percent:[1,5,10,12.5,20,25,50,75],percentSteps:40,modulus:12,remainder:250,negative:150,modOperand:120,cycle:30}
+ easy:{label:'Easy',description:'Build confidence with small, mostly positive numbers.',range:'Multiplication: 1–12 · addition/subtraction: 0–100 (non-negative answers) · squares: 0–12 · cubes: 0–5 · surds: square-root basics.',modRange:'Moduli 2–5, small numbers up to 30, and short last-digit powers.',multiply:12,add:100,square:12,extraSquares:[],cube:5,powers:{2:5,3:3,5:2,10:3,11:2},division:12,divisors:[2,3,4,5,10],percent:[10,25,50],percentSteps:10,modulus:5,remainder:30,negative:20,modOperand:20,cycle:8},
+ medium:{label:'Medium',description:'Practise signed numbers and useful everyday shortcuts.',range:'Multiplication: −25 to 25 (excluding 0) · addition/subtraction: −500 to 500 · squares: 0–20, 25 and 30 · cubes: −7 to 7 · surds: simplify, multiply and divide.',modRange:'Moduli 2–9, numbers up to 120, and last-digit powers up to 20.',multiply:25,add:500,square:20,extraSquares:[25,30],cube:7,powers:{2:8,3:4,5:3,10:4,11:3},division:25,divisors:[2,3,4,5,6,7,8,9,10,11,12],percent:[1,5,10,20,25,50,75],percentSteps:20,modulus:9,remainder:120,negative:75,modOperand:60,cycle:20},
+ hard:{label:'Hard',description:'The original full-range practice, including larger powers and shortcuts.',range:'Multiplication: −50 to 50 (excluding 0) · addition/subtraction: −2000 to 2000 · squares: 0–32 and useful larger values · cubes: −10 to 10 · surds: combine, rationalise and use conjugates.',modRange:'Moduli 2–12, numbers up to 250, and last-digit powers up to 30.',multiply:50,add:2000,square:32,extraSquares:[35,40,45,50,60,70,80,90,100],cube:10,powers:{2:12,3:6,5:5,10:6,11:5},division:50,divisors:[2,3,4,5,6,7,8,9,10,11,12,25],percent:[1,5,10,12.5,20,25,50,75],percentSteps:40,modulus:12,remainder:250,negative:150,modOperand:120,cycle:30}
 };
 function levelSettings(level){if(!Object.hasOwn(difficulties,level))throw new Error('Unknown difficulty: '+level);return difficulties[level];}
 const mod=(a,m)=>((a%m)+m)%m;
@@ -131,10 +131,11 @@ function generate(category,rng=Math.random,level='hard'){
  let a,b,answer,prompt,hint,explanation,operands;
  switch(category){
  case 'multiply':
-  a=int(easy?0:-d.multiply,d.multiply);b=int(easy?0:-d.multiply,d.multiply);answer=a*b;prompt=operand(a)+' × '+operand(b);
+  // Map directly onto non-zero factors, retaining both signs at higher levels.
+  {const factor=()=>{const n=int(1,easy?d.multiply:2*d.multiply);return n>d.multiply?d.multiply-n:n;};a=factor();b=factor();}answer=a*b;prompt=operand(a)+' × '+operand(b);
   {const x=Math.abs(a),y=Math.abs(b),t=10*Math.floor(y/10),u=y%10;
   hint='Multiply the magnitudes by splitting one number into tens and units, then decide the sign.';
-  explanation=x+' × '+y+' = '+x+' × '+t+' + '+x+' × '+u+' = '+(x*t)+' + '+(x*u)+' = '+(x*y)+'. '+(a*b===0?'Any number multiplied by zero is zero.':(a<0)!==(b<0)?'One factor is negative, so the result is negative.':'The signs match, so the result is positive.');}
+  explanation=x+' × '+y+' = '+x+' × '+t+' + '+x+' × '+u+' = '+(x*t)+' + '+(x*u)+' = '+(x*y)+'. '+((a<0)!==(b<0)?'One factor is negative, so the result is negative.':'The signs match, so the result is positive.');}
   operands=[a,b];break;
  case 'addsubtract':
   a=int(easy?0:-d.add,d.add);b=int(easy?0:-d.add,d.add);{const subtract=rng()<.5;if(easy&&subtract&&a<b)[a,b]=[b,a];answer=subtract?a-b:a+b;prompt=operand(a)+(subtract?' − ':' + ')+operand(b);const term=subtract?-b:b;
@@ -199,7 +200,7 @@ function generateMod(lesson,rng=Math.random,level='hard'){
   hint='Find a multiple of '+m+' so the leftover is between 0 and '+(m-1)+'.';
   explanation=fmt(a)+' = '+operand(Math.floor(a/m))+' × '+m+' + '+answer+'. The remainder is '+answer+'.';
  }else{
-  a=int(0,d.modOperand);b=int(0,d.modOperand);op=lesson==='multiply'?'×':pick(['+','−']);const ra=mod(a,m),rb=mod(b,m),v=op==='×'?ra*rb:op==='+'?ra+rb:ra-rb;
+  a=int(lesson==='multiply'?1:0,d.modOperand);b=int(lesson==='multiply'?1:0,d.modOperand);op=lesson==='multiply'?'×':pick(['+','−']);const ra=mod(a,m),rb=mod(b,m),v=op==='×'?ra*rb:op==='+'?ra+rb:ra-rb;
   answer=mod(v,m);prompt='('+a+' '+op+' '+b+') mod '+m;hint='Reduce both numbers modulo '+m+' before doing the '+(op==='×'?'multiplication':op==='+'?'addition':'subtraction')+'.';
   explanation=a+' ≡ '+ra+' and '+b+' ≡ '+rb+' (mod '+m+'). Then '+ra+' '+op+' '+rb+' = '+fmt(v)+'. Finally '+fmt(v)+' = '+operand(Math.floor(v/m))+' × '+m+' + '+answer+', so the remainder is '+answer+'.';
  }

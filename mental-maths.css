@@ -82,3 +82,46 @@ html body.duck-airy #mentalScreen input[type="checkbox"]{width:17px!important;he
 @media(prefers-reduced-motion:reduce){
  #mentalScreen .mm-question-card.mm-correct-flash::after{animation-timing-function:steps(1,end)}
 }
+
+#mentalScreen .mm-history h2,#mentalScreen .mm-fluency h2{margin-top:0}
+#mentalScreen .mm-history-filters{display:flex;gap:16px;flex-wrap:wrap;margin:20px 0}
+#mentalScreen .mm-history-filters label{flex:1;min-width:140px;font-size:13px;font-weight:600}
+#mentalScreen .mm-history-filters select{margin-top:7px}
+#mentalScreen .mm-history-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+#mentalScreen .mm-history-stats span{font-size:22px}
+#mentalScreen .mm-table-scroll{max-width:100%;overflow:auto;border:1px solid var(--du-line,#ddd);border-radius:14px;margin-top:20px}
+#mentalScreen .mm-row-scroll{max-height:460px}
+#mentalScreen .mm-progress-table{width:100%;border-collapse:separate;border-spacing:0;min-width:580px;font-size:13px;font-variant-numeric:tabular-nums;text-align:left}
+#mentalScreen .mm-progress-table th,#mentalScreen .mm-progress-table td{padding:13px 14px;border-bottom:1px solid var(--du-line,#ddd);vertical-align:middle;white-space:nowrap}
+#mentalScreen .mm-progress-table th{font-weight:600;text-align:left}
+#mentalScreen .mm-progress-table thead th{position:sticky;top:0;z-index:1;background:var(--du-surface,#fff);font-size:12px}
+#mentalScreen .mm-progress-table tbody tr:last-child>*{border-bottom:0}
+#mentalScreen .mm-fluency-bar{display:block;position:relative;height:3px;border-radius:3px;background:#7773;margin-top:9px;min-width:140px}
+#mentalScreen .mm-fluency-bar>span{display:block;height:100%;border-radius:inherit;background:#b68b00}
+#mentalScreen .mm-fluency-label[data-tone=fluent]{color:#15803d}
+#mentalScreen .mm-fluency-label[data-tone=developing]{color:#8a6500}
+html[data-duck-theme=dark] #mentalScreen :is(.mm-history,.mm-fluency){background:#000!important;border:1px solid #c6a93b!important;box-shadow:0 0 10px #facc1526!important}
+html[data-duck-theme=dark] #mentalScreen .mm-history-stats>div,html[data-duck-theme=dark] #mentalScreen .mm-progress-table thead th{background:#000!important}
+html[data-duck-theme=dark] #mentalScreen .mm-fluency-bar>span{background:#facc15;box-shadow:0 0 7px #facc1580}
+html[data-duck-theme=dark] #mentalScreen .mm-fluency-label[data-tone=fluent]{color:#4ade80}
+html[data-duck-theme=dark] #mentalScreen .mm-fluency-label[data-tone=developing]{color:#facc15}
+@media(max-width:480px){#mentalScreen .mm-history-stats>div:last-child{grid-column:auto}}
+/* Tables scroll inside their panels instead of widening the mobile workspace. */
+#mentalScreen .mm-workspace>*{min-width:0}
+#mentalScreen .mm-table-scroll{width:100%;box-sizing:border-box;min-width:0}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #mentalScreen :is(.mm-history,.mm-fluency,.mm-history-stats>div){background:#000!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #mentalScreen .mm-progress-table :is(th,td){background:#000!important;color:var(--du-ink,#fff)!important;border-color:#facc152e!important}
+/* Coefficients remain individual, labelled fields within readable factors. */
+#mentalScreen #mmCoefficients{display:flex;flex-wrap:wrap;align-items:center;gap:12px;width:100%;font-size:23px;line-height:1.8}
+#mentalScreen .mm-factor-group{display:inline-flex;flex-wrap:wrap;align-items:center;gap:3px;max-width:100%}
+#mentalScreen .mm-factor-term{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+html body.duck-airy #mentalScreen input.mm-coefficient{width:64px!important;min-width:0!important;padding:10px 4px!important;font-size:21px!important;text-align:center;border:1px solid var(--du-line,#ddd)!important;border-radius:10px;background:var(--du-bg,#fff)!important;color:var(--du-ink,#111)!important}
+html body.duck-airy #mentalScreen input.mm-coefficient[aria-invalid=true]{border-color:#e07865!important}
+#mentalScreen .mm-answer-row:has(#mmCoefficients:not([hidden])){display:flex;flex-wrap:wrap}
+#mentalScreen .mm-answer-row:has(#mmCoefficients:not([hidden])) .mm-primary{margin-top:8px}
+#mentalScreen .mm-modes{max-width:100%;box-sizing:border-box}
+@media(max-width:480px){#mentalScreen .mm-modes button{flex:1 1 42%}#mentalScreen #mmCoefficients{font-size:20px}html body.duck-airy #mentalScreen input.mm-coefficient{width:52px!important;font-size:19px!important}}
+#mentalScreen .mm-undefined{margin-top:12px;padding:10px 18px;border:1px solid var(--du-line,#ddd);border-radius:12px;background:var(--du-surface,#fff);color:var(--du-ink,#111);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #mentalScreen .mm-undefined{background:#000!important;border-color:#b59c39!important;color:#fff!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #mentalScreen .mm-undefined:hover{box-shadow:0 0 10px #facc1566!important}
+html:not([data-duck-theme=dark]) #mentalScreen .mm-undefined:hover{background:var(--duck-gradient,#ffdd46)}
