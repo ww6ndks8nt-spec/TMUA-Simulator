@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-04.general-leaderboards">
+<meta name="ducktmua-build" content="2026-10-04.leaderboard-layout">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='light'?'light':'dark';}catch(e){document.documentElement.dataset.duckTheme='dark';}
 </script>
@@ -2586,12 +2586,12 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <div class="glb-choices" id="generalLbChoices"></div>
 <p class="study-muted">Participation is optional and independent for each ranking. Your chosen public name is used; email addresses and individual answers are never shown here. Paper-score leaderboard consent remains separate in Settings.</p>
 <p id="generalLbSaveStatus" role="status" aria-live="polite"></p>
-<div class="glb-panel"><div class="glb-toolbar"><div id="generalLbTabs" role="group" aria-label="Choose a leaderboard"></div><button id="generalLbRefresh" type="button" class="bigbtn ghost">Refresh rankings</button></div>
-<h2 id="generalLbHeading">Most time spent practising</h2><p id="generalLbMethod" class="study-muted"></p>
-<p id="generalLbLoadStatus" role="status" aria-live="polite"></p>
-<div class="glb-table-scroll" role="region" tabindex="0" aria-labelledby="generalLbHeading"><table class="glb-table"><thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th id="generalLbValueHeading" scope="col">Recorded time</th><th scope="col">Details</th></tr></thead><tbody id="generalLbRows"></tbody></table></div>
-<p id="generalLbFootnote" class="study-muted">Top 100 published entries. Equal values share a rank. These are practice statistics, not verified exam results.</p></div>
-<details class="glb-panel glb-methods"><summary>How these rankings work</summary><p><strong>Practice time:</strong> recorded question time from saved paper attempts, mistake drills, question-bank sessions and completed mental-maths questions. Combined sittings are counted through their individual papers, once each. In-progress papers and time spent browsing pages are excluded. Older paper timers may include time away from the tab. Totals reflect retained account history.</p><p><strong>Estimated performance:</strong> the same source-weighted first-attempt TMUA estimate used on the Overview page, on a 1–9 scale. At least three scored TMUA papers are needed. MAT, ESAT and question drills do not contribute. Estimates are unofficial and do not adjust for timing arrangements.</p><p><strong>Papers completed:</strong> different full papers submitted with at least one recorded answer, including MAT and ESAT. Retakes count once; a paired Paper 1 / Paper 2 sitting counts as two. Question drills do not count.</p><p>When you join, eligible saved history contributes. Updates follow successful account sync and may take up to a minute while practising. Turning a switch off removes that public entry once the change reaches the server. If you are offline, reconnect and use Retry sync. Your private history is retained. Changing to Anonymous in Settings updates the name used on these rankings; it does not make a public entry impossible to link with earlier versions.</p></details>
+<div class="glb-actions" id="generalLbActions"><button id="generalLbRefresh" type="button" class="bigbtn ghost">Refresh rankings</button></div>
+<p id="generalLbLoadStatus" class="glb-load-status" role="status" aria-live="polite"></p>
+<div class="glb-panel glb-ranking"><div id="generalLbTabs" role="group" aria-label="Choose a leaderboard"></div>
+<div class="glb-table-scroll" role="region" tabindex="0" aria-label="Leaderboard results"><table class="glb-table"><caption id="generalLbHeading" class="glb-sr">Most time spent practising</caption><thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th id="generalLbValueHeading" scope="col">Recorded time</th></tr></thead><tbody id="generalLbRows"></tbody></table></div>
+</div>
+<details class="glb-panel glb-methods"><summary>How these rankings work</summary><p><strong>Practice time:</strong> total accumulated time spent on completed timed exam attempts. Mental maths, question-bank sessions, mistake drills, untimed attempts and continued or resumed exam practice do not count. Time is capped at the attempt’s time allowance. Older attempts without a recorded timing mode cannot be included reliably.</p><p><strong>Estimated performance:</strong> the same source-weighted first-attempt TMUA estimate used on the Overview page, on a 1–9 scale. At least three scored TMUA papers are needed. MAT and question drills do not contribute. Estimates are unofficial and do not adjust for timing arrangements.</p><p><strong>Papers completed:</strong> different full papers submitted with at least 15 recorded answers for TMUA or 8 for MAT. Retakes do not increase the count; a combined Paper 1 / Paper 2 sitting counts as two when each paper meets its threshold.</p><p>When you join, eligible saved history contributes. Updates follow successful account sync and may take up to a minute while practising. Turning a switch off removes that public entry once the change reaches the server. If you are offline, reconnect and use Retry sync. Your private history is retained. Changing to Anonymous in Settings updates the name used on these rankings; it does not make a public entry impossible to link with earlier versions.</p><p>Top 100 published entries. Equal values share a rank. These are practice statistics, not verified exam results.</p></details>
 </div></section>
 
 <section id="formulaeScreen" class="screen hidden nav-aware modern-ui studio-ui" aria-labelledby="formulaeTitle"><div class="card">
@@ -3969,6 +3969,7 @@ let questionTimesMs = [], questionTimingIdx = null, questionTimingStartedAt = 0;
 let submitted = false, reviewMode = false;
 let secondsLeft = 0, timerId = null, noTimer = false;
 let sessionMode = '75 min';
+let leaderboardExamTiming=null;
 let reviewOriginHub = false;
 let dualMode = false, dualPair = null, dualStage = 0;
 let dualPaperSeconds = 75*60, dualGapTimerId = null, dualGapEndsAt = 0;
@@ -4019,7 +4020,7 @@ function persistNow(){ clearTimeout(saveDebounce); Store.write(ROOT); }
 function snapshotProgress(){
   if(!active || submitted || reviewMode || !currentUser) return;
   flushQuestionTiming(true);
-  STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), idx, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
+  STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
   persist();
 }
 function fmtDate(t){
@@ -5338,6 +5339,7 @@ function startDualSecondPaper(){
 }
 
 function startTest(resume){
+  leaderboardExamTiming={version:1,kind:resume?'continued-exam':noTimer?'untimed':'timed-exam',limitMs:!resume&&!noTimer?Math.max(0,secondsLeft)*1000:0};
   stopPreExamTimer();
   $('preExamScreen').classList.add('hidden');
   hideSideNav(); reviewOriginHub=false;
@@ -5744,7 +5746,7 @@ function submit(){
     if(a!==null && !isCorrectAns(q,a)) delete STATE.resolvedErrors[finishedPaper.id+':'+i];
   });
 
-  (STATE.results[finishedPaper.id]=STATE.results[finishedPaper.id]||[]).push({t:Date.now(), c, s, a:finishedAnswers, questionTimesMs:questionTimesMs.slice()});
+  (STATE.results[finishedPaper.id]=STATE.results[finishedPaper.id]||[]).push({t:Date.now(), c, s, a:finishedAnswers, questionTimesMs:questionTimesMs.slice(), mode:sessionMode, noTimer, examTiming:leaderboardExamTiming?{...leaderboardExamTiming}:null});
   if(STATE.results[finishedPaper.id].length>30) STATE.results[finishedPaper.id]=STATE.results[finishedPaper.id].slice(-30);
   const isFirst = STATE.results[finishedPaper.id].length===1;
   persistNow();
@@ -5918,7 +5920,7 @@ $('exitBtn').addEventListener('click', ()=>{
 function unloadSave(){
   if(active && currentUser && !submitted && !reviewMode && !$('testMain').classList.contains('hidden')){
     flushQuestionTiming(true);
-    STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), idx, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
+    STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
     const s=JSON.stringify(ROOT);
     try{ localStorage.setItem(SAVE_KEY, s); return true; }catch(e){return false;}
     if(window.storage && window.storage.set){ try{ window.storage.set(SAVE_KEY, s); }catch(e){} }
@@ -7032,8 +7034,8 @@ refreshAccountCircles();
 <link rel="stylesheet" href="formulae-list.css?v=20261003-1">
 <script src="formulae-data.js?v=20261003-1"></script>
 <script src="formulae-list.js?v=20261003-1"></script>
-<link rel="stylesheet" href="general-leaderboards.css?v=20261004-1">
-<script src="general-leaderboards.js?v=20261004-1"></script>
+<link rel="stylesheet" href="general-leaderboards.css?v=20261004-2">
+<script src="general-leaderboards.js?v=20261004-2"></script>
 <script>cloudBoot();</script>
 <link rel="stylesheet" href="site-footer.css?v=20261002-1">
 <script src="site-footer.js?v=20261002-1"></script>
