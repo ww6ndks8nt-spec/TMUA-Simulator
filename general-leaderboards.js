@@ -10,16 +10,26 @@ const boards={
 const finite=x=>Number.isFinite(x)&&x>=0?x:0;
 const unique=rows=>{const seen=new Set();return (Array.isArray(rows)?rows:[]).filter(r=>{if(!r||typeof r!=='object')return false;const k=r._syncId||r.id||JSON.stringify(r);if(seen.has(k))return false;seen.add(k);return true;});};
 function metrics(state=STATE){
- const known=new Map(ALL_PAPERS.map(p=>[p.id,p]));let ms=0,papers=0;const first=[],timeInfo={eligible:0,legacy:0,continued:0,untimed:0};
- const times=r=>(Array.isArray(r.questionTimesMs)?r.questionTimesMs:[]).reduce((n,x)=>n+finite(x),0);
+ const known=new Map(ALL_PAPERS.map(p=>[p.id,p]));let ms=0,papers=0;const first=[],timeInfo={eligible:0,legacy:0,continued:0,untimed:0,unavailable:0};
+ const times=r=>(Array.isArray(r.questionTimesMs)?r.questionTimesMs:[]).reduce((n,x)=>n+((typeof x==='number'||typeof x==='string')?finite(Number(x)):0),0);
  for(const [pid,saved] of Object.entries(state.results||{})){
   const p=known.get(pid);if(!p)continue;const rows=unique(saved).sort((a,b)=>finite(a.t)-finite(b.t));
   for(const r of rows){
-   const timing=r.examTiming;
-   if(timing?.version===1&&timing.kind==='timed-exam'&&Number.isFinite(timing.limitMs)&&timing.limitMs>0){ms+=Math.min(times(r),timing.limitMs);timeInfo.eligible++;}
-   else if(timing?.kind==='continued-exam')timeInfo.continued++;
-   else if(timing?.kind==='untimed'||r.noTimer===true)timeInfo.untimed++;
-   else timeInfo.legacy++;
+   const timing=r.examTiming,mode=typeof r.mode==='string'?r.mode.trim():'',recorded=times(r);
+   // Explicit exclusions take precedence; legacy records must not be relabelled as verified timed exams.
+   if(timing?.kind==='continued-exam'||/\b(continued|resumed)\b/i.test(mode))timeInfo.continued++;
+   else if(timing?.kind==='untimed'||r.noTimer===true||/\buntimed\b/i.test(mode))timeInfo.untimed++;
+   else if(p.randomized||/wrong.answer|mistake drill|question.bank/i.test(mode))continue;
+   else if(timing?.version===1&&timing.kind==='timed-exam'&&Number.isFinite(timing.limitMs)&&timing.limitMs>0){
+    ms+=Math.min(recorded,timing.limitMs);if(recorded>0)timeInfo.eligible++;else timeInfo.unavailable++;
+   }else if(!timing&&recorded>0){
+    // Older completed results saved question times but often no mode or allowance.
+    // Preserve that history without guessing an allowance from today's settings.
+    const label=mode.match(/^(\d+(?:\.\d+)?)\s*min(?:\s+(\d+)\s*sec)?(?:\s*·|$)/i);
+    const limit=label?(Number(label[1])*60+Number(label[2]||0))*1000:0;
+    ms+=limit>0?Math.min(recorded,limit):recorded;
+    timeInfo.legacy++;
+   }else timeInfo.unavailable++;
   }
   if(!p.esat&&rows.some(r=>Array.isArray(r.a)&&r.a.reduce((n,a,i)=>n+(Number.isInteger(a)&&a>=0&&a<(p.questions[i]?.opts?.length||0)?1:0),0)>=(p.mat?8:15)))papers++;
   // As on Overview, a first submitted attempt cannot be replaced by a retake.
@@ -63,10 +73,11 @@ function refreshChoices(){
 }
 function timeNote(m){
  const parts=[m.timeInfo.eligible+' eligible timed attempt'+(m.timeInfo.eligible===1?'':'s')];
- if(m.timeInfo.legacy)parts.push(m.timeInfo.legacy+' older attempt'+(m.timeInfo.legacy===1?'':'s')+' excluded: timing mode was not saved');
+ if(m.timeInfo.legacy)parts.push(m.timeInfo.legacy+' older attempt'+(m.timeInfo.legacy===1?'':'s')+' included from recorded exam time (original timing details may be unavailable)');
  if(m.timeInfo.continued)parts.push(m.timeInfo.continued+' continued/resumed excluded');
  if(m.timeInfo.untimed)parts.push(m.timeInfo.untimed+' untimed excluded');
- if(!m.timeInfo.eligible)parts.push('Complete a new timed paper to start this total');
+ if(m.timeInfo.unavailable)parts.push(m.timeInfo.unavailable+' attempt'+(m.timeInfo.unavailable===1?'':'s')+' without usable timing');
+ if(!m.time)parts.push('No eligible recorded exam time yet');
  return parts.join(' · ')+'.';
 }
 function schedule(){

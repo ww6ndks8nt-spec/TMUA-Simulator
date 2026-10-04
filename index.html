@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-04.dark-page-consistency">
+<meta name="ducktmua-build" content="2026-10-04.leaderboard-history-fix">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='light'?'light':'dark';}catch(e){document.documentElement.dataset.duckTheme='dark';}
 </script>
@@ -2591,7 +2591,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <div class="glb-panel glb-ranking"><div id="generalLbTabs" role="group" aria-label="Choose a leaderboard"></div>
 <div class="glb-table-scroll" role="region" tabindex="0" aria-label="Leaderboard results"><table class="glb-table"><caption id="generalLbHeading" class="glb-sr">Most time spent practising</caption><thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th id="generalLbValueHeading" scope="col">Recorded time</th></tr></thead><tbody id="generalLbRows"></tbody></table></div>
 </div>
-<details class="glb-panel glb-methods"><summary>How these rankings work</summary><p><strong>Practice time:</strong> total accumulated time spent on completed timed exam attempts. Mental maths, question-bank sessions, mistake drills, untimed attempts and continued or resumed exam practice do not count. Time is capped at the attempt’s time allowance. Older attempts without a recorded timing mode cannot be included reliably.</p><p><strong>Estimated performance:</strong> the same source-weighted first-attempt TMUA estimate used on the Overview page, on a 1–9 scale. At least three scored TMUA papers are needed. MAT and question drills do not contribute. Estimates are unofficial and do not adjust for timing arrangements.</p><p><strong>Papers completed:</strong> different full papers submitted with at least 15 recorded answers for TMUA or 8 for MAT. Retakes do not increase the count; a combined Paper 1 / Paper 2 sitting counts as two when each paper meets its threshold.</p><p>When you join, eligible saved history contributes. Updates follow successful account sync and may take up to a minute while practising. Turning a switch off removes that public entry once the change reaches the server. If you are offline, reconnect and use Retry sync. Your private history is retained. Changing to Anonymous in Settings updates the name used on these rankings; it does not make a public entry impossible to link with earlier versions.</p><p>Top 100 published entries. Equal values share a rank. These are practice statistics, not verified exam results.</p></details>
+<details class="glb-panel glb-methods"><summary>How these rankings work</summary><p><strong>Practice time:</strong> recorded time from completed exam attempts. Attempts marked untimed, continued or resumed are excluded, as are mental maths, question-bank sessions and mistake drills. Older completed attempts contribute their saved question times even when the original timing mode was not recorded; these cannot retrospectively be confirmed as timed exams. Time is capped when the original allowance is recorded. No time is invented for attempts without recorded question times. Combined sittings are counted through the individual paper records, without adding the combined summary again.</p><p><strong>Estimated performance:</strong> the same source-weighted first-attempt TMUA estimate used on the Overview page, on a 1–9 scale. At least three scored TMUA papers are needed. MAT and question drills do not contribute. Estimates are unofficial and do not adjust for timing arrangements.</p><p><strong>Papers completed:</strong> different full papers submitted with at least 15 recorded answers for TMUA or 8 for MAT. Retakes do not increase the count; a combined Paper 1 / Paper 2 sitting counts as two when each paper meets its threshold.</p><p>When you join, eligible saved history contributes. Updates follow successful account sync and may take up to a minute while practising. Turning a switch off removes that public entry once the change reaches the server. If you are offline, reconnect and use Retry sync. Your private history is retained. Changing to Anonymous in Settings updates the name used on these rankings; it does not make a public entry impossible to link with earlier versions.</p><p>Top 100 published entries. Equal values share a rank. These are practice statistics, not verified exam results.</p></details>
 </div></section>
 
 <section id="formulaeScreen" class="screen hidden nav-aware modern-ui studio-ui" aria-labelledby="formulaeTitle"><div class="card">
@@ -7034,8 +7034,8 @@ refreshAccountCircles();
 <link rel="stylesheet" href="formulae-list.css?v=20261004-2">
 <script src="formulae-data.js?v=20261003-1"></script>
 <script src="formulae-list.js?v=20261003-1"></script>
-<link rel="stylesheet" href="general-leaderboards.css?v=20261004-4">
-<script src="general-leaderboards.js?v=20261004-3"></script>
+<link rel="stylesheet" href="general-leaderboards.css?v=20261004-5">
+<script src="general-leaderboards.js?v=20261004-5"></script>
 <script>cloudBoot();</script>
 <link rel="stylesheet" href="site-footer.css?v=20261002-1">
 <script src="site-footer.js?v=20261002-1"></script>
