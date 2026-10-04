@@ -164,3 +164,5 @@ html body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview .pp-l
 html body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview .pp-lb-table thead th{color:var(--fp-yellow)!important}
 html body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview .pp-lb-table .pp-lb-mode{color:var(--du-muted)!important}
 html body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview .pp-lb-me .pp-score{color:var(--fp-yellow)!important}
+
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview .pp-lb-table thead{background:var(--du-bg)!important}

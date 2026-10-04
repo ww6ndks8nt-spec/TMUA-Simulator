@@ -264,3 +264,26 @@ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-analytics>.
  html body.duck-airy.duck-redesign.duck-fullpage #sideNav .account-circle{width:28px!important;height:28px!important;min-width:28px!important}
  html body.duck-airy.duck-redesign.duck-fullpage #sideNav .side-nav-items{gap:4px!important}
 }
+
+/* Menus retain their layout during a short closing fade; closed items cannot receive focus. */
+html body.duck-fullpage .fp-nav-list{opacity:0;transform:translateY(-7px);transition:opacity .2s ease,transform .2s ease;pointer-events:none}
+html body.duck-fullpage .fp-nav-menu.fp-menu-visible .fp-nav-list{opacity:1;transform:translateY(0);pointer-events:auto}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign.duck-fullpage #sideNav .fp-nav-list :is(.side-nav-item,.fp-menu-search):is(:hover,:focus-visible){
+ background:var(--du-bg)!important;color:#ffdc5a!important;box-shadow:0 0 0 1px rgba(255,220,90,.88),0 0 14px rgba(255,210,60,.26)!important;
+}
+/* Keep matching inset/outset shadow layers so the browser can interpolate the row glow. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen #dashboardTiming .study-clickable-row{
+ --duck-hover-shadow:0 0 14px rgba(255,210,60,.26),inset 0 0 0 1px rgba(255,220,90,.08),0 0 0 1px rgba(255,220,90,.88)!important;
+}
+html body.duck-airy.duck-redesign.duck-fullpage .screen select{
+ transition:box-shadow .28s ease,border-color .28s ease,background-color .2s ease,color .2s ease!important;
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview #startTimingSelect:is(:hover,:focus){
+ box-shadow:0 0 0 1px rgba(255,220,90,.88),0 0 14px rgba(255,210,60,.26)!important;border-color:#d8bd52!important;outline:none!important;
+}
+/* Both charts use the same fixed plot height, with coordinates measured at the live width. */
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-daily-scroll svg{height:320px!important;max-height:320px!important}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-analytics.fp-reveal-reset>.fp-reveal-pending{transition:none!important}
+@media(prefers-reduced-motion:reduce){
+ html body.duck-fullpage .fp-nav-list,html body.duck-airy.duck-redesign.duck-fullpage .screen select{transition:none!important}
+}

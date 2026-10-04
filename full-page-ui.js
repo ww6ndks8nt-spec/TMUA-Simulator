@@ -9,9 +9,22 @@
   const details=make('details','fp-nav-menu'),summary=make('summary','',label),list=make('div','fp-nav-list');
   summary.appendChild(make('span','fp-chevron'));summary.lastChild.setAttribute('aria-hidden','true');
   details.append(summary,list);items.appendChild(details);menus.push(details);
-  for(const [id,title] of ids){const node=$(id);if(!node)continue;node.querySelector('.side-nav-label').textContent=title;node.setAttribute('aria-label',title);node.title=title;list.appendChild(node);node.addEventListener('click',()=>{details.open=false;});}
-  let hoverClose;details.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){clearTimeout(hoverClose);details.open=true;}});details.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')hoverClose=setTimeout(()=>{if(!details.contains(document.activeElement))details.open=false;},180);});
-  details.addEventListener('toggle',()=>{if(details.open)menus.forEach(other=>{if(other!==details)other.open=false;});});
+  for(const [id,title] of ids){const node=$(id);if(!node)continue;node.querySelector('.side-nav-label').textContent=title;node.setAttribute('aria-label',title);node.title=title;list.appendChild(node);node.addEventListener('click',()=>{details.fpSetOpen(false);});}
+  let closeTimer;
+  details.fpSetOpen=expanded=>{
+   clearTimeout(closeTimer);
+   if(expanded){
+    menus.forEach(other=>{if(other!==details)other.fpSetOpen(false);});
+    if(!details.open){details.open=true;list.getBoundingClientRect();}
+    details.classList.add('fp-menu-visible');list.inert=false;
+   }else{
+    details.classList.remove('fp-menu-visible');list.inert=true;
+    closeTimer=setTimeout(()=>{details.open=false;},matchMedia('(prefers-reduced-motion: reduce)').matches?0:200);
+   }
+  };
+  summary.addEventListener('click',event=>{event.preventDefault();details.fpSetOpen(!details.classList.contains('fp-menu-visible'));});
+  let hoverClose;details.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){clearTimeout(hoverClose);details.fpSetOpen(true);}});details.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')hoverClose=setTimeout(()=>{if(!details.contains(document.activeElement))details.fpSetOpen(false);},180);});
+
  }
  menu('Practise',[['navPapers','Papers'],['navBank','Question bank'],['navMental','Mental maths'],['navFormulae','Formulae list']]);
  menu('Review',[['navReview','Attempts'],['navWrong','Mistake drill'],['navJournal','Mistake journal'],['navBookmarks','Bookmarks']]);
@@ -20,9 +33,9 @@
  planner.classList.add('fp-planner');planner.title='Planner';planner.setAttribute('aria-label','Planner');account.prepend(planner);
  // Keep the original More element available to existing navigation handlers.
  $('airyMoreNav').hidden=true;$('navDashboard').hidden=true;
- const find=$('duFindButton');find.title='Search papers and questions';find.setAttribute('aria-label',find.title);find.classList.remove('du-nav-search');find.classList.add('fp-menu-search');menus[0].querySelector('.fp-nav-list').appendChild(find);find.addEventListener('click',()=>{menus[0].open=false;});
- document.addEventListener('click',e=>menus.forEach(m=>{if(!m.contains(e.target))m.open=false;}));
- document.addEventListener('keydown',e=>{if(e.key==='Escape')menus.forEach(m=>{if(m.open){m.open=false;m.querySelector('summary').focus();}});});
+ const find=$('duFindButton');find.title='Search papers and questions';find.setAttribute('aria-label',find.title);find.classList.remove('du-nav-search');find.classList.add('fp-menu-search');menus[0].querySelector('.fp-nav-list').appendChild(find);find.addEventListener('click',()=>{menus[0].fpSetOpen(false);});
+ document.addEventListener('click',e=>menus.forEach(m=>{if(!m.contains(e.target))m.fpSetOpen(false);}));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')menus.forEach(m=>{if(m.open){m.fpSetOpen(false);m.querySelector('summary').focus();}});});
  const card=dash.querySelector(':scope>.card'),hero=make('section','fp-home-hero');hero.setAttribute('aria-label','Practice overview');
  card.prepend(hero);
  const main=make('div','fp-home-main'),score=dash.querySelector('.mastery-card'),stats=make('div','fp-home-stats');
@@ -53,6 +66,7 @@
  // Recent papers now occupies the left-hand side of the opening screen.
  dash.querySelector('.airy-dashboard')?.remove();
  function renderDaily(){
+  if(!dailyBody.clientWidth)return; // Measure only after the screen has a layout.
   const now=Date.now(),rows=currentUser?dashboardAllAttemptRows().filter(r=>r.t>0&&r.t<=now&&!!r.p.esat===ESAT_MODE):[];
   const end=new Date(now);end.setHours(0,0,0,0);end.setDate(end.getDate()+1);
   const first=new Date(end);
@@ -80,21 +94,50 @@
   renderDaily();
  }
  const original=buildDashboard;buildDashboard=function(...args){const result=original.apply(this,args);refresh();return result;};
- let chartWidth=0,chartFrame;
- const observer=new ResizeObserver(entries=>{const width=Math.round(entries[0].contentRect.width);if(width>0&&width!==chartWidth){chartWidth=width;cancelAnimationFrame(chartFrame);chartFrame=requestAnimationFrame(()=>{if(currentUser&&!dash.classList.contains('hidden'))renderDashboardChart(dashboardFirstAttempts());});}});
- observer.observe($('dashMasteryChart'));
- // Reveal each analytics panel once when it enters this screen's scroll viewport.
- const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
- if('IntersectionObserver' in window&&!reducedMotion.matches){
-  const panels=[...analytics.children];
-  panels.forEach(panel=>panel.classList.add('fp-reveal-pending'));
-  const revealObserver=new IntersectionObserver(entries=>{
+ let chartFrame;
+ const chartWidths=new WeakMap();
+ function scheduleCharts(){
+  cancelAnimationFrame(chartFrame);
+  chartFrame=requestAnimationFrame(()=>{
+   if(dash.classList.contains('hidden'))return;
+   renderDaily();
+   if(currentUser)renderDashboardChart(dashboardFirstAttempts());
+  });
+ }
+ const observer=new ResizeObserver(entries=>{
+  if(entries.some(entry=>{const width=Math.round(entry.contentRect.width),changed=width>0&&width!==chartWidths.get(entry.target);chartWidths.set(entry.target,width);return changed;}))scheduleCharts();
+ });
+ observer.observe($('dashMasteryChart'));observer.observe(dailyBody);
+ // Rearm when leaving home; reveal again after each return, including retained scroll positions.
+ const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)'),panels=[...analytics.children];
+ let revealObserver=null,revealFrame=0,revealNextFrame=0;
+ if('IntersectionObserver' in window){
+  revealObserver=new IntersectionObserver(entries=>{
+   if(dash.classList.contains('hidden')||analytics.classList.contains('fp-reveal-reset'))return;
    const incoming=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>panels.indexOf(a.target)-panels.indexOf(b.target));
    incoming.forEach((entry,i)=>{entry.target.style.setProperty('--fp-reveal-delay',(i*170)+'ms');entry.target.classList.add('fp-reveal-visible');revealObserver.unobserve(entry.target);});
   },{root:dash,threshold:0.06,rootMargin:'0px 0px -32px 0px'});
-  panels.forEach(panel=>revealObserver.observe(panel));
-  analytics.addEventListener('focusin',event=>{const panel=panels.find(panel=>panel.contains(event.target));if(panel){panel.style.setProperty('--fp-reveal-delay','0ms');panel.classList.add('fp-reveal-visible');revealObserver.unobserve(panel);}});
-  reducedMotion.addEventListener('change',event=>{if(event.matches){revealObserver.disconnect();panels.forEach(panel=>{panel.style.setProperty('--fp-reveal-delay','0ms');panel.classList.add('fp-reveal-visible');});}});
  }
+ function resetReveals(){
+  cancelAnimationFrame(revealFrame);cancelAnimationFrame(revealNextFrame);revealObserver?.disconnect();
+  analytics.classList.add('fp-reveal-reset');
+  panels.forEach(panel=>{panel.style.setProperty('--fp-reveal-delay','0ms');panel.classList.toggle('fp-reveal-pending',!!revealObserver&&!reducedMotion.matches);panel.classList.remove('fp-reveal-visible');});
+ }
+ function startReveals(){
+  scheduleCharts();
+  revealFrame=requestAnimationFrame(()=>{revealNextFrame=requestAnimationFrame(()=>{
+   analytics.classList.remove('fp-reveal-reset');
+   if(!dash.classList.contains('hidden')&&!reducedMotion.matches)panels.forEach(panel=>revealObserver?.observe(panel));
+  });});
+ }
+ let homeVisible=!dash.classList.contains('hidden');
+ new MutationObserver(()=>{
+  const visible=!dash.classList.contains('hidden');
+  if(visible!==homeVisible){homeVisible=visible;resetReveals();if(visible)startReveals();}
+ }).observe(dash,{attributes:true,attributeFilter:['class']});
+ analytics.addEventListener('focusin',event=>{const panel=panels.find(panel=>panel.contains(event.target));if(panel){panel.style.setProperty('--fp-reveal-delay','0ms');panel.classList.add('fp-reveal-visible');revealObserver?.unobserve(panel);}});
+ reducedMotion.addEventListener('change',()=>{resetReveals();if(homeVisible)startReveals();});
+ resetReveals();if(homeVisible)startReveals();
+
  refresh();
 })();
