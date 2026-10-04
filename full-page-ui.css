@@ -287,3 +287,7 @@ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-analytics.f
 @media(prefers-reduced-motion:reduce){
  html body.duck-fullpage .fp-nav-list,html body.duck-airy.duck-redesign.duck-fullpage .screen select{transition:none!important}
 }
+
+/* Visibility must override the responsive top-bar layout, including on auth screens. */
+html body.duck-airy.duck-redesign.duck-fullpage #sideNav.hidden,
+html body.duck-airy.duck-redesign.duck-fullpage:has(#loginScreen:not(.hidden)) #sideNav{display:none!important}

@@ -166,3 +166,6 @@ html body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview .pp-l
 html body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview .pp-lb-me .pp-score{color:var(--fp-yellow)!important}
 
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview .pp-lb-table thead{background:var(--du-bg)!important}
+
+/* Match all three paper-summary values to the difficulty value. */
+html body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview :is(#ppCount,#ppStandard,#ppDifficulty){font-size:36px!important}

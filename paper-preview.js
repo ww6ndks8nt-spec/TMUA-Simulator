@@ -104,7 +104,7 @@ function renderLeaderboardEntries(p,entries){
   status.textContent=rows.length+' result'+(rows.length===1?'':'s')+(matches.length>50?' · top 50':'');content.replaceChildren();
   if(!rows.length){content.append(make('p','pp-empty',entries.length?'No first attempts recorded for this sitting mode.':'No scores yet — the first attempt on this paper claims the top spot.'));return;}
   const scroll=make('div','pp-lb-table-scroll'),table=make('table','pp-lb-table');table.setAttribute('aria-label','First-attempt leaderboard');
-  const head=make('thead'),headRow=make('tr');for(const label of ['Rank','Player','Sitting mode','Date','Score','Estimated grade']){const th=make('th','',label);th.scope='col';headRow.append(th);}head.append(headRow);
+  const head=make('thead'),headRow=make('tr');for(const label of ['Rank','Name','Sitting mode','Date','Score','Estimated grade']){const th=make('th','',label);th.scope='col';headRow.append(th);}head.append(headRow);
   const body=make('tbody');
   rows.forEach((e,i)=>{
    const row=make('tr',e.uid===currentUser?'pp-lb-me':'');row.append(make('td','pp-lb-rank',String(i+1)));
