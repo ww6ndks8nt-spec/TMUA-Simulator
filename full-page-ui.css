@@ -201,7 +201,7 @@ html body.duck-fullpage .fp-daily-chart .fp-date-label{font-size:11px}
  html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail{display:flex;grid-column:2;grid-row:2}
  html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-stats .v{font-size:32px!important}
  html body.duck-fullpage .fp-home-rail>.duck-mascot{margin:0!important}
- html body.duck-fullpage .fp-background-ducks img:nth-child(n+5){display:none}
+ html body.duck-fullpage .fp-background-ducks img:nth-child(n+7){display:none}
 }
 @media(max-width:800px){
  html body.duck-airy.duck-redesign.duck-fullpage{--fp-nav-height:96px}
@@ -312,3 +312,15 @@ html body.duck-fullpage .fp-background-ducks .fp-constellation{position:absolute
 html body.duck-fullpage .fp-background-ducks img{z-index:1}
 html body.duck-fullpage .fp-constellation line{stroke:#9e7e25;stroke-opacity:.16;stroke-width:1;vector-effect:non-scaling-stroke}
 html[data-duck-theme="dark"] body.duck-fullpage .fp-constellation line{stroke:#ffdc5a;stroke-opacity:.12}
+
+/* More stars in the duck constellation, distributed across the open background. */
+html body.duck-fullpage .fp-background-ducks img:nth-child(9){left:17%;top:34%;bottom:auto;width:100px;animation-delay:-7s}
+html body.duck-fullpage .fp-background-ducks img:nth-child(10){left:36%;top:23%;bottom:auto;width:85px;animation-delay:-4s}
+html body.duck-fullpage .fp-background-ducks img:nth-child(11){left:55%;top:27%;bottom:auto;width:105px;animation-delay:-10s}
+html body.duck-fullpage .fp-background-ducks img:nth-child(12){left:85%;top:40%;bottom:auto;width:110px;animation-delay:-1s}
+html body.duck-fullpage .fp-background-ducks img:nth-child(13){left:46%;bottom:26%;top:auto;width:90px;animation-delay:-8s}
+html body.duck-fullpage .fp-background-ducks img:nth-child(14){left:24%;bottom:26%;top:auto;width:85px;animation-delay:-5s}
+@media(max-width:1000px){
+ html body.duck-fullpage .fp-background-ducks img:nth-child(5){left:66%;width:85px}
+ html body.duck-fullpage .fp-background-ducks img:nth-child(6){left:4%;top:45%;width:95px}
+}

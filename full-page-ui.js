@@ -46,19 +46,32 @@
  rail.append(dash.querySelector('.du-next'),dash.querySelector('.airy-focus'));
  const art=make('div','fp-background-ducks');art.setAttribute('aria-hidden','true');
  art.innerHTML='<img src="duck-mascot-sirquacksalot.png?v=20261002-dry" alt="" draggable="false"><img src="duck-mascot-lady-lay-a-lot.png?v=20261002-dry" alt="" draggable="false">';
- for(let i=0;i<6;i++){const img=make('img');img.src=i%2?'duck-mascot-lady-lay-a-lot.png?v=20261002-dry':'duck-mascot-sirquacksalot.png?v=20261002-dry';img.alt='';img.draggable=false;art.appendChild(img);}
+ for(let i=0;i<12;i++){const img=make('img');img.src=i%2?'duck-mascot-lady-lay-a-lot.png?v=20261002-dry':'duck-mascot-sirquacksalot.png?v=20261002-dry';img.alt='';img.draggable=false;art.appendChild(img);}
  // Keep constellation endpoints attached to the gently drifting background ducks.
  const stars=[...art.querySelectorAll('img')],svgNS='http://www.w3.org/2000/svg';
  const constellation=document.createElementNS(svgNS,'svg');constellation.classList.add('fp-constellation');constellation.setAttribute('aria-hidden','true');constellation.setAttribute('focusable','false');
  art.appendChild(constellation); // Append after images to preserve their positional selectors.
- const edges=[[5,2],[2,3],[3,4],[4,6],[6,1],[1,7],[7,0],[0,5],[2,1]];
- const links=edges.map(()=>{const line=document.createElementNS(svgNS,'line');constellation.appendChild(line);return line;});
+ // Mask the full silhouettes at full opacity: faint duck artwork must still occlude lines.
+ const defs=document.createElementNS(svgNS,'defs');
+ defs.innerHTML='<filter id="fp-duck-opaque"><feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 20 0"/></filter><mask id="fp-duck-cutouts" x="0" y="0" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" style="mask-type:luminance"><rect width="100%" height="100%" fill="white"/></mask>';
+ constellation.appendChild(defs);
+ const cutout=defs.querySelector('mask'),cutouts=stars.map(star=>{const image=document.createElementNS(svgNS,'image');image.setAttribute('href',star.getAttribute('src'));image.setAttribute('filter','url(#fp-duck-opaque)');cutout.appendChild(image);return image;});
+ const threads=document.createElementNS(svgNS,'g');threads.setAttribute('mask','url(#fp-duck-cutouts)');constellation.appendChild(threads);
+ const edges=[[5,8],[8,9],[9,2],[2,10],[10,3],[3,11],[11,4],[4,6],[6,12],[12,1],[1,7],[7,0],[0,13],[13,5],[9,12]];
+ const links=edges.map(()=>{const line=document.createElementNS(svgNS,'line');threads.appendChild(line);return line;});
  let constellationVisible=false,constellationFrame=0,lastConstellationDraw=0;
  const constellationMotion=matchMedia('(prefers-reduced-motion: reduce)');
  function drawConstellation(){
   const bounds=art.getBoundingClientRect();if(!bounds.width||!bounds.height)return;
   const points=stars.map(star=>{const b=star.getBoundingClientRect();return b.width&&b.height?{x:b.left+b.width/2-bounds.left,y:b.top+b.height/2-bounds.top}:null;});
-  const connections=points.filter(Boolean).length===4?[[0,1],[1,2],[2,3]]:edges;
+  const connections=points.filter(Boolean).length===6?[[0,1],[1,4],[4,3],[3,2],[2,5],[5,0]]:edges;
+  cutout.setAttribute('width',bounds.width);cutout.setAttribute('height',bounds.height);
+  stars.forEach((star,i)=>{
+   const image=cutouts[i];image.style.display=points[i]?'':'none';if(!points[i])return;
+   const style=getComputedStyle(star),origin=style.transformOrigin.split(' ').map(parseFloat),w=star.offsetWidth,h=star.offsetHeight;
+   image.setAttribute('width',w);image.setAttribute('height',h);
+   image.setAttribute('transform','translate('+(star.offsetLeft+origin[0])+' '+(star.offsetTop+origin[1])+') '+(style.transform==='none'?'':style.transform)+' translate('+(-origin[0])+' '+(-origin[1])+')');
+  });
   constellation.setAttribute('viewBox','0 0 '+bounds.width+' '+bounds.height);
   links.forEach((line,i)=>{const pair=connections[i],a=pair&&points[pair[0]],b=pair&&points[pair[1]];line.style.display=a&&b?'':'none';if(a&&b){line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);}});
  }
