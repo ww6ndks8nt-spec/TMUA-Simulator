@@ -56,7 +56,7 @@ function render(p){
   const date=make('time','pp-date',Number.isFinite(Number(r.t))&&Number(r.t)>0?new Date(Number(r.t)).toLocaleDateString('en-GB'):'Date unavailable');
   if(Number.isFinite(Number(r.t))&&Number(r.t)>0)date.dateTime=new Date(Number(r.t)).toISOString();
   const metric=(label,value)=>{const e=make('span','pp-metric');e.append(make('small','',label),make('strong','',value));return e;};
-  const chevron=make('span','pp-chevron','⌄');chevron.setAttribute('aria-hidden','true');
+  const chevron=make('span','pp-chevron');chevron.setAttribute('aria-hidden','true');chevron.innerHTML='<svg viewBox="0 0 16 16" width="16" height="16" focusable="false"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   summary.append(date,make('strong','pp-score',scoreText(s)),metric('Estimated grade',grade===null?'—':grade.toFixed(1)),metric('Tracked time',timeText(r)),chevron);
   const body=make('div','pp-expanded'),scroll=make('div','pp-question-scroll'),table=make('table','pp-question-table');
   table.setAttribute('aria-label','Correct and incorrect answers by question');table.style.minWidth=Math.max(300,p.questions.length*34)+'px';
@@ -74,20 +74,48 @@ function render(p){
 }
 const originalOpen=openStart;
 openStart=function(p){originalOpen(p);render(active);};
+function leaderboardModeSeconds(mode,p){
+ const text=String(mode||'').trim().toLowerCase();
+ if(/untimed|no timer/.test(text))return 0;
+ const min=text.match(/(\d+(?:\.\d+)?)\s*(?:min(?:ute)?s?|m)\b/),sec=text.match(/(\d+)\s*(?:sec(?:ond)?s?|s)\b/),hour=text.match(/(\d+)\s*(?:hours?|hrs?|h)\b/);
+ if(min||sec||hour)return Math.round((hour?Number(hour[1])*3600:0)+(min?Number(min[1])*60:0)+(sec?Number(sec[1]):0));
+ if(/extra/.test(text))return Math.ceil(standardPaperSeconds(p)*1.25);
+ if(/challenge/.test(text))return selectedTimeSecondsForPaper(p,'challenge');
+ if(/speedrun/.test(text))return 2700;
+ if(text==='standard')return standardPaperSeconds(p);
+ return null;
+}
 function renderLeaderboardEntries(p,entries){
  const host=el('lbCard');host.replaceChildren();
  host.append(make('h2','pp-lb-title','Leaderboard — first attempts'));
- if(!entries.length){host.append(make('p','pp-empty','No scores yet — the first attempt on this paper claims the top spot.'));return;}
- const list=make('ol','pp-lb-list');list.setAttribute('aria-label','First-attempt rankings');
- entries.forEach((e,i)=>{
-  const row=make('li','pp-attempt pp-lb-row'+(e.uid===currentUser?' pp-lb-me':''));
-  const candidate=make('div','pp-lb-candidate');candidate.append(make('span','pp-lb-rank',String(i+1)),make('strong','pp-lb-name',e.name));
-  const date=make('time','pp-date',Number(e.t)>0?new Date(Number(e.t)).toLocaleDateString('en-GB'):'Date unavailable');if(Number(e.t)>0)date.dateTime=new Date(Number(e.t)).toISOString();
-  const metric=(label,value)=>{const m=make('div','pp-metric');m.append(make('small','',label),make('strong','',value));return m;};
-  const grade=e.s===p.questions.filter(q=>q.correct!==99).length?difficultyGrade(e.c,p):null;
-  row.append(candidate,date,make('strong','pp-score',e.c+' / '+e.s),metric('Estimated grade',grade===null?'—':grade.toFixed(1)),metric('Sitting mode',e.mode||'Not recorded'));list.append(row);
- });
- host.append(list);
+ const filters=make('div','pp-lb-filters');filters.setAttribute('role','group');filters.setAttribute('aria-label','Leaderboard sitting mode');
+ const duration=s=>{const m=Math.floor(s/60),sec=s%60;return m+' min'+(sec?' '+sec+'s':'');};
+ const base=standardPaperSeconds(p),modes=[base,Math.ceil(base*1.25)];
+ if(!p.esat&&!p.randomized)modes.push(selectedTimeSecondsForPaper(p,'challenge'));
+ if(!p.esat&&!p.mat&&!p.randomized&&!isChallengePaper(p))modes.push(2700);
+ const choices=[...new Set(modes)].map(s=>[String(s),duration(s)]);choices.push(['0','Untimed'],['all','All']);
+ const content=make('div','pp-lb-content'),status=make('p','pp-lb-status');status.setAttribute('role','status');let selected='all';
+ const buttons=[];
+ for(const [key,label] of choices){const button=make('button','bigbtn ghost pp-lb-filter',label);button.type='button';button.dataset.modeSeconds=key;button.addEventListener('click',()=>{selected=key;draw();});filters.append(button);buttons.push(button);}
+ host.append(filters,status,content);
+ function draw(){
+  buttons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.modeSeconds===selected)));
+  const matches=entries.filter(e=>selected==='all'||leaderboardModeSeconds(e.mode,p)===Number(selected)),rows=matches.slice(0,50);
+  status.textContent=rows.length+' result'+(rows.length===1?'':'s')+(matches.length>50?' · top 50':'');content.replaceChildren();
+  if(!rows.length){content.append(make('p','pp-empty',entries.length?'No first attempts recorded for this sitting mode.':'No scores yet — the first attempt on this paper claims the top spot.'));return;}
+  const scroll=make('div','pp-lb-table-scroll'),table=make('table','pp-lb-table');table.setAttribute('aria-label','First-attempt leaderboard');
+  const head=make('thead'),headRow=make('tr');for(const label of ['Rank','Player','Sitting mode','Date','Score','Estimated grade']){const th=make('th','',label);th.scope='col';headRow.append(th);}head.append(headRow);
+  const body=make('tbody');
+  rows.forEach((e,i)=>{
+   const row=make('tr',e.uid===currentUser?'pp-lb-me':'');row.append(make('td','pp-lb-rank',String(i+1)));
+   const player=make('th','pp-lb-player');player.scope='row';const name=make('span','pp-lb-name',e.name),avatar=make('span','pp-lb-avatar',String(e.name).trim().split(/\s+/).slice(0,2).map(word=>Array.from(word)[0]||'').join('').toUpperCase());avatar.setAttribute('aria-hidden','true');player.append(avatar,name);if(e.uid===currentUser)player.append(make('small','pp-lb-you','You'));
+   row.append(player,make('td','pp-lb-mode',e.mode||'Not recorded'));
+   const dateCell=make('td'),date=make('time','pp-date',Number(e.t)>0?new Date(Number(e.t)).toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit',year:'2-digit'}):'—');if(Number(e.t)>0)date.dateTime=new Date(Number(e.t)).toISOString();dateCell.append(date);row.append(dateCell,make('td','pp-score',e.c+' / '+e.s));
+   const grade=e.s===p.questions.filter(q=>q.correct!==99).length?difficultyGrade(e.c,p):null;row.append(make('td','pp-lb-grade',grade===null?'—':grade.toFixed(1)));body.append(row);
+  });
+  table.append(head,body);scroll.append(table);content.append(scroll);
+ }
+ draw();
 }
 window.PaperPreview={render,renderLeaderboardEntries};
 })();

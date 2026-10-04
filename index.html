@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-04.layout-refinements">
+<meta name="ducktmua-build" content="2026-10-04.brand-motion">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='light'?'light':'dark';}catch(e){document.documentElement.dataset.duckTheme='dark';}
 </script>
@@ -5621,7 +5621,7 @@ function lbPut(pid, uid, entry){
   return lbRequest('/leaderboards/'+encodeURIComponent(pid)+'/'+encodeURIComponent(uid)+'.json',
     { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(entry) });
 }
-function lbSortEntries(obj){
+function lbSortEntries(obj,limit=50){
   const arr=Object.keys(obj||{}).map(uid=>Object.assign({uid}, obj[uid]))
     .filter(e=>e && typeof e.c==='number' && typeof e.s==='number' && e.s>0 && e.name);
   arr.sort((x,y)=>{
@@ -5629,7 +5629,7 @@ function lbSortEntries(obj){
     if(py!==px) return py-px;
     return (x.t||0)-(y.t||0);
   });
-  return arr.slice(0,50);
+  return arr.slice(0,limit);
 }
 async function renderLeaderboard(p){
   const card=$('lbCard');
@@ -5648,7 +5648,7 @@ async function renderLeaderboard(p){
   try{
     const data=await lbGet(p.id);
     if(active!==p) return;               // user moved on while loading
-    const arr=lbSortEntries(data);
+    const arr=lbSortEntries(data,window.PaperPreview?.renderLeaderboardEntries?Infinity:50);
     if(window.PaperPreview?.renderLeaderboardEntries){window.PaperPreview.renderLeaderboardEntries(p,arr);return;}
     if(!arr.length){
       card.innerHTML='<div class="ahead">Leaderboard — first attempts</div><div class="arow">No scores yet — the first attempt on this paper claims the top spot.</div>';
@@ -7030,17 +7030,17 @@ refreshAccountCircles();
 <script src="mental-maths-triples.js?v=20261003-1"></script>
 <script src="mental-maths-tracking.js?v=20261003-triples"></script>
 <script src="mental-maths.js?v=20261003-triples"></script>
-<link rel="stylesheet" href="dark-hover.css?v=20261002-2">
+<link rel="stylesheet" href="dark-hover.css?v=20261004-3">
 <link rel="stylesheet" href="ui-polish.css?v=20261003-results-dark">
 <link rel="stylesheet" href="formulae-list.css?v=20261004-2">
 <script src="formulae-data.js?v=20261003-1"></script>
 <script src="formulae-list.js?v=20261003-1"></script>
 <link rel="stylesheet" href="general-leaderboards.css?v=20261004-6">
 <script src="general-leaderboards.js?v=20261004-7"></script>
-<link rel="stylesheet" href="paper-preview.css?v=20261004-2">
-<script src="paper-preview.js?v=20261004-2"></script>
-<link rel="stylesheet" href="full-page-ui.css?v=20261004-2">
-<script src="full-page-ui.js?v=20261004-2"></script>
+<link rel="stylesheet" href="paper-preview.css?v=20261004-3">
+<script src="paper-preview.js?v=20261004-3"></script>
+<link rel="stylesheet" href="full-page-ui.css?v=20261004-4">
+<script src="full-page-ui.js?v=20261004-4"></script>
 <script>cloudBoot();</script>
 <link rel="stylesheet" href="site-footer.css?v=20261002-1">
 <script src="site-footer.js?v=20261002-1"></script>

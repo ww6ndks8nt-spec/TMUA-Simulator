@@ -83,5 +83,18 @@
  let chartWidth=0,chartFrame;
  const observer=new ResizeObserver(entries=>{const width=Math.round(entries[0].contentRect.width);if(width>0&&width!==chartWidth){chartWidth=width;cancelAnimationFrame(chartFrame);chartFrame=requestAnimationFrame(()=>{if(currentUser&&!dash.classList.contains('hidden'))renderDashboardChart(dashboardFirstAttempts());});}});
  observer.observe($('dashMasteryChart'));
+ // Reveal each analytics panel once when it enters this screen's scroll viewport.
+ const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+ if('IntersectionObserver' in window&&!reducedMotion.matches){
+  const panels=[...analytics.children];
+  panels.forEach(panel=>panel.classList.add('fp-reveal-pending'));
+  const revealObserver=new IntersectionObserver(entries=>{
+   const incoming=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>panels.indexOf(a.target)-panels.indexOf(b.target));
+   incoming.forEach((entry,i)=>{entry.target.style.setProperty('--fp-reveal-delay',(i*170)+'ms');entry.target.classList.add('fp-reveal-visible');revealObserver.unobserve(entry.target);});
+  },{root:dash,threshold:0.06,rootMargin:'0px 0px -32px 0px'});
+  panels.forEach(panel=>revealObserver.observe(panel));
+  analytics.addEventListener('focusin',event=>{const panel=panels.find(panel=>panel.contains(event.target));if(panel){panel.style.setProperty('--fp-reveal-delay','0ms');panel.classList.add('fp-reveal-visible');revealObserver.unobserve(panel);}});
+  reducedMotion.addEventListener('change',event=>{if(event.matches){revealObserver.disconnect();panels.forEach(panel=>{panel.style.setProperty('--fp-reveal-delay','0ms');panel.classList.add('fp-reveal-visible');});}});
+ }
  refresh();
 })();

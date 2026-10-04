@@ -1,13 +1,18 @@
-/* Dark mode keeps each control's resting fill and adds a yellow glow.
-   Legacy hover paints are limited to light mode at their original rules,
-   so active tabs and selected options retain their normal state colours. */
+/* Boxed controls opt in to the border glow. Plain text actions, tabs and
+   disclosure labels must never receive a rectangular hover shadow. */
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign
 :is(#sideNav,.screen,dialog,#duckQuickFind,#profileSettings,#topbar,#substrip,#footbar,#navWindow,#endConfirm)
-:is(button,summary,[role="button"],[role="link"],.official-solution-link,.review-link,.mat-pdf-actions a,.mat-load-pdf,.study-clickable-row,.airy-recent-row,.arow.clickable):not(:disabled):not([aria-disabled="true"]):not(.locked):not(.duck-play):not(.duck-egg):not(.side-nav-brand):not(details.study-panel>summary):is(:hover,:focus-visible){
+:is(.bigbtn,.study-btn,.pvbtn,.pre-exam-btn,.account-circle,.paper,.review-go,.du-collection-tab,.dash-range-btn.active,.side-nav-item.active,.mm-sign,.mm-primary,button[aria-pressed="true"],#closeProfileSettings,.official-solution-link,.review-link,.mat-pdf-actions a,.mat-load-pdf,.study-clickable-row,.airy-recent-row,.arow.clickable):not(:disabled):not([aria-disabled="true"]):not(.locked):not(.duck-play):not(.duck-egg):not(.side-nav-brand):not(details.study-panel>summary):is(:hover,:focus-visible){
  box-shadow:0 0 0 1px rgba(255,220,90,.88),0 0 14px rgba(255,210,60,.26)!important;
 }
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign
 :is(#sideNav,.screen,dialog,#duckQuickFind,#profileSettings,#topbar,#substrip,#footbar,#navWindow,#endConfirm)
 :is(button,summary,[role="button"],[role="link"],.official-solution-link,.review-link,.mat-pdf-actions a,.mat-load-pdf,.study-clickable-row,.airy-recent-row,.arow.clickable):not(:disabled):not([aria-disabled="true"]):not(.locked):focus-visible{
  outline:2px solid #ffdc5a!important;outline-offset:3px!important;
+}
+
+/* Text feedback follows the glyphs; retain keyboard focus visibility. */
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign
+:is(.linkback,.linkbtn,.airy-text-link,.mm-text-button,.topic-sort,.pp-tab,.dash-help,.fp-scroll-cue,#duResetPapers,.fp-nav-menu>summary,.pp-instructions>summary,.pp-more>summary,.glb-methods>summary,.site-footer a):hover{
+ text-shadow:0 0 8px rgba(255,220,90,.5);text-decoration:underline;text-underline-offset:4px;
 }

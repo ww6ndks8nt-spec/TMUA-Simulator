@@ -223,3 +223,44 @@ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-recent
 html[data-duck-theme="dark"] body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-recent .bigbtn{background:var(--du-bg)!important;background-image:none!important;color:#ffdc5a!important;border:1px solid #9b8437!important}
 html body.duck-fullpage .fp-daily-scroll svg{min-width:0}
 html body.duck-fullpage .fp-daily-chart[data-period="30"] svg{min-width:560px}
+/* Brand mark and shared hover timing. */
+html body.duck-airy.duck-redesign.duck-fullpage #sideNav .side-nav-brand .duck-logo{display:block!important;width:44px!important;height:44px!important;flex:0 0 44px!important}
+html body.duck-airy.duck-redesign.duck-fullpage #sideNav .side-nav-brand{gap:10px!important}
+html body.duck-airy.duck-redesign.duck-fullpage
+:is(#sideNav,.screen,dialog,#duckQuickFind,#profileSettings,#topbar,#substrip,#footbar,#navWindow,#endConfirm)
+:is(button,summary,a,[role="button"],[role="link"],.paper,.study-clickable-row,.airy-recent-row,.arow.clickable,.pp-attempt,.bank-question-row,.review-attempt,.review-go,.study-panel,.attempts),
+html body.duck-airy.duck-redesign.duck-fullpage #resultScreen #breakdown .brow{
+ transition:box-shadow .28s ease,text-shadow .28s ease,filter .28s ease,border-color .28s ease,background-color .2s ease,color .2s ease,transform .2s ease!important;
+}
+/* Only armed by the scroll observer; content remains visible without JS. */
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-analytics>.fp-reveal-pending{
+ opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease,box-shadow .28s ease!important;
+ transition-delay:var(--fp-reveal-delay,0ms),var(--fp-reveal-delay,0ms),0ms!important;
+}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-analytics>.fp-reveal-visible{opacity:1;transform:translateY(0)}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-analytics>.fp-reveal-pending:focus-within{opacity:1;transform:none;transition-delay:0ms!important}
+@media(max-width:800px){
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .side-nav-brand .duck-logo{width:30px!important;height:30px!important;flex-basis:30px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .side-nav-brand{gap:7px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .duck-brand-word{font-size:16px!important;letter-spacing:-.4px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .airy-brand-copy{font-size:10px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .airy-header-account{padding-left:6px!important}
+}
+@media(max-width:360px){
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav{padding-left:12px!important;padding-right:12px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .account-circle{width:30px!important;height:30px!important;min-width:30px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .airy-header-account{gap:3px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .side-nav-brand .duck-logo{width:25px!important;height:25px!important;flex-basis:25px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-analytics>.fp-reveal-pending{opacity:1!important;transform:none!important;transition:none!important}
+ html body.duck-airy.duck-redesign.duck-fullpage
+ :is(#sideNav,.screen,dialog,#duckQuickFind,#profileSettings,#topbar,#substrip,#footbar,#navWindow,#endConfirm)
+ :is(button,summary,a,[role="button"],[role="link"],.paper,.study-clickable-row,.airy-recent-row,.arow.clickable,.pp-attempt,.bank-question-row,.review-attempt,.review-go,.study-panel,.attempts),
+ html body.duck-airy.duck-redesign.duck-fullpage #resultScreen #breakdown .brow{transition:none!important}
+}
+@media(max-width:360px){
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .duck-brand-word{font-size:15px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .account-circle{width:28px!important;height:28px!important;min-width:28px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .side-nav-items{gap:4px!important}
+}
