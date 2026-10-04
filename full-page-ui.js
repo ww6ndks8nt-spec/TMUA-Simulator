@@ -7,9 +7,10 @@
  const items=nav.querySelector('.side-nav-items'),menus=[];
  function menu(label,ids){
   const details=make('details','fp-nav-menu'),summary=make('summary','',label),list=make('div','fp-nav-list');
-  summary.appendChild(make('span','fp-chevron','⌄'));
+  summary.appendChild(make('span','fp-chevron'));summary.lastChild.setAttribute('aria-hidden','true');
   details.append(summary,list);items.appendChild(details);menus.push(details);
   for(const [id,title] of ids){const node=$(id);if(!node)continue;node.querySelector('.side-nav-label').textContent=title;node.setAttribute('aria-label',title);node.title=title;list.appendChild(node);node.addEventListener('click',()=>{details.open=false;});}
+  let hoverClose;details.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){clearTimeout(hoverClose);details.open=true;}});details.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')hoverClose=setTimeout(()=>{if(!details.contains(document.activeElement))details.open=false;},180);});
   details.addEventListener('toggle',()=>{if(details.open)menus.forEach(other=>{if(other!==details)other.open=false;});});
  }
  menu('Practise',[['navPapers','Papers'],['navBank','Question bank'],['navMental','Mental maths'],['navFormulae','Formulae list']]);
@@ -32,38 +33,45 @@
  rail.append(dash.querySelector('.du-next'),dash.querySelector('.airy-focus'));
  const art=make('div','fp-background-ducks');art.setAttribute('aria-hidden','true');
  art.innerHTML='<img src="duck-mascot-sirquacksalot.png?v=20261002-dry" alt="" draggable="false"><img src="duck-mascot-lady-lay-a-lot.png?v=20261002-dry" alt="" draggable="false">';
+ for(let i=0;i<6;i++){const img=make('img');img.src=i%2?'duck-mascot-lady-lay-a-lot.png?v=20261002-dry':'duck-mascot-sirquacksalot.png?v=20261002-dry';img.alt='';img.draggable=false;art.appendChild(img);}
  const scroll=make('button','fp-scroll-cue','Scroll down for detailed analytics ↓');scroll.type='button';
- hero.append(art,main,rail,scroll);
+ const recent=dash.querySelector('.airy-recent');recent.classList.add('fp-home-recent');hero.append(art,recent,main,rail,scroll);
  dash.querySelector(':scope>.card>.studio-heading').hidden=true;
  dash.querySelector('.airy-stats')?.remove();
  const analytics=make('section','fp-analytics');analytics.id='homeAnalytics';analytics.setAttribute('aria-label','Detailed analytics');
- hero.after(analytics);scroll.addEventListener('click',()=>{const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;dash.scrollTo({top:dash.scrollTop+analytics.getBoundingClientRect().top-(innerWidth<=800?148:112),behavior:reduced?'instant':'smooth'});});
+ hero.after(analytics);scroll.addEventListener('click',()=>{const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;dash.scrollTo({top:dash.scrollTop+analytics.getBoundingClientRect().top-(innerWidth<=800?118:92),behavior:reduced?'instant':'smooth'});});
  const chart=dash.querySelector('.studio-chart');
  chart.querySelector('[data-chart-view="performance"]').click();
  chart.querySelector('h2').textContent='Performance over time';
  analytics.appendChild(chart);
  const daily=make('section','fp-daily dash-panel'),dailyHeader=make('div','fp-daily-header');dailyHeader.appendChild(make('h2','','Questions per day'));
- const period=make('select','airy-chart-period');period.setAttribute('aria-label','Daily activity period');period.innerHTML='<option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option>';
+ const period=make('select','airy-chart-period');period.setAttribute('aria-label','Daily activity period');period.innerHTML='<option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option><option value="all">All</option>';
  dailyHeader.appendChild(period);const dailyBody=make('div','fp-daily-chart');dailyBody.id='fpDailyChart';daily.append(dailyHeader,dailyBody);analytics.appendChild(daily);
  const details=dash.querySelector('.airy-analysis');analytics.appendChild(details);
  analytics.appendChild($('dashTopics').closest('.studio-analysis'));
  analytics.appendChild($('dashboardTiming').closest('.studio-analysis'));
- analytics.appendChild(dash.querySelector('.airy-recent'));
+ // Recent papers now occupies the left-hand side of the opening screen.
  dash.querySelector('.airy-dashboard')?.remove();
  function renderDaily(){
-  const days=Number(period.value),now=Date.now(),end=new Date(now);end.setHours(0,0,0,0);end.setDate(end.getDate()+1);
-  const buckets=Array.from({length:days},(_,i)=>{const start=new Date(end),next=new Date(end);start.setDate(start.getDate()-days+i);next.setDate(next.getDate()-days+i+1);return {start:+start,end:+next,count:0};});
-  if(currentUser)for(const row of dashboardAllAttemptRows()){
-   if(row.t>now||!!row.p.esat!==ESAT_MODE)continue;
-   const bucket=buckets.find(b=>row.t>=b.start&&row.t<b.end);
-   if(bucket)bucket.count+=Array.isArray(row.r.a)?row.r.a.filter(a=>a!==null&&a!==undefined).length:0;
-  }
-  const total=buckets.reduce((s,b)=>s+b.count,0),max=Math.max(4,Math.ceil(Math.max(...buckets.map(b=>b.count))/4)*4);
-  const W=740,H=235,L=42,R=12,T=16,B=32,base=H-B,slot=(W-L-R)/days,bw=Math.min(28,slot*.6);
-  let svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+total+' attempted questions over the last '+days+' days">';
+  const now=Date.now(),rows=currentUser?dashboardAllAttemptRows().filter(r=>r.t>0&&r.t<=now&&!!r.p.esat===ESAT_MODE):[];
+  const end=new Date(now);end.setHours(0,0,0,0);end.setDate(end.getDate()+1);
+  const first=new Date(end);
+  if(period.value==='all'&&rows.length){first.setTime(Math.min(...rows.map(r=>r.t)));first.setHours(0,0,0,0);}else first.setDate(first.getDate()-(Number(period.value)||7));
+  const buckets=[],byDay=new Map(),dayKey=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+  for(const d=new Date(first);d<end;d.setDate(d.getDate()+1)){const b={start:+d,count:0};buckets.push(b);byDay.set(dayKey(d),b);}
+  for(const row of rows){const bucket=byDay.get(dayKey(new Date(row.t)));if(bucket)bucket.count+=Array.isArray(row.r.a)?row.r.a.filter(a=>a!==null&&a!==undefined).length:0;}
+  const days=buckets.length,total=buckets.reduce((s,b)=>s+b.count,0),max=Math.max(4,Math.ceil(Math.max(...buckets.map(b=>b.count))/4)*4),diagonal=['7','30'].includes(period.value);
+  const W=Math.max(560,dailyBody.clientWidth||740),H=diagonal?320:270,L=42,R=18,T=16,B=diagonal?85:32,base=H-B,slot=(W-L-R)/days,bw=Math.min(28,slot*.6);
+  let svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+total+' attempted questions over '+days+' days">';
   for(let i=0;i<=4;i++){const y=base-(base-T)*i/4;svg+='<line class="airy-chart-grid" x1="'+L+'" y1="'+y+'" x2="'+(W-R)+'" y2="'+y+'"/><text x="'+(L-10)+'" y="'+(y+4)+'" text-anchor="end">'+max*i/4+'</text>';}
-  buckets.forEach((b,i)=>{const x=L+slot*(i+.5),h=(base-T)*b.count/max,label=new Date(b.start).toLocaleDateString('en-GB',{day:'numeric',month:'short'});svg+='<g data-count="'+b.count+'"><title>'+label+': '+b.count+' questions</title><rect class="fp-day-bar" x="'+(x-bw/2)+'" y="'+(base-h)+'" width="'+bw+'" height="'+h+'" rx="2"/>'+(i%Math.ceil(days/7)===0?'<text x="'+x+'" y="'+(H-9)+'" text-anchor="middle">'+label+'</text>':'')+'</g>';});
-  dailyBody.dataset.total=String(total);dailyBody.innerHTML='<div class="airy-chart-total">'+total+' questions</div>'+svg+'</svg>'+(total?'':'<p class="airy-chart-empty">Complete a paper to start tracking.</p>');
+  buckets.forEach((b,i)=>{const x=L+slot*(i+.5),h=(base-T)*b.count/max,date=new Date(b.start),label=date.toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit',year:'2-digit'}),short=date.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+   svg+='<g data-count="'+b.count+'"><title>'+label+': '+b.count+' questions</title><rect class="fp-day-bar" x="'+(x-bw/2)+'" y="'+(base-h)+'" width="'+bw+'" height="'+h+'" rx="2"/>';
+   if(diagonal)svg+='<text class="fp-date-label" transform="translate('+x+' '+(base+18)+') rotate(-50)" text-anchor="end">'+label+'</text>';
+   else if(i%Math.ceil(days/7)===0)svg+='<text x="'+x+'" y="'+(H-9)+'" text-anchor="middle">'+short+'</text>';
+   svg+='</g>';
+  });
+  dailyBody.dataset.total=String(total);dailyBody.dataset.days=String(days);dailyBody.dataset.period=period.value;
+  dailyBody.innerHTML='<div class="airy-chart-total">'+total+' questions</div><div class="fp-daily-scroll">'+svg+'</svg></div>'+(total?'':'<p class="airy-chart-empty">No attempted questions in this period.</p>');
  }
  period.addEventListener('change',renderDaily);
  function refresh(){
@@ -72,5 +80,8 @@
   renderDaily();
  }
  const original=buildDashboard;buildDashboard=function(...args){const result=original.apply(this,args);refresh();return result;};
+ let chartWidth=0,chartFrame;
+ const observer=new ResizeObserver(entries=>{const width=Math.round(entries[0].contentRect.width);if(width>0&&width!==chartWidth){chartWidth=width;cancelAnimationFrame(chartFrame);chartFrame=requestAnimationFrame(()=>{if(currentUser&&!dash.classList.contains('hidden'))renderDashboardChart(dashboardFirstAttempts());});}});
+ observer.observe($('dashMasteryChart'));
  refresh();
 })();

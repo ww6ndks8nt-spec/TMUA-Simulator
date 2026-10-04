@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-04.full-page-home">
+<meta name="ducktmua-build" content="2026-10-04.layout-refinements">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='light'?'light':'dark';}catch(e){document.documentElement.dataset.duckTheme='dark';}
 </script>
@@ -4481,7 +4481,7 @@ function renderDashboardChart(firstRows){
     host.innerHTML='<div class="dash-chart-empty">No first-attempt results in this period.</div>';
     return;
   }
-  const W=940,H=310,PL=50,PR=18,PT=18,PB=42;
+  const W=Math.max(320,host.clientWidth||940),H=320,PL=50,PR=18,PT=18,PB=42;
   const x0=PL,x1=W-PR,y0=H-PB,y1=PT;
   const n=points.length;
   const x=(p,i)=>n===1?(x0+x1)/2:x0+(x1-x0)*i/(n-1);
@@ -4972,8 +4972,8 @@ function paperSessionMode(p,seconds,combined=false){
 function timingOptions(p){
   const rows=[['75','Standard'],['extra','25% extra time']];
   if(!ESAT_MODE&&!p?.esat&&!p?.randomized)rows.push(['challenge','Challenge mode']);
-  rows.push(['0','Untimed']);
   if(!ESAT_MODE&&!p?.esat&&!p?.mat&&!p?.randomized&&!isChallengePaper(p))rows.push(['45','Speedrun mode']);
+  rows.push(['0','Untimed']);
   return rows.map(([value,label])=>'<option value="'+value+'">'+label+(p&&!p.randomized&&value!=='0'?' · '+paperTimeLabel(selectedTimeSecondsForPaper(p,value)):'')+'</option>').join('');
 }
 function refreshStartTiming(){
@@ -5649,6 +5649,7 @@ async function renderLeaderboard(p){
     const data=await lbGet(p.id);
     if(active!==p) return;               // user moved on while loading
     const arr=lbSortEntries(data);
+    if(window.PaperPreview?.renderLeaderboardEntries){window.PaperPreview.renderLeaderboardEntries(p,arr);return;}
     if(!arr.length){
       card.innerHTML='<div class="ahead">Leaderboard — first attempts</div><div class="arow">No scores yet — the first attempt on this paper claims the top spot.</div>';
       return;
@@ -7036,10 +7037,10 @@ refreshAccountCircles();
 <script src="formulae-list.js?v=20261003-1"></script>
 <link rel="stylesheet" href="general-leaderboards.css?v=20261004-6">
 <script src="general-leaderboards.js?v=20261004-7"></script>
-<link rel="stylesheet" href="paper-preview.css?v=20261004-1">
-<script src="paper-preview.js?v=20261004-1"></script>
-<link rel="stylesheet" href="full-page-ui.css?v=20261004-1">
-<script src="full-page-ui.js?v=20261004-1"></script>
+<link rel="stylesheet" href="paper-preview.css?v=20261004-2">
+<script src="paper-preview.js?v=20261004-2"></script>
+<link rel="stylesheet" href="full-page-ui.css?v=20261004-2">
+<script src="full-page-ui.js?v=20261004-2"></script>
 <script>cloudBoot();</script>
 <link rel="stylesheet" href="site-footer.css?v=20261002-1">
 <script src="site-footer.js?v=20261002-1"></script>

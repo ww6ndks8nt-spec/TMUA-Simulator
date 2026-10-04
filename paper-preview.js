@@ -14,7 +14,8 @@ for(const [id,label] of [['ppCount','Questions'],['ppStandard','Standard time'],
 banner.append(brand,title,facts);
 const instructions=make('details','pp-instructions');instructions.id='ppInstructions';instructions.append(make('summary','','Instructions'));
 // Preserve source-material links, keyboard guidance and companion instructions.
-instructions.append(oldSpecs,el('companionRow'),el('companionInstructions'),el('stdInstructions'));
+const instructionBody=make('div','pp-instruction-popover');instructionBody.append(oldSpecs,el('companionRow'),el('companionInstructions'),el('stdInstructions'));instructions.append(instructionBody);
+document.addEventListener('click',e=>{if(!instructions.contains(e.target))instructions.open=false;});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&instructions.open){instructions.open=false;instructions.querySelector('summary').focus();}});
 timing.firstChild.textContent='Time allowed';
 const more=make('details','pp-more');more.append(make('summary','','Combined sitting'),el('beginBothBtn'),el('beginBothNote'));
 setup.append(make('h2','','Set up your sitting'),timing,instructions,buttons,more);
@@ -42,7 +43,7 @@ function render(p){
  brand.textContent=category(p);
  title.replaceChildren();const parts=p.title.split(/\s*[·–]\s*(?=Paper\s)/i);parts.forEach((part,i)=>{if(i)title.append(document.createElement('br'));title.append(document.createTextNode(part));});
  el('ppCount').textContent=p.questions.length;el('ppStandard').textContent=paperTimeLabel(standardPaperSeconds(p));
- el('ppDifficulty').innerHTML=difficultyRatingMarkup(difficultyStats(p).mean);
+ const difficulty=difficultyStats(p).mean;el('ppDifficulty').textContent=Number.isFinite(difficulty)?difficulty.toFixed(1):'—';
  instructions.open=false;more.open=false;more.hidden=el('beginBothBtn').classList.contains('hidden');
  if(el('beginBtn').textContent==='Begin test')el('beginBtn').textContent='Start paper →';
  const rows=(STATE.results[p.id]||[]).filter(r=>r&&typeof r==='object').slice().sort((a,b)=>(Number(a.t)||0)-(Number(b.t)||0));
@@ -73,5 +74,20 @@ function render(p){
 }
 const originalOpen=openStart;
 openStart=function(p){originalOpen(p);render(active);};
-window.PaperPreview={render};
+function renderLeaderboardEntries(p,entries){
+ const host=el('lbCard');host.replaceChildren();
+ host.append(make('h2','pp-lb-title','Leaderboard — first attempts'));
+ if(!entries.length){host.append(make('p','pp-empty','No scores yet — the first attempt on this paper claims the top spot.'));return;}
+ const list=make('ol','pp-lb-list');list.setAttribute('aria-label','First-attempt rankings');
+ entries.forEach((e,i)=>{
+  const row=make('li','pp-attempt pp-lb-row'+(e.uid===currentUser?' pp-lb-me':''));
+  const candidate=make('div','pp-lb-candidate');candidate.append(make('span','pp-lb-rank',String(i+1)),make('strong','pp-lb-name',e.name));
+  const date=make('time','pp-date',Number(e.t)>0?new Date(Number(e.t)).toLocaleDateString('en-GB'):'Date unavailable');if(Number(e.t)>0)date.dateTime=new Date(Number(e.t)).toISOString();
+  const metric=(label,value)=>{const m=make('div','pp-metric');m.append(make('small','',label),make('strong','',value));return m;};
+  const grade=e.s===p.questions.filter(q=>q.correct!==99).length?difficultyGrade(e.c,p):null;
+  row.append(candidate,date,make('strong','pp-score',e.c+' / '+e.s),metric('Estimated grade',grade===null?'—':grade.toFixed(1)),metric('Sitting mode',e.mode||'Not recorded'));list.append(row);
+ });
+ host.append(list);
+}
+window.PaperPreview={render,renderLeaderboardEntries};
 })();
