@@ -68,17 +68,7 @@ function refreshChoices(){
  for(const [key,b] of Object.entries(boards)){
   const input=$('glbOpt-'+key);if(!input)continue;input.checked=p[b.pref]===true;input.disabled=saving||!available();
   $('glbOwn-'+key).textContent=format(key,m[key]);
-  $('glbOwnNote-'+key).textContent=key==='performance'?m.samples+' scored first attempt'+(m.samples===1?'':'s')+(m.samples<3?' · '+(3-m.samples)+' more needed to rank':''):key==='papers'?'Qualifying different papers in your saved history':timeNote(m);
  }
-}
-function timeNote(m){
- const parts=[m.timeInfo.eligible+' eligible timed attempt'+(m.timeInfo.eligible===1?'':'s')];
- if(m.timeInfo.legacy)parts.push(m.timeInfo.legacy+' older attempt'+(m.timeInfo.legacy===1?'':'s')+' included from recorded exam time (original timing details may be unavailable)');
- if(m.timeInfo.continued)parts.push(m.timeInfo.continued+' continued/resumed excluded');
- if(m.timeInfo.untimed)parts.push(m.timeInfo.untimed+' untimed excluded');
- if(m.timeInfo.unavailable)parts.push(m.timeInfo.unavailable+' attempt'+(m.timeInfo.unavailable===1?'':'s')+' without usable timing');
- if(!m.time)parts.push('No eligible recorded exam time yet');
- return parts.join(' · ')+'.';
 }
 function schedule(){
  if(!available()||timer)return;
@@ -100,7 +90,7 @@ function publish(force=false){
   try{
    await cloudRequest('/.json',{method:'PATCH',body:JSON.stringify(patch)},uid);
    if(!available(uid))return false;signatures.set(uid,sig);refreshChoices();
-   if(!screen.classList.contains('hidden')){$('generalLbSaveStatus').textContent='Participation and public summaries are synced.';await load();}
+   if(!screen.classList.contains('hidden')){$('generalLbSaveStatus').textContent='';await load();}
    return true;
   }catch(error){
    if(currentUser===uid&&!screen.classList.contains('hidden'))$('generalLbSaveStatus').textContent='Public updates could not sync. Reconnect and use Retry sync. '+cloudError(error);
@@ -152,16 +142,15 @@ async function load(){
     row.append(cell);
    }body.append(row);
   });
-  $('generalLbLoadStatus').textContent=entries.length?'Updated '+new Date().toLocaleTimeString()+'. Showing '+entries.length+' published entries.':'No participants have an eligible published result yet.';
+  $('generalLbLoadStatus').textContent=entries.length?'':'No participants have an eligible published result yet.';
  }catch(error){if(sequence===loadSequence&&uid===currentUser)$('generalLbLoadStatus').textContent='Rankings could not load. Check your connection and try Refresh rankings. The site owner may need to publish the updated database rules.';}
 }
 for(const [key,b] of Object.entries(boards)){
  const card=document.createElement('section');card.className='glb-choice';
  const title=document.createElement('h2');title.textContent=b.short;
  const value=document.createElement('p');value.className='glb-own';value.id='glbOwn-'+key;
- const note=document.createElement('p');note.className='study-muted';note.id='glbOwnNote-'+key;
  const label=document.createElement('label');label.className='glb-opt';const input=document.createElement('input');input.type='checkbox';input.id='glbOpt-'+key;input.addEventListener('change',()=>changeChoice(key,input.checked));
- const text=document.createElement('span');text.textContent='Participate in '+b.short.toLowerCase();label.append(input,text);card.append(title,value,note,label);$('generalLbChoices').append(card);
+ const text=document.createElement('span');text.textContent='Participate in '+b.short.toLowerCase();label.append(input,text);card.append(title,value,label);$('generalLbChoices').append(card);
  const button=document.createElement('button');button.type='button';button.className='bigbtn ghost';button.dataset.glbTab=key;button.textContent=b.short;button.setAttribute('aria-pressed',String(key===selected));button.onclick=()=>{selected=key;load();};$('generalLbTabs').append(button);
 }
 const retry=document.createElement('button');retry.type='button';retry.className='bigbtn ghost';retry.id='generalLbRetry';retry.textContent='Retry sync';$('generalLbActions').prepend(retry);
@@ -179,7 +168,7 @@ window.showGeneralLeaderboards=function(){
  document.querySelectorAll('.screen').forEach(e=>e.classList.add('hidden'));
  ['preExamScreen','topbar','substrip','testMain','footbar','navOver','paperGapScreen','endConfirm'].forEach(id=>$(id)?.classList.add('hidden'));
  setSideNav('leaderboards');screen.classList.remove('hidden');$('airyMoreNav').open=false;screen.scrollTop=0;window.scrollTo(0,0);refreshChoices();
- $('generalLbSaveStatus').textContent=available()?'Choose each ranking independently. Switches are saved with your account.':'Sign in with a verified account to participate.';
+ $('generalLbSaveStatus').textContent=available()?'':'Sign in with a verified account to participate.';
  load();if(available())syncNow().catch(e=>{$('generalLbSaveStatus').textContent=cloudError(e);});
 };
 $('navLeaderboards').addEventListener('click',showGeneralLeaderboards);

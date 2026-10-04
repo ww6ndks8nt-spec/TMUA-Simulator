@@ -72,3 +72,6 @@ html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen .glb
 html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen .glb-line::after{background:var(--du-bg);border:2px solid #ffdc5a;box-shadow:0 0 5px rgba(255,220,90,.85),0 0 11px rgba(255,210,60,.4)}
 @media(max-width:600px){#leaderboardsScreen .glb-table tbody :is(th,td){font-size:12px}#leaderboardsScreen .glb-table :is(th,td):first-child{width:9%}#leaderboardsScreen .glb-table :is(th,td):nth-child(2){width:18%}#leaderboardsScreen .glb-table :is(th,td):last-child{width:73%}}
 @media(max-width:600px){#leaderboardsScreen .glb-table :is(th,td):first-child{width:12%}#leaderboardsScreen .glb-table :is(th,td):nth-child(2){width:18%}#leaderboardsScreen .glb-table :is(th,td):last-child{width:70%}#leaderboardsScreen .glb-table thead th:first-child{white-space:nowrap;font-size:9px}}
+
+/* Successful sync/load needs no description or reserved space. Errors remain visible. */
+#leaderboardsScreen :is(#generalLbSaveStatus,#generalLbLoadStatus):empty{display:none!important}

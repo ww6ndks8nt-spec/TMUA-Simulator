@@ -38,7 +38,7 @@
  document.querySelectorAll('.studio-heading .studio-eyebrow').forEach(el=>el.hidden=true);
  const titles={dashboardScreen:'Overview',libraryScreen:'Papers',reviewHubScreen:'Review',wrongHubScreen:'Wrong answers',bankScreen:'Question bank',bookmarksScreen:'Bookmarks',journalScreen:'Journal',plannerScreen:'Planner'};
  Object.entries(titles).forEach(([id,title])=>{const h=$(id)?.querySelector('h1');if(h)h.textContent=title;});
- const leads={libraryScreen:'Past papers, community papers and challenge sets.',reviewHubScreen:'Your completed attempts.',bankScreen:'Filter questions and build a practice session.',bookmarksScreen:'Saved questions and notes.',journalScreen:'Review your mistakes and lessons.',plannerScreen:'Plan a paper or topic session.'};
+ const leads={reviewHubScreen:'Your completed attempts.',bookmarksScreen:'Saved questions and notes.',journalScreen:'Review your mistakes and lessons.',plannerScreen:'Plan a paper or topic session.'};
  Object.entries(leads).forEach(([id,text])=>{const el=$(id)?.querySelector('.lead');if(el&&!(id==='libraryScreen'&&ESAT_MODE))el.textContent=text;});
  const grid=make('div','airy-dashboard');dash.querySelector('.studio-heading').after(grid);
  const stats=dash.querySelector('.dash-stats'),mastery=dash.querySelector('.mastery-card'),chart=dash.querySelector('.studio-chart');
