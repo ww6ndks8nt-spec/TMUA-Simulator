@@ -47,6 +47,35 @@
  const art=make('div','fp-background-ducks');art.setAttribute('aria-hidden','true');
  art.innerHTML='<img src="duck-mascot-sirquacksalot.png?v=20261002-dry" alt="" draggable="false"><img src="duck-mascot-lady-lay-a-lot.png?v=20261002-dry" alt="" draggable="false">';
  for(let i=0;i<6;i++){const img=make('img');img.src=i%2?'duck-mascot-lady-lay-a-lot.png?v=20261002-dry':'duck-mascot-sirquacksalot.png?v=20261002-dry';img.alt='';img.draggable=false;art.appendChild(img);}
+ // Keep constellation endpoints attached to the gently drifting background ducks.
+ const stars=[...art.querySelectorAll('img')],svgNS='http://www.w3.org/2000/svg';
+ const constellation=document.createElementNS(svgNS,'svg');constellation.classList.add('fp-constellation');constellation.setAttribute('aria-hidden','true');constellation.setAttribute('focusable','false');
+ art.appendChild(constellation); // Append after images to preserve their positional selectors.
+ const edges=[[5,2],[2,3],[3,4],[4,6],[6,1],[1,7],[7,0],[0,5],[2,1]];
+ const links=edges.map(()=>{const line=document.createElementNS(svgNS,'line');constellation.appendChild(line);return line;});
+ let constellationVisible=false,constellationFrame=0,lastConstellationDraw=0;
+ const constellationMotion=matchMedia('(prefers-reduced-motion: reduce)');
+ function drawConstellation(){
+  const bounds=art.getBoundingClientRect();if(!bounds.width||!bounds.height)return;
+  const points=stars.map(star=>{const b=star.getBoundingClientRect();return b.width&&b.height?{x:b.left+b.width/2-bounds.left,y:b.top+b.height/2-bounds.top}:null;});
+  const connections=points.filter(Boolean).length===4?[[0,1],[1,2],[2,3]]:edges;
+  constellation.setAttribute('viewBox','0 0 '+bounds.width+' '+bounds.height);
+  links.forEach((line,i)=>{const pair=connections[i],a=pair&&points[pair[0]],b=pair&&points[pair[1]];line.style.display=a&&b?'':'none';if(a&&b){line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);}});
+ }
+ function animateConstellation(time){
+  if(!constellationVisible||document.hidden){constellationFrame=0;return;}
+  if(time-lastConstellationDraw>40){drawConstellation();lastConstellationDraw=time;}
+  constellationFrame=requestAnimationFrame(animateConstellation);
+ }
+ function syncConstellation(){
+  cancelAnimationFrame(constellationFrame);constellationFrame=0;
+  if(!constellationVisible||document.hidden)return;
+  drawConstellation();if(!constellationMotion.matches)constellationFrame=requestAnimationFrame(animateConstellation);
+ }
+ new IntersectionObserver(entries=>{constellationVisible=entries[0].isIntersecting;syncConstellation();},{root:dash}).observe(art);
+ new ResizeObserver(()=>{if(constellationVisible)drawConstellation();}).observe(art);
+ stars.forEach(star=>star.addEventListener('load',()=>{if(constellationVisible)drawConstellation();}));
+ document.addEventListener('visibilitychange',syncConstellation);constellationMotion.addEventListener('change',syncConstellation);
  const scroll=make('button','fp-scroll-cue','Scroll down for detailed analytics ↓');scroll.type='button';
  const recent=dash.querySelector('.airy-recent');recent.classList.add('fp-home-recent');hero.append(art,recent,main,rail,scroll);
  dash.querySelector(':scope>.card>.studio-heading').hidden=true;

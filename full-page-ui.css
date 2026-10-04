@@ -291,3 +291,24 @@ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-analytics.f
 /* Visibility must override the responsive top-bar layout, including on auth screens. */
 html body.duck-airy.duck-redesign.duck-fullpage #sideNav.hidden,
 html body.duck-airy.duck-redesign.duck-fullpage:has(#loginScreen:not(.hidden)) #sideNav{display:none!important}
+
+/* The mascot glow follows the artwork's silhouette, with the shared gradual timing. */
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .duck-play .airy-duck-art img{
+ filter:drop-shadow(0 0 0 rgba(255,220,90,0)) drop-shadow(0 0 0 rgba(255,210,60,0));transition:filter .28s ease;
+}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .duck-play:is(:hover,:focus-visible,.quacking) .airy-duck-art img{
+ filter:drop-shadow(0 0 6px rgba(255,220,90,.7)) drop-shadow(0 0 17px rgba(255,210,60,.35));
+}
+html[data-duck-theme="dark"] body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .duck-bubble{
+ background:var(--du-bg,#15171d)!important;color:#fff!important;border:1px solid #d8bd52!important;
+ box-shadow:0 0 12px rgba(255,210,60,.25),inset 0 0 0 1px rgba(255,220,90,.08)!important;
+}
+@media(prefers-reduced-motion:reduce){
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .duck-play .airy-duck-art img{transition:none!important}
+}
+
+/* Faint constellation threads sit behind the decorative ducks and all page controls. */
+html body.duck-fullpage .fp-background-ducks .fp-constellation{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible}
+html body.duck-fullpage .fp-background-ducks img{z-index:1}
+html body.duck-fullpage .fp-constellation line{stroke:#9e7e25;stroke-opacity:.16;stroke-width:1;vector-effect:non-scaling-stroke}
+html[data-duck-theme="dark"] body.duck-fullpage .fp-constellation line{stroke:#ffdc5a;stroke-opacity:.12}
