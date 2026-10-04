@@ -1,0 +1,147 @@
+/* Full monitor layout, scoped away from the Pearson exam and auth screens. */
+html body.duck-airy.duck-redesign.duck-fullpage{--du-content-max:none;--fp-gutter:clamp(20px,3vw,64px)}
+html body.duck-airy.duck-redesign.duck-fullpage #sideNav{inset:0 0 auto!important;max-width:none!important;width:100%!important;height:90px!important;margin:0!important;padding:0 var(--fp-gutter)!important;gap:36px!important;box-sizing:border-box;background:var(--du-bg)!important;border-bottom:1px solid var(--du-line)!important;z-index:100}
+html body.duck-airy.duck-redesign.duck-fullpage #sideNav .side-nav-head{flex:0 0 auto!important;height:auto!important}
+html body.duck-airy.duck-fullpage #sideNav .side-nav-brand .duck-logo{display:none!important}
+html body.duck-airy.duck-fullpage #sideNav .side-nav-brand{min-width:166px}
+html body.duck-airy.duck-fullpage #sideNav .side-nav-items{justify-content:flex-start!important;gap:22px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important}
+html body.duck-airy.duck-fullpage #sideNav :is(#airyMoreNav,#navDashboard){display:none!important}
+html body.duck-airy.duck-fullpage #sideNav .airy-header-account{flex:0 0 auto!important;gap:10px!important}
+html body.duck-airy.duck-fullpage #sideNav .fp-planner{width:40px!important;min-width:40px!important;padding:8px!important}
+html body.duck-airy.duck-fullpage #sideNav .fp-planner .side-nav-label{display:none!important}
+html body.duck-airy.duck-fullpage #sideNav .fp-search{display:flex!important;align-items:center;justify-content:center;width:40px;height:40px;padding:8px!important;border:0!important;border-radius:50%;background:transparent!important;color:var(--du-ink)!important}
+html body.duck-airy.duck-fullpage #sideNav .fp-search span{display:none!important}
+html body.duck-fullpage .fp-nav-menu{position:relative}
+html body.duck-fullpage .fp-nav-menu>summary{list-style:none;display:flex;align-items:center;gap:14px;padding:12px 16px;cursor:pointer;border-radius:12px;font-size:15px;font-weight:600}
+html body.duck-fullpage .fp-nav-menu>summary::-webkit-details-marker{display:none}
+html body.duck-fullpage .fp-chevron{font-size:17px;color:var(--du-muted)}
+html body.duck-fullpage .fp-nav-menu:has(.active)>summary{color:#a87700}
+html[data-duck-theme="dark"] body.duck-fullpage .fp-nav-menu:has(.active)>summary{color:#ffe16c}
+html body.duck-fullpage .fp-nav-menu[open]>summary,html body.duck-fullpage .fp-nav-menu>summary:hover{background:var(--du-soft)}
+html body.duck-fullpage .fp-nav-list{position:absolute;top:calc(100% + 12px);left:0;min-width:228px;padding:10px;background:var(--du-bg);border:1px solid var(--du-line);border-radius:16px;box-shadow:0 14px 40px #0003;z-index:105}
+html body.duck-fullpage .fp-nav-menu:not([open]) .fp-nav-list{display:none}
+html body.duck-airy.duck-fullpage #sideNav .fp-nav-list .side-nav-item{justify-content:flex-start!important;border-radius:9px!important;width:100%!important;padding:13px!important;min-height:46px!important}
+html body.duck-airy.duck-redesign.duck-fullpage .screen.modern-ui.nav-aware{padding:124px var(--fp-gutter) 48px!important;scroll-padding-top:115px}
+html body.duck-airy.duck-redesign.duck-fullpage .screen.modern-ui.nav-aware>.card,
+html body.duck-airy.duck-redesign.duck-fullpage #startScreen.paper-preview>.card{width:100%!important;max-width:none!important;box-sizing:border-box}
+html body.duck-fullpage #mentalScreen .mm-layout{max-width:none!important;margin-left:0!important;margin-right:0!important}
+html body.duck-fullpage .screen>.duck-garden{display:none!important}
+html body.duck-fullpage #dashboardScreen>.card>.studio-heading{display:none!important}
+html body.duck-fullpage .fp-home-hero{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) clamp(260px,21vw,380px);grid-template-rows:1fr 44px;gap:20px clamp(24px,4vw,90px);min-height:calc(100svh - 145px);box-sizing:border-box;padding:12px 0 0}
+html body.duck-fullpage .fp-home-main{align-self:center;min-width:0;display:flex;flex-direction:column;align-items:center;padding:30px 0 100px;gap:60px}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen :is(.fp-main-score,.fp-home-stats .dash-stat){height:auto!important;min-height:0!important;background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;margin:0!important;padding:0!important;display:flex!important;justify-content:center;overflow:visible}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen :is(.fp-main-score,.fp-home-stats .dash-stat)::before,html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen :is(.fp-main-score,.fp-home-stats .dash-stat)::after{display:none!important}
+html body.duck-fullpage .fp-home-main .airy-stat-icon{display:none!important}
+html body.duck-fullpage .fp-home-main .airy-stat-copy{display:flex!important;flex-direction:column!important;align-items:center;text-align:center}
+html body.duck-fullpage .fp-main-score .mastery-row{order:-1;display:flex!important;align-items:baseline!important;justify-content:center;gap:12px!important}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen #dashMastery{font-size:clamp(90px,8.5vw,164px)!important;font-weight:500!important;line-height:1.08!important;letter-spacing:-.065em!important;color:var(--du-ink)!important}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-main-score .airy-score-divisor{font-size:clamp(26px,2.8vw,48px)!important;font-weight:400!important;color:var(--du-muted)!important;letter-spacing:-.03em}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-main-score .mastery-kicker{color:var(--du-muted)!important;font-size:17px!important;letter-spacing:0!important;text-transform:none!important;margin:18px 0 0!important}
+html body.duck-fullpage .fp-home-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;max-width:880px;gap:0}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-stats .dash-stat{padding:0 20px!important}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-stats .dash-stat+.dash-stat{border-left:1px solid var(--du-line)!important}
+html body.duck-fullpage .fp-home-stats .airy-stat-copy{gap:12px;width:100%;min-width:0}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-stats .v{order:-1;font-size:clamp(24px,2.7vw,46px)!important;font-weight:500!important;letter-spacing:-.04em!important;line-height:1.2!important;color:var(--du-ink)!important;white-space:normal!important;overflow-wrap:anywhere}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-stats .l{font-size:14px!important;line-height:1.5!important;color:var(--du-muted)!important;white-space:normal!important}
+html body.duck-fullpage .fp-home-rail{display:flex;flex-direction:column;justify-content:center;gap:22px;min-width:0;padding:0 0 28px}
+html body.duck-fullpage .fp-home-rail>.duck-mascot{position:relative!important;align-self:center;width:155px!important;height:155px!important;flex:0 0 155px;transform:none!important;inset:auto!important}
+html body.duck-fullpage .fp-home-rail .duck-mascot::before{display:none!important}
+html body.duck-fullpage .fp-home-rail .duck-play{box-shadow:none!important;background:transparent!important}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next{width:100%!important;grid-column:auto;grid-row:auto}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next-list{display:flex!important}
+html body.duck-fullpage .fp-home-rail .airy-planner{display:none!important}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next-item{height:auto!important;min-height:180px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:12px!important;padding:24px!important;border-radius:20px!important;box-sizing:border-box;width:100%;cursor:pointer}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next-item>b{font-size:23px!important;line-height:1.3!important;letter-spacing:-.035em!important;max-width:100%!important}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next-item>small{font-size:11px!important;letter-spacing:1.7px!important;text-transform:uppercase}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next-item>p{font-size:14px!important;line-height:1.5!important;flex:0!important}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next-item button{position:static!important;margin-top:auto!important;width:auto!important;max-width:100%!important;height:auto!important;min-height:38px!important;border-radius:9px!important;padding:8px 12px!important;font-size:13px!important;align-self:flex-end}
+html body.duck-fullpage .fp-home-rail .airy-focus{margin:0!important}
+html body.duck-fullpage .fp-background-ducks{position:absolute;inset:0;overflow:hidden;z-index:-1;pointer-events:none}
+html body.duck-fullpage .fp-background-ducks img{position:absolute;width:clamp(180px,19vw,360px);height:auto;object-fit:contain;opacity:.11;bottom:32px;left:2%;transform:rotate(-12deg)}
+html body.duck-fullpage .fp-background-ducks img+img{width:clamp(120px,13vw,240px);left:52%;bottom:75px;transform:rotate(12deg);opacity:.075}
+html body.duck-fullpage .fp-scroll-cue{grid-column:1/-1;justify-self:center;align-self:end;background:transparent!important;color:var(--du-muted)!important;box-shadow:none!important;border:0!important;padding:12px 20px;font-size:13px;letter-spacing:.03em;cursor:pointer}
+html body.duck-fullpage .fp-analytics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;padding-top:60px;scroll-margin-top:112px}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-analytics>.studio-chart{grid-column:auto!important;grid-row:auto!important;height:auto!important;min-height:340px!important;margin:0!important;padding:26px!important;box-sizing:border-box}
+html body.duck-fullpage .fp-analytics .airy-chart-switch,html body.duck-fullpage .fp-analytics #airyActivityPeriod,html body.duck-fullpage .fp-analytics #airyActivityChart{display:none!important}
+html body.duck-fullpage .fp-analytics>.airy-analysis,html body.duck-fullpage .fp-analytics>.studio-analysis{grid-column:1/-1;margin:0!important}
+html body.duck-fullpage .fp-analytics>.airy-recent{grid-column:1/-1!important;grid-row:auto!important}
+html body.duck-fullpage .fp-daily{padding:26px;border-radius:25px;background:var(--du-surface);border:1px solid var(--du-line);min-width:0}
+html body.duck-fullpage .fp-daily-header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+html body.duck-fullpage .fp-daily-header h2{font-size:19px!important;margin:0!important}
+html body.duck-fullpage .fp-daily-chart svg{width:100%;display:block;max-height:300px;overflow:visible}
+html body.duck-fullpage .fp-daily-chart text{font-family:inherit;font-size:11px;fill:var(--du-muted)}
+html body.duck-fullpage .fp-daily-chart .airy-chart-grid{stroke:var(--du-line);stroke-width:1}
+html body.duck-fullpage .fp-day-bar{fill:#dcb92a}
+html[data-duck-theme="dark"] body.duck-fullpage .fp-day-bar{fill:#ffe16c;filter:drop-shadow(0 0 3px #ffdc5a80)}
+html[data-duck-theme="dark"] body.duck-fullpage .fp-daily{background:var(--du-bg);border-color:#d8bd52;box-shadow:0 0 12px rgba(255,210,60,.18),inset 0 0 0 1px rgba(255,220,90,.08)}
+html body.duck-fullpage :is(.fp-scroll-cue,.fp-nav-menu>summary):focus-visible{outline:2px solid #d8bd52;outline-offset:4px}
+@media(min-width:1900px){html body.duck-fullpage .fp-home-main{gap:80px}html body.duck-fullpage .fp-home-rail{gap:30px}}
+@media(max-width:1100px){
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav{gap:18px!important}
+ html body.duck-airy.duck-fullpage #sideNav .side-nav-items{gap:4px!important}
+ html body.duck-airy.duck-fullpage #sideNav .airy-header-account{gap:5px!important}
+ html body.duck-fullpage .fp-home-hero{grid-template-columns:minmax(0,1fr) 250px;gap:18px}
+ html body.duck-fullpage .fp-home-main{gap:42px}
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-stats .dash-stat{padding:0 10px!important}
+}
+@media(max-width:800px){
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav{height:128px!important;display:grid!important;grid-template-columns:1fr auto!important;grid-template-rows:65px 52px!important;gap:0!important;padding:0 18px!important}
+ html body.duck-airy.duck-fullpage #sideNav .side-nav-head{grid-row:1!important;grid-column:1!important}
+ html body.duck-airy.duck-fullpage #sideNav .airy-header-account{grid-row:1!important;grid-column:2!important}
+ html body.duck-airy.duck-fullpage #sideNav .side-nav-items{grid-row:2!important;grid-column:1/-1!important;justify-content:center!important;gap:12px!important;width:100%!important;overflow:visible!important}
+ html body.duck-airy.duck-fullpage #sideNav .side-nav-brand{min-width:0!important}
+ html body.duck-airy.duck-fullpage #sideNav .duck-brand-word{font-size:18px!important}
+ html body.duck-airy.duck-fullpage #sideNav .account-circle{width:34px!important;height:34px!important;min-width:34px!important;font-size:17px!important}
+ html body.duck-airy.duck-fullpage #sideNav :is(.fp-planner,.fp-search){width:32px!important;min-width:32px!important;height:34px!important;min-height:34px!important;padding:5px!important}
+ html body.duck-airy.duck-fullpage #sideNav .fp-search{display:none!important}
+ html body.duck-fullpage .fp-nav-menu>summary{padding:12px 10px;gap:9px;font-size:14px}
+ html body.duck-airy.duck-redesign.duck-fullpage .screen.modern-ui.nav-aware{padding-top:153px!important}
+ html body.duck-fullpage .fp-home-hero{grid-template-columns:1fr;min-height:calc(100svh - 175px);grid-template-rows:auto auto 44px}
+ html body.duck-fullpage .fp-home-main{padding:35px 0 25px;gap:34px}
+ html body.duck-fullpage .fp-home-rail{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:0}
+ html body.duck-fullpage .fp-home-rail>.duck-mascot{grid-column:1/-1;justify-self:center;width:90px!important;height:90px!important;margin:-20px 0 -5px}
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next-item{min-height:210px!important;padding:20px!important}
+ html body.duck-fullpage .fp-home-rail .du-next{grid-column:1!important;grid-row:2!important}
+ html body.duck-fullpage .fp-home-rail .airy-focus{grid-column:2;grid-row:2}
+ html body.duck-fullpage .fp-background-ducks img{top:0;bottom:auto;left:-30px;width:180px;opacity:.07}
+ html body.duck-fullpage .fp-background-ducks img+img{top:60px;left:auto;right:-10px;width:120px}
+ html body.duck-fullpage .fp-analytics{grid-template-columns:1fr;gap:24px;padding-top:38px}
+ html body.duck-fullpage .fp-daily-header{flex-wrap:wrap}
+}
+@media(max-width:480px){
+ html body.duck-fullpage{--fp-gutter:18px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen #dashMastery{font-size:84px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-stats .v{font-size:25px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-stats .l{font-size:11px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-stats .dash-stat{padding:0 8px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next-item{padding:17px!important;min-height:215px!important;border-radius:16px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next-item>b{font-size:19px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .du-next-item>p{font-size:12px!important}
+ html body.duck-fullpage .fp-home-rail{gap:14px}
+ html body.duck-fullpage .fp-nav-list{min-width:200px}
+ html body.duck-fullpage .fp-nav-menu:nth-of-type(3) .fp-nav-list{left:-60px}
+}
+/* Explicitly override the earlier compact dashboard's sizing rules. */
+html body.duck-airy.duck-redesign.duck-fullpage #sideNav.duck-topbar{border-radius:0!important;border-width:0 0 1px!important;box-shadow:none!important}
+html body.duck-airy.duck-redesign.duck-fullpage #sideNav #duFindButton.fp-menu-search{display:flex!important;align-items:center;gap:10px;width:100%;padding:13px!important;min-height:46px;border:0!important;border-radius:9px;background:transparent!important;color:var(--du-ink)!important;font-size:14px;cursor:pointer}
+html body.duck-airy.duck-redesign.duck-fullpage #sideNav #duFindButton.fp-menu-search span{display:inline!important}
+html body.duck-airy.duck-redesign.duck-fullpage #sideNav #duFindButton svg{width:20px;height:20px}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail .airy-planner{display:none!important}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail :is(.duck-play,.airy-duck-art){width:155px!important;height:155px!important;min-width:0!important;padding:0!important;margin:0!important}
+html body.duck-fullpage .fp-daily-chart{position:relative;padding-top:40px}
+html body.duck-fullpage .fp-daily-chart .airy-chart-total{top:12px;left:0;right:auto}
+html body.duck-fullpage .fp-analytics>*{min-width:0!important;max-width:100%;box-sizing:border-box}
+@media(max-width:800px){
+ html body.duck-fullpage .fp-analytics{grid-template-columns:minmax(0,1fr)!important}
+ html body.duck-fullpage .fp-analytics .topic-table{overflow-x:auto}
+ html body.duck-fullpage .fp-analytics .airy-analysis-body{overflow-x:auto}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav #navPlanner .side-nav-icon{display:inline-flex!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-home-rail :is(.duck-play,.airy-duck-art){width:90px!important;height:90px!important}
+}
+@media(prefers-reduced-motion:reduce){html body.duck-fullpage .fp-home-hero .airy-duck-art img{animation:none!important}}
+html body.duck-airy.duck-redesign.duck-fullpage #dashboardScreen .fp-main-score .mastery-row{flex-direction:row!important;flex-wrap:nowrap!important;width:max-content;max-width:100%}
+@media(min-width:801px){
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav{display:flex!important;flex-wrap:nowrap!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .side-nav-items{order:1!important;flex:1 1 0!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav .airy-header-account{order:2!important}
+}

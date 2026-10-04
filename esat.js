@@ -16,7 +16,8 @@
   if(node.textContent.includes('Duck TMUA'))node.textContent=node.textContent.replace(/Duck TMUA/g,'Duck ESAT');
  }
  back.textContent='← Duck TMUA';
- $('libraryScreen').querySelector('.lead').textContent='ENGAA and NSAA multiple-choice past papers, 2016–2023. Read the original PDFs and record your answers in the simulator.';
+ let libraryLead=$('libraryScreen').querySelector('.lead');if(!libraryLead){libraryLead=doc.createElement('p');libraryLead.className='lead';$('libraryScreen').querySelector('.studio-heading').after(libraryLead);}
+ libraryLead.textContent='ENGAA and NSAA multiple-choice past papers, 2016–2023. Read the original PDFs and record your answers in the simulator.';
  $('reviewHubScreen').querySelector('.lead').textContent='Revisit your answers and open the source answer-key PDFs.';
  [['grid4','ENGAA','Sections 1 and 2 · 2016–2023','01'],['gridMAT','NSAA','Section 1: 2016–2023 · Section 2: 2020–2023','02']].forEach(([id,name,sub,num])=>{
   const c=$(id).closest('.studio-collection');c.querySelector('.collection-name').innerHTML=name+'<small>'+sub+'</small>';c.querySelector('.collection-num').textContent=num;
