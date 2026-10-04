@@ -10,13 +10,16 @@ const boards={
 const finite=x=>Number.isFinite(x)&&x>=0?x:0;
 const unique=rows=>{const seen=new Set();return (Array.isArray(rows)?rows:[]).filter(r=>{if(!r||typeof r!=='object')return false;const k=r._syncId||r.id||JSON.stringify(r);if(seen.has(k))return false;seen.add(k);return true;});};
 function metrics(state=STATE){
- const known=new Map(ALL_PAPERS.map(p=>[p.id,p]));let ms=0,papers=0;const first=[];
+ const known=new Map(ALL_PAPERS.map(p=>[p.id,p]));let ms=0,papers=0;const first=[],timeInfo={eligible:0,legacy:0,continued:0,untimed:0};
  const times=r=>(Array.isArray(r.questionTimesMs)?r.questionTimesMs:[]).reduce((n,x)=>n+finite(x),0);
  for(const [pid,saved] of Object.entries(state.results||{})){
   const p=known.get(pid);if(!p)continue;const rows=unique(saved).sort((a,b)=>finite(a.t)-finite(b.t));
   for(const r of rows){
    const timing=r.examTiming;
-   if(timing?.version===1&&timing.kind==='timed-exam'&&Number.isFinite(timing.limitMs)&&timing.limitMs>0)ms+=Math.min(times(r),timing.limitMs);
+   if(timing?.version===1&&timing.kind==='timed-exam'&&Number.isFinite(timing.limitMs)&&timing.limitMs>0){ms+=Math.min(times(r),timing.limitMs);timeInfo.eligible++;}
+   else if(timing?.kind==='continued-exam')timeInfo.continued++;
+   else if(timing?.kind==='untimed'||r.noTimer===true)timeInfo.untimed++;
+   else timeInfo.legacy++;
   }
   if(!p.esat&&rows.some(r=>Array.isArray(r.a)&&r.a.reduce((n,a,i)=>n+(Number.isInteger(a)&&a>=0&&a<(p.questions[i]?.opts?.length||0)?1:0),0)>=(p.mat?8:15)))papers++;
   // As on Overview, a first submitted attempt cannot be replaced by a retake.
@@ -26,7 +29,7 @@ function metrics(state=STATE){
   const grade=dashboardAttemptGrade(sc.c,sc.s,p);if(Number.isFinite(grade)&&grade>=1&&grade<=9)first.push({grade,weight:dashboardSourceWeight(p)});
  }
  const mean=dashboardMeanGrade(first);
- return {time:Math.min(31557600000,Math.floor(ms/1000)),performance:mean===null?null:Math.round(mean*1000)/1000,papers,samples:first.length};
+ return {time:Math.min(31557600000,Math.floor(ms/1000)),performance:mean===null?null:Math.round(mean*1000)/1000,papers,samples:first.length,timeInfo};
 }
 function preferences(){return ROOT.profiles[currentUser]?.preferences||{};}
 function consent(state,key,enabled,source){const record=state.generalLeaderboardConsent??={version:1};record[key]={enabled,t:Date.now(),source,notice:'2026-10-04'};}
@@ -55,8 +58,16 @@ function refreshChoices(){
  for(const [key,b] of Object.entries(boards)){
   const input=$('glbOpt-'+key);if(!input)continue;input.checked=p[b.pref]===true;input.disabled=saving||!available();
   $('glbOwn-'+key).textContent=format(key,m[key]);
-  $('glbOwnNote-'+key).textContent=key==='performance'?m.samples+' scored first attempt'+(m.samples===1?'':'s')+(m.samples<3?' · '+(3-m.samples)+' more needed to rank':''):key==='papers'?'Qualifying different papers in your saved history':'Eligible timed exam practice';
+  $('glbOwnNote-'+key).textContent=key==='performance'?m.samples+' scored first attempt'+(m.samples===1?'':'s')+(m.samples<3?' · '+(3-m.samples)+' more needed to rank':''):key==='papers'?'Qualifying different papers in your saved history':timeNote(m);
  }
+}
+function timeNote(m){
+ const parts=[m.timeInfo.eligible+' eligible timed attempt'+(m.timeInfo.eligible===1?'':'s')];
+ if(m.timeInfo.legacy)parts.push(m.timeInfo.legacy+' older attempt'+(m.timeInfo.legacy===1?'':'s')+' excluded: timing mode was not saved');
+ if(m.timeInfo.continued)parts.push(m.timeInfo.continued+' continued/resumed excluded');
+ if(m.timeInfo.untimed)parts.push(m.timeInfo.untimed+' untimed excluded');
+ if(!m.timeInfo.eligible)parts.push('Complete a new timed paper to start this total');
+ return parts.join(' · ')+'.';
 }
 function schedule(){
  if(!available()||timer)return;
@@ -111,11 +122,24 @@ async function load(){
   const data=await lbRequest('/generalLeaderboards/'+b.path+'.json?orderBy=%22value%22&limitToLast=100');
   if(sequence!==loadSequence||uid!==currentUser)return;
   const entries=sorted(data),body=$('generalLbRows');let rank=0,last=null;
+  const top=entries[0]?.value||1,labelChars=Math.max(1,...entries.map(r=>format(key,r.value).length));
   entries.forEach((r,i)=>{
    if(r.value!==last)rank=i+1;last=r.value;
    const row=document.createElement('tr');if(r.uid===currentUser)row.className='glb-you';
    const texts=[rank,r.name+(r.uid===currentUser?' (you)':''),format(key,r.value)];
-   for(const [i,text] of texts.entries()){const cell=document.createElement(i===1?'th':'td');if(i===1)cell.scope='row';cell.textContent=String(text);row.append(cell);}body.append(row);
+   for(const [i,text] of texts.entries()){
+    const cell=document.createElement(i===1?'th':'td');if(i===1)cell.scope='row';
+    if(i!==2)cell.textContent=String(text);
+    else{
+     const plot=document.createElement('div');plot.className='glb-bar-space';plot.style.setProperty('--glb-label-width','calc('+labelChars+'ch + 20px)');
+     const area=document.createElement('div');area.className='glb-bar-area';
+     const relative=document.createElement('div');relative.className='glb-relative';relative.style.width=(Math.max(0,Math.min(1,r.value/top))*100)+'%';
+     const line=document.createElement('span');line.className='glb-line';line.setAttribute('aria-hidden','true');
+     const number=document.createElement('span');number.className='glb-bar-number';number.textContent=String(text);
+     relative.append(line,number);area.append(relative);plot.append(area);cell.append(plot);
+    }
+    row.append(cell);
+   }body.append(row);
   });
   $('generalLbLoadStatus').textContent=entries.length?'Updated '+new Date().toLocaleTimeString()+'. Showing '+entries.length+' published entries.':'No participants have an eligible published result yet.';
  }catch(error){if(sequence===loadSequence&&uid===currentUser)$('generalLbLoadStatus').textContent='Rankings could not load. Check your connection and try Refresh rankings. The site owner may need to publish the updated database rules.';}
@@ -131,11 +155,18 @@ for(const [key,b] of Object.entries(boards)){
 }
 const retry=document.createElement('button');retry.type='button';retry.className='bigbtn ghost';retry.id='generalLbRetry';retry.textContent='Retry sync';$('generalLbActions').prepend(retry);
 retry.onclick=async()=>{if(saving)return;saving=true;refreshChoices();retry.disabled=true;try{await syncNow();}catch(e){$('generalLbSaveStatus').textContent=cloudError(e);}finally{saving=false;retry.disabled=false;refreshChoices();}};
-$('generalLbRefresh').onclick=load;
+$('generalLbRefresh').onclick=async()=>{
+ const button=$('generalLbRefresh');if(button.disabled||saving)return;button.disabled=true;saving=true;refreshChoices();
+ try{
+  if(available()){await cloudRefresh();await syncNow();}
+  await load();
+ }catch(error){$('generalLbSaveStatus').textContent=cloudError(error);await load();}
+ finally{button.disabled=false;saving=false;refreshChoices();}
+};
 window.showGeneralLeaderboards=function(){
  studyHide();if(timerId)clearInterval(timerId);if(dualGapTimerId){clearInterval(dualGapTimerId);dualGapTimerId=null;}stopPreExamTimer();
  document.querySelectorAll('.screen').forEach(e=>e.classList.add('hidden'));
- ['topbar','substrip','testMain','footbar','navOver','paperGapScreen','endConfirm'].forEach(id=>$(id)?.classList.add('hidden'));
+ ['preExamScreen','topbar','substrip','testMain','footbar','navOver','paperGapScreen','endConfirm'].forEach(id=>$(id)?.classList.add('hidden'));
  setSideNav('leaderboards');screen.classList.remove('hidden');$('airyMoreNav').open=false;screen.scrollTop=0;window.scrollTo(0,0);refreshChoices();
  $('generalLbSaveStatus').textContent=available()?'Choose each ranking independently. Switches are saved with your account.':'Sign in with a verified account to participate.';
  load();if(available())syncNow().catch(e=>{$('generalLbSaveStatus').textContent=cloudError(e);});

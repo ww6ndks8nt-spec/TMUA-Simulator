@@ -15,12 +15,12 @@
 #formulaeScreen .formula-badge{display:inline-block;padding:5px 9px;border:1px solid var(--du-line,#ddd);border-radius:8px;font-size:11px;font-weight:600;color:var(--du-muted,#626574)}
 #formulaeScreen .formula-math{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:10px 0;color:var(--du-ink,#111)}
 #formulaeScreen mjx-container[display=true]{margin:0!important}
-html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaeScreen :is(.formula-intro,.formula-controls,.formula-card){background:#000!important;border-color:#9d8737!important;box-shadow:0 0 9px #facc1524!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaeScreen :is(.formula-intro,.formula-controls,.formula-card){background:var(--du-bg)!important;border-color:#9d8737!important;box-shadow:0 0 9px #facc1524!important}
 html[data-duck-theme=dark] #formulaeScreen .formula-badge{border-color:#88732c;color:#f6db6b}
 html[data-duck-theme=dark] #formulaeScreen .formula-card[data-kind=shortcut] .formula-badge{color:#93c5fd;border-color:#315a89}
 html[data-duck-theme=dark] #formulaeScreen .formula-card[data-kind=provided] .formula-badge{color:#c4b5fd;border-color:#6e5894}
 @media(max-width:1000px){#formulaeScreen .formula-controls{grid-template-columns:1fr 1fr}#formulaeScreen .formula-controls label:first-child{grid-column:1/-1}}
 @media(max-width:700px){#formulaeScreen .formula-grid{grid-template-columns:1fr}#formulaeScreen .formula-card{padding:18px}#formulaeScreen .formula-controls{padding:18px;gap:12px}#formulaeScreen .formula-controls button{grid-column:1/-1}}
-html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaeScreen{background:#000!important}
-html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaClear{background:#000!important;color:#f6db6b!important;border:1px solid #9d8737!important;box-shadow:none!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaeScreen{background:var(--du-bg)!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaClear{background:var(--du-bg)!important;color:#f6db6b!important;border:1px solid #9d8737!important;box-shadow:none!important}
 html[data-duck-theme=dark] body.duck-airy.duck-redesign #formulaClear:is(:hover,:focus-visible){box-shadow:0 0 12px #facc1555!important}

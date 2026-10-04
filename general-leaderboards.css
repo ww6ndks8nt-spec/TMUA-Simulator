@@ -17,11 +17,11 @@
 #leaderboardsScreen [aria-pressed=true]{border:2px solid #b28c00;box-shadow:0 0 8px #d6b52c44}
 #leaderboardsScreen .glb-methods{font-size:14px;line-height:1.75}
 #leaderboardsScreen .glb-methods summary{cursor:pointer;font-weight:650}
-html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen{background:#000!important;color:#fff}
-html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen :is(.glb-choice,.glb-panel){background:#000!important;border-color:#91762d;box-shadow:0 0 10px #facc1524}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen{background:var(--du-bg)!important;color:#fff}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen :is(.glb-choice,.glb-panel){background:var(--du-bg)!important;border:1px solid #d8bd52!important;box-shadow:0 0 12px rgba(255,210,60,.18),inset 0 0 0 1px rgba(255,220,90,.08)!important}
 html[data-duck-theme=dark] #leaderboardsScreen .glb-table :is(th,td){border-bottom-color:#6d5d2c66;color:#fff}
 html[data-duck-theme=dark] #leaderboardsScreen .glb-you{background:#141414;box-shadow:inset 3px 0 #facc15}
-html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen button{background:#000!important;color:#fff!important;border:1px solid #73632b!important;box-shadow:none!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen button{background:var(--du-bg)!important;color:#fff!important;border:1px solid #73632b!important;box-shadow:none!important}
 html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen button:is(:hover,:focus-visible){box-shadow:0 0 12px #facc1566!important}
 html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen button[aria-pressed=true]{border-color:#facc15!important;color:#ffe77a!important;box-shadow:0 0 8px #facc1544!important}
 @media(max-width:950px){#leaderboardsScreen .glb-choices{grid-template-columns:1fr}#leaderboardsScreen .glb-choice .study-muted{min-height:0}}
@@ -29,7 +29,7 @@ html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen butt
 #leaderboardsScreen .glb-opt{display:flex!important;flex-direction:row!important;align-items:center!important}
 #leaderboardsScreen .glb-opt input{display:inline-block!important;margin:0!important;width:18px!important;min-width:18px!important}
 html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen :is(.glb-own,.glb-opt){color:#fff!important}
-html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen .glb-table :is(thead,tbody,tr,th,td){background:#000!important;background-image:none!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen .glb-table :is(thead,tbody,tr,th,td){background:var(--du-bg)!important;background-image:none!important}
 #leaderboardsScreen .glb-panel>h2{margin:24px 0 12px}
 /* The ranking box follows the compact three-column reference layout. */
 #leaderboardsScreen .glb-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:18px 0 12px}
@@ -58,3 +58,17 @@ html[data-duck-theme=dark] #leaderboardsScreen .glb-table :is(th,td){border-bott
  #leaderboardsScreen .glb-table :is(th,td):nth-child(2){width:40%}
  #leaderboardsScreen .glb-table :is(th,td):last-child{width:45%}
 }
+/* Relative bars: every row reserves the same label space; the leader fills its track. */
+#leaderboardsScreen .glb-table :is(th,td):first-child{width:10%}
+#leaderboardsScreen .glb-table :is(th,td):nth-child(2){width:25%}
+#leaderboardsScreen .glb-table :is(th,td):last-child{width:65%}
+#leaderboardsScreen .glb-bar-space{padding-right:var(--glb-label-width);min-width:0;font-variant-numeric:tabular-nums}
+#leaderboardsScreen .glb-bar-area{width:100%;height:30px}
+#leaderboardsScreen .glb-relative{position:relative;height:30px}
+#leaderboardsScreen .glb-line{position:absolute;left:0;top:50%;transform:translateY(-50%);width:100%;height:4px;background:var(--duck-gradient,linear-gradient(90deg,#ffe483,#d3af18));border-radius:99px}
+#leaderboardsScreen .glb-line::after{content:"";position:absolute;right:0;top:50%;transform:translate(50%,-50%);width:10px;height:10px;box-sizing:border-box;border-radius:50%;background:var(--du-surface,#fff);border:2px solid #c09b17}
+#leaderboardsScreen .glb-bar-number{position:absolute;left:calc(100% + 14px);top:50%;transform:translateY(-50%);white-space:nowrap;line-height:1.3}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen .glb-line{height:3px;background:#ffdc5a!important;box-shadow:0 0 5px rgba(255,220,90,.75),0 0 11px rgba(255,210,60,.35)}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen .glb-line::after{background:var(--du-bg);border:2px solid #ffdc5a;box-shadow:0 0 5px rgba(255,220,90,.85),0 0 11px rgba(255,210,60,.4)}
+@media(max-width:600px){#leaderboardsScreen .glb-table tbody :is(th,td){font-size:12px}#leaderboardsScreen .glb-table :is(th,td):first-child{width:9%}#leaderboardsScreen .glb-table :is(th,td):nth-child(2){width:23%}#leaderboardsScreen .glb-table :is(th,td):last-child{width:68%}}
+@media(max-width:600px){#leaderboardsScreen .glb-table :is(th,td):first-child{width:12%}#leaderboardsScreen .glb-table :is(th,td):nth-child(2){width:22%}#leaderboardsScreen .glb-table :is(th,td):last-child{width:66%}#leaderboardsScreen .glb-table thead th:first-child{white-space:nowrap;font-size:9px}}
