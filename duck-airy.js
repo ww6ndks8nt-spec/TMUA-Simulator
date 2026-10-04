@@ -24,7 +24,7 @@
   screen.prepend(garden);
  });
  const items=nav.querySelector('.side-nav-items');
- const main=[['navDashboard','Overview','home'],['navPapers','Papers','paper'],['navMental','Mental maths','clock'],['navBank','Question bank','bank'],['navReview','Review','chart'],['navJournal','Journal','journal'],['navPlanner','Planner','calendar']];
+ const main=[['navDashboard','Overview','home'],['navPapers','Papers','paper'],['navMental','Mental maths','clock'],['navBank','Question bank','bank'],['navLeaderboards','Leaderboards','chart'],['navReview','Review','chart'],['navJournal','Journal','journal'],['navPlanner','Planner','calendar']];
  main.forEach(([id,label,key])=>{const el=$(id);el.querySelector('.side-nav-label').textContent=label;el.querySelector('.side-nav-icon').innerHTML=icon(key);items.appendChild(el);});
  const more=make('details','airy-nav-more');more.id='airyMoreNav';
  const moreToggle=make('summary');moreToggle.innerHTML=icon('more');moreToggle.setAttribute('aria-label','More pages');moreToggle.title='More pages';

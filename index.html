@@ -9,7 +9,7 @@
 <meta property="og:description" content="Practise TMUA papers, review every attempt and track your progress across devices.">
 <meta property="og:url" content="https://ducktmua.com/">
 <meta property="og:type" content="website">
-<meta name="ducktmua-build" content="2026-10-03.formulae-list">
+<meta name="ducktmua-build" content="2026-10-04.general-leaderboards">
 <script id="duck-appearance-bootstrap">
 try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-appearance')==='light'?'light':'dark';}catch(e){document.documentElement.dataset.duckTheme='dark';}
 </script>
@@ -2576,9 +2576,23 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
     <button class="side-nav-item" id="navWrong" type="button" aria-label="Wrong-answer papers" title="Wrong-answer papers">
       <span class="side-nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7h-7M17 4l3 3-3 3M4 17h7M7 14l-3 3 3 3M4 7h3l10 10h3"/></svg></span><span class="side-nav-label">Wrong-answer papers</span><span class="side-nav-badge" id="wrongBadge">0</span>
     </button>
-<button class="side-nav-item" id="navBank" type="button" aria-label="Question bank" title="Question bank"><span class="side-nav-icon" aria-hidden="true">▤</span><span class="side-nav-label">Question bank</span></button><button class="side-nav-item" id="navBookmarks" type="button" aria-label="Bookmarks" title="Bookmarks"><span class="side-nav-icon" aria-hidden="true">☆</span><span class="side-nav-label">Bookmarks</span></button><button class="side-nav-item" id="navJournal" type="button" aria-label="Mistake journal" title="Mistake journal"><span class="side-nav-icon" aria-hidden="true">✎</span><span class="side-nav-label">Mistake journal</span></button><button class="side-nav-item" id="navFormulae" type="button" aria-label="Formulae list" title="Formulae list"><span class="side-nav-icon" aria-hidden="true">∑</span><span class="side-nav-label">Formulae list</span></button><button class="side-nav-item" id="navPlanner" type="button" aria-label="Practice planner" title="Practice planner"><span class="side-nav-icon" aria-hidden="true">▦</span><span class="side-nav-label">Practice planner</span></button>  </div>
+<button class="side-nav-item" id="navBank" type="button" aria-label="Question bank" title="Question bank"><span class="side-nav-icon" aria-hidden="true">▤</span><span class="side-nav-label">Question bank</span></button><button class="side-nav-item" id="navBookmarks" type="button" aria-label="Bookmarks" title="Bookmarks"><span class="side-nav-icon" aria-hidden="true">☆</span><span class="side-nav-label">Bookmarks</span></button><button class="side-nav-item" id="navJournal" type="button" aria-label="Mistake journal" title="Mistake journal"><span class="side-nav-icon" aria-hidden="true">✎</span><span class="side-nav-label">Mistake journal</span></button><button class="side-nav-item" id="navLeaderboards" type="button" aria-label="Leaderboards" title="Leaderboards"><span class="side-nav-icon" aria-hidden="true">▥</span><span class="side-nav-label">Leaderboards</span></button><button class="side-nav-item" id="navFormulae" type="button" aria-label="Formulae list" title="Formulae list"><span class="side-nav-icon" aria-hidden="true">∑</span><span class="side-nav-label">Formulae list</span></button><button class="side-nav-item" id="navPlanner" type="button" aria-label="Practice planner" title="Practice planner"><span class="side-nav-icon" aria-hidden="true">▦</span><span class="side-nav-label">Practice planner</span></button>  </div>
   <div class="side-nav-foot"><span class="duck-logo" aria-hidden="true"></span><span>Duck TMUA</span></div>
 </nav>
+
+<section id="leaderboardsScreen" class="screen hidden nav-aware modern-ui studio-ui" aria-labelledby="generalLbTitle"><div class="card">
+<header class="studio-heading"><div><h1 id="generalLbTitle">Leaderboards</h1></div></header>
+<p class="lead">Celebrate steady practice. Choose which rankings you want to join.</p>
+<div class="glb-choices" id="generalLbChoices"></div>
+<p class="study-muted">Participation is optional and independent for each ranking. Your chosen public name is used; email addresses and individual answers are never shown here. Paper-score leaderboard consent remains separate in Settings.</p>
+<p id="generalLbSaveStatus" role="status" aria-live="polite"></p>
+<div class="glb-panel"><div class="glb-toolbar"><div id="generalLbTabs" role="group" aria-label="Choose a leaderboard"></div><button id="generalLbRefresh" type="button" class="bigbtn ghost">Refresh rankings</button></div>
+<h2 id="generalLbHeading">Most time spent practising</h2><p id="generalLbMethod" class="study-muted"></p>
+<p id="generalLbLoadStatus" role="status" aria-live="polite"></p>
+<div class="glb-table-scroll" role="region" tabindex="0" aria-labelledby="generalLbHeading"><table class="glb-table"><thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th id="generalLbValueHeading" scope="col">Recorded time</th><th scope="col">Details</th></tr></thead><tbody id="generalLbRows"></tbody></table></div>
+<p id="generalLbFootnote" class="study-muted">Top 100 published entries. Equal values share a rank. These are practice statistics, not verified exam results.</p></div>
+<details class="glb-panel glb-methods"><summary>How these rankings work</summary><p><strong>Practice time:</strong> recorded question time from saved paper attempts, mistake drills, question-bank sessions and completed mental-maths questions. Combined sittings are counted through their individual papers, once each. In-progress papers and time spent browsing pages are excluded. Older paper timers may include time away from the tab. Totals reflect retained account history.</p><p><strong>Estimated performance:</strong> the same source-weighted first-attempt TMUA estimate used on the Overview page, on a 1–9 scale. At least three scored TMUA papers are needed. MAT, ESAT and question drills do not contribute. Estimates are unofficial and do not adjust for timing arrangements.</p><p><strong>Papers completed:</strong> different full papers submitted with at least one recorded answer, including MAT and ESAT. Retakes count once; a paired Paper 1 / Paper 2 sitting counts as two. Question drills do not count.</p><p>When you join, eligible saved history contributes. Updates follow successful account sync and may take up to a minute while practising. Turning a switch off removes that public entry once the change reaches the server. If you are offline, reconnect and use Retry sync. Your private history is retained. Changing to Anonymous in Settings updates the name used on these rankings; it does not make a public entry impossible to link with earlier versions.</p></details>
+</div></section>
 
 <section id="formulaeScreen" class="screen hidden nav-aware modern-ui studio-ui" aria-labelledby="formulaeTitle"><div class="card">
 <header class="studio-heading"><div><h1 id="formulaeTitle">Formulae list</h1></div></header>
@@ -2642,7 +2656,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
       <div class="newprof">
         <input class="txt" id="siName" type="email" aria-label="Email" maxlength="254" placeholder="Email address" autocomplete="username">
         <input class="txt" id="siPin" aria-label="Password" type="password" maxlength="128" style="width:170px" placeholder="Password" autocomplete="current-password">
-        <label class="leaderboard-optin"><input id="siLeaderboardOptIn" type="checkbox"><span>Publish my eligible first-attempt scores and chosen display name on the public leaderboard. <small>Optional. You can withdraw in Settings. Leaving this unticked does not change an existing saved choice.</small></span></label>
+        <label class="leaderboard-optin"><input id="siLeaderboardOptIn" type="checkbox"><span>Join the public paper-score, practice-time, estimated-performance and papers-completed leaderboards using my chosen display name. <small>Optional. Manage each general ranking in Leaderboards and paper scores in Settings. Leaving this unticked keeps existing choices.</small></span></label>
         <button class="bigbtn" id="siBtn">Sign in</button>
       </div>
       <label class="cloud-remember"><input id="rememberAccount" type="checkbox" checked> Remember me on this device</label><p><button type="button" id="resetPasswordBtn" class="linkbtn">Forgot password?</button></p><button type="button" id="finishDeletionBtn" class="bigbtn ghost hidden">Finish deleting my account</button><p class="switchline">New here? <button class="linkbtn" id="toRegister">Register a profile</button></p>
@@ -2656,7 +2670,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
       <div class="newprof">
         <input class="txt" id="rgPin" aria-label="New password" type="password" maxlength="128" style="width:170px" placeholder="Choose a password" autocomplete="new-password">
         <input class="txt" id="rgPin2" aria-label="Repeat password" type="password" maxlength="128" style="width:170px" placeholder="Repeat password" autocomplete="new-password">
-        <label class="leaderboard-optin"><input id="rgLeaderboardOptIn" type="checkbox"><span>Publish my eligible first-attempt scores and chosen display name on the public leaderboard. <small>Optional. Your private progress still syncs. You can withdraw in Settings.</small></span></label>
+        <label class="leaderboard-optin"><input id="rgLeaderboardOptIn" type="checkbox"><span>Join the public paper-score, practice-time, estimated-performance and papers-completed leaderboards using my chosen display name. <small>Optional. Your private progress still syncs. Manage each general ranking in Leaderboards and paper scores in Settings.</small></span></label>
         <div class="registration-security" aria-label="Registration security check">
           <div id="registrationTurnstile"></div>
           <p id="registrationSecurityStatus" role="status" aria-live="polite">Complete the security check to create your account.</p>
@@ -3026,8 +3040,8 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <fieldset><legend>Leaderboard privacy</legend>
 <label class="settings-check"><input id="settingsLeaderboard" type="checkbox"><span>Publish my eligible first-attempt scores and chosen display name on the public leaderboard.</span></label>
 <label>Public name<select id="settingsPublicName"><option value="profile">Use profile name</option><option value="anonymous">Anonymous</option></select></label>
-<p class="study-muted">Your practice history still syncs privately. Turn submission off and save to withdraw consent and remove public scores. Existing users need to opt in explicitly before future submissions. You can also remove existing public scores below.</p></fieldset>
-<button type="button" class="bigbtn ghost" id="removeLeaderboardEntries">Withdraw consent and remove public scores</button><p id="leaderboardRemovalStatus" class="study-muted" role="status"></p>
+<p class="study-muted">Your practice history still syncs privately. This checkbox controls paper-score leaderboards only. Manage practice-time, estimated-performance and papers-completed participation separately in the Leaderboards tab. The button below withdraws from all rankings.</p></fieldset>
+<button type="button" class="bigbtn ghost" id="removeLeaderboardEntries">Withdraw from all leaderboards</button><p id="leaderboardRemovalStatus" class="study-muted" role="status"></p>
 <fieldset><legend>Review and appearance</legend>
 <label>Colour mode<select id="settingsTheme"><option value="light">Bright (default)</option><option value="dark">Dark</option></select></label>
 <p class="study-muted">Applies immediately and is remembered on this device. Exam screens keep their own appearance.</p>
@@ -4663,6 +4677,8 @@ function updateReviewBadge(){
   const w=$('wrongBadge'); if(w) w.textContent=wrongQuestionPool().length;
 }
 function setSideNav(tab){
+  $('navLeaderboards').classList.toggle('active',tab==='leaderboards');
+  if(tab!=='leaderboards')$('leaderboardsScreen').classList.add('hidden');
   $('navFormulae').classList.toggle('active',tab==='formulae');
   if(tab!=='formulae')$('formulaeScreen').classList.add('hidden');
   $('navMental').classList.toggle('active',tab==='mental');
@@ -4678,7 +4694,7 @@ function setSideNav(tab){
   $('navWrong').classList.toggle('active',tab==='wrong');
   updateReviewBadge();
 }
-function hideSideNav(){ $('formulaeScreen').classList.add('hidden'); $('sideNav').classList.add('hidden'); $('mentalScreen').classList.add('hidden'); }
+function hideSideNav(){ $('leaderboardsScreen').classList.add('hidden'); $('formulaeScreen').classList.add('hidden'); $('sideNav').classList.add('hidden'); $('mentalScreen').classList.add('hidden'); }
 function showLibraryHub(){
   if(timerId) clearInterval(timerId);
   if(dualGapTimerId){ clearInterval(dualGapTimerId); dualGapTimerId=null; }
@@ -6384,6 +6400,7 @@ function flattenCloud(profile,state){
  flat['profile/created']=profile.created||0;
  const put=(path,v)=>{if(v!==undefined)flat['records/'+cloudKey(path)]=JSON.stringify(v);};
  if(state.leaderboardConsent)put(['preferences','leaderboardConsent'],state.leaderboardConsent);
+ if(state.generalLeaderboardConsent)put(['preferences','generalLeaderboardConsent'],state.generalLeaderboardConsent);
  for(const [id,r] of Object.entries(state.mentalMaths||{}))put(['mentalMaths',id],r);
  for(const [k,v] of Object.entries(profile.preferences||{}))if(v!==undefined){
   if(k==='duration'){
@@ -6426,6 +6443,7 @@ function expandCloud(flat,fallbackName='Student'){
   const r=JSON.parse(value),[a,b,c]=path;
   if(a==='preferences'&&b==='duration'&&['75','extra','challenge','60','45','0'].includes(r))timingChoice=r;
   else if(a==='preferences'&&b==='leaderboardConsent'&&r&&r.version===1&&typeof r.enabled==='boolean')state.leaderboardConsent=r;
+  else if(a==='preferences'&&b==='generalLeaderboardConsent'&&r&&r.version===1)state.generalLeaderboardConsent=r;
   else if(a==='mentalMaths'&&typeof b==='string'&&r&&r.v===1){(state.mentalMaths??={})[b]=r;}
   else if(a==='results'){(state.results[b]??=[]).push(r);}
   else if(['combinedResults','randomResults'].includes(a))state[a].push(r);
@@ -6485,13 +6503,14 @@ function cloudFlush(){
  const uid=CLOUD.uid;
  CLOUD.queue=CLOUD.queue.catch(()=>false).then(async()=>{
   if(!CLOUD.ready||CLOUD.deleting||uid!==CLOUD.uid||CLOUD.auth.currentUser?.uid!==uid)return false;
-  cloudCapture();const sent={...CLOUD.pending};if(!Object.keys(sent).length)return true;
+  cloudCapture();const sent={...CLOUD.pending};if(!Object.keys(sent).length){window.GeneralLeaderboards?.schedule();return true;}
   try{
-   await cloudRequest('/users/'+uid+'.json',{method:'PATCH',body:JSON.stringify(sent)});
+   const withdrawals=window.GeneralLeaderboards?.withdrawalPatch(uid,sent);
+   await cloudRequest(withdrawals?'/.json':'/users/'+uid+'.json',{method:'PATCH',body:JSON.stringify(withdrawals||sent)},uid);
    if(uid!==CLOUD.uid)return false;
    for(const [k,v] of Object.entries(sent))if(JSON.stringify(CLOUD.pending[k])===JSON.stringify(v))delete CLOUD.pending[k];
    ROOT.cloudSync[uid]={pending:CLOUD.pending};await Store.writeLocal(ROOT);
-   cloudStatus(Object.keys(CLOUD.pending).length?'Saving…':'Cloud saved');return true;
+   cloudStatus(Object.keys(CLOUD.pending).length?'Saving…':'Cloud saved');window.GeneralLeaderboards?.schedule();return true;
   }catch(error){cloudStatus('Not synced — retry when online');return false;}
  });
  return CLOUD.queue;
@@ -6514,7 +6533,7 @@ async function cloudRefresh(){
   cloudCapture();const merged=cloudOverlay(remoteCloudMap(remote),CLOUD.pending);
   const values=expandCloud(merged,CLOUD.auth.currentUser.displayName||'Student');
   ROOT.profiles[uid]=values.profile;ROOT.data[uid]=STATE=values.state;CLOUD.observed=flattenCloud(values.profile,values.state);
-  await Store.writeLocal(ROOT);applyCloudAppearance();
+  await Store.writeLocal(ROOT);applyCloudAppearance();window.GeneralLeaderboards?.refreshChoices();
   if(!$('mentalScreen').classList.contains('hidden'))window.MentalMathsTracking?.render();
   // Avoid replacing a form while the user is typing.
   if(!document.activeElement?.matches('input,textarea,select')){
@@ -6688,7 +6707,7 @@ async function cloudBoot(){
 const pendingLeaderboardChoices=new Map();
 function makeLeaderboardConsent(enabled,source){return {version:1,enabled:!!enabled,t:Date.now(),source,notice:'2026-10-02'};}
 function rememberLeaderboardOptIn(uid,source){
- const choice=makeLeaderboardConsent(true,source);pendingLeaderboardChoices.set(uid,choice);
+ const choice={...makeLeaderboardConsent(true,source),general:true,notice:'2026-10-04'};pendingLeaderboardChoices.set(uid,choice);
  try{localStorage.setItem('ducktmua-leaderboard-optin:'+uid,JSON.stringify(choice));}catch(e){}
 }
 function applyPendingLeaderboardOptIn(uid,values){
@@ -6696,14 +6715,16 @@ function applyPendingLeaderboardOptIn(uid,values){
  if(!choice)try{choice=JSON.parse(localStorage.getItem('ducktmua-leaderboard-optin:'+uid)||'null');}catch(e){}
  if(choice?.version===1&&choice.enabled===true&&Number.isFinite(choice.t)){
   values.state.leaderboardConsent=choice;values.profile.preferences.leaderboard=true;
+  if(choice.general===true)window.GeneralLeaderboards?.optInAll(values,choice);
   pendingLeaderboardChoices.delete(uid);try{localStorage.removeItem('ducktmua-leaderboard-optin:'+uid);}catch(e){}
  }else if(values.state.leaderboardConsent?.version!==1||values.state.leaderboardConsent.enabled!==true){
   values.profile.preferences.leaderboard=false;
  }
 }
-async function removeProfileLeaderboardEntries(uid){
+async function removeProfileLeaderboardEntries(uid,all=false){
  const ids=new Set([...ALL_PAPERS.map(p=>p.id),...Object.keys(ROOT.data[uid]?.results||{})]);
  const patch={};for(const pid of ids)patch['leaderboards/'+pid+'/'+uid]=null;
+ if(all)window.GeneralLeaderboards?.addRemovals(patch,uid);
  await cloudRequest('/.json',{method:'PATCH',body:JSON.stringify(patch)},uid);
 }
 $('removeLeaderboardEntries').onclick=async()=>{
@@ -6711,9 +6732,10 @@ $('removeLeaderboardEntries').onclick=async()=>{
  CLOUD.busy=true;setProfileSettingsBusy(true);status.textContent='Removing public scores…';
  try{
   STATE.leaderboardConsent=makeLeaderboardConsent(false,'settings');ROOT.profiles[uid].preferences.leaderboard=false;
+  window.GeneralLeaderboards?.withdrawAll();
   $('settingsLeaderboard').checked=false;cloudCapture();await Store.writeLocal(ROOT);
   if(!await cloudFlush())throw Error('Your choice is saved on this device. Reconnect and retry to update the cloud and remove public scores.');
-  await removeProfileLeaderboardEntries(uid);status.textContent='Consent withdrawn and public scores removed. Your private practice history is unchanged.';
+  await removeProfileLeaderboardEntries(uid,true);status.textContent='Consent withdrawn and public scores removed. Your private practice history is unchanged.';
  }catch(error){status.textContent=cloudError(error)+' You can retry this button.';}
  finally{CLOUD.busy=false;setProfileSettingsBusy(false);}
 };
@@ -6835,6 +6857,7 @@ async function cloudDeleteAccount(fromLogin=false){
   const patch={};patch['users/'+user.uid]=null;patch['deletedAccounts/'+user.uid]=true;
   const pids=new Set([...ALL_PAPERS.map(p=>p.id),...Object.keys(ROOT.data[user.uid]?.results||{})]);
   for(const pid of pids)patch['leaderboards/'+pid+'/'+user.uid]=null;
+  window.GeneralLeaderboards?.addRemovals(patch,user.uid);
   await cloudRequest('/.json',{method:'PATCH',body:JSON.stringify(patch)},user.uid);dataRemoved=true;
   CLOUD.ready=false;clearInterval(CLOUD.poll);
   stage='account';status.textContent='Removing your sign-in account…';assertSameUser();
@@ -6889,7 +6912,7 @@ $('profileSettingsForm').addEventListener('submit',async e=>{
   const wasPublic=profilePreferences(user.uid).leaderboard;
   const isPublic=$('settingsLeaderboard').checked;
   if(isPublic!==wasPublic||!STATE.leaderboardConsent)STATE.leaderboardConsent=makeLeaderboardConsent(isPublic,'settings');
-  ROOT.profiles[user.uid]={...ROOT.profiles[user.uid],name,preferences:{
+  ROOT.profiles[user.uid]={...ROOT.profiles[user.uid],name,preferences:{...ROOT.profiles[user.uid].preferences,
    leaderboard:$('settingsLeaderboard').checked,publicName:$('settingsPublicName').value,
    hideSolutions:$('settingsHideSolutions').checked,textSize:$('settingsTextSize').value,
    contrast:$('settingsContrast').checked,duration:normaliseTimingChoice($('settingsDuration').value),timerAlerts:$('settingsTimerAlerts').checked
@@ -6922,6 +6945,8 @@ $('restoreProfile').onchange=async e=>{
   const imported=flattenCloud({...ROOT.profiles[uid],preferences:backup.preferences||ROOT.profiles[uid].preferences},backup.data);
   delete imported['records/'+cloudKey(['preferences','leaderboardConsent'])];
   delete imported['profile/preferences/leaderboard'];
+  delete imported['records/'+cloudKey(['preferences','generalLeaderboardConsent'])];
+  for(const key of ['leaderboardTime','leaderboardPerformance','leaderboardPapers'])delete imported['profile/preferences/'+key];
   const merged=expandCloud({...CLOUD.observed,...imported},ROOT.profiles[uid].name);
   ROOT.profiles[uid]=merged.profile;ROOT.data[uid]=STATE=merged.state;
   studyOwner=null;studySession=null;studyTick=0;studySelected.clear();
@@ -6993,7 +7018,7 @@ refreshAccountCircles();
 <script src="duck-redesign.js?v=20261002-mental-maths"></script>
 <script src="esat.js?v=20260922-5"></script>
 <link rel="stylesheet" href="duck-airy.css?v=20261003-heading-alignment">
-<script src="duck-airy.js?v=20261003-formulae"></script>
+<script src="duck-airy.js?v=20261004-leaderboards"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20261002-dark-glow">
 <link rel="stylesheet" href="mental-maths.css?v=20261003-triples">
 <script src="mental-maths-engine.js?v=20261003-no-zero"></script>
@@ -7007,6 +7032,8 @@ refreshAccountCircles();
 <link rel="stylesheet" href="formulae-list.css?v=20261003-1">
 <script src="formulae-data.js?v=20261003-1"></script>
 <script src="formulae-list.js?v=20261003-1"></script>
+<link rel="stylesheet" href="general-leaderboards.css?v=20261004-1">
+<script src="general-leaderboards.js?v=20261004-1"></script>
 <script>cloudBoot();</script>
 <link rel="stylesheet" href="site-footer.css?v=20261002-1">
 <script src="site-footer.js?v=20261002-1"></script>

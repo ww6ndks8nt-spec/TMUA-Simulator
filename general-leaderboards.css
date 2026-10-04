@@ -1,0 +1,33 @@
+#leaderboardsScreen .glb-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:24px 0}
+#leaderboardsScreen :is(.glb-choice,.glb-panel){min-width:0;background:var(--du-surface,#fff);border:1px solid var(--du-line,#ddd);border-radius:18px;padding:24px}
+#leaderboardsScreen .glb-choice h2{font-size:17px;margin:0 0 16px}
+#leaderboardsScreen .glb-own{font-size:32px;font-weight:750;margin:12px 0}
+#leaderboardsScreen .glb-choice .study-muted{min-height:44px;font-size:13px}
+#leaderboardsScreen .glb-opt{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;cursor:pointer}
+#leaderboardsScreen .glb-opt input{width:18px;height:18px;flex:0 0 18px;accent-color:#d9b62c;margin:2px 0}
+#leaderboardsScreen .glb-toolbar,#generalLbTabs{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#leaderboardsScreen .glb-toolbar{justify-content:space-between}
+#leaderboardsScreen .glb-panel{margin:24px 0}
+#leaderboardsScreen .glb-table-scroll{overflow-x:auto}
+#leaderboardsScreen .glb-table{border-collapse:collapse;width:100%;text-align:left}
+#leaderboardsScreen .glb-table :is(th,td){padding:16px 12px;border-bottom:1px solid var(--du-line,#e5e5e5)}
+#leaderboardsScreen .glb-table thead th{font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+#leaderboardsScreen .glb-table tbody th{font-weight:600;overflow-wrap:anywhere;max-width:350px}
+#leaderboardsScreen .glb-you{background:#fff7d0}
+#leaderboardsScreen [aria-pressed=true]{border:2px solid #b28c00;box-shadow:0 0 8px #d6b52c44}
+#leaderboardsScreen .glb-methods{font-size:14px;line-height:1.75}
+#leaderboardsScreen .glb-methods summary{cursor:pointer;font-weight:650}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen{background:#000!important;color:#fff}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen :is(.glb-choice,.glb-panel){background:#000!important;border-color:#91762d;box-shadow:0 0 10px #facc1524}
+html[data-duck-theme=dark] #leaderboardsScreen .glb-table :is(th,td){border-bottom-color:#6d5d2c66;color:#fff}
+html[data-duck-theme=dark] #leaderboardsScreen .glb-you{background:#141414;box-shadow:inset 3px 0 #facc15}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen button{background:#000!important;color:#fff!important;border:1px solid #73632b!important;box-shadow:none!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen button:is(:hover,:focus-visible){box-shadow:0 0 12px #facc1566!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen button[aria-pressed=true]{border-color:#facc15!important;color:#ffe77a!important;box-shadow:0 0 8px #facc1544!important}
+@media(max-width:950px){#leaderboardsScreen .glb-choices{grid-template-columns:1fr}#leaderboardsScreen .glb-choice .study-muted{min-height:0}}
+@media(max-width:600px){#leaderboardsScreen :is(.glb-choice,.glb-panel){padding:18px}#leaderboardsScreen .glb-table{min-width:520px}#generalLbTabs{width:100%}#generalLbTabs button{flex:1 1 100%}}
+#leaderboardsScreen .glb-opt{display:flex!important;flex-direction:row!important;align-items:center!important}
+#leaderboardsScreen .glb-opt input{display:inline-block!important;margin:0!important;width:18px!important;min-width:18px!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen :is(.glb-own,.glb-opt){color:#fff!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign #leaderboardsScreen .glb-table :is(thead,tbody,tr,th,td){background:#000!important;background-image:none!important}
+#leaderboardsScreen .glb-panel>h2{margin:24px 0 12px}
