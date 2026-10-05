@@ -4333,14 +4333,6 @@ function buildLibrary(){
       const setKey = p.practiceSet || ({setajp1:'Set B',setajp2:'Set B',setbjp1:'Set C',setbjp2:'Set C',setbr3p1:'Set C',setbr3p2:'Set C',setcr2p1:'Set D',setcr2p2:'Set D',setcr3p2:'Set D',p1a:'Set B',p2a:'Set B',p1b:'Set C',p2b:'Set C',p1c:'Set D',p2c:'Set D',p1d:'Set E',p2d:'Set E',p1e:'Set F',p2e:'Set F'})[p.id] || p.id;
       if(!setRows.has(setKey)){ setRows.set(setKey,{p1:null,p2:null}); setOrder.push(setKey); }
       setRows.get(setKey)[p.type===2?'p2':'p1']=b;
-    } else if(p.matAdditional){
-      const entry=document.createElement('div');entry.className='mat-extra-entry';
-      const links=document.createElement('div');links.className='mat-extra-links';
-      for(const [label,url] of [['Question PDF',p.url],['Solutions PDF',p.solutionUrl]]){
-        const a=document.createElement('a');a.href=url;a.textContent=label+' ↗';
-        a.target='_blank';a.rel='noopener noreferrer';a.setAttribute('aria-label',p.title+' · '+label);links.appendChild(a);
-      }
-      entry.append(b,links);grids[5].appendChild(entry);
     } else (grids[p.group]||grids[4]).appendChild(b);
   });
   setOrder.sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})).forEach(setKey=>{
