@@ -11,10 +11,12 @@ const facts=make('div','pp-facts');
 for(const [id,label] of [['ppCount','Questions'],['ppStandard','Standard time'],['ppDifficulty','Difficulty']]){
  const fact=make('div','pp-fact'),value=make('div','pp-value');value.id=id;fact.append(value,make('span','pp-label',label));facts.append(fact);
 }
-banner.append(brand,title,facts);
+const sourceLinks=make('div','mat-extra-links');sourceLinks.id='ppMatExtraLinks';sourceLinks.hidden=true;
+banner.append(brand,title,facts,sourceLinks);
 const instructions=make('details','pp-instructions');instructions.id='ppInstructions';instructions.append(make('summary','','Instructions'));
 // Preserve source-material links, keyboard guidance and companion instructions.
-const instructionBody=make('div','pp-instruction-popover');instructionBody.append(oldSpecs,el('companionRow'),el('companionInstructions'),el('stdInstructions'));instructions.append(instructionBody);
+const instructionBody=make('div','pp-instruction-popover');instructionBody.append(oldSpecs,el('companionRow'),el('companionInstructions'),el('stdInstructions'));const extraInfo=make('p','mat-extra-info');extraInfo.hidden=true;instructionBody.prepend(extraInfo);
+instructions.append(instructionBody);
 document.addEventListener('click',e=>{if(!instructions.contains(e.target))instructions.open=false;});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&instructions.open){instructions.open=false;instructions.querySelector('summary').focus();}});
 timing.firstChild.textContent='Time allowed';
 const more=make('details','pp-more');more.append(make('summary','','Combined sitting'),el('beginBothBtn'),el('beginBothNote'));
@@ -40,9 +42,22 @@ function score(p,r){return Array.isArray(r.a)&&r.a.length===p.questions.length?s
 function scoreText(s){return s?s.c+' / '+s.s:'—';}
 function timeText(r){if(!Array.isArray(r.questionTimesMs)||!r.questionTimesMs.some(x=>Number.isFinite(Number(x))&&Number(x)>0))return '—';return fmtQuestionTime(dashboardAttemptTimeMs(r));}
 function render(p){
- brand.textContent=category(p);
+ brand.textContent=p.matAdditional?'Additional MAT paper':category(p);
+ banner.classList.toggle('pp-mat-additional',!!p.matAdditional);
+ sourceLinks.replaceChildren();sourceLinks.hidden=!p.matAdditional;
+ extraInfo.hidden=!p.matAdditional;
+ if(p.matAdditional){
+   for(const [label,url] of [['Question PDF',p.url],['Solutions PDF',p.solutionUrl]]){
+     const a=make('a','',label+' ↗');a.href=url;a.target='_blank';a.rel='noopener noreferrer';sourceLinks.append(a);
+   }
+   extraInfo.textContent=(p.id==='mat2023additional'
+     ?'Oxford arranged this additional multiple-choice test before shortlisting for candidates affected by technical disruption in the 2023 MAT.'
+     :'Oxford arranged this additional multiple-choice test just before interviews for a small number of candidates shortlisted without a MAT score.')
+     +' The original paper allowed 1 hour. This simulator uses the usual MAT practice allowance of 37 minutes 30 seconds.';
+ }
  title.replaceChildren();const parts=p.title.split(/\s*[·–]\s*(?=Paper\s)/i);parts.forEach((part,i)=>{if(i)title.append(document.createElement('br'));title.append(document.createTextNode(part));});
  el('ppCount').textContent=p.questions.length;el('ppStandard').textContent=paperTimeLabel(standardPaperSeconds(p));
+ if(p.matAdditional)el('ppStandard').innerHTML='<span class="mat-time-full">37 min 30 sec</span><span class="mat-time-short" aria-label="37 minutes 30 seconds">37:30</span>';
  const difficulty=difficultyStats(p).mean;el('ppDifficulty').textContent=Number.isFinite(difficulty)?difficulty.toFixed(1):'—';
  instructions.open=false;more.open=false;more.hidden=el('beginBothBtn').classList.contains('hidden');
  if(el('beginBtn').textContent==='Begin test')el('beginBtn').textContent='Start paper →';

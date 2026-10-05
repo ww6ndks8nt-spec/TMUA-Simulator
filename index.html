@@ -3084,6 +3084,8 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <link rel="stylesheet" href="review-dark-refinements.css?v=20261003-1">
 <script src="qiuyun_mock01.js?v=20260925-3"></script>
 <script src="mat_difficulty_data.js?v=20260923-1"></script>
+<script src="mat-additional.js?v=20261005-1"></script>
+<link rel="stylesheet" href="mat-additional.css?v=20261005-1">
 <script src="step_paper1_data.js?v=20260923-4"></script>
 <script src="practice_set_a_p2.js?v=20261005-reviewed-ratings"></script>
 <script>
@@ -3812,6 +3814,7 @@ MAT_PAPERS_METADATA.forEach(p=>PAPERS.push({
  questions:p.key.split('').map((key,i)=>({mat:true,companion:false,sourcePart:'1'+'ABCDEFGHIJ'[i],topics:p.topics[i],stem:MAT_TRANSCRIBED[p.id][i].stem,opts:MAT_TRANSCRIBED[p.id][i].opts,correct:'ABCDE'.indexOf(key),sol:'<a class="official-solution-link" href="'+p.solutionUrl+'" target="_blank" rel="noopener noreferrer">Oxford solutions · PDF ↗</a>'}))
 }));
 
+PAPERS.push(...MAT_ADDITIONAL_PAPERS);
 PAPERS.push(...STEP_PAPER1_PAPERS,...STEP_LEGACY_PAPERS);
 PAPERS.push(...QIUYUN_MOCK01_PAPERS);
 const ALL_PAPERS=[...PAPERS,...ESAT_ALL_PAPERS];
@@ -4330,6 +4333,14 @@ function buildLibrary(){
       const setKey = p.practiceSet || ({setajp1:'Set B',setajp2:'Set B',setbjp1:'Set C',setbjp2:'Set C',setbr3p1:'Set C',setbr3p2:'Set C',setcr2p1:'Set D',setcr2p2:'Set D',setcr3p2:'Set D',p1a:'Set B',p2a:'Set B',p1b:'Set C',p2b:'Set C',p1c:'Set D',p2c:'Set D',p1d:'Set E',p2d:'Set E',p1e:'Set F',p2e:'Set F'})[p.id] || p.id;
       if(!setRows.has(setKey)){ setRows.set(setKey,{p1:null,p2:null}); setOrder.push(setKey); }
       setRows.get(setKey)[p.type===2?'p2':'p1']=b;
+    } else if(p.matAdditional){
+      const entry=document.createElement('div');entry.className='mat-extra-entry';
+      const links=document.createElement('div');links.className='mat-extra-links';
+      for(const [label,url] of [['Question PDF',p.url],['Solutions PDF',p.solutionUrl]]){
+        const a=document.createElement('a');a.href=url;a.textContent=label+' ↗';
+        a.target='_blank';a.rel='noopener noreferrer';a.setAttribute('aria-label',p.title+' · '+label);links.appendChild(a);
+      }
+      entry.append(b,links);grids[5].appendChild(entry);
     } else (grids[p.group]||grids[4]).appendChild(b);
   });
   setOrder.sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})).forEach(setKey=>{
@@ -5011,7 +5022,7 @@ function openStart(p){
   $('startSub').textContent=paperDescription(p)+'.';
   $('startDifficulty').innerHTML='';$('startDifficulty').classList.add('hidden');
   $('startCount').textContent=p.questions.length;
-  $('startMarking').textContent=p.mat?'4 marks each · no penalty':'1 mark each · no penalty';
+  $('startMarking').textContent=p.matAdditional?'1 point per correct answer · no penalty':p.mat?'4 marks each · no penalty':'1 mark each · no penalty';
   refreshStartTiming();
 
   const cr=$('companionRow');
@@ -7040,7 +7051,7 @@ refreshAccountCircles();
 <link rel="stylesheet" href="general-leaderboards.css?v=20261004-6">
 <script src="general-leaderboards.js?v=20261004-7"></script>
 <link rel="stylesheet" href="paper-preview.css?v=20261004-7">
-<script src="paper-preview.js?v=20261004-6"></script>
+<script src="paper-preview.js?v=20261005-mat-additional"></script>
 <link rel="stylesheet" href="full-page-ui.css?v=20261004-10">
 <script src="full-page-ui.js?v=20261004-10"></script>
 <script>cloudBoot();</script>

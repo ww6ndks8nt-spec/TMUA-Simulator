@@ -1,0 +1,21 @@
+/* Source links for the additional Oxford MAT papers. */
+.mat-extra-entry{display:flex;flex-direction:column;min-width:0;gap:8px}
+.mat-extra-entry>.paper{width:100%;flex:1}
+.mat-extra-links{display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;padding:0 6px 8px}
+.mat-extra-links[hidden],.mat-extra-info[hidden]{display:none!important}
+.mat-extra-links a{font-size:13px;font-weight:600;color:#755000;text-decoration:underline;text-underline-offset:3px;transition:color .25s ease,text-shadow .25s ease}
+html[data-duck-theme="dark"] .mat-extra-links a{color:#ffe077}
+html[data-duck-theme="dark"] .mat-extra-links a:hover,html[data-duck-theme="dark"] .mat-extra-links a:focus-visible{color:#fff3bc;text-shadow:0 0 9px #ffd43b80}
+.mat-extra-links a:hover,.mat-extra-links a:focus-visible{box-shadow:none!important;background:transparent!important}
+#ppMatExtraLinks{justify-content:center;margin-top:12px}
+.mat-extra-info{font-size:14px;line-height:1.6;color:inherit}
+.mat-extra-figure{margin:18px 0;max-width:100%;background:#fff;padding:8px;border-radius:4px;box-sizing:border-box}
+.mat-extra-figure img{display:block;width:100%;max-width:740px;height:auto;margin:auto;filter:none!important}
+@media(prefers-reduced-motion:reduce){.mat-extra-links a{transition:none}}
+
+.mat-time-short{display:none}
+@media(max-width:600px){
+ .pp-mat-additional .mat-time-full{display:none}
+ .pp-mat-additional .mat-time-short{display:inline;white-space:nowrap}
+ html body.duck-airy.duck-redesign #startScreen.paper-preview .pp-mat-additional .pp-facts{grid-template-columns:1fr 1.7fr 1fr}
+}
