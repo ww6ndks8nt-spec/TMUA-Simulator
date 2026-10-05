@@ -123,7 +123,7 @@ const PRACTICE_SET_A_P2 = [
       "Logic",
       "Number Theory"
     ],
-    "estimatedDifficulty": 6.0,
+    "estimatedDifficulty": 6.5,
     "difficultyRationale": "Decode a nested implication; parity reduces the pair checking, with one composite sum providing the counterexample."
   },
   {
@@ -144,7 +144,7 @@ const PRACTICE_SET_A_P2 = [
       "Differentiation",
       "Functions and Graphs"
     ],
-    "estimatedDifficulty": 5.5,
+    "estimatedDifficulty": 6.0,
     "difficultyRationale": "Distinguish an invalid use of monotonicity across a disconnected domain from a conclusion which remains true."
   },
   {
@@ -254,7 +254,7 @@ const PRACTICE_SET_A_P2 = [
       "Differentiation",
       "Functions and Graphs"
     ],
-    "estimatedDifficulty": 5.5,
+    "estimatedDifficulty": 6.0,
     "difficultyRationale": "Construct counterexamples to strict derivative, gradient-ordering and intermediate-value claims."
   },
   {
@@ -274,7 +274,7 @@ const PRACTICE_SET_A_P2 = [
       "Logic",
       "Sequences and Series"
     ],
-    "estimatedDifficulty": 6.5,
+    "estimatedDifficulty": 5.5,
     "difficultyRationale": "A counterexample must meet both hypotheses; telescoping distinguishes the two plausible positive decreasing options."
   },
   {
@@ -314,7 +314,7 @@ const PRACTICE_SET_A_P2 = [
     "topics": [
       "Logic"
     ],
-    "estimatedDifficulty": 6.0,
+    "estimatedDifficulty": 6.5,
     "difficultyRationale": "Resolve mutually dependent truth values, using the truth of a conditional with a false antecedent."
   },
   {
@@ -373,7 +373,7 @@ const PRACTICE_SET_A_P2 = [
       "Logic",
       "Sequences and Series"
     ],
-    "estimatedDifficulty": 6.0,
+    "estimatedDifficulty": 5.5,
     "difficultyRationale": "The full invariant-interval proof is substantial, but endpoint and escape examples make the supplied options much easier to eliminate."
   },
   {
@@ -414,7 +414,7 @@ const PRACTICE_SET_A_P2 = [
       "General algebra",
       "Functions and Graphs"
     ],
-    "estimatedDifficulty": 8.0,
+    "estimatedDifficulty": 7.5,
     "difficultyRationale": "Use equal inputs in a universal implication, then classify strict positivity of a quadratic on t greater than zero, retaining the exceptional boundary."
   }
 ];
