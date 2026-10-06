@@ -3084,8 +3084,8 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 <link rel="stylesheet" href="review-dark-refinements.css?v=20261003-1">
 <script src="qiuyun_mock01.js?v=20260925-3"></script>
 <script src="mat_difficulty_data.js?v=20260923-1"></script>
-<script src="mat-additional.js?v=20261005-1"></script>
-<link rel="stylesheet" href="mat-additional.css?v=20261005-1">
+<script src="mat-additional.js?v=20261006-ratings"></script>
+<link rel="stylesheet" href="mat-additional.css?v=20261006-graphs">
 <script src="step_paper1_data.js?v=20260923-4"></script>
 <script src="practice_set_a_p2.js?v=20261005-reviewed-ratings"></script>
 <script>
@@ -4681,6 +4681,10 @@ function updateReviewBadge(){
   const w=$('wrongBadge'); if(w) w.textContent=wrongQuestionPool().length;
 }
 function setSideNav(tab){
+  for(const [key,id] of [['tricks','Tricks'],['logic','Logic']]){
+    $('nav'+id)?.classList.toggle('active',tab===key);
+    if(tab!==key)$(key+'Screen')?.classList.add('hidden');
+  }
   $('navLeaderboards').classList.toggle('active',tab==='leaderboards');
   if(tab!=='leaderboards')$('leaderboardsScreen').classList.add('hidden');
   $('navFormulae').classList.toggle('active',tab==='formulae');
@@ -6213,10 +6217,6 @@ function renderModernReview(){
  let ratingLabel=$('modernReviewDifficulty');
  if(!ratingLabel){ratingLabel=document.createElement('div');ratingLabel.id='modernReviewDifficulty';ratingLabel.style.marginTop='10px';$('modernReviewTopic').insertAdjacentElement('afterend',ratingLabel);}
  ratingLabel.innerHTML='Difficulty '+difficultyRatingMarkup(q.estimatedDifficulty);ratingLabel.hidden=!!q.esat;
- let rationale=$('modernReviewDifficultyRationale');
- if(!rationale){rationale=document.createElement('details');rationale.id='modernReviewDifficultyRationale';ratingLabel.insertAdjacentElement('afterend',rationale);}
- rationale.open=false;rationale.hidden=q.difficultySource!=='mat-editorial-review';
- rationale.innerHTML=rationale.hidden?'':'<summary>Difficulty rationale (contains solution hints)</summary><p>'+escapeHtml(q.difficultyRationale)+'</p>';
 
  $('modernReviewState').textContent=modernReviewLabel(status);$('modernReviewState').className='modern-review-status '+status;
  $('modernReviewYourAnswer').textContent=a===null||a===undefined?'Not answered':LETTERS[a];
@@ -6351,14 +6351,14 @@ function matDifficultySummary(p){
 }
 function difficultyPanel(p){
  const s=difficultyStats(p);if(!s.count)return '';
- if(p.mat)return matDifficultySummary(p)+'<div class="difficulty-scroll"><table class="difficulty-table"><caption>MAT question difficulty review</caption><thead><tr><th>Question</th><th>Difficulty</th><th>Rationale and comparator</th></tr></thead><tbody>'+p.questions.map((q,i)=>'<tr><th scope="row">'+(i+1)+'</th><td>'+difficultyRatingMarkup(q.estimatedDifficulty)+'</td><td><details><summary>Show rationale (contains solution hints)</summary>'+escapeHtml(q.difficultyRationale)+'</details></td></tr>').join('')+'</tbody></table></div>';
+ if(p.mat)return matDifficultySummary(p)+'<div class="difficulty-scroll"><table class="difficulty-table"><caption>MAT question difficulty ratings</caption><thead><tr><th scope="col">Question</th><th scope="col">Difficulty</th></tr></thead><tbody>'+p.questions.map((q,i)=>'<tr><th scope="row">'+(i+1)+'</th><td>'+difficultyRatingMarkup(q.estimatedDifficulty)+'</td></tr>').join('')+'</tbody></table></div>';
  let html='<div class="difficulty-scroll"><table class="difficulty-table"><caption>Estimated score conversion</caption><thead><tr><th scope="col">Raw mark</th><th scope="col">Score</th></tr></thead><tbody>';
  html+=Array.from({length:s.scored+1},(_,raw)=>'<tr><th scope="row">'+raw+' / '+s.scored+'</th><td>'+difficultyGradeText(raw,p)+'</td></tr>').join('');
  return html+'</tbody></table></div>';
 }
 function downloadDifficultyRatings(){
- const rows=[['Paper','Question','Difficulty','Paper mean','Scored mean','Scored','Source','Model version','Review rationale']];
- PAPERS.filter(p=>!p.esat).forEach(p=>{const s=difficultyStats(p);p.questions.forEach((q,i)=>rows.push([p.title,i+1,q.estimatedDifficulty.toFixed(1),s.mean.toFixed(2),s.scoredMean?.toFixed(2)||'',q.correct!==99?'Yes':'No',q.difficultySource==='user-review'?'User revised ratings':q.difficultySource==='spreadsheet'?'User spreadsheet: '+q.difficultySourceCell:q.difficultySource==='step-editorial-review'?'Individual STEP MCQ editorial review':q.difficultySource==='mat-editorial-review'?'Individual MAT MCQ editorial review':q.difficultySource==='community-editorial-review'?'Individual community mock editorial review':'Estimated against supplied official questions',q.difficultyReviewVersion||DIFFICULTY_MODEL_VERSION,q.difficultyRationale||'']));});
+ const rows=[['Paper','Question','Difficulty','Paper mean','Scored mean','Scored','Source','Model version']];
+ PAPERS.filter(p=>!p.esat).forEach(p=>{const s=difficultyStats(p);p.questions.forEach((q,i)=>rows.push([p.title,i+1,q.estimatedDifficulty.toFixed(1),s.mean.toFixed(2),s.scoredMean?.toFixed(2)||'',q.correct!==99?'Yes':'No',q.difficultySource==='user-review'?'User revised ratings':q.difficultySource==='spreadsheet'?'User spreadsheet: '+q.difficultySourceCell:q.difficultySource==='step-editorial-review'?'Individual STEP MCQ editorial review':q.difficultySource==='mat-editorial-review'?'Individual MAT MCQ editorial review':q.difficultySource==='community-editorial-review'?'Individual community mock editorial review':'Estimated against supplied official questions',q.difficultyReviewVersion||DIFFICULTY_MODEL_VERSION]));});
  const csv=rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n');
  const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='tmua_question_difficulties.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
@@ -7045,7 +7045,10 @@ refreshAccountCircles();
 <link rel="stylesheet" href="paper-preview.css?v=20261004-7">
 <script src="paper-preview.js?v=20261005-mat-additional"></script>
 <link rel="stylesheet" href="full-page-ui.css?v=20261004-10">
-<script src="full-page-ui.js?v=20261004-10"></script>
+<link rel="stylesheet" href="revision-guides.css?v=20261006-2">
+<script src="revision-guides-data.js?v=20261006-1"></script>
+<script src="revision-guides.js?v=20261006-2"></script>
+<script src="full-page-ui.js?v=20261006-guides"></script>
 <script>cloudBoot();</script>
 <link rel="stylesheet" href="site-footer.css?v=20261002-1">
 <script src="site-footer.js?v=20261002-1"></script>

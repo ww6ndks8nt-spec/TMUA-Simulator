@@ -11,6 +11,11 @@ html[data-duck-theme="dark"] .mat-extra-links a:hover,html[data-duck-theme="dark
 .mat-extra-info{font-size:14px;line-height:1.6;color:inherit}
 .mat-extra-figure{margin:18px 0;max-width:100%;background:#fff;padding:8px;border-radius:4px;box-sizing:border-box}
 .mat-extra-figure img{display:block;width:100%;max-width:740px;height:auto;margin:auto;filter:none!important}
+.mat-graph-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:840px;margin:20px auto;align-items:start}
+.mat-graph-options .mat-option-graph{margin:0;padding:10px;min-width:0;background:#fff!important;color:#000!important;border:1px solid #ddd;border-radius:5px;box-sizing:border-box}
+.mat-graph-options .mat-option-graph svg{display:block!important;width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:11/12;background:#fff!important;color:#000!important;filter:none!important;overflow:hidden}
+@media(max-width:700px){.mat-graph-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+@media(max-width:450px){.mat-graph-options{grid-template-columns:1fr;max-width:280px}}
 @media(prefers-reduced-motion:reduce){.mat-extra-links a{transition:none}}
 
 .mat-time-short{display:none}

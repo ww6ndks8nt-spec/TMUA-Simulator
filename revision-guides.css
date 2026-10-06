@@ -1,0 +1,33 @@
+.rg-screen [hidden]{display:none!important}
+.rg-screen{color:var(--du-ink,#15151b)}
+.rg-screen .rg-controls{display:grid;grid-template-columns:2fr 1fr auto;align-items:end;gap:16px;margin:24px 0;padding:20px;border:1px solid var(--du-line,#ddd);border-radius:18px;background:var(--du-surface,#fff)}
+.rg-controls label{font-size:13px;font-weight:600;min-width:0}
+.rg-controls :is(input,select){display:block;width:100%;box-sizing:border-box;min-width:0;padding:12px;margin-top:8px;border:1px solid var(--du-line,#ddd);border-radius:10px;background:var(--du-bg,#fff);color:inherit;font:inherit}
+.rg-topic{margin:32px 0}.rg-topic>h2{font-size:23px;margin-bottom:18px}
+.rg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
+.rg-lesson{border:1px solid var(--du-line,#ddd);border-radius:18px;background:var(--du-surface,#fff);padding:24px;min-width:0}
+.rg-lesson h3{font-size:20px;line-height:1.4;margin:0 0 18px;color:inherit}
+.rg-body{font-size:15px;line-height:1.8}.rg-body p{margin:12px 0}.rg-body p:last-child{margin-bottom:0}.rg-body ul{padding-left:22px}
+.rg-example{border-left:3px solid #c89b1b;padding:3px 0 3px 16px;margin:20px 0}
+.rg-table{overflow:auto;margin:16px 0}.rg-table table{width:100%;border-collapse:collapse;text-align:left;font-size:14px}.rg-table caption{text-align:left;font-weight:600;padding-bottom:8px}.rg-table :is(th,td){padding:9px 12px;border-bottom:1px solid var(--du-line,#ddd)}
+.rg-body mjx-container[display=true]{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:5px 0}
+.rg-graphs{display:grid;grid-template-columns:1fr;gap:12px}.rg-graphs figure{margin:0}.rg-graphs svg{width:100%;max-height:260px;display:block}.rg-graphs text{fill:currentColor;font:12px sans-serif}.rg-axis{stroke:currentColor;opacity:.35;fill:none}.rg-curve{stroke:#aa7900;stroke-width:2.5;fill:none}.rg-min{stroke:#219665;stroke-width:5}.rg-min-dot{fill:#219665}.rg-graphs figcaption{font-size:13px;text-align:center}
+.rg-count{font-size:13px}.rg-controls button{transition:box-shadow .25s ease,border-color .25s ease!important}
+.rg-triangle{margin:20px 0}.rg-triangle svg{display:block;width:100%;max-width:520px;height:auto;margin:auto}.rg-triangle text{fill:currentColor;font:13px Arial,sans-serif}.rg-triangle figcaption,.rg-triangle .rg-ssa-explanation{font-size:14px;line-height:1.7}.rg-ssa-circle{fill:none;stroke:currentColor;opacity:.4;stroke-dasharray:4 5;stroke-width:1.2}.rg-ssa-fill{fill:#dab93f;opacity:.09}.rg-ssa-ray{stroke:currentColor;stroke-width:1.5;fill:none}.rg-ssa-side,.rg-ssa-angle{stroke:#997000;stroke-width:2.2;fill:none}.rg-ssa-alternate{stroke:#167c87;stroke-width:2.2;fill:none;stroke-dasharray:7 3}.rg-ssa-height{stroke:currentColor;stroke-width:1.3;stroke-dasharray:3 3;fill:none}.rg-ssa-point{fill:currentColor}
+html[data-duck-theme=dark] .rg-ssa-side,html[data-duck-theme=dark] .rg-ssa-angle{stroke:#f6db6b}html[data-duck-theme=dark] .rg-ssa-alternate{stroke:#75dce5}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign .rg-screen{background:var(--du-bg)!important;color:#fff}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign .rg-screen :is(.rg-lesson,.rg-controls){background:var(--du-bg)!important;border-color:#9d8737!important;box-shadow:0 0 12px #facc1533!important}
+html[data-duck-theme=dark] .rg-screen :is(h2,h3){color:#f6db6b;text-shadow:0 0 10px #facc1530}
+html[data-duck-theme=dark] .rg-screen .rg-body{color:#fff}
+html[data-duck-theme=dark] .rg-curve{stroke:#f6db6b;filter:drop-shadow(0 0 3px #facc1566)}
+html[data-duck-theme=dark] .rg-controls button{background:var(--du-bg)!important;color:#fff!important;border:1px solid #9d8737!important;box-shadow:none!important}
+html[data-duck-theme=dark] .rg-controls button:is(:hover,:focus-visible){box-shadow:0 0 12px #facc1555!important}
+@media(min-width:1900px){.rg-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:850px){.rg-grid{grid-template-columns:1fr}.rg-controls{grid-template-columns:1fr 1fr!important}.rg-controls label:first-child{grid-column:1/-1}.rg-lesson{padding:18px}}
+@media(prefers-reduced-motion:reduce){.rg-controls button{transition:none!important}}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign.duck-fullpage :is(#tricksScreen,#logicScreen),
+html[data-duck-theme=dark] body.duck-airy.duck-redesign.duck-fullpage :is(#tricksScreen,#logicScreen)>.card{background:var(--du-bg)!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign.duck-fullpage :is(#tricksScreen,#logicScreen) :is(.rg-body p,.rg-body li,.rg-table td){color:#fff!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign.duck-fullpage :is(#tricksScreen,#logicScreen) .rg-table th{background:var(--du-bg)!important;color:#f6db6b!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign.duck-fullpage :is(#tricksScreen,#logicScreen) .rg-controls button{background:var(--du-bg)!important;color:#fff!important;box-shadow:none!important}
+html[data-duck-theme=dark] body.duck-airy.duck-redesign.duck-fullpage :is(#tricksScreen,#logicScreen) .rg-controls button:is(:hover,:focus-visible){box-shadow:0 0 12px #facc1555!important}

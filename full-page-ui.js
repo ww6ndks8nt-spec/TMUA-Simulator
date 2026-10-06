@@ -26,7 +26,7 @@
   let hoverClose;details.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){clearTimeout(hoverClose);details.fpSetOpen(true);}});details.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')hoverClose=setTimeout(()=>{if(!details.contains(document.activeElement))details.fpSetOpen(false);},180);});
 
  }
- menu('Practise',[['navPapers','Papers'],['navBank','Question bank'],['navMental','Mental maths'],['navFormulae','Formulae list']]);
+ menu('Practise',[['navPapers','Papers'],['navBank','Question bank'],['navMental','Mental maths'],['navFormulae','Formulae list'],['navTricks','Recurring tricks'],['navLogic','Logic']]);
  menu('Review',[['navReview','Attempts'],['navWrong','Mistake drill'],['navJournal','Mistake journal'],['navBookmarks','Bookmarks']]);
  items.appendChild($('navLeaderboards'));
  const account=nav.querySelector('.airy-header-account'),planner=$('navPlanner');
