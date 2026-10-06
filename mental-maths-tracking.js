@@ -58,25 +58,20 @@ function fluency(s,n){
  const rate=s.fast/s.n;
  return rate>=.9?{label:'Fluent',tone:'fluent'}:rate>=.7?{label:'Developing',tone:'developing'}:{label:'Building fluency',tone:'building'};
 }
-screen.querySelector('.mm-session-footer').insertAdjacentHTML('afterend',`
+screen.querySelector('#mmSessionStats').insertAdjacentHTML('afterend',`
 <section class="mm-panel mm-history" aria-labelledby="mmHistoryTitle">
  <h2 id="mmHistoryTitle">Your mental maths progress</h2>
- <p id="mmHistoryStorage" class="mm-muted mm-small"></p>
  <div class="mm-history-filters"><label>Mode<select id="mmHistoryMode"><option value="all">All modes</option><option value="arithmetic">Mental maths</option><option value="modular">Modular arithmetic</option><option value="quadratic">Quadratic factorisation</option><option value="polynomial">Polynomial factorisation</option><option value="trig">Common trig values</option><option value="pythagorean">Pythagorean triples</option></select></label><label>Difficulty<select id="mmHistoryLevel"><option value="all">All levels</option><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></label></div>
  <div class="mm-stats mm-history-stats" aria-label="Saved practice summary"><div><span id="mmHistoryCount">0</span><p>Completed questions</p></div><div><span id="mmHistoryAccuracy">—</span><p>First-check accuracy</p></div><div><span id="mmHistoryAverage">—</span><p>Average time</p></div><div><span id="mmHistoryTime">0 s</span><p>Active practice time</p></div></div>
- <p class="mm-muted mm-small">Completed questions only. Revealed answers count as incorrect. Timing includes retries and hints, but excludes time away from the tab. Unsubmitted typing edits are not errors. Mixed practice is grouped by each question’s actual difficulty.</p>
  <div class="mm-table-scroll" role="region" aria-label="Accuracy and timing by skill" tabindex="0"><table class="mm-progress-table"><thead><tr><th scope="col">Skill</th><th scope="col">Completed</th><th scope="col">Accuracy</th><th scope="col">Average time</th><th scope="col">Hints / reveals</th></tr></thead><tbody id="mmHistorySkills"></tbody></table></div>
  <p id="mmHistoryEmpty" class="mm-muted">Complete a question to start your saved summary.</p>
 </section>
 <section class="mm-panel mm-fluency" aria-labelledby="mmFluencyTitle">
  <h2 id="mmFluencyTitle">Multiplication fluency</h2>
- <p class="mm-muted mm-small">All saved multiplication practice, across all levels. Row 12 covers 12 × (−12) through 12 × 12, excluding zero. The largest factor magnitude determines the row; swapped factors and equivalent signs share a fact, so (−12) × (−5) counts as 12 × 5.</p>
- <p class="mm-muted mm-small">The bar shows the percentage answered correctly at the first check, without a hint, within 5 seconds. “Fluent” requires at least 90%, 10 completed questions and half the row’s distinct facts practised. This is a practice benchmark, not an exam grade.</p>
  <div class="mm-table-scroll mm-row-scroll" role="region" aria-label="Fluency for multiplication rows 1 to 50" tabindex="0"><table class="mm-progress-table"><thead><tr><th scope="col">Row</th><th scope="col">Facts practised</th><th scope="col">Completed</th><th scope="col">Accuracy</th><th scope="col">Average time</th><th scope="col">Fluency</th></tr></thead><tbody id="mmFluencyRows"></tbody></table></div>
 </section>`);
 function render(){
  const {total,skills,rows}=summarise(data(),$('mmHistoryMode').value,$('mmHistoryLevel').value);
- $('mmHistoryStorage').textContent=(typeof currentUser!=='undefined'&&currentUser?'Saved privately with your account and included in cross-device sync.':'Saved in this browser for guest practice.')+' Tracking starts with this update. Starting a fresh session does not erase this summary.';
  $('mmHistoryCount').textContent=total.n;$('mmHistoryAccuracy').textContent=percent(total.correct,total.n);$('mmHistoryAverage').textContent=average(total);$('mmHistoryTime').textContent=duration(total.time);$('mmHistoryEmpty').hidden=total.n>0;
  const body=$('mmHistorySkills');body.replaceChildren();
  for(const m of ['arithmetic','modular','quadratic','polynomial','trig','pythagorean']){

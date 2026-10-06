@@ -2608,18 +2608,9 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
   <div class="mm-modes" role="group" aria-label="Training mode"><button id="mmPracticeMode" type="button" aria-pressed="true">Arithmetic</button><button id="mmModMode" type="button" aria-pressed="false">Modular arithmetic</button><button id="mmQuadraticMode" type="button" aria-pressed="false">Quadratics</button><button id="mmPolynomialMode" type="button" aria-pressed="false">Polynomials</button><button id="mmTrigMode" type="button" aria-pressed="false">Trigonometry</button><button id="mmTriplesMode" type="button" aria-pressed="false">Pythagorean triples</button></div>
   <div class="mm-layout">
    <section class="mm-settings" aria-label="Practice settings"><div class="mm-settings-body">
-    <label class="mm-label" for="mmDifficulty">Difficulty</label><select id="mmDifficulty" aria-describedby="mmDifficultyHelp"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option><option value="mixed">Mixed</option></select><p id="mmDifficultyHelp" class="mm-muted mm-small"></p>
-    <div id="mmArithmeticSettings"><h2>Choose your mix</h2><p class="mm-muted">Practise everything, or focus on a skill.</p><fieldset id="mmCategories"><legend>Skills · choose one or more</legend></fieldset><p class="mm-range" id="mmRange"></p></div>
-    <div id="mmModSettings" hidden><h2>Learn, then practise</h2><label class="mm-label" for="mmLesson">Topic</label><select id="mmLesson"></select><p class="mm-muted">Start with remainders and work down the topics. Each topic generates fresh questions.</p></div>
-    <div id="mmTriplesSettings" hidden><h2>Recognise the triple</h2><p class="mm-muted">Fill the missing side in a² + b² = c². Here a and b are the perpendicular sides, and c is the hypotenuse.</p><p class="mm-muted mm-small">Every question uses positive integer side lengths from a common Pythagorean triple or one of its multiples. Questions include both missing legs and missing hypotenuses.</p></div>
-    <div id="mmTrigSettings" hidden><h2>Common trig values</h2><label class="mm-label" for="mmTrigFunction">Function</label><select id="mmTrigFunction"><option value="mixed">Sine, cosine and tangent</option><option value="sin">Sine only</option><option value="cos">Cosine only</option><option value="tan">Tangent only</option></select><label class="mm-label" for="mmTrigUnits">Angle units</label><select id="mmTrigUnits"><option value="mixed">Degrees and radians</option><option value="degrees">Degrees only</option><option value="radians">Radians only</option></select><p class="mm-muted mm-small">Standard angles based on 30°, 45° and 90°, including negative angles and full turns. Tangent is undefined at odd multiples of 90° (π/2).</p></div>
-    <div id="mmFactorSettings" hidden><h2 id="mmFactorTitle"></h2><p id="mmFactorCopy" class="mm-muted"></p><p class="mm-muted mm-small">Medium and Hard only. Mixed alternates these two levels. Press Tab or Enter to move between coefficient boxes.</p></div>
-    <div class="mm-preferences"><label class="mm-timer-setting"><input type="checkbox" id="mmAutoCheck" checked> Auto-check answers</label>
-    <label class="mm-timer-setting"><input type="checkbox" id="mmTimerToggle"> Show question timer</label></div>
+    <label class="mm-label" for="mmDifficulty">Difficulty</label><select id="mmDifficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option><option value="mixed">Mixed</option></select>
    </div></section>
    <div class="mm-workspace">
-    <section id="mmLessonCard" class="mm-panel mm-lesson" hidden aria-labelledby="mmLessonTitle"><p class="mm-eyebrow">The idea</p><h2 id="mmLessonTitle"></h2><p id="mmLessonText"></p><div class="mm-example" id="mmLessonExample"></div><p class="mm-muted" id="mmLessonTip"></p></section>
-    <section class="mm-stats" aria-label="This session"><div><span id="mmCompleted">0</span><p>Completed</p></div><div><span id="mmAccuracy">—</span><p>First-check accuracy</p></div><div><span id="mmStreak">0</span><p>Current streak</p></div><div><span id="mmBest">0</span><p>Best streak</p></div><div><span id="mmAverageTime">—</span><p>Average time / question</p></div></section>
     <section class="mm-panel mm-question-card" aria-label="Current question">
      <div class="mm-question-top"><span id="mmSkill" class="mm-skill"></span><span id="mmLevelBadge" class="mm-skill"></span><span id="mmCounter" class="mm-muted">Question 1</span><span id="mmTimer" class="mm-clock" hidden>0.0 s</span></div>
      <h2 id="mmPrompt" class="mm-prompt" aria-live="polite" aria-atomic="true"></h2>
@@ -2636,7 +2627,18 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
      <p id="mmKeyboardHelp" class="mm-muted mm-small"></p>
     </section>
 
-    <div class="mm-session-footer"><p class="mm-muted mm-small">This session · separate totals for each mode and difficulty. Average time includes completed and revealed questions; time away from this tab is excluded.</p><button id="mmReset" type="button" class="mm-text-button">Start a fresh session</button></div>
+    <section class="mm-settings mm-skill-settings" aria-label="Skill and practice preferences"><div class="mm-settings-body">
+    <div id="mmArithmeticSettings"><h2>Choose your mix</h2><p class="mm-muted">Practise everything, or focus on a skill.</p><fieldset id="mmCategories"><legend>Skill</legend></fieldset><p class="mm-range" id="mmRange"></p></div>
+    <div id="mmModSettings" hidden><h2>Learn, then practise</h2><label class="mm-label" for="mmLesson">Topic</label><select id="mmLesson"></select><p class="mm-muted">Start with remainders and work down the topics. Each topic generates fresh questions.</p></div>
+    <div id="mmTriplesSettings" hidden><h2>Recognise the triple</h2><p class="mm-muted">Fill the missing side in a² + b² = c². Here a and b are the perpendicular sides, and c is the hypotenuse.</p><p class="mm-muted mm-small">Every question uses positive integer side lengths from a common Pythagorean triple or one of its multiples. Questions include both missing legs and missing hypotenuses.</p></div>
+    <div id="mmTrigSettings" hidden><h2>Common trig values</h2><label class="mm-label" for="mmTrigFunction">Function</label><select id="mmTrigFunction"><option value="mixed">Sine, cosine and tangent</option><option value="sin">Sine only</option><option value="cos">Cosine only</option><option value="tan">Tangent only</option></select><label class="mm-label" for="mmTrigUnits">Angle units</label><select id="mmTrigUnits"><option value="mixed">Degrees and radians</option><option value="degrees">Degrees only</option><option value="radians">Radians only</option></select><p class="mm-muted mm-small">Standard angles based on 30°, 45° and 90°, including negative angles and full turns. Tangent is undefined at odd multiples of 90° (π/2).</p></div>
+    <div id="mmFactorSettings" hidden><h2 id="mmFactorTitle"></h2><p id="mmFactorCopy" class="mm-muted"></p><p class="mm-muted mm-small">Medium and Hard only. Mixed alternates these two levels. Press Tab or Enter to move between coefficient boxes.</p></div>
+    <div class="mm-preferences"><label class="mm-timer-setting"><input type="checkbox" id="mmAutoCheck" checked> Auto-check answers</label>
+    <label class="mm-timer-setting"><input type="checkbox" id="mmTimerToggle"> Show question timer</label></div>
+   </div></section>
+    <div class="mm-session-footer"><button id="mmReset" type="button" class="mm-text-button">Start a fresh session</button></div>
+    <section id="mmLessonCard" class="mm-panel mm-lesson" hidden aria-labelledby="mmLessonTitle"><p class="mm-eyebrow">The idea</p><h2 id="mmLessonTitle"></h2><p id="mmLessonText"></p><div class="mm-example" id="mmLessonExample"></div><p class="mm-muted" id="mmLessonTip"></p></section>
+    <section id="mmSessionStats" class="mm-stats" aria-label="This session"><div><span id="mmCompleted">0</span><p>Completed</p></div><div><span id="mmAccuracy">—</span><p>First-check accuracy</p></div><div><span id="mmStreak">0</span><p>Current streak</p></div><div><span id="mmBest">0</span><p>Best streak</p></div><div><span id="mmAverageTime">—</span><p>Average time / question</p></div></section>
    </div>
   </div>
  </div>
@@ -7087,13 +7089,13 @@ refreshAccountCircles();
 <link rel="stylesheet" href="duck-airy.css?v=20261003-heading-alignment">
 <script src="duck-airy.js?v=20261004-descriptions"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20261002-dark-glow">
-<link rel="stylesheet" href="mental-maths.css?v=20261006-open">
+<link rel="stylesheet" href="mental-maths.css?v=20261006-clean">
 <script src="mental-maths-engine.js?v=20261003-no-zero"></script>
 <script src="mental-maths-factorisation.js?v=20261003-1"></script>
 <script src="mental-maths-trig.js?v=20261003-1"></script>
 <script src="mental-maths-triples.js?v=20261003-1"></script>
-<script src="mental-maths-tracking.js?v=20261003-triples"></script>
-<script src="mental-maths.js?v=20261006-open"></script>
+<script src="mental-maths-tracking.js?v=20261006-clean"></script>
+<script src="mental-maths.js?v=20261006-clean"></script>
 <link rel="stylesheet" href="dark-hover.css?v=20261004-5">
 <link rel="stylesheet" href="ui-polish.css?v=20261003-results-dark">
 <link rel="stylesheet" href="formulae-list.css?v=20261004-2">
