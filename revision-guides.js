@@ -2,10 +2,12 @@
 'use strict';
 const $=id=>document.getElementById(id);
 let questionSerial=0;
+// Plain question text must not be parsed as HTML: TeX inequalities contain < and >.
+const escapeQuestionText=value=>String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 function practiceQuestion(question){
  const id='rg-question-'+(++questionSerial),letters='ABCD';
  const form=document.createElement('form');form.className='rg-practice';
- form.innerHTML=`<h4 id="${id}-title">Try it yourself</h4><p class="rg-question-note">Original DuckTMUA question</p><div class="rg-question-prompt" id="${id}-prompt">${question.prompt}</div><fieldset aria-labelledby="${id}-title ${id}-prompt"><legend>Choose one answer</legend>${question.options.map((option,i)=>`<label class="rg-choice"><input type="radio" name="${id}" value="${i}"><span class="rg-choice-letter">${letters[i]}</span><span class="rg-choice-text">${option}</span><span class="rg-choice-mark"></span></label>`).join('')}</fieldset><div class="rg-question-actions"><button type="submit" disabled>Check answer</button><button type="button" class="rg-retry" hidden>Try again</button></div><p class="rg-feedback" role="status" aria-live="polite" aria-atomic="true"></p><div class="rg-solution" hidden><h5>Worked solution</h5>${question.solution}</div>`;
+ form.innerHTML=`<h4 id="${id}-title">Try it yourself</h4><p class="rg-question-note">Original DuckTMUA question</p><div class="rg-question-prompt" id="${id}-prompt">${escapeQuestionText(question.prompt)}</div><fieldset aria-labelledby="${id}-title ${id}-prompt"><legend>Choose one answer</legend>${question.options.map((option,i)=>`<label class="rg-choice"><input type="radio" name="${id}" value="${i}"><span class="rg-choice-letter">${letters[i]}</span><span class="rg-choice-text">${escapeQuestionText(option)}</span><span class="rg-choice-mark"></span></label>`).join('')}</fieldset><div class="rg-question-actions"><button type="submit" disabled>Check answer</button><button type="button" class="rg-retry" hidden>Try again</button></div><p class="rg-feedback" role="status" aria-live="polite" aria-atomic="true"></p><div class="rg-solution" hidden><h5>Worked solution</h5>${richMathHtml(question.solution)}</div>`;
  const field=form.querySelector('fieldset'),check=form.querySelector('[type=submit]'),retry=form.querySelector('.rg-retry'),feedback=form.querySelector('.rg-feedback'),solution=form.querySelector('.rg-solution');
  const choices=[...form.querySelectorAll('.rg-choice')];
  field.addEventListener('change',()=>{
@@ -49,13 +51,13 @@ for(const [key,data] of Object.entries(window.DuckRevisionGuides)){
  for(const [topic] of data.topics){const o=document.createElement('option');o.value=topic;o.textContent=topic;select.append(o);}
  function build(){if(built)return;built=true;
   for(const [topic,cards] of data.topics){const section=document.createElement('section');section.className='rg-topic';const h=document.createElement('h2');h.textContent=topic;section.append(h);const grid=document.createElement('div');grid.className='rg-grid';section.append(grid);
-   for(const [title,html] of cards){const article=document.createElement('article');article.className='rg-lesson';const heading=document.createElement('h3');heading.textContent=title;article.append(heading);const body=document.createElement('div');body.className='rg-body';body.innerHTML=html;if(key==='tricks')body.append(practiceQuestion(window.DuckTrickQuestions[title]));article.append(body);grid.append(article);rows.push({node:article,topic,text:(topic+' '+title+' '+body.textContent).toLowerCase()});}
+   for(const [title,html] of cards){const article=document.createElement('article');article.className='rg-lesson';const heading=document.createElement('h3');heading.textContent=title;article.append(heading);const body=document.createElement('div');body.className='rg-body';body.innerHTML=richMathHtml(html);if(key==='tricks')body.append(practiceQuestion(window.DuckTrickQuestions[title]));article.append(body);grid.append(article);rows.push({node:article,topic,text:(topic+' '+title+' '+body.textContent).toLowerCase()});}
    content.append(section);
   }
   const graphs=content.querySelector('.rg-graphs');if(graphs)graphs.append(distanceGraph([1,5],'Two points: minimum 4 for every x from 1 to 5.'),distanceGraph([1,3,7],'Three points: minimum 6 only at x = 3.'));
   if(key==='tricks')for(const figure of content.querySelectorAll('[data-ssa-case]')){
-   figure.innerHTML=window.DuckSSADiagrams[Number(figure.dataset.ssaCase)];
-   figure.querySelector('svg').setAttribute('aria-label',figure.getAttribute('aria-label'));
+   const svg=figure.querySelector('svg');
+   if(svg)svg.setAttribute('aria-label',figure.getAttribute('aria-label'));
    figure.closest('.rg-lesson').classList.add('rg-ssa-lesson');
   }
   typeset(content);
