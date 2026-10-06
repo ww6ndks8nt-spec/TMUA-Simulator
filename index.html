@@ -2642,7 +2642,13 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 </section>
 
 <div id="bankScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Targeted practice</div><h1>Question bank</h1></div></header>
-<div class="study-filters"><label>Search<input id="bankSearch" type="search" placeholder="Paper or question text"></label><label>Topic<select id="bankTopic"></select></label><label>Source<select id="bankSource"></select></label><label>Estimated difficulty<select id="bankEstimatedDifficulty"><option value="">All levels</option><option value="1,4">1.0–3.9</option><option value="4,5">4.0–4.9</option><option value="5,6">5.0–5.9</option><option value="6,7">6.0–6.9</option><option value="7,8">7.0–7.9</option><option value="8,9">8.0–8.9</option><option value="9,10">9.0+</option></select></label><label>Attempt status<select id="bankStatus"><option value="">All questions</option><option value="new">Not attempted</option><option value="attempted">Attempted</option><option value="wrong">Last answer incorrect</option><option value="correct">Last answer correct</option></select></label><label>Your rating<select id="bankDifficulty"><option value="">All ratings</option><option>Unrated</option><option>Easy</option><option>Moderate</option><option>Hard</option></select></label></div>
+<div class="study-filters bank-filters">
+<div class="bank-filter-search"><label>Search<input id="bankSearch" type="search" placeholder="Paper or question text"></label><label>Filter by paper<select id="bankSource"></select></label><button id="bankResetFilters" class="bank-filter-reset" type="button">Clear filters</button></div>
+<fieldset id="bankPaperCategory" class="bank-filter-group"><legend>Paper category</legend><div class="bank-filter-buttons"></div></fieldset>
+<fieldset id="bankTopic" class="bank-filter-group"><legend>Topic</legend><div class="bank-filter-buttons"></div></fieldset>
+<fieldset id="bankEstimatedDifficulty" class="bank-filter-group"><legend>Estimated difficulty</legend><div class="bank-filter-buttons"></div></fieldset>
+<fieldset id="bankStatus" class="bank-filter-group"><legend>Attempt status</legend><div class="bank-filter-buttons"></div></fieldset>
+</div>
 <div class="study-actions"><button id="bankSelect" class="bigbtn ghost">Select this page</button><button id="bankClear" class="bigbtn ghost">Clear selection</button><button id="bankStart" class="bigbtn" disabled>Practise selected questions</button></div><p id="bankCount" class="study-muted" role="status"></p><p id="bankSessionSummary" role="status"></p><div id="bankResume" class="study-actions"></div><p class="study-muted"><button type="button" id="downloadDifficulties" class="linkback">Download difficulty ratings (CSV)</button></p><div id="bankList"></div><div class="study-actions"><button id="bankPrev" class="bigbtn ghost">Previous page</button><span id="bankPage"></span><button id="bankNext" class="bigbtn ghost">Next page</button></div></div></div><div id="bookmarksScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div class="duck-heading-copy"><span class="duck-logo" aria-hidden="true"></span><div><div class="studio-eyebrow">Return to the good ones</div><h1>Bookmarks</h1></div></div></header><p class="lead">Your saved questions, with a note about what makes each worth revisiting.</p><div id="bookmarksList"></div></div></div><div id="journalScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Review & reflect</div><h1>Mistake journal</h1></div></header><p class="lead">Turn incorrect answers into specific lessons. Marking a journal entry resolved does not remove it from wrong-answer practice.</p><div class="study-filters"><label>Status<select id="journalFilter"><option value="">All entries</option><option value="open">To review</option><option value="resolved">Resolved</option></select></label><label>Category<select id="journalCategoryFilter"></select></label></div><p id="journalCount" role="status" class="study-muted"></p><div id="journalList"></div></div></div><div id="plannerScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Make a plan</div><h1>Practice planner</h1></div></header><p class="lead">Plan a full paper or a focused topic session. Dates are saved with your profile; this planner does not send notifications.</p><form id="plannerForm" class="study-panel"><div class="study-filters"><label>Session type<select id="planKind"><option value="paper">Full paper</option><option value="topic">Topic practice</option></select></label><label>Paper or topic<select id="planTarget" required></select></label><label>Date<input id="planDate" type="date" required></label><label>Planned minutes<input id="planMinutes" type="number" min="5" max="600" value="75" required></label></div><button class="bigbtn" type="submit">Schedule session</button><span id="plannerSaved" role="status"></span><p class="study-muted">Planned minutes reserve study time. Full papers keep their existing exam timer settings.</p></form><section class="study-panel"><h2>Suggested topics</h2><p class="study-muted">Lowest accuracy in your completed papers, with at least three attempted questions per topic.</p><div id="plannerSuggestions" class="study-actions"></div></section><div id="plannerList"></div></div></div><div id="studyScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Question-bank practice</div><h1>Focused practice</h1></div></header><div class="study-actions"><button id="studyBack" class="bigbtn ghost">Save & return to bank</button><button id="studyBookmark" class="bigbtn ghost">Bookmark question</button></div><p id="studyPosition" class="study-muted"></p><section id="studyContent" class="study-panel"><h2 id="studyTitle"></h2><div id="studyStem" class="study-stem"></div><div id="studyOptions"></div><button id="studyCheck" class="bigbtn">Check answer</button><p id="studyFeedback" role="status"></p><div id="studySolution" class="study-solution hidden"></div></section><div class="study-actions"><button id="studyPrev" class="bigbtn ghost">Previous question</button><button id="studyNext" class="bigbtn ghost">Next question</button><button id="studyFinish" class="bigbtn">Finish session</button></div><details class="study-panel"><summary>Bookmark notes & mistake lesson</summary><div class="study-filters"><label>Your difficulty<select id="studyRating"><option>Unrated</option><option>Easy</option><option>Moderate</option><option>Hard</option></select></label><label>Mistake category<select id="studyCategory"></select></label></div><label class="study-field">Bookmark note<textarea id="studyBookmarkNote" maxlength="4000" placeholder="Adding a note also bookmarks this question."></textarea></label><label class="study-field">Lesson learned<textarea id="studyLesson" maxlength="4000" placeholder="What will you do differently next time?"></textarea></label><button id="studySaveDetails" class="bigbtn ghost">Save notes & lesson</button><span id="studySaved" role="status"></span></details></div></div>
 <div id="modernReviewScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Review & understand</div><h1>Answer review</h1></div><div class="study-actions"><button id="modernReviewBack" class="bigbtn ghost">Results summary</button><button id="modernReviewHistory" class="bigbtn ghost">Review history</button></div></header><p id="modernReviewPaper" class="lead"></p><div class="modern-review-layout"><nav class="study-panel modern-review-navigation" aria-label="Review questions"><div id="modernReviewNavigator"></div></nav><div id="modernReviewContent"><section class="study-panel"><div class="modern-review-heading"><h2 id="modernReviewQuestion"></h2><span id="modernReviewState"></span></div><p id="modernReviewTopic" class="study-muted"></p><div class="modern-review-metrics"><div><span>Your answer</span><b id="modernReviewYourAnswer"></b></div><div><span>Correct answer</span><b id="modernReviewCorrectAnswer"></b></div><div><span>Time spent</span><b id="modernReviewTime"></b></div></div><div id="modernReviewStem" class="study-stem"></div><div id="modernReviewOptions"></div></section><section class="study-panel modern-review-worked"><h2 id="modernReviewSolutionTitle">Worked solution</h2><p id="modernReviewSolutionNotice" class="modern-review-notice" role="status"></p><div id="modernReviewSolution"></div></section><div class="study-actions"><button id="modernReviewPrev" class="bigbtn ghost">Previous question</button><button id="modernReviewNext" class="bigbtn">Next question</button><button id="modernReviewBookmark" class="bigbtn ghost">Bookmark question</button><button id="modernReviewPractice" class="bigbtn ghost">Practise again</button></div><details class="study-panel"><summary>Add a lesson to your mistake journal</summary><label class="study-field">Category<select id="modernReviewCategory"></select></label><label class="study-field">Lesson<textarea id="modernReviewLesson" maxlength="4000" placeholder="What will you do differently next time?"></textarea></label><button id="modernReviewSaveLesson" class="bigbtn ghost">Save lesson</button><span id="modernReviewSaved" role="status"></span></details></div></div></div></div>
 <!-- ============ LOGIN ============ -->
@@ -6009,12 +6015,53 @@ function studyHistory(){
  PAPERS.forEach(p=>(STATE.results[p.id]||[]).forEach(r=>p.questions.forEach((q,i)=>{if(q.correct!==99&&Array.isArray(r.a))add(p.id+':'+i,r.a[i],r.t||0,isCorrectAns(q,r.a[i]));})));
  studyData().responses.forEach(r=>add(r.key,r.answer,r.t,r.correct));return m;
 }
+const bankFilters={category:new Set(),topic:new Set(),difficulty:new Set(),status:new Set()};
+function bankPaperCategory(p){
+ if(isChallengePaper(p))return 'Challenge';
+ if(p.mat||p.group===5&&!p.esat)return 'MAT';
+ if(p.group===6||/^step/i.test(p.id))return 'STEP';
+ if(p.group===1||p.group===2)return 'Practice';
+ if(p.group===4||p.esat)return 'Official';
+ return 'Community';
+}
+function bankFilterGroup(id,key,options,allLabel){
+ const host=$(id).querySelector('.bank-filter-buttons');
+ for(const [value,label] of [['',allLabel],...options]){
+  const button=document.createElement('button');button.type='button';button.className='bank-filter-button';button.textContent=label;button.dataset.filter=key;button.dataset.value=value;
+  button.addEventListener('click',()=>{
+   const selected=bankFilters[key];
+   if(!value)selected.clear();else if(selected.has(value))selected.delete(value);else selected.add(value);
+   syncBankFilterButtons();if(key==='category')refreshBankPaperOptions();studyPage=0;buildStudyBank();
+  });host.append(button);
+ }
+}
+function syncBankFilterButtons(){
+ document.querySelectorAll('.bank-filter-button').forEach(button=>{
+  const selected=bankFilters[button.dataset.filter],value=button.dataset.value;
+  button.setAttribute('aria-pressed',String(value?selected.has(value):selected.size===0));
+ });
+}
+function refreshBankPaperOptions(){
+ const host=$('bankSource'),value=host.value,categories=bankFilters.category;
+ const papers=PAPERS.filter(p=>!p.archived&&(!categories.size||categories.has(bankPaperCategory(p))));
+ host.innerHTML=studyOption('','All papers')+papers.map(p=>studyOption(p.id,p.title)).join('');
+ host.value=papers.some(p=>p.id===value)?value:'';
+}
+function resetBankFilters(topics=[]){
+ Object.values(bankFilters).forEach(values=>values.clear());
+ topics.filter(t=>TOPIC_CATEGORIES.includes(t)).forEach(t=>bankFilters.topic.add(t));
+ $('bankSearch').value='';$('bankSource').value='';refreshBankPaperOptions();syncBankFilterButtons();studyPage=0;buildStudyBank();
+}
 function studyFiltered(){
- const d=studyData(),h=studyHistory();const search=$('bankSearch').value.trim().toLowerCase(),topic=$('bankTopic').value,source=$('bankSource').value,status=$('bankStatus').value,rating=$('bankDifficulty').value;
+ const h=studyHistory(),search=$('bankSearch').value.trim().toLowerCase(),source=$('bankSource').value;
+ const {topic,category,difficulty,status}=bankFilters;
+ const ranges=[...difficulty].map(value=>value.split(',').map(Number));
  return studyCatalog.filter(x=>{
  if(x.p.archived)return false;
- const v=h.get(x.key);const range=$('bankEstimatedDifficulty').value.split(',').map(Number),matchDifficulty=!$('bankEstimatedDifficulty').value||(x.q.estimatedDifficulty>=range[0]&&x.q.estimatedDifficulty<range[1]);
- return matchDifficulty&&(!search||(studyKeyTitle(x)+' '+studyText(x.q.stem)).toLowerCase().includes(search))&&(!topic||x.topics.includes(topic))&&(!source||x.p.id===source)&&(!rating||(d.ratings[x.key]||'Unrated')===rating)&&(!status||(status==='new'?!v:status==='attempted'?!!v:status==='wrong'?v&&!v.ok:v&&v.ok));
+ const v=h.get(x.key);
+ const matchDifficulty=!ranges.length||ranges.some(([lo,hi])=>x.q.estimatedDifficulty>=lo&&x.q.estimatedDifficulty<hi);
+ const matchStatus=!status.size||[...status].some(s=>s==='new'?!v:s==='attempted'?!!v:s==='wrong'?v&&!v.ok:v&&v.ok);
+ return matchDifficulty&&matchStatus&&(!search||(studyKeyTitle(x)+' '+studyText(x.q.stem)).toLowerCase().includes(search))&&(!topic.size||x.topics.some(t=>topic.has(t)))&&(!category.size||category.has(bankPaperCategory(x.p)))&&(!source||x.p.id===source);
  });
 }
 function studyMeta(x,h){const v=h.get(x.key);return x.topic+' · '+difficultyLabel(x.q)+' · Your rating: '+(studyData().ratings[x.key]||'Unrated')+' · '+(!v?'Not attempted':v.ok?'Last attempt correct':'Last attempt incorrect');}
@@ -6118,7 +6165,7 @@ function buildStudyPlanner(){
  plans.forEach(p=>{
  const row=document.createElement('article');row.className='study-list-row';const body=document.createElement('div');body.className='study-row-body';const title=document.createElement('b');title.textContent=studyPlanLabel(p);
  const info=document.createElement('p');info.className='study-muted';info.textContent=new Date(p.date+'T12:00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'})+' · '+p.minutes+' minutes planned · '+(p.done?'Completed':p.date<studyToday()?'Overdue':'Scheduled');body.append(title,info);
- const actions=document.createElement('div');actions.className='study-actions';actions.append(studyButton('Start',()=>{if(p.kind==='paper'){const paper=paperById(p.target);if(paper){studyHide();openStart(paper);}}else{const targets=planTopicCategories(p);if(targets.length>1){startStudySession(studyCatalog.filter(x=>targets.some(t=>x.topics.includes(t))).map(x=>x.key));return;}studyNav('bank');$('bankTopic').value=targets[0];$('bankSource').value='';$('bankStatus').value='';$('bankDifficulty').value='';$('bankSearch').value='';studyPage=0;buildStudyBank();}}),studyButton(p.done?'Reopen':'Mark done',()=>{p.done=!p.done;studySave();buildStudyPlanner();}),studyButton('Remove',()=>{studyData().plans=studyData().plans.filter(x=>x.id!==p.id);studySave();buildStudyPlanner();}));row.append(body,actions);host.appendChild(row);
+ const actions=document.createElement('div');actions.className='study-actions';actions.append(studyButton('Start',()=>{if(p.kind==='paper'){const paper=paperById(p.target);if(paper){studyHide();openStart(paper);}}else{const targets=planTopicCategories(p);if(targets.length>1){startStudySession(studyCatalog.filter(x=>targets.some(t=>x.topics.includes(t))).map(x=>x.key));return;}studyNav('bank');resetBankFilters(targets);}}),studyButton(p.done?'Reopen':'Mark done',()=>{p.done=!p.done;studySave();buildStudyPlanner();}),studyButton('Remove',()=>{studyData().plans=studyData().plans.filter(x=>x.id!==p.id);studySave();buildStudyPlanner();}));row.append(body,actions);host.appendChild(row);
  });
  const rec=$('plannerSuggestions');rec.innerHTML='';const topics=dashboardTopicStats().filter(x=>x.attempted>=3).sort((a,b)=>a.correct/a.attempted-b.correct/b.attempted).slice(0,3);
  if(!topics.length){rec.textContent='Topic suggestions will appear after you have attempted at least three questions in a topic.';return;}
@@ -6153,9 +6200,13 @@ setSideNav=function(tab){studyHide();originalSetSideNav(tab);Object.entries(STUD
 const originalBuildDashboard=buildDashboard;
 buildDashboard=function(){originalBuildDashboard();buildStudyTiming();};
 Object.entries(STUDY_TABS).forEach(([tab,id])=>$(id).addEventListener('click',()=>studyNav(tab)));
-$('bankTopic').innerHTML=studyOption('','All topics')+TOPIC_CATEGORIES.map(t=>studyOption(t)).join('');
-$('bankSource').innerHTML=studyOption('','All sources')+PAPERS.filter(p=>!p.archived).map(p=>studyOption(p.id,p.title)).join('');
-['bankTopic','bankSource','bankStatus','bankDifficulty','bankEstimatedDifficulty'].forEach(id=>$(id).addEventListener('change',()=>{studyPage=0;buildStudyBank();}));
+bankFilterGroup('bankPaperCategory','category',['Community','Official','STEP','MAT','Practice','Challenge'].map(v=>[v,v]),'All categories');
+bankFilterGroup('bankTopic','topic',TOPIC_CATEGORIES.map(v=>[v,v]),'All topics');
+bankFilterGroup('bankEstimatedDifficulty','difficulty',[['1,4','1.0–3.9'],['4,5','4.0–4.9'],['5,6','5.0–5.9'],['6,7','6.0–6.9'],['7,8','7.0–7.9'],['8,9','8.0–8.9'],['9,Infinity','9.0+']],'All levels');
+bankFilterGroup('bankStatus','status',[['new','Not attempted'],['attempted','Attempted'],['wrong','Last answer incorrect'],['correct','Last answer correct']],'All questions');
+syncBankFilterButtons();refreshBankPaperOptions();
+$('bankSource').addEventListener('change',()=>{studyPage=0;buildStudyBank();});
+$('bankResetFilters').addEventListener('click',()=>resetBankFilters());
 $('bankSearch').addEventListener('input',()=>{studyPage=0;buildStudyBank();});
 $('bankPrev').addEventListener('click',()=>{studyPage--;buildStudyBank();});$('bankNext').addEventListener('click',()=>{studyPage++;buildStudyBank();});
 $('bankStart').addEventListener('click',()=>startStudySession([...studySelected]));
@@ -7023,8 +7074,8 @@ if(duck){
 refreshAccountCircles();
 
 </script>
-<script src="duck-redesign.js?v=20261002-mental-maths"></script>
-<script src="esat.js?v=20261004-preview"></script>
+<script src="duck-redesign.js?v=20261006-bank-filters"></script>
+<script src="esat.js?v=20261006-bank-filters"></script>
 <link rel="stylesheet" href="duck-airy.css?v=20261003-heading-alignment">
 <script src="duck-airy.js?v=20261004-descriptions"></script>
 <link rel="stylesheet" href="pearson-exam.css?v=20261002-dark-glow">
@@ -7045,12 +7096,15 @@ refreshAccountCircles();
 <link rel="stylesheet" href="paper-preview.css?v=20261004-7">
 <script src="paper-preview.js?v=20261005-mat-additional"></script>
 <link rel="stylesheet" href="full-page-ui.css?v=20261004-10">
-<link rel="stylesheet" href="revision-guides.css?v=20261006-2">
-<script src="revision-guides-data.js?v=20261006-1"></script>
-<script src="revision-guides.js?v=20261006-2"></script>
+<link rel="stylesheet" href="revision-guides.css?v=20261006-practice">
+<script src="revision-diagrams/ssa-tikz.js?v=20261006-1"></script>
+<script src="revision-guides-data.js?v=20261006-practice"></script>
+<script src="revision-tricks-questions.js?v=20261006-1"></script>
+<script src="revision-guides.js?v=20261006-practice"></script>
 <script src="full-page-ui.js?v=20261006-guides"></script>
 <script>cloudBoot();</script>
 <link rel="stylesheet" href="site-footer.css?v=20261002-1">
 <script src="site-footer.js?v=20261002-1"></script>
+<link rel="stylesheet" href="question-bank-filters.css?v=20261006-1">
 </body>
 </html>

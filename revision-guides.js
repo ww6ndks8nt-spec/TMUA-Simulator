@@ -1,26 +1,34 @@
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
-function triangleDiagram(){
- const figure=document.createElement('figure');figure.className='rg-triangle';
- const ax=28,cy=152,base=240,b=176,h=88,cx=ax+b*Math.cos(Math.PI/6),a=123.2;
- const offset=Math.sqrt(a*a-h*h),near=cx-offset,far=cx+offset;
- figure.innerHTML=`<svg viewBox="0 0 350 295" role="img" aria-labelledby="ssaDiagramTitle ssaDiagramDesc"><title id="ssaDiagramTitle">The SSA ambiguous case: two possible triangles</title><desc id="ssaDiagramDesc">Angle A is 30 degrees and AC equals b, or 10 units. A circle centred at C with radius a, or 7 units, meets the horizontal ray from A at B1 and B2. Both triangles AB1C and AB2C satisfy the given data. The perpendicular height CH is h equals 5, so h is less than a and a is less than b.</desc>
- <circle class="rg-ssa-circle" cx="${cx}" cy="${cy}" r="${a}"/>
- <path class="rg-ssa-fill" d="M${ax} ${base}L${cx} ${cy}L${far} ${base}Z"/>
- <path class="rg-ssa-ray" d="M${ax} ${base}H333m-7-4 7 4-7 4"/>
- <path class="rg-ssa-side" d="M${ax} ${base}L${cx} ${cy}L${far} ${base}"/>
- <path class="rg-ssa-alternate" d="M${cx} ${cy}L${near} ${base}"/>
- <path class="rg-ssa-height" d="M${cx} ${cy}V${base}m0-9h9v9"/>
- <path class="rg-ssa-angle" d="M${ax+38} ${base}A38 38 0 0 0 ${ax+38*Math.cos(Math.PI/6)} ${base-19}"/>
- ${[[ax,base],[cx,cy],[near,base],[far,base]].map(([x,y])=>`<circle class="rg-ssa-point" cx="${x}" cy="${y}" r="3"/>`).join('')}
- <text x="18" y="259">A</text><text x="${cx}" y="139" text-anchor="middle">C</text>
- <text x="${near}" y="260" text-anchor="middle">B₁</text><text x="${far}" y="260" text-anchor="middle">B₂</text><text x="${cx}" y="260" text-anchor="middle">H</text>
- <text x="82" y="187" class="rg-ssa-label">b = 10</text><text x="64" y="227" class="rg-ssa-label">30°</text>
- <text x="110" y="190" transform="translate(0 17)" class="rg-ssa-label">a = 7</text><text x="242" y="193" class="rg-ssa-label">a = 7</text>
- <text x="${cx+12}" y="225" class="rg-ssa-label">h = 5</text>
- </svg><figcaption><strong>Two triangles from the same data.</strong> Fix A and C. The third vertex B must lie on the ray from A and on the circle centred at C with radius a. Here both B₁ and B₂ work.</figcaption><p class="rg-ssa-explanation">The dashed height is h = b sin A. A circle with radius a &lt; h misses the ray; at a = h it just touches at H. For h &lt; a &lt; b it meets the ray twice. At a = b, one intersection is A itself and is degenerate; for a &gt; b, one intersection lies behind A. Only one triangle remains in these last two cases.</p>`;
- return figure;
+let questionSerial=0;
+function practiceQuestion(question){
+ const id='rg-question-'+(++questionSerial),letters='ABCD';
+ const form=document.createElement('form');form.className='rg-practice';
+ form.innerHTML=`<h4 id="${id}-title">Try it yourself</h4><p class="rg-question-note">Original DuckTMUA question</p><div class="rg-question-prompt" id="${id}-prompt">${question.prompt}</div><fieldset aria-labelledby="${id}-title ${id}-prompt"><legend>Choose one answer</legend>${question.options.map((option,i)=>`<label class="rg-choice"><input type="radio" name="${id}" value="${i}"><span class="rg-choice-letter">${letters[i]}</span><span class="rg-choice-text">${option}</span><span class="rg-choice-mark"></span></label>`).join('')}</fieldset><div class="rg-question-actions"><button type="submit" disabled>Check answer</button><button type="button" class="rg-retry" hidden>Try again</button></div><p class="rg-feedback" role="status" aria-live="polite" aria-atomic="true"></p><div class="rg-solution" hidden><h5>Worked solution</h5>${question.solution}</div>`;
+ const field=form.querySelector('fieldset'),check=form.querySelector('[type=submit]'),retry=form.querySelector('.rg-retry'),feedback=form.querySelector('.rg-feedback'),solution=form.querySelector('.rg-solution');
+ const choices=[...form.querySelectorAll('.rg-choice')];
+ field.addEventListener('change',()=>{
+  check.disabled=false;
+  choices.forEach(label=>label.classList.toggle('is-selected',label.querySelector('input').checked));
+ });
+ form.addEventListener('submit',event=>{
+  event.preventDefault();const selected=field.querySelector('input:checked');if(!selected||field.disabled)return;
+  const index=Number(selected.value),correct=index===question.answer;
+  field.disabled=true;check.disabled=true;retry.hidden=false;solution.hidden=false;
+  choices[question.answer].classList.add('is-correct');
+  choices[question.answer].querySelector('.rg-choice-mark').textContent='✓ Correct';
+  if(!correct){choices[index].classList.add('is-incorrect');choices[index].querySelector('.rg-choice-mark').textContent='✕ Your answer';}
+  feedback.textContent=correct?'Correct — '+letters[index]+' is the right answer.':'Not quite — you chose '+letters[index]+'. The correct answer is '+letters[question.answer]+'.';
+  form.dataset.result=correct?'correct':'incorrect';
+  typeset(solution);
+ });
+ retry.addEventListener('click',()=>{
+  form.reset();field.disabled=false;check.disabled=true;retry.hidden=true;solution.hidden=true;feedback.textContent='';delete form.dataset.result;
+  choices.forEach(label=>{label.classList.remove('is-selected','is-correct','is-incorrect');label.querySelector('.rg-choice-mark').textContent='';});
+  field.querySelector('input').focus();
+ });
+ return form;
 }
 function distanceGraph(points,title){
  const left=0,right=8,bottom=180,scale=10;
@@ -41,11 +49,15 @@ for(const [key,data] of Object.entries(window.DuckRevisionGuides)){
  for(const [topic] of data.topics){const o=document.createElement('option');o.value=topic;o.textContent=topic;select.append(o);}
  function build(){if(built)return;built=true;
   for(const [topic,cards] of data.topics){const section=document.createElement('section');section.className='rg-topic';const h=document.createElement('h2');h.textContent=topic;section.append(h);const grid=document.createElement('div');grid.className='rg-grid';section.append(grid);
-   for(const [title,html] of cards){const article=document.createElement('article');article.className='rg-lesson';const heading=document.createElement('h3');heading.textContent=title;article.append(heading);const body=document.createElement('div');body.className='rg-body';body.innerHTML=html;article.append(body);grid.append(article);rows.push({node:article,topic,text:(topic+' '+title+' '+body.textContent).toLowerCase()});}
+   for(const [title,html] of cards){const article=document.createElement('article');article.className='rg-lesson';const heading=document.createElement('h3');heading.textContent=title;article.append(heading);const body=document.createElement('div');body.className='rg-body';body.innerHTML=html;if(key==='tricks')body.append(practiceQuestion(window.DuckTrickQuestions[title]));article.append(body);grid.append(article);rows.push({node:article,topic,text:(topic+' '+title+' '+body.textContent).toLowerCase()});}
    content.append(section);
   }
   const graphs=content.querySelector('.rg-graphs');if(graphs)graphs.append(distanceGraph([1,5],'Two points: minimum 4 for every x from 1 to 5.'),distanceGraph([1,3,7],'Three points: minimum 6 only at x = 3.'));
-  if(key==='tricks')content.querySelector('.rg-lesson .rg-table').before(triangleDiagram());
+  if(key==='tricks')for(const figure of content.querySelectorAll('[data-ssa-case]')){
+   figure.innerHTML=window.DuckSSADiagrams[Number(figure.dataset.ssaCase)];
+   figure.querySelector('svg').setAttribute('aria-label',figure.getAttribute('aria-label'));
+   figure.closest('.rg-lesson').classList.add('rg-ssa-lesson');
+  }
   typeset(content);
  }
  function filter(){const terms=search.value.toLowerCase().trim().split(/\s+/).filter(Boolean);let count=0;for(const r of rows){const visible=(select.value==='all'||select.value===r.topic)&&terms.every(t=>r.text.includes(t));r.node.hidden=!visible;if(visible)count++;}for(const section of content.children)section.hidden=![...section.querySelectorAll('.rg-lesson')].some(n=>!n.hidden);screen.querySelector('.rg-count').textContent=`${count} of ${rows.length} lessons`;screen.querySelector('.rg-empty').hidden=count!==0;}

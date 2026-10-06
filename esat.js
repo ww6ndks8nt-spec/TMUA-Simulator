@@ -24,7 +24,8 @@
  });
  $('duPaperSearch').placeholder='Try 2023, Physics or Chemistry…';
  $('duPaperType').innerHTML='<option value="">All sections</option><option value="1">Section 1</option><option value="2">Section 2</option>';
- $('bankEstimatedDifficulty').closest('label').hidden=true;
+ $('bankEstimatedDifficulty').hidden=true;
+ $('bankPaperCategory').hidden=true;
  $('downloadDifficulties').hidden=true;
  const info=doc.createElement('p');info.className='esat-archive-note';
  info.innerHTML='Crossed-out questions are excluded from practice and the affected timers are reduced proportionally. The source PDFs retain their original annotations. Unannotated historical papers may still contain advanced topics outside today’s specification. ENGAA Section 1 Parts A and B are combined into one sitting per year. NSAA subject parts are offered separately; older ENGAA Section 2 written reasoning is not marked. <a href="https://esat-tmua.ac.uk/esat-preparation-materials/" target="_blank" rel="noopener noreferrer">Official preparation guidance ↗</a>';

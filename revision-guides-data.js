@@ -1,62 +1,208 @@
 /* Authored revision lessons. All HTML is fixed site content, never user input. */
 window.DuckRevisionGuides = {
-tricks: {title:'Recurring tricks', topics:[
-['Triangles',[
-['Two sides and an angle: how many triangles?',String.raw`<p>Count <strong>non-congruent</strong> triangles: reflections of the same triangle count once. If the given angle is between the given sides (SAS), there is exactly one triangle for positive side lengths and an angle strictly between \(0^\circ\) and \(180^\circ\).</p><p>For SSA, let \(A\) be the given angle, \(a\) its opposite side and \(b\) the other given side. Put \(h=b\sin A\).</p><div class="rg-table"><table><caption>When A is acute</caption><thead><tr><th>Condition</th><th>Triangles</th></tr></thead><tbody><tr><td>\(a&lt;h\)</td><td>0</td></tr><tr><td>\(a=h\)</td><td>1</td></tr><tr><td>\(h&lt;a&lt;b\)</td><td>2</td></tr><tr><td>\(a\ge b\)</td><td>1</td></tr></tbody></table></div><p>If \(90^\circ\le A&lt;180^\circ\), there is one triangle precisely when \(a&gt;b\), and none otherwise.</p><p><strong>Why:</strong> the sine rule gives \(\sin B=b\sin A/a\). The angles \(B\) and \(180^\circ-B\) have the same sine, but each must satisfy \(A+B&lt;180^\circ\). Equality would make a degenerate triangle.</p><div class="rg-example"><strong>Example</strong><p>For \(A=30^\circ\), \(b=10\), the height is \(5\). Thus \(a=4,5,7,10\) gives respectively 0, 1, 2, 1 triangles.</p></div>`]
-]],
-['Algebra',[
-['Quadratics in disguise',String.raw`<p>When the same expression and its square occur, replace that expression by one variable. Carry its possible values into the new equation.</p>\[x^4-5x^2+4=0\quad\Longrightarrow\quad u^2-5u+4=0,\quad u=x^2\ge0.\]<p>Here \(u=1,4\), so \(x=\pm1,\pm2\). A positive \(u\) gives two real values of \(x\), zero gives one, and a negative \(u\) gives none.</p><div class="rg-example"><strong>Exponential version</strong>\[4^x-5\cdot2^x+4=0.\]<p>Set \(u=2^x&gt;0\). Then \(u=1,4\), giving \(x=0,2\). The substitution restriction matters just as much as solving the quadratic.</p></div>`],
-['Reciprocal substitutions',String.raw`<p>When powers of \(x\) and \(1/x\) appear symmetrically, try \(u=x+1/x\), with \(x\ne0\).</p>\[x^2+\frac1{x^2}=u^2-2.\]<p>For real \(x\), \(u\le-2\) or \(u\ge2\). This follows from \((x-1)^2\ge0\) for positive \(x\), and the corresponding negative case.</p><div class="rg-example"><strong>Example</strong>\[x^2+\frac1{x^2}-3\left(x+\frac1x\right)+4=0.\]<p>This becomes \(u^2-3u+2=0\). Reject \(u=1\); \(u=2\) gives \(x^2-2x+1=0\), so only \(x=1\).</p></div><p>For a reciprocal quartic, divide by \(x^2\) only after checking that \(x=0\) is not a solution.</p>`],
-['Coefficient sums by substitution',String.raw`<p>For \(P(x)=c_0+c_1x+\cdots+c_nx^n\), evaluate at \(1\) to add all coefficients and at \(-1\) to alternate their signs.</p>\[E=\frac{P(1)+P(-1)}2,\qquad O=\frac{P(1)-P(-1)}2,\]<p>where \(E\) and \(O\) are the sums of coefficients of even and odd powers. The constant is an even-power term.</p><div class="rg-example"><strong>Example</strong><p>For \(P(x)=(2+x)^5\), \(P(1)=243\) and \(P(-1)=1\). Thus \(E=122\) and \(O=121\), with no expansion.</p></div>`],
-['Remainders with quadratic or higher-degree divisors',String.raw`<p>Write \(P(x)=D(x)Q(x)+R(x)\), where the degree of \(R\) is smaller than the degree of \(D\). For a linear divisor \(x-a\), the remainder is the number \(P(a)\). For a quadratic divisor, start with \(R(x)=ux+v\); for a cubic, start with \(ux^2+vx+w\).</p><p>If \(D(a)=0\), then \(R(a)=P(a)\). A degree-\(m\) divisor with \(m\) distinct known roots gives \(m\) equations for the remainder's coefficients.</p><div class="rg-example"><strong>Quadratic example</strong><p>Divide \(x^3+2x+1\) by \((x-1)(x+1)\). At \(x=1\) and \(x=-1\),</p>\[u+v=4,\qquad -u+v=-2.\]<p>Hence the remainder is \(3x+1\).</p></div><p><strong>When roots are inconvenient:</strong> reduce powers using the divisor. For division by \(x^3-2\), write \(x^3\equiv2\), where \(\equiv\) here means “has the same remainder”. Then \(x^7+x\equiv4x+x=5x\).</p><p><strong>Repeated factors need extra information.</strong> Substituting the same root twice does not give two equations. For a factor \((x-a)^2\), differentiating \(P=DQ+R\) also gives \(R'(a)=P'(a)\). Alternatively, use polynomial division. Do not assume repeated roots provide independent value conditions.</p>`],
-['Recognise a nested surd as a square',String.raw`<p>To simplify \(\sqrt{a+2\sqrt b}\), seek \(u,v\ge0\) satisfying \(u+v=a\) and \(uv=b\). Then</p>\[(\sqrt u+\sqrt v)^2=a+2\sqrt b.\]<div class="rg-example"><strong>Example</strong>\[\sqrt{7+4\sqrt3}=\sqrt{7+2\sqrt{12}}=2+\sqrt3,\]<p>because \(4+3=7\) and \(4\cdot3=12\).</p></div><p>For a minus sign, the principal square root is \(|\sqrt u-\sqrt v|\). Thus \(\sqrt{7-4\sqrt3}=2-\sqrt3\), which is positive.</p>`]
-]],
-['Signs, modulus and bounds',[
-['Split into sign cases',String.raw`<p>Multiplying or dividing an inequality by a negative expression reverses its direction. If its sign is unknown, split the domain into cases first, or move everything to one side and use a sign chart.</p><div class="rg-example"><strong>Example</strong>\[\frac1{x-1}&gt;2,\qquad x\ne1.\]<p>If \(x&gt;1\), multiplication gives \(1&gt;2x-2\), so \(1&lt;x&lt;3/2\). If \(x&lt;1\), it gives \(1&lt;2x-2\), impossible in this case. The answer is \((1,3/2)\).</p></div><p>When squaring \(\sqrt{f(x)}=g(x)\), retain \(f(x)\ge0\) and \(g(x)\ge0\), then check candidates in the original equation.</p>`],
-['Square roots produce modulus',String.raw`<p>The square-root symbol means the nonnegative root. Therefore</p>\[\sqrt{u^2}=|u|,\qquad \sqrt{(x-3)^2}=|x-3|.\]<div class="rg-example"><strong>Example</strong>\[\sqrt{(x-3)^2}=2-x.\]<p>The right side requires \(x\le2\), so \(|x-3|=3-x\). The equation becomes \(3-x=2-x\), which is impossible. Squaring alone would produce the invalid candidate \(x=5/2\).</p></div>`],
-['Modulus as distance',String.raw`<p>Interpret \(|x-a|\) as the distance from \(x\) to \(a\) on the number line.</p>\[|x-a|&lt;r\iff a-r&lt;x&lt;a+r\quad(r&gt;0).\]<p>For distinct \(a,b\), \(|x-a|=|x-b|\) has the single solution \(x=(a+b)/2\).</p><div class="rg-example"><strong>Example</strong><p>\(|x-2|&lt;|x-8|\) asks for points closer to 2 than to 8. Their midpoint is 5, so the answer is \(x&lt;5\).</p></div><p>If \(a=b\), the distances are equal for every real \(x\): check this special case before dividing by \(a-b\).</p>`],
-['Graphs of sums of distances: the median rule',String.raw`<p>Sort the points \(a_1\le\cdots\le a_n\). The graph of \(F(x)=\sum_{i=1}^n|x-a_i|\) is continuous and piecewise linear. Between points, its slope is “number to the left minus number to the right”. Crossing one point increases the slope by 2 (or by \(2k\) if \(k\) points coincide).</p><p><strong>Odd number of points:</strong> the minimum occurs at the middle point. <strong>Even number:</strong> every point between the two middle points minimises the sum. Find the minimum value by substituting any minimiser.</p><div class="rg-graphs"></div><div class="rg-example"><strong>Examples</strong><p>\(|x-1|+|x-5|\) has minimum 4 on the whole interval \([1,5]\).</p><p>\(|x-1|+|x-3|+|x-7|\) has minimum \(2+0+4=6\), attained only at \(x=3\).</p></div><p><strong>Why the rule works:</strong> pair the leftmost and rightmost points, then the next pair, and so on. Each pair is minimised everywhere between its two points. All these intervals overlap in the middle; an unpaired middle term is minimised at its point.</p><p>This is the unweighted rule. If terms have unequal coefficients, use their actual slopes rather than simply counting points.</p>`],
-['Minimums and lower bounds',String.raw`<p>A lower bound \(L\) satisfies \(f(x)\ge L\) throughout the domain. A minimum must also be <strong>attained</strong> at an allowed input. The greatest lower bound need not be a minimum.</p><div class="rg-example"><strong>Same expression, different domains</strong><p>\(f(x)=x^2\) on \([-1,1]\) has minimum 0 at \(x=0\). On \((0,1]\), its greatest lower bound is still 0, but it has no minimum.</p></div><p>For \(x&gt;0\), \(x+1/x\ge2\), with equality at \(x=1\). On \(x&gt;1\), the greatest lower bound remains 2 but is not attained. Always check equality conditions against the domain.</p>`]
-]],
-['Graphs and solution counts',[
-['Turn an equation into intersections',String.raw`<p>The solutions of \(f(x)=g(x)\) are the x-coordinates of the intersections of their graphs. Count intersections before trying to calculate them.</p><div class="rg-example"><strong>Example</strong><p>\(|x|=x^2\) compares a V-shape with a parabola. For \(x\ge0\), solve \(x=x^2\); for \(x&lt;0\), solve \(-x=x^2\). The distinct solutions are \(-1,0,1\); do not count the shared boundary \(0\) twice.</p></div><p>If one graph is strictly increasing and the other strictly decreasing on an interval, there can be at most one intersection there. Existence still needs a separate check.</p>`],
-['Turn a parameter into a horizontal line',String.raw`<p>Rewrite the equation as \(f(x)=k\). Varying \(k\) moves a horizontal line; the number of solutions changes at critical heights such as extrema and excluded or included boundary values.</p><div class="rg-example"><strong>Example</strong>\[(x^2-1)^2=k.\]<div class="rg-table"><table><thead><tr><th>Parameter</th><th>Distinct real roots</th></tr></thead><tbody><tr><td>\(k&lt;0\)</td><td>0</td></tr><tr><td>\(k=0\)</td><td>2</td></tr><tr><td>\(0&lt;k&lt;1\)</td><td>4</td></tr><tr><td>\(k=1\)</td><td>3</td></tr><tr><td>\(k&gt;1\)</td><td>2</td></tr></tbody></table></div><p>Check this using \(x^2=1\pm\sqrt k\): positive right sides give two roots, zero gives one, and negative values give none.</p></div>`],
-['Use symmetry before solving',String.raw`<p>If the domain is symmetric and \(f(-x)=f(x)\), the graph is even: roots of \(f(x)=k\) occur in pairs \(\pm x\), except possibly \(0\). If \(f(-x)=-f(x)\), the graph is odd: roots of \(f(x)=0\) pair in the same way.</p><p>For an odd function, a nonzero horizontal level does <strong>not</strong> generally have paired roots: reflecting \(f(x)=k\) gives \(f(-x)=-k\).</p><div class="rg-example"><strong>Shifted symmetry</strong><p>For \(f(x)=(x-2)^2\), the axis is \(x=2\). Solutions at a positive height come as \(2-d\) and \(2+d\), so their sum is 4 without solving for \(d\).</p></div>`]
-]],
-['Trigonometry',[
-['Change the interval with the angle',String.raw`<p>When setting \(u=ax+b\), transform both ends of the interval. If \(a&lt;0\), reverse their order and keep track of open and closed endpoints.</p><div class="rg-example"><strong>Example</strong><p>Solve \(\sin(2x+30^\circ)=1/2\) for \(0^\circ\le x&lt;180^\circ\). Put \(u=2x+30^\circ\), so \(30^\circ\le u&lt;390^\circ\).</p><p>The permitted angles are \(u=30^\circ,150^\circ\); \(390^\circ\) is excluded. Converting back gives \(x=0^\circ,60^\circ\).</p></div>`],
-['An inverse-trig answer is only one branch',String.raw`<p>If \(\alpha\) is one solution, generate all branches and then filter to the interval:</p>\[\begin{aligned}\sin u=\sin\alpha &:~u=\alpha+360^\circ n\ \text{or}\ 180^\circ-\alpha+360^\circ n,\\\cos u=\cos\alpha &:~u=\pm\alpha+360^\circ n,\\\tan u=\tan\alpha &:~u=\alpha+180^\circ n,\end{aligned}\quad n\in\mathbb Z.\]<p>In radians, replace \(360^\circ\) by \(2\pi\) and \(180^\circ\) by \(\pi\). Remove duplicates at special values.</p><div class="rg-example"><strong>Example</strong><p>\(\sin x=1/2\) on \([-180^\circ,360^\circ]\) gives \(30^\circ,150^\circ\), not just \(30^\circ\). Tangent is undefined at odd multiples of \(90^\circ\).</p></div>`],
-['Turn mixed squares into one trig variable',String.raw`<p>Use \(\sin^2x+\cos^2x=1\), then solve a quadratic in \(\sin x\) or \(\cos x\). Reject values outside \([-1,1]\) before solving for angles.</p><div class="rg-example"><strong>Example</strong>\[2\cos^2x+\sin x-1=0.\]<p>Putting \(s=\sin x\) gives \(2s^2-s-1=0\), hence \((2s+1)(s-1)=0\). For \(0^\circ\le x&lt;360^\circ\), the answers are \(90^\circ,210^\circ,330^\circ\).</p></div><p>Factor rather than dividing by a trig expression: division can discard solutions where that expression is zero.</p>`]
-]],
-['Exponentials and logarithms',[
-['Rewrite everything in the same base',String.raw`<p>If all bases are powers of one positive number other than 1, rewrite them using that base and equate exponents.</p><div class="rg-example"><strong>Example</strong>\[8^x=4^{x+1}\iff2^{3x}=2^{2x+2}\iff3x=2x+2.\]<p>Thus \(x=2\). For a base between 0 and 1, equality still lets you equate exponents, but inequalities reverse direction.</p></div>`],
-['Check the original logarithm domains',String.raw`<p>Every original log argument must be strictly positive. Combining logs can hide restrictions: a positive product does not mean each factor is positive.</p><div class="rg-example"><strong>Example</strong>\[\log_2(x-1)+\log_2(x+1)=3.\]<p>The original domain is \(x&gt;1\). Combining gives \(\log_2(x^2-1)=3\), so \(x^2=9\). Only \(x=3\) is valid; \(-3\) makes both original arguments negative.</p></div><p>If the base is variable, also require that it is positive and not equal to 1.</p>`]
-]],
-['Sequences and sums',[
-['Calculate a few terms, then explain the pattern',String.raw`<p>A recurrence may hide a short cycle. Calculate exact values and check that each step is defined. Seeing a pattern suggests a proof; it does not replace one.</p><div class="rg-example"><strong>Example</strong><p>For \(u_{n+1}=1/(1-u_n)\), \(u_1=2\), the terms are \(2,-1,1/2,2,\ldots\). Returning to 2 restarts the same deterministic recurrence, so the cycle repeats.</p><p>Since \(2026\equiv1\pmod3\), \(u_{2026}=2\).</p></div>`],
-['Look for telescoping',String.raw`<p>Rewrite each term as a difference of neighbouring terms. Write out the beginning and end of the sum before cancelling.</p>\[\frac1{n(n+1)}=\frac1n-\frac1{n+1}.\]<div class="rg-example"><strong>Example</strong>\[\sum_{n=1}^N\frac1{n(n+1)}=1-\frac1{N+1}.\]<p>Similarly, rationalising \(1/(\sqrt{n+1}+\sqrt n)\) gives \(\sqrt{n+1}-\sqrt n\), so its sum from 1 to \(N\) is \(\sqrt{N+1}-1\).</p></div>`]
-]],
-['Calculus',[
-['Include endpoints when finding extrema',String.raw`<p>For a continuous function on a closed interval, compare values at all stationary points, endpoints and any interior points where the derivative does not exist. Stationary points alone are insufficient.</p><div class="rg-example"><strong>Example</strong><p>For \(f(x)=x^3-3x\) on \([0,3]\), \(f'(x)=3x^2-3\). The only interior stationary point is \(x=1\).</p>\[f(0)=0,\qquad f(1)=-2,\qquad f(3)=18.\]<p>The minimum is \(-2\) at 1; the maximum is 18 at the endpoint 3.</p></div><p>An excluded endpoint may give a bound but cannot be where a maximum or minimum is attained.</p>`],
-['King’s rule: pair reflected integrand values',String.raw`<p>Reflect an integrable function across the midpoint of \([a,b]\). Reflection preserves signed area, so</p>\[I=\int_a^b f(x)\,dx=\int_a^b f(a+b-x)\,dx.\]<p>Adding the two expressions gives</p>\[2I=\int_a^b\bigl(f(x)+f(a+b-x)\bigr)\,dx.\]<p>If the bracket is a constant \(C\), then \(I=C(b-a)/2\). The key is to <strong>check the reflected sum</strong>; the original function need not be constant or symmetric.</p><div class="rg-example"><strong>Example</strong>\[I=\int_0^1\frac{x^2}{x^2+(1-x)^2}\,dx.\]<p>Replacing \(x\) with \(1-x\) swaps the numerator to \((1-x)^2\). The two fractions add to 1, so \(2I=1\) and \(I=1/2\).</p></div><p>This is a useful symmetry argument; no memorised advanced integration method is needed.</p>`]
-]]]},
-logic:{title:'Logic',topics:[
-['Statements and implication',[
-['What does an implication claim?',String.raw`<p>\(P\Rightarrow Q\) says that every case satisfying \(P\) also satisfies \(Q\). It is false only when \(P\) is true and \(Q\) is false.</p><div class="rg-table"><table><thead><tr><th>P</th><th>Q</th><th>P ⇒ Q</th></tr></thead><tbody><tr><td>True</td><td>True</td><td>True</td></tr><tr><td>True</td><td>False</td><td>False</td></tr><tr><td>False</td><td>True</td><td>True</td></tr><tr><td>False</td><td>False</td><td>True</td></tr></tbody></table></div><p><strong>Example:</strong> “If an integer is divisible by 4, it is even.” The integer 6 does not disprove this: it does not satisfy the premise. A counterexample would have to be divisible by 4 but odd.</p><p>A false premise does not establish the conclusion; it simply cannot falsify this implication.</p>`],
-['Converse, inverse and contrapositive',String.raw`<p>Starting from \(P\Rightarrow Q\):</p><ul><li>Converse: \(Q\Rightarrow P\).</li><li>Inverse: \(\neg P\Rightarrow\neg Q\).</li><li>Contrapositive: \(\neg Q\Rightarrow\neg P\).</li></ul><p>Only the contrapositive is always equivalent to the original. The converse and inverse are equivalent to each other.</p><p><strong>Example:</strong> “Divisible by 4 implies even” is equivalent to “Not even implies not divisible by 4”. Its converse is false: 6 is even but not divisible by 4.</p>`],
-['If, only if, necessary and sufficient',String.raw`<div class="rg-table"><table><thead><tr><th>Wording</th><th>Meaning</th></tr></thead><tbody><tr><td>P if Q</td><td>\(Q\Rightarrow P\)</td></tr><tr><td>P only if Q</td><td>\(P\Rightarrow Q\)</td></tr><tr><td>P is sufficient for Q</td><td>\(P\Rightarrow Q\)</td></tr><tr><td>P is necessary for Q</td><td>\(Q\Rightarrow P\)</td></tr></tbody></table></div><p><strong>Example:</strong> being divisible by 4 is sufficient for being even. Being even is necessary for divisibility by 4. Neither statement claims that all even numbers are divisible by 4.</p><p>“Necessary” means required; “sufficient” means enough on its own.</p>`],
-['If and only if: two separate directions',String.raw`<p>\(P\iff Q\) means both \(P\Rightarrow Q\) and \(Q\Rightarrow P\). Test each separately.</p><p><strong>Example:</strong> for real \(x\), \(x=2\Rightarrow x^2=4\), but the reverse fails at \(x=-2\). The correct equivalence is</p>\[x^2=4\iff(x=2\text{ or }x=-2).\]<p>Adding the assumption \(x\ge0\) makes \(x^2=4\iff x=2\) valid. Domains can change logical equivalence.</p>`]
-]],
-['Negation and quantifiers',[
-['Negate and/or statements',String.raw`<p>In mathematical logic, “or” is inclusive unless stated otherwise: one or both statements may hold.</p>\[\neg(P\land Q)\iff\neg P\lor\neg Q,\qquad\neg(P\lor Q)\iff\neg P\land\neg Q.\]<p><strong>Example:</strong> the negation of “\(x&gt;0\) and \(y&gt;0\)” is “\(x\le0\) or \(y\le0\)”. It does not require both to be nonpositive.</p><p>Statements are <strong>logical negations of each other</strong> when exactly one is true in every allowed case. “\(x&gt;0\)” and “\(x&lt;0\)” are not: both fail at zero.</p>`],
-['Negate an implication',String.raw`<p>The negation of “if P then Q” is the exact situation in which it fails:</p>\[\neg(P\Rightarrow Q)\iff P\land\neg Q.\]<p><strong>Example:</strong> to deny “Every positive real number has square greater than itself”, say “There exists a positive real number whose square is less than or equal to itself”. The value \(x=1/2\) supplies a counterexample.</p><p>Reversing the arrow or negating both statements is not the negation of the original implication.</p>`],
-['Negate every and some',String.raw`<p>\(\forall\) means “for every”; \(\exists\) means “there exists at least one”. Negation swaps them:</p>\[\neg(\forall x\,P(x))\iff\exists x\,\neg P(x),\qquad\neg(\exists x\,P(x))\iff\forall x\,\neg P(x).\]<p><strong>Example:</strong> “Not every student solved every question” means “Some student failed to solve at least one question”. It does not mean that no student solved anything.</p><p>Keep the domain unchanged: negating a claim about integers still gives a claim about integers.</p>`],
-['Quantifier order changes the claim',String.raw`<p>\(\forall x\,\exists y\) permits a different \(y\) for each \(x\). In \(\exists y\,\forall x\), one fixed \(y\) must work for all \(x\).</p><p><strong>Example over the reals:</strong> “For every \(x\), there exists \(y&gt;x\)” is true: choose \(y=x+1\). “There exists \(y\) greater than every \(x\)” is false: take \(x=y+1\).</p><p>To negate a sequence of quantifiers, swap each in place and negate the final condition; do not reorder them.</p>`]
-]],
-['Checking and constructing arguments',[
-['Find an efficient counterexample',String.raw`<p>One admissible counterexample disproves a universal claim. Try zero, one, minus one, equal variables, fractions, negatives and included boundary values where allowed.</p><p><strong>Example:</strong> “If \(x^2&gt;x\), then \(x&gt;1\)” fails at \(x=-1\), since \(1&gt;-1\). Positive examples alone can hide an entire negative branch.</p><p>To prove an existence claim, one working example is enough. To prove a universal claim, checking many examples is not enough.</p>`],
-['Locate the first invalid step',String.raw`<p>Check each inference, especially division by a possibly zero quantity, inequality multiplication by an unknown sign, squaring, and square roots.</p><div class="rg-example"><strong>Example</strong><p>Suppose \(a=b=1\). Then \(a^2=ab\), so \((a-b)(a+b)=b(a-b)\). Cancelling \(a-b\) appears to give \(a+b=b\), hence \(2=1\).</p><p>The first invalid step is the cancellation: \(a-b=0\). The earlier equalities are valid.</p></div>`],
-['A true conclusion can have an invalid proof',String.raw`<p>The truth of a statement and the validity of its justification are separate questions.</p><p><strong>Example:</strong> “For every real \(x\), \(x^2\ge0\), because \(x\ge0\) and multiplying two nonnegative numbers gives a nonnegative result.” The conclusion is true, but the argument wrongly assumes \(x\ge0\).</p><p>Repair it by splitting into \(x\ge0\) and \(x&lt;0\). In the second case, \(x^2=(-x)^2\), a product of two positive numbers.</p>`],
-['Existence is not uniqueness',String.raw`<p>Existence means at least one solution. Uniqueness means at most one. “Exactly one” requires both.</p><p><strong>Example:</strong> \(x^3+x=2\) has the solution \(x=1\). Also \(f'(x)=3x^2+1&gt;0\), so \(f(x)=x^3+x\) is strictly increasing and takes the value 2 at most once. Together these show there is exactly one real solution.</p><p>Finding one solution alone does not exclude others; proving “at most one” alone does not show any solution exists.</p>`]
-]]]}
+  "tricks": {
+    "title": "Recurring tricks",
+    "topics": [
+      [
+        "Triangles",
+        [
+          [
+            "SSA non congruent triangles counting",
+            "<p class=\"rg-ssa-note\">This type of problem came up 4 times in official past papers, and is worth mastering before your sitting</p><p>Let \\(A\\) be the given angle, \\(a\\) its opposite side and \\(b\\) the other given side. Put \\(h=b\\sin A\\).</p><p>The four cases below assume \\(0^\\circ&lt;A&lt;90^\\circ\\) and positive side lengths. Fix \\(OC=b\\), with angle \\(A\\) at \\(O\\). The third vertex \\(B\\) must lie both on the horizontal ray from \\(O\\) and on the circle centred at \\(C\\) with radius \\(a\\). The perpendicular \\(CH\\) has length \\(h\\).</p><div class=\"rg-ssa-cases\">\n<section class=\"rg-ssa-case\"><h4>\\(a&lt;h\\): no triangles</h4><figure data-ssa-case=\"0\" aria-label=\"The side of length a cannot reach the baseline\"></figure><p>The shortest distance from \\(C\\) to the baseline is \\(h\\). Since \\(a&lt;h\\), the circle cannot reach the baseline, so there is no possible position for \\(B\\).</p></section>\n<section class=\"rg-ssa-case\"><h4>\\(a=h\\): one triangle</h4><figure data-ssa-case=\"1\" aria-label=\"The circle is tangent to the baseline at H\"></figure><p>The circle just touches the baseline at \\(H\\), giving the single possibility \\(B=H\\). The triangle is right-angled at \\(B\\), and the side of length \\(a\\) is also the height \\(h\\).</p></section>\n<section class=\"rg-ssa-case\"><h4>\\(h&lt;a&lt;b\\): two triangles</h4><figure data-ssa-case=\"2\" aria-label=\"Two circle intersections give two non-congruent triangles\"></figure><p>The circle crosses the ray twice, at \\(B_1\\) and \\(B_2\\). Both points lie beyond \\(O\\), producing two valid triangles with the same \\(a\\), \\(b\\) and \\(A\\). Their third sides \\(OB_1\\) and \\(OB_2\\) differ, so the triangles are non-congruent.</p></section>\n<section class=\"rg-ssa-case\"><h4>\\(a\\ge b\\): one triangle</h4><figure data-ssa-case=\"3\" aria-label=\"Only one circle intersection is on the forward ray\"></figure><p>When \\(a&gt;b\\), as drawn, the second intersection \\(X\\) is behind \\(O\\), outside the ray defining angle \\(A\\). Only the forward intersection \\(B\\) is valid.</p><p>At the boundary \\(a=b\\), \\(X\\) coincides with \\(O\\), giving a zero-length third side rather than a triangle. The other intersection still gives exactly one valid triangle.</p></section>\n</div><div class=\"rg-angle-note\"><strong>If the given angle is right or obtuse</strong><p>For \\(90^\\circ\\le A&lt;180^\\circ\\), there is exactly one triangle when \\(a&gt;b\\), and none when \\(a\\le b\\). Do not apply the four acute-angle cases to these angles.</p></div><p class=\"rg-ssa-sources\">The four direct appearances in the published 2016–2023 archive are 2018 Paper 1 Q19, 2018 Paper 2 Q14, 2022 Paper 1 Q17 and 2023 Paper 1 Q8.</p>"
+          ]
+        ]
+      ],
+      [
+        "Algebra",
+        [
+          [
+            "Quadratics in disguise",
+            "<p>When an expression and its square occur, replace that expression by one variable. Solve the resulting quadratic, then substitute back.</p><p>Carry the possible values of the substituted expression into the new equation. For instance, \\(u=x^2\\) requires \\(u\\ge0\\), while \\(u=2^x\\) requires \\(u>0\\).</p><p>Count the original solutions, not merely the values of the new variable. For \\(u=x^2\\), a positive \\(u\\) gives two real values of \\(x\\), zero gives one, and a negative \\(u\\) gives none.</p>"
+          ],
+          [
+            "Reciprocal substitutions",
+            "<p>When powers of \\(x\\) and \\(1/x\\) appear symmetrically, try \\(u=x+1/x\\), with \\(x\\ne0\\).</p>\\[x^2+\\frac1{x^2}=u^2-2.\\]<p>For real \\(x\\), \\(u\\le-2\\) or \\(u\\ge2\\). This follows from \\((x-1)^2\\ge0\\) for positive \\(x\\), and the corresponding negative case.</p><p>For a reciprocal quartic, divide by \\(x^2\\) only after checking that \\(x=0\\) is not a solution.</p>"
+          ],
+          [
+            "Coefficient sums by substitution",
+            "<p>For \\(P(x)=c_0+c_1x+\\cdots+c_nx^n\\), evaluate at \\(1\\) to add all coefficients and at \\(-1\\) to alternate their signs.</p>\\[E=\\frac{P(1)+P(-1)}2,\\qquad O=\\frac{P(1)-P(-1)}2,\\]<p>where \\(E\\) and \\(O\\) are the sums of coefficients of even and odd powers. The constant is an even-power term.</p>"
+          ],
+          [
+            "Remainders with quadratic or higher-degree divisors",
+            "<p>Write \\(P(x)=D(x)Q(x)+R(x)\\), where the degree of \\(R\\) is smaller than the degree of \\(D\\). For a linear divisor \\(x-a\\), the remainder is the number \\(P(a)\\). For a quadratic divisor, start with \\(R(x)=ux+v\\); for a cubic, start with \\(ux^2+vx+w\\).</p><p>If \\(D(a)=0\\), then \\(R(a)=P(a)\\). A degree-\\(m\\) divisor with \\(m\\) distinct known roots gives \\(m\\) equations for the remainder's coefficients.</p><p><strong>When roots are inconvenient:</strong> use the divisor to reduce higher powers to lower ones. Continue until the expression has degree smaller than the divisor.</p><p><strong>Repeated factors need extra information.</strong> Substituting the same root twice does not give two equations. For a factor \\((x-a)^2\\), differentiating \\(P=DQ+R\\) also gives \\(R'(a)=P'(a)\\). Alternatively, use polynomial division. Do not assume repeated roots provide independent value conditions.</p>"
+          ],
+          [
+            "Recognise a nested surd as a square",
+            "<p>To simplify \\(\\sqrt{a+2\\sqrt b}\\), seek \\(u,v\\ge0\\) satisfying \\(u+v=a\\) and \\(uv=b\\). Then</p>\\[(\\sqrt u+\\sqrt v)^2=a+2\\sqrt b.\\]<p>For a minus sign, the principal square root is \\(|\\sqrt u-\\sqrt v|\\). Check which square root is larger before removing the modulus.</p>"
+          ]
+        ]
+      ],
+      [
+        "Signs, modulus and bounds",
+        [
+          [
+            "Split into sign cases",
+            "<p>Multiplying or dividing an inequality by a negative expression reverses its direction. If its sign is unknown, split the domain into cases first, or move everything to one side and use a sign chart.</p><p>When squaring \\(\\sqrt{f(x)}=g(x)\\), retain \\(f(x)\\ge0\\) and \\(g(x)\\ge0\\), then check candidates in the original equation.</p>"
+          ],
+          [
+            "Square roots produce modulus",
+            "<p>The square-root symbol means the nonnegative root. Therefore</p>\\[\\sqrt{u^2}=|u|,\\qquad \\sqrt{(x-3)^2}=|x-3|.\\]"
+          ],
+          [
+            "Modulus as distance",
+            "<p>Interpret \\(|x-a|\\) as the distance from \\(x\\) to \\(a\\) on the number line.</p>\\[|x-a|&lt;r\\iff a-r&lt;x&lt;a+r\\quad(r&gt;0).\\]<p>For distinct \\(a,b\\), \\(|x-a|=|x-b|\\) has the single solution \\(x=(a+b)/2\\).</p><p>If \\(a=b\\), the distances are equal for every real \\(x\\): check this special case before dividing by \\(a-b\\).</p>"
+          ],
+          [
+            "Graphs of sums of distances: the median rule",
+            "<p>Sort the points \\(a_1\\le\\cdots\\le a_n\\). The graph of \\(F(x)=\\sum_{i=1}^n|x-a_i|\\) is continuous and piecewise linear. Between points, its slope is “number to the left minus number to the right”. Crossing one point increases the slope by 2 (or by \\(2k\\) if \\(k\\) points coincide).</p><p><strong>Odd number of points:</strong> the minimum occurs at the middle point. <strong>Even number:</strong> every point between the two middle points minimises the sum. Find the minimum value by substituting any minimiser.</p><div class=\"rg-graphs\"></div><p><strong>Why the rule works:</strong> pair the leftmost and rightmost points, then the next pair, and so on. Each pair is minimised everywhere between its two points. All these intervals overlap in the middle; an unpaired middle term is minimised at its point.</p><p>This is the unweighted rule. If terms have unequal coefficients, use their actual slopes rather than simply counting points.</p>"
+          ],
+          [
+            "Minimums and lower bounds",
+            "<p>A lower bound \\(L\\) satisfies \\(f(x)\\ge L\\) throughout the domain. A minimum must also be <strong>attained</strong> at an allowed input. The greatest lower bound need not be a minimum.</p><p>To identify a minimum, check the equality conditions of your bound against the domain. If the bound is only approached at an excluded endpoint, it may be a greatest lower bound without being a minimum.</p>"
+          ]
+        ]
+      ],
+      [
+        "Graphs and solution counts",
+        [
+          [
+            "Turn an equation into intersections",
+            "<p>The solutions of \\(f(x)=g(x)\\) are the x-coordinates of the intersections of their graphs. Count intersections before trying to calculate them.</p><p>If one graph is strictly increasing and the other strictly decreasing on an interval, there can be at most one intersection there. Existence still needs a separate check.</p>"
+          ],
+          [
+            "Turn a parameter into a horizontal line",
+            "<p>Rewrite the equation as \\(f(x)=k\\). Varying \\(k\\) moves a horizontal line; the number of solutions changes at critical heights such as extrema and excluded or included boundary values.</p>"
+          ],
+          [
+            "Use symmetry before solving",
+            "<p>If the domain is symmetric and \\(f(-x)=f(x)\\), the graph is even: roots of \\(f(x)=k\\) occur in pairs \\(\\pm x\\), except possibly \\(0\\). If \\(f(-x)=-f(x)\\), the graph is odd: roots of \\(f(x)=0\\) pair in the same way.</p><p>For an odd function, a nonzero horizontal level does <strong>not</strong> generally have paired roots: reflecting \\(f(x)=k\\) gives \\(f(-x)=-k\\).</p>"
+          ]
+        ]
+      ],
+      [
+        "Trigonometry",
+        [
+          [
+            "Change the interval with the angle",
+            "<p>When setting \\(u=ax+b\\), transform both ends of the interval. If \\(a&lt;0\\), reverse their order and keep track of open and closed endpoints.</p>"
+          ],
+          [
+            "An inverse-trig answer is only one branch",
+            "<p>If \\(\\alpha\\) is one solution, generate all branches and then filter to the interval:</p>\\[\\begin{aligned}\\sin u=\\sin\\alpha &:~u=\\alpha+360^\\circ n\\ \\text{or}\\ 180^\\circ-\\alpha+360^\\circ n,\\\\\\cos u=\\cos\\alpha &:~u=\\pm\\alpha+360^\\circ n,\\\\\\tan u=\\tan\\alpha &:~u=\\alpha+180^\\circ n,\\end{aligned}\\quad n\\in\\mathbb Z.\\]<p>In radians, replace \\(360^\\circ\\) by \\(2\\pi\\) and \\(180^\\circ\\) by \\(\\pi\\). Remove duplicates at special values.</p>"
+          ],
+          [
+            "Turn mixed squares into one trig variable",
+            "<p>Use \\(\\sin^2x+\\cos^2x=1\\), then solve a quadratic in \\(\\sin x\\) or \\(\\cos x\\). Reject values outside \\([-1,1]\\) before solving for angles.</p><p>Factor rather than dividing by a trig expression: division can discard solutions where that expression is zero.</p>"
+          ]
+        ]
+      ],
+      [
+        "Exponentials and logarithms",
+        [
+          [
+            "Rewrite everything in the same base",
+            "<p>If all bases are powers of one positive number other than 1, rewrite them using that base and equate exponents.</p>"
+          ],
+          [
+            "Check the original logarithm domains",
+            "<p>Every original log argument must be strictly positive. Combining logs can hide restrictions: a positive product does not mean each factor is positive.</p><p>If the base is variable, also require that it is positive and not equal to 1.</p>"
+          ]
+        ]
+      ],
+      [
+        "Sequences and sums",
+        [
+          [
+            "Calculate a few terms, then explain the pattern",
+            "<p>A recurrence may hide a short cycle. Calculate exact values and check that each step is defined. Seeing a pattern suggests a proof; it does not replace one.</p>"
+          ],
+          [
+            "Look for telescoping",
+            "<p>Rewrite each term as a difference of neighbouring terms. Write out the beginning and end of the sum before cancelling.</p>\\[\\frac1{n(n+1)}=\\frac1n-\\frac1{n+1}.\\]"
+          ]
+        ]
+      ],
+      [
+        "Calculus",
+        [
+          [
+            "Include endpoints when finding extrema",
+            "<p>For a continuous function on a closed interval, compare values at all stationary points, endpoints and any interior points where the derivative does not exist. Stationary points alone are insufficient.</p><p>An excluded endpoint may give a bound but cannot be where a maximum or minimum is attained.</p>"
+          ],
+          [
+            "King’s rule: pair reflected integrand values",
+            "<p>Reflect an integrable function across the midpoint of \\([a,b]\\). Reflection preserves signed area, so</p>\\[I=\\int_a^b f(x)\\,dx=\\int_a^b f(a+b-x)\\,dx.\\]<p>Adding the two expressions gives</p>\\[2I=\\int_a^b\\bigl(f(x)+f(a+b-x)\\bigr)\\,dx.\\]<p>If the bracket is a constant \\(C\\), then \\(I=C(b-a)/2\\). The key is to <strong>check the reflected sum</strong>; the original function need not be constant or symmetric.</p><p>This is a useful symmetry argument; no memorised advanced integration method is needed.</p>"
+          ]
+        ]
+      ]
+    ]
+  },
+  "logic": {
+    "title": "Logic",
+    "topics": [
+      [
+        "Statements and implication",
+        [
+          [
+            "What does an implication claim?",
+            "<p>\\(P\\Rightarrow Q\\) says that every case satisfying \\(P\\) also satisfies \\(Q\\). It is false only when \\(P\\) is true and \\(Q\\) is false.</p><div class=\"rg-table\"><table><thead><tr><th>P</th><th>Q</th><th>P ⇒ Q</th></tr></thead><tbody><tr><td>True</td><td>True</td><td>True</td></tr><tr><td>True</td><td>False</td><td>False</td></tr><tr><td>False</td><td>True</td><td>True</td></tr><tr><td>False</td><td>False</td><td>True</td></tr></tbody></table></div><p><strong>Example:</strong> “If an integer is divisible by 4, it is even.” The integer 6 does not disprove this: it does not satisfy the premise. A counterexample would have to be divisible by 4 but odd.</p><p>A false premise does not establish the conclusion; it simply cannot falsify this implication.</p>"
+          ],
+          [
+            "Converse, inverse and contrapositive",
+            "<p>Starting from \\(P\\Rightarrow Q\\):</p><ul><li>Converse: \\(Q\\Rightarrow P\\).</li><li>Inverse: \\(\\neg P\\Rightarrow\\neg Q\\).</li><li>Contrapositive: \\(\\neg Q\\Rightarrow\\neg P\\).</li></ul><p>Only the contrapositive is always equivalent to the original. The converse and inverse are equivalent to each other.</p><p><strong>Example:</strong> “Divisible by 4 implies even” is equivalent to “Not even implies not divisible by 4”. Its converse is false: 6 is even but not divisible by 4.</p>"
+          ],
+          [
+            "If, only if, necessary and sufficient",
+            "<div class=\"rg-table\"><table><thead><tr><th>Wording</th><th>Meaning</th></tr></thead><tbody><tr><td>P if Q</td><td>\\(Q\\Rightarrow P\\)</td></tr><tr><td>P only if Q</td><td>\\(P\\Rightarrow Q\\)</td></tr><tr><td>P is sufficient for Q</td><td>\\(P\\Rightarrow Q\\)</td></tr><tr><td>P is necessary for Q</td><td>\\(Q\\Rightarrow P\\)</td></tr></tbody></table></div><p><strong>Example:</strong> being divisible by 4 is sufficient for being even. Being even is necessary for divisibility by 4. Neither statement claims that all even numbers are divisible by 4.</p><p>“Necessary” means required; “sufficient” means enough on its own.</p>"
+          ],
+          [
+            "If and only if: two separate directions",
+            "<p>\\(P\\iff Q\\) means both \\(P\\Rightarrow Q\\) and \\(Q\\Rightarrow P\\). Test each separately.</p><p><strong>Example:</strong> for real \\(x\\), \\(x=2\\Rightarrow x^2=4\\), but the reverse fails at \\(x=-2\\). The correct equivalence is</p>\\[x^2=4\\iff(x=2\\text{ or }x=-2).\\]<p>Adding the assumption \\(x\\ge0\\) makes \\(x^2=4\\iff x=2\\) valid. Domains can change logical equivalence.</p>"
+          ]
+        ]
+      ],
+      [
+        "Negation and quantifiers",
+        [
+          [
+            "Negate and/or statements",
+            "<p>In mathematical logic, “or” is inclusive unless stated otherwise: one or both statements may hold.</p>\\[\\neg(P\\land Q)\\iff\\neg P\\lor\\neg Q,\\qquad\\neg(P\\lor Q)\\iff\\neg P\\land\\neg Q.\\]<p><strong>Example:</strong> the negation of “\\(x&gt;0\\) and \\(y&gt;0\\)” is “\\(x\\le0\\) or \\(y\\le0\\)”. It does not require both to be nonpositive.</p><p>Statements are <strong>logical negations of each other</strong> when exactly one is true in every allowed case. “\\(x&gt;0\\)” and “\\(x&lt;0\\)” are not: both fail at zero.</p>"
+          ],
+          [
+            "Negate an implication",
+            "<p>The negation of “if P then Q” is the exact situation in which it fails:</p>\\[\\neg(P\\Rightarrow Q)\\iff P\\land\\neg Q.\\]<p><strong>Example:</strong> to deny “Every positive real number has square greater than itself”, say “There exists a positive real number whose square is less than or equal to itself”. The value \\(x=1/2\\) supplies a counterexample.</p><p>Reversing the arrow or negating both statements is not the negation of the original implication.</p>"
+          ],
+          [
+            "Negate every and some",
+            "<p>\\(\\forall\\) means “for every”; \\(\\exists\\) means “there exists at least one”. Negation swaps them:</p>\\[\\neg(\\forall x\\,P(x))\\iff\\exists x\\,\\neg P(x),\\qquad\\neg(\\exists x\\,P(x))\\iff\\forall x\\,\\neg P(x).\\]<p><strong>Example:</strong> “Not every student solved every question” means “Some student failed to solve at least one question”. It does not mean that no student solved anything.</p><p>Keep the domain unchanged: negating a claim about integers still gives a claim about integers.</p>"
+          ],
+          [
+            "Quantifier order changes the claim",
+            "<p>\\(\\forall x\\,\\exists y\\) permits a different \\(y\\) for each \\(x\\). In \\(\\exists y\\,\\forall x\\), one fixed \\(y\\) must work for all \\(x\\).</p><p><strong>Example over the reals:</strong> “For every \\(x\\), there exists \\(y&gt;x\\)” is true: choose \\(y=x+1\\). “There exists \\(y\\) greater than every \\(x\\)” is false: take \\(x=y+1\\).</p><p>To negate a sequence of quantifiers, swap each in place and negate the final condition; do not reorder them.</p>"
+          ]
+        ]
+      ],
+      [
+        "Checking and constructing arguments",
+        [
+          [
+            "Find an efficient counterexample",
+            "<p>One admissible counterexample disproves a universal claim. Try zero, one, minus one, equal variables, fractions, negatives and included boundary values where allowed.</p><p><strong>Example:</strong> “If \\(x^2&gt;x\\), then \\(x&gt;1\\)” fails at \\(x=-1\\), since \\(1&gt;-1\\). Positive examples alone can hide an entire negative branch.</p><p>To prove an existence claim, one working example is enough. To prove a universal claim, checking many examples is not enough.</p>"
+          ],
+          [
+            "Locate the first invalid step",
+            "<p>Check each inference, especially division by a possibly zero quantity, inequality multiplication by an unknown sign, squaring, and square roots.</p><div class=\"rg-example\"><strong>Example</strong><p>Suppose \\(a=b=1\\). Then \\(a^2=ab\\), so \\((a-b)(a+b)=b(a-b)\\). Cancelling \\(a-b\\) appears to give \\(a+b=b\\), hence \\(2=1\\).</p><p>The first invalid step is the cancellation: \\(a-b=0\\). The earlier equalities are valid.</p></div>"
+          ],
+          [
+            "A true conclusion can have an invalid proof",
+            "<p>The truth of a statement and the validity of its justification are separate questions.</p><p><strong>Example:</strong> “For every real \\(x\\), \\(x^2\\ge0\\), because \\(x\\ge0\\) and multiplying two nonnegative numbers gives a nonnegative result.” The conclusion is true, but the argument wrongly assumes \\(x\\ge0\\).</p><p>Repair it by splitting into \\(x\\ge0\\) and \\(x&lt;0\\). In the second case, \\(x^2=(-x)^2\\), a product of two positive numbers.</p>"
+          ],
+          [
+            "Existence is not uniqueness",
+            "<p>Existence means at least one solution. Uniqueness means at most one. “Exactly one” requires both.</p><p><strong>Example:</strong> \\(x^3+x=2\\) has the solution \\(x=1\\). Also \\(f'(x)=3x^2+1&gt;0\\), so \\(f(x)=x^3+x\\) is strictly increasing and takes the value 2 at most once. Together these show there is exactly one real solution.</p><p>Finding one solution alone does not exclude others; proving “at most one” alone does not show any solution exists.</p>"
+          ]
+        ]
+      ]
+    ]
+  }
 };

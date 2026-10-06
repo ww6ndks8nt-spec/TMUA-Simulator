@@ -136,7 +136,7 @@
  function nextCard(label,title,description,cta,run){
   const card=make('article','du-next-item');card.append(make('small','',label),make('b','',title),make('p','',description),button(cta,run));return card;
  }
- function focusTopic(topic){studyNav('bank');byId('bankTopic').value=topic;['bankSource','bankStatus','bankDifficulty','bankEstimatedDifficulty','bankSearch'].forEach(id=>byId(id).value='');studyPage=0;buildStudyBank();}
+ function focusTopic(topic){studyNav('bank');resetBankFilters([topic]);}
  function refreshNext(){
   const name=ROOT.profiles?.[currentUser]?.name||'';
   byId('duWelcomeTitle').textContent=name?'Welcome back, '+name+'.':'Make room for a little progress.';

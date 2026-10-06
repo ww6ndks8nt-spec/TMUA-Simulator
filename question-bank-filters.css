@@ -1,0 +1,16 @@
+/* Multi-select question-bank filters. */
+html body.duck-redesign #bankScreen .bank-filters{display:flex!important;flex-direction:column!important;gap:22px!important;margin:24px 0!important}
+#bankScreen .bank-filter-search{display:grid;grid-template-columns:minmax(180px,1fr) minmax(180px,1fr) auto;align-items:end;gap:16px}
+#bankScreen .bank-filter-group{border:0;padding:0;margin:0;min-width:0}
+#bankScreen .bank-filter-group[hidden]{display:none!important}
+#bankScreen .bank-filter-group legend{padding:0;margin-bottom:11px;font-size:14px;font-weight:700;color:var(--du-ink,#21212a)}
+#bankScreen .bank-filter-buttons{display:flex;flex-wrap:wrap;gap:10px;padding:3px}
+html body.duck-redesign #bankScreen :is(.bank-filter-button,.bank-filter-reset){appearance:none;position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 15px;border:1px solid #c9bd97!important;border-radius:20px!important;background:#fffdf5!important;color:#312a16!important;font:inherit;font-size:13px;font-weight:600;line-height:1.4;white-space:normal;cursor:pointer;box-shadow:0 0 0 transparent!important;text-shadow:none!important;transform:none!important;transition:border-color .3s ease,box-shadow .3s ease,background-color .3s ease!important}
+html body.duck-redesign #bankScreen :is(.bank-filter-button,.bank-filter-reset):is(:hover,:focus-visible),html body.duck-redesign #bankScreen .bank-filter-button[aria-pressed=true]{background:linear-gradient(135deg,#fff3b9,#e8ca50)!important;border-color:#bb941b!important}
+html body.duck-redesign #bankScreen :is(.bank-filter-button,.bank-filter-reset):focus-visible{outline:2px solid #ad8514;outline-offset:4px}
+html body.duck-redesign #bankScreen .bank-filter-button[aria-pressed=true]{font-weight:700}
+html[data-duck-theme=dark] body.duck-redesign #bankScreen .bank-filter-group legend{color:#fff!important}
+html[data-duck-theme=dark] body.duck-redesign #bankScreen :is(.bank-filter-button,.bank-filter-reset){background:var(--du-bg,#15171d)!important;background-image:none!important;color:#fff!important;border-color:#6f623b!important;box-shadow:0 0 0 transparent!important}
+html[data-duck-theme=dark] body.duck-redesign #bankScreen :is(.bank-filter-button,.bank-filter-reset):is(:hover,:focus-visible),html[data-duck-theme=dark] body.duck-redesign #bankScreen .bank-filter-button[aria-pressed=true]{background:var(--du-bg,#15171d)!important;background-image:none!important;border-color:#f2ce54!important;box-shadow:0 0 6px #facc1577,0 0 16px #facc153d!important}
+@media(max-width:650px){#bankScreen .bank-filter-search{grid-template-columns:minmax(0,1fr)}#bankScreen .bank-filter-reset{justify-self:start}#bankScreen .bank-filter-buttons{gap:9px}html body.duck-redesign #bankScreen .bank-filter-button{min-height:44px;padding:9px 12px}}
+@media(prefers-reduced-motion:reduce){html body.duck-redesign #bankScreen :is(.bank-filter-button,.bank-filter-reset){transition:none!important}}
