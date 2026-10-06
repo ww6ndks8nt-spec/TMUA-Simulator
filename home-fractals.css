@@ -1,0 +1,24 @@
+/* Decorative layers retain the existing page background and never intercept clicks. */
+html body.duck-fullpage .fp-fractal-background{
+ position:absolute;inset:0;overflow:hidden;z-index:-1;pointer-events:none;
+ -webkit-mask-image:radial-gradient(ellipse 48% 45% at 50% 49%,rgba(0,0,0,.08) 0%,rgba(0,0,0,.14) 30%,#000 100%);
+ mask-image:radial-gradient(ellipse 48% 45% at 50% 49%,rgba(0,0,0,.08) 0%,rgba(0,0,0,.14) 30%,#000 100%);
+}
+html body.duck-fullpage .fp-fractal-background .fp-fractal-layer{
+ position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+ opacity:0;transition:opacity 2s ease-in-out;pointer-events:none;
+ filter:sepia(.4) saturate(1.1);user-select:none;
+}
+html body.duck-fullpage .fp-fractal-background .fp-fractal-layer.is-active{opacity:.28}
+html[data-duck-theme="dark"] body.duck-fullpage .fp-fractal-background .fp-fractal-layer{
+ filter:drop-shadow(0 0 2px #dfb44438);
+}
+html[data-duck-theme="dark"] body.duck-fullpage .fp-fractal-background .fp-fractal-layer.is-active{opacity:.48}
+html[data-duck-theme="dark"] body.duck-fullpage .fp-fractal-background .fp-fractal-layer[data-fractal="mandelbrot"].is-active{opacity:.85}
+@media(max-width:700px){
+ html body.duck-fullpage .fp-fractal-background .fp-fractal-layer{object-fit:cover;object-position:45% center}
+ html[data-duck-theme="dark"] body.duck-fullpage .fp-fractal-background .fp-fractal-layer.is-active{opacity:.3}
+}
+@media(prefers-reduced-motion:reduce){
+ html body.duck-fullpage .fp-fractal-background .fp-fractal-layer{transition:none}
+}

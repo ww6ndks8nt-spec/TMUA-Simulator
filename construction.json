@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dragon",
+    "name": "Heighway dragon curve",
+    "depth": 11,
+    "segments": 2048,
+    "closed": false
+  },
+  {
+    "id": "gosper",
+    "name": "Gosper curve",
+    "depth": 4,
+    "segments": 2401,
+    "closed": false
+  },
+  {
+    "id": "minkowski",
+    "name": "Minkowski island",
+    "depth": 3,
+    "segments": 2048,
+    "closed": true
+  },
+  {
+    "id": "hilbert",
+    "name": "Hilbert curve",
+    "depth": 5,
+    "segments": 1023,
+    "closed": false
+  },
+  {
+    "id": "sierpinski",
+    "name": "Sierpi\u0144ski triangle",
+    "depth": 5,
+    "triangles": 243
+  },
+  {
+    "id": "mandelbrot",
+    "name": "Mandelbrot set",
+    "maxIterations": 500,
+    "recurrence": "z(n+1)=z(n)^2+c; z(0)=0",
+    "realRange": [
+      -1.95,
+      1.45
+    ],
+    "escapeRadius": 16
+  }
+]
