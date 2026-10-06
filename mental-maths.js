@@ -6,6 +6,8 @@ const el=id=>document.getElementById(id),fresh=()=>({completed:0,totalTimeMs:0,a
 const freshStats=()=>Object.fromEntries(['arithmetic','modular','quadratic','polynomial','trig','pythagorean'].flatMap(m=>Object.keys(E.difficulties).map(d=>[m+':'+d,fresh()])));
 let composing=false,firstCorrect=false,usedHint=false;
 let owner=null,difficulty='medium',mode='arithmetic',lesson='remainders',selected=Object.keys(E.categories),bag=[],levelBag=[],question=null,closed=false,checked=false,elapsed=0,tickingAt=null,lastPrompt='',stats=freshStats();
+const filterViews=[];
+function syncFilterButtons(){filterViews.forEach(update=>update());}
 const user=()=>typeof currentUser==='undefined'?'guest':currentUser||'guest';
 function save(){try{localStorage.setItem('ducktmua.mental.settings.'+owner,JSON.stringify({categoriesVersion:2,selected,lesson,difficulty,trigFunction:el('mmTrigFunction').value,trigUnits:el('mmTrigUnits').value,autoCheck:el('mmAutoCheck').checked,timer:el('mmTimerToggle').checked}));}catch(e){}}
 function load(){
@@ -23,6 +25,7 @@ function difficultyCopy(){
  if(mode==='trig')el('mmDifficultyHelp').textContent=({easy:'Reference angles from 0° to 90° (0 to π/2).',medium:'Standard angles from 0° to 360° (0 to 2π).',hard:'The full range: −360° to 360° (−2π to 2π).',mixed:'A mix of all three levels, including the full signed angle range.'})[difficulty];
  if(mode==='pythagorean')el('mmDifficultyHelp').textContent=E.pythagoreanDescriptions[difficulty];
  el('mmRange').textContent=d.range;el('mmLevelBadge').textContent=difficulty==='mixed'&&question?'Mixed · '+E.difficulties[question.difficulty].label:d.label;
+ syncFilterButtons();
  el('mmKeyboardHelp').textContent=factorMode()?(el('mmAutoCheck').checked?'Use Tab or Enter between boxes. A correct complete factorisation instantly starts the next question.':'Use Tab or Enter between boxes, then Enter in the last box to check. Correct answers instantly start the next question.'):(el('mmAutoCheck').checked?'Correct answers instantly move you to the next question. Press Enter to check manually.':'Press Enter to check your answer. Correct answers instantly move you to the next question.');
 }
 function factorMode(){return mode==='quadratic'||mode==='polynomial';}
@@ -109,7 +112,7 @@ function finish(revealed=false){
  el('mmFeedback').textContent='Answer: '+(question.answerDisplay||E.fmt(question.answer))+'. Read the method, then try another.';el('mmFeedback').removeAttribute('data-tone');
  renderStats();timer();el('mmCheck').focus({preventScroll:true});
 }
-function switchMode(value){if(mode===value)return;pause();mode=value;if(factorMode()&&difficulty==='easy'){difficulty='medium';el('mmDifficulty').value=difficulty;save();}bag=[];levelBag=[];drawMode();next(false);screen.scrollTo(0,0);if(smallScreen.matches)el('mmSettingsDetails').open=false;}
+function switchMode(value){if(mode===value)return;pause();mode=value;if(factorMode()&&difficulty==='easy'){difficulty='medium';el('mmDifficulty').value=difficulty;save();}bag=[];levelBag=[];drawMode();next(false);screen.scrollTo(0,0);}
 window.showMentalMaths=function(){
  if(owner!==user()){pause();elapsed=0;owner=user();stats=freshStats();mode='arithmetic';bag=[];levelBag=[];question=null;load();drawMode();}
  if(typeof studyHide==='function')studyHide();
@@ -122,7 +125,7 @@ window.showMentalMaths=function(){
  if(!question)next(false);else{renderStats();timer();}
  window.MentalMathsTracking?.render();
 };
-Object.entries(E.categories).forEach(([value,label])=>{const row=document.createElement('label');row.className='mm-category';const input=document.createElement('input');input.type='checkbox';input.value=value;input.checked=true;input.dataset.mmCategory=value;row.append(input,document.createTextNode(label));el('mmCategories').appendChild(row);input.addEventListener('change',()=>{const list=Array.from(screen.querySelectorAll('[data-mm-category]:checked'),x=>x.value);if(!list.length){input.checked=true;el('mmFeedback').textContent='Keep at least one question type selected.';return;}selected=list;bag=[];levelBag=[];save();next(false);});});
+Object.entries(E.categories).forEach(([value,label])=>{const row=document.createElement('label');row.className='mm-category';const input=document.createElement('input');input.type='checkbox';input.value=value;input.checked=true;input.dataset.mmCategory=value;const caption=document.createElement('span');caption.textContent=label;row.append(input,caption);el('mmCategories').appendChild(row);input.addEventListener('change',()=>{const list=Array.from(screen.querySelectorAll('[data-mm-category]:checked'),x=>x.value);if(!list.length){input.checked=true;el('mmFeedback').textContent='Keep at least one question type selected.';return;}selected=list;bag=[];levelBag=[];save();next(false);});});
 [...E.lessons,{id:'mixed',title:'Mixed practice · all topics'}].forEach(l=>{const option=document.createElement('option');option.value=l.id;option.textContent=l.title;el('mmLesson').appendChild(option);});
 el('navMental').addEventListener('click',window.showMentalMaths);
 el('mmPracticeMode').addEventListener('click',()=>switchMode('arithmetic'));el('mmModMode').addEventListener('click',()=>switchMode('modular'));
@@ -145,8 +148,37 @@ el('mmAutoCheck').addEventListener('change',()=>{save();difficultyCopy();if(el('
 el('mmTimerToggle').addEventListener('change',()=>{save();timer();});
 el('mmReset').addEventListener('click',()=>{stats[mode+':'+difficulty]=fresh();bag=[];levelBag=[];next();});
 new MutationObserver(syncClock).observe(screen,{attributes:true,attributeFilter:['class']});document.addEventListener('visibilitychange',syncClock);setInterval(()=>{if(!screen.classList.contains('hidden'))timer();},200);
-const smallScreen=window.matchMedia('(max-width:850px)');
-function sizeSettings(){el('mmSettingsDetails').open=!smallScreen.matches;}
-smallScreen.addEventListener('change',sizeSettings);sizeSettings();
+// Keep the native select as the state holder while exposing accessible choice buttons.
+// Existing generation, persistence and progress filtering handlers remain unchanged.
+function selectButtons(id,label,shortNames={}){
+ const select=el(id),group=document.createElement('div');
+ group.className='mm-filter-buttons';group.setAttribute('role','group');group.setAttribute('aria-label',label);group.id=id+'Buttons';
+ select.hidden=true;
+ const oldLabel=select.closest('label');
+ if(oldLabel){
+  const field=document.createElement('div');field.className='mm-history-filter';
+  const caption=document.createElement('div');caption.className='mm-label';caption.textContent=label;
+  oldLabel.before(field);field.append(caption,select,group);oldLabel.remove();
+ }else{
+  const caption=screen.querySelector('label[for="'+id+'"]');
+  if(caption){caption.removeAttribute('for');caption.id=id+'Caption';group.setAttribute('aria-labelledby',caption.id);}
+  select.after(group);
+ }
+ const buttons=[...select.options].map(option=>{
+  const button=document.createElement('button');button.type='button';button.className='mm-filter-button';button.textContent=shortNames[option.value]||option.textContent;
+  button.dataset.value=option.value;button.addEventListener('click',()=>{
+   if(select.value===option.value)return;
+   select.value=option.value;select.dispatchEvent(new Event('change',{bubbles:true}));syncFilterButtons();
+  });group.append(button);return {option,button};
+ });
+ const update=()=>buttons.forEach(({option,button})=>{button.disabled=option.disabled;button.setAttribute('aria-pressed',String(select.value===option.value));});
+ filterViews.push(update);select.addEventListener('change',update);update();
+}
+selectButtons('mmDifficulty','Difficulty');
+selectButtons('mmLesson','Modular topic',Object.fromEntries(E.lessons.map(l=>[l.id,l.title.replace(/^\d+\s*[·.]\s*/, '')])));
+selectButtons('mmTrigFunction','Function',{mixed:'All functions',sin:'sin',cos:'cos',tan:'tan'});
+selectButtons('mmTrigUnits','Angle units',{mixed:'Both',degrees:'Degrees',radians:'Radians'});
+selectButtons('mmHistoryMode','Mode',{all:'All modes',arithmetic:'Arithmetic',modular:'Modular',quadratic:'Quadratics',polynomial:'Polynomials',trig:'Trigonometry',pythagorean:'Triples'});
+selectButtons('mmHistoryLevel','Difficulty');
 drawMode();
 })();
