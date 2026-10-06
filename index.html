@@ -2656,9 +2656,10 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
   <aside class="studio-login-brand" aria-label="Duck TMUA Exam Simulator"><div class="studio-login-wordmark">Duck TMUA<span>Exam Simulator</span></div><div class="duck-login-mascot" role="img" aria-label="Duck TMUA yellow duck logo"></div><div class="studio-login-bottom">Test of Mathematics<br>for University Admission</div></aside><div class="card">
     <div class="brandline">Test of Mathematics for University Admission</div>
     <h1 id="authTitle">Sign in</h1>
-    <p class="lead" id="authLead">Sign in with your email address and password, or register a new account. Your progress, question history and resumable sessions sync across devices.</p>
+    <p class="lead" id="authLead">Sign in with Google or your email and password, or register a new account. Your progress, question history and resumable sessions sync across devices.</p>
 
     <div id="signinView">
+      <button type="button" id="googleSignInBtn" class="google-auth-button">Continue with Google</button><p class="google-auth-divider">or use email</p>
       <div class="newprof">
         <input class="txt" id="siName" type="email" aria-label="Email" maxlength="254" placeholder="Email address" autocomplete="username">
         <input class="txt" id="siPin" aria-label="Password" type="password" maxlength="128" style="width:170px" placeholder="Password" autocomplete="current-password">
@@ -2669,6 +2670,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
     </div>
 
     <div id="registerView" class="hidden">
+      <button type="button" id="googleRegisterBtn" class="google-auth-button">Continue with Google</button><p class="google-auth-divider">or create an email account</p>
       <div class="newprof">
         <input class="txt" id="rgEmail" type="email" aria-label="Registration email" maxlength="254" placeholder="Email address" autocomplete="email">
 <input class="txt" id="rgName" aria-label="New profile name" maxlength="24" placeholder="Choose a profile name" autocomplete="off">
@@ -2700,7 +2702,7 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
       <p class="switchline">Wrong email or another account? <button type="button" class="linkbtn" id="verificationSignOutBtn">Sign out</button></p>
     </section>
     <div class="formerr" id="loginErr" role="status" aria-live="polite"></div>
-    <p class="libnote">Sign in with the same email and password on any device to access your practice history. You can import an old local profile using its backup file in Settings.</p>
+    <p class="libnote">Sign in with the same account on any device to access your practice history. You can import an old local profile using its backup file in Settings.</p>
   </div>
 </div>
 
@@ -3034,10 +3036,11 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 
 <dialog id="profileSettings" class="modern-ui"><form id="profileSettingsForm">
 <div class="settings-heading"><h2>Profile settings</h2><button type="button" id="closeProfileSettings" aria-label="Close settings">✕</button></div>
-<p class="study-muted">Your account and practice history sync across devices. Use the same email and password wherever you sign in.</p>
+<p class="study-muted">Your account and practice history sync across devices. Use the same account wherever you sign in.</p>
 <label>Profile name<input id="settingsName" class="txt" required maxlength="60" autocomplete="username"></label>
+<p id="googleAccountStatus" class="study-muted"></p><button type="button" id="linkGoogleBtn" class="google-auth-button">Link Google account</button>
 <label>Current password<input id="settingsCurrentPin" class="txt" type="password" maxlength="128" autocomplete="current-password"></label>
-<p class="study-muted">Required when changing your password. Account deletion asks for your password below.</p>
+<p class="study-muted" id="reauthHelp">Required when changing your password. Account deletion asks for your password below.</p>
 <label>New password<input id="settingsNewPin" class="txt" type="password" maxlength="128" autocomplete="new-password" placeholder="Leave blank to keep it"></label>
 <label>Confirm new password<input id="settingsConfirmPin" class="txt" type="password" maxlength="128" autocomplete="new-password"></label>
 <label class="settings-check"><input id="settingsSyncName" type="checkbox" checked><span>Update my existing leaderboard entries with this name</span></label>
@@ -6632,7 +6635,7 @@ function cloudVerificationControls(disabled=CLOUD.busy){
  $('verificationSendBtn').textContent=seconds?'Resend in '+seconds+'s':(CLOUD.verificationNextSend?'Resend verification email':'Send verification email');
 }
 function cloudAuthControls(disabled){
- ['siBtn','rgBtn','resetPasswordBtn','toRegister','toSignin','finishDeletionBtn','siLeaderboardOptIn','rgLeaderboardOptIn'].forEach(id=>$(id).disabled=disabled);
+ ['siBtn','rgBtn','googleSignInBtn','googleRegisterBtn','resetPasswordBtn','toRegister','toSignin','finishDeletionBtn','siLeaderboardOptIn','rgLeaderboardOptIn'].forEach(id=>$(id).disabled=disabled);
  window.DuckRegistration?.setBusy(disabled);
  cloudVerificationControls(disabled);
  if(!disabled&&!CLOUD.busy&&CLOUD.authStatePending){
@@ -6706,7 +6709,7 @@ async function cloudOpenUser(user){
  // Tombstone access is owner-only and remains available to finish account deletion.
  const deleted=await cloudRequest('/deletedAccounts/'+user.uid+'.json');
  if(CLOUD.auth.currentUser?.uid!==user.uid)return false;
- if(deleted){cloudLeaveUI();$('siName').value=user.email||'';$('finishDeletionBtn').classList.remove('hidden');throw Error('This account has a pending deletion. Enter your password and use Finish deleting my account.');}
+ if(deleted){cloudLeaveUI();$('siName').value=user.email||'';$('finishDeletionBtn').classList.remove('hidden');throw Error('This account has a pending deletion. Use Finish deleting my account to confirm your identity.');}
  $('finishDeletionBtn').classList.add('hidden');
  if(!user.emailVerified){cloudShowVerification(user);return false;}
  // Refresh the signed claim before any protected data request.
@@ -6869,7 +6872,9 @@ $('signOutBtn').addEventListener('click',async()=>{
 });
 async function reauthenticateCloud(password){
  const user=CLOUD.auth.currentUser;
- if(!user||!password)throw Error('Enter your current password to continue.');
+ if(!user)throw Error('Please sign in again.');
+ if(cloudUsesGoogleOnly(user)){await CLOUD.sdk.reauthenticateWithPopup(user,cloudGoogleProvider());return;}
+ if(!password)throw Error('Enter your current password to continue.');
  await cloudPrepareRecaptcha();
  if(CLOUD.auth.currentUser?.uid!==user.uid)throw Error('The signed-in account changed. Please try again from the correct account.');
  await CLOUD.sdk.reauthenticateWithCredential(user,CLOUD.sdk.EmailAuthProvider.credential(user.email,password));
@@ -6887,7 +6892,9 @@ function cloudShowDeleteAccount(){
  $('deleteAccountEmail').textContent=user.email||'this account';
  $('deleteAccountPassword').value=$('settingsCurrentPin').value;
  $('deleteAccountForm').classList.remove('hidden');$('deleteProfileBtn').classList.add('hidden');$('deleteProfileBtn').setAttribute('aria-expanded','true');
- $('deleteAccountForm').scrollIntoView({block:'nearest'});$('deleteAccountPassword').focus();
+ refreshGoogleAccountSettings();
+ $('deleteAccountForm').scrollIntoView({block:'nearest'});
+ if(!cloudUsesGoogleOnly(user))$('deleteAccountPassword').focus();
 }
 async function cloudForgetDeletedUser(uid){
  delete ROOT.profiles[uid];delete ROOT.data[uid];if(ROOT.cloudSync)delete ROOT.cloudSync[uid];
@@ -6901,13 +6908,13 @@ async function cloudDeleteAccount(fromLogin=false){
  if(!user){status.textContent='Please sign in again before deleting your account.';return;}
  if(!fromLogin&&($('deleteAccountForm').classList.contains('hidden')||$('deleteAccountForm').dataset.uid!==user.uid)){cloudShowDeleteAccount();return;}
  const input=fromLogin?$('siPin'):$('deleteAccountPassword'),password=input.value;
- if(!password){status.textContent='Enter your current password to delete this account.';input.setAttribute('aria-invalid','true');input.focus();input.scrollIntoView({block:'nearest'});return;}
+ if(!password&&!cloudUsesGoogleOnly(user)){status.textContent='Enter your current password to delete this account.';input.setAttribute('aria-invalid','true');input.focus();input.scrollIntoView({block:'nearest'});return;}
  input.removeAttribute('aria-invalid');
  if(fromLogin&&!confirm('Finish permanently deleting '+(user.email||'this account')+'? This cannot be undone.'))return;
  const assertSameUser=()=>{if(CLOUD.auth?.currentUser?.uid!==user.uid)throw Error('The signed-in account changed. Please try again from the correct account.');};
  let stage='password',dataRemoved=false,authRemoved=false;
  CLOUD.busy=true;CLOUD.deleting=true;setProfileSettingsBusy(true);cloudAuthControls(true);
- status.textContent='Checking your password…';status.scrollIntoView({block:'nearest'});
+ status.textContent=cloudUsesGoogleOnly(user)?'Confirm your Google account in the popup…':'Checking your password…';status.scrollIntoView({block:'nearest'});
  try{
   await reauthenticateCloud(password);assertSameUser();stage='session';
   await user.getIdToken(true);assertSameUser();
@@ -6930,7 +6937,7 @@ async function cloudDeleteAccount(fromLogin=false){
    try{await cloudForgetDeletedUser(user.uid);}catch(localError){}
    if(CLOUD.auth?.currentUser?.uid===user.uid){
     cloudLeaveUI();$('siName').value=user.email||'';$('finishDeletionBtn').classList.remove('hidden');
-    authErr('Your saved data has been removed, but deleting your sign-in account did not finish. Enter your password and click Finish deleting my account. '+cloudError(error));
+    authErr('Your saved data has been removed, but deleting your sign-in account did not finish. Click Finish deleting my account to confirm your identity. '+cloudError(error));
    }else if(!CLOUD.auth?.currentUser){
     cloudLeaveUI();$('finishDeletionBtn').classList.add('hidden');
     authErr(authRemoved?'Account deleted. Local cleanup could not be saved; clear this site’s browser data on this device.':'Your saved data has been removed. Sign in again to finish deleting the account.');
@@ -6940,11 +6947,11 @@ async function cloudDeleteAccount(fromLogin=false){
    CLOUD.ready=false;clearInterval(CLOUD.poll);
    if(CLOUD.auth?.currentUser?.uid===user.uid){
     cloudLeaveUI();CLOUD.authStatePending=false;$('siName').value=user.email||'';$('finishDeletionBtn').classList.remove('hidden');
-    authErr('We could not confirm whether deletion finished. Your account has not been reopened. Reconnect, enter your password and click Finish deleting my account to retry. '+cloudError(error));
+    authErr('We could not confirm whether deletion finished. Your account has not been reopened. Reconnect and click Finish deleting my account to confirm your identity and retry. '+cloudError(error));
    }else if(!CLOUD.auth?.currentUser){cloudLeaveUI();authErr('Deletion could not be confirmed. Reconnect and sign in again to check or finish deleting your account.');}
    else CLOUD.authStatePending=true;
   }else{
-   status.textContent=(stage==='password'?'Password check failed. ':'Deletion did not finish. ')+cloudError(error);
+   status.textContent=(stage==='password'?'Identity check failed. ':'Deletion did not finish. ')+cloudError(error);
    status.scrollIntoView({block:'nearest'});
    if(stage==='password'){input.setAttribute('aria-invalid','true');}
   }
@@ -7102,6 +7109,8 @@ refreshAccountCircles();
 <script src="revision-tricks-questions.js?v=20261006-1"></script>
 <script src="revision-guides.js?v=20261006-practice"></script>
 <script src="full-page-ui.js?v=20261006-guides"></script>
+<link rel="stylesheet" href="google-signin.css?v=20261006-1">
+<script src="google-signin.js?v=20261006-1"></script>
 <script>cloudBoot();</script>
 <link rel="stylesheet" href="site-footer.css?v=20261002-1">
 <script src="site-footer.js?v=20261002-1"></script>
