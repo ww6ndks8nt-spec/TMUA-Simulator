@@ -1,6 +1,6 @@
 /* Decorative layers retain the existing page background and never intercept clicks. */
 html body.duck-fullpage .fp-fractal-background{
- position:absolute;inset:0;overflow:hidden;z-index:-1;pointer-events:none;
+ position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none;
  -webkit-mask-image:radial-gradient(ellipse 48% 45% at 50% 49%,rgba(0,0,0,.08) 0%,rgba(0,0,0,.14) 30%,#000 100%);
  mask-image:radial-gradient(ellipse 48% 45% at 50% 49%,rgba(0,0,0,.08) 0%,rgba(0,0,0,.14) 30%,#000 100%);
 }
@@ -22,3 +22,6 @@ html[data-duck-theme="dark"] body.duck-fullpage .fp-fractal-background .fp-fract
 @media(prefers-reduced-motion:reduce){
  html body.duck-fullpage .fp-fractal-background .fp-fractal-layer{transition:none}
 }
+
+/* Explicit stacking avoids a negative layer disappearing behind the page. */
+html body.duck-fullpage .fp-home-hero > :is(.fp-home-main,.fp-home-rail,.fp-home-recent,.fp-scroll-cue){position:relative;z-index:1}

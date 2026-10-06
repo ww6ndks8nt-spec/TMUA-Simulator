@@ -3,7 +3,9 @@
 (function(){
  'use strict';
  const host=document.querySelector('.fp-fractal-background'),screen=document.getElementById('dashboardScreen');
- if(!host||!screen)return;
+ if(!host||!screen||host.dataset.fractalsMounted)return;
+ host.dataset.fractalsMounted='true';
+ const sources=window.DuckHomeFractalSources||{};
  const items=[['dragon','svg','Heighway dragon curve'],['mandelbrot','png','Mandelbrot set'],['gosper','svg','Gosper curve'],['sierpinski','svg','Sierpiński triangle'],['minkowski','svg','Minkowski island'],['hilbert','svg','Hilbert curve']];
  const motion=matchMedia('(prefers-reduced-motion: reduce)');
  const layers=items.map(([id,extension,name])=>{
@@ -11,7 +13,7 @@
   const layer={image,id,name,ready:false,failed:false};
   image.onload=async()=>{try{await image.decode();}catch(_){}layer.ready=true;startWhenReady();sync();};
   image.onerror=()=>{layer.failed=true;startWhenReady();sync();};
-  image.src='fractals/'+id+'.'+extension+'?v=20261006-1';host.appendChild(image);return layer;
+  image.src=sources[id]||('fractals/'+id+'.'+extension+'?v=20261006-1');host.appendChild(image);return layer;
  });
  let current=-1,timer=0,inView=false;
  function startWhenReady(){
