@@ -2592,6 +2592,17 @@ html body[data-exam-scheme=contrast] #testMain img.official-source-fig{filter:in
 .official-paper-content mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding:4px 0}
 
 </style>
+<style id="mistake-date-style">
+#wrongBuilder .wrong-date-filter{border:0;padding:0;margin:22px 0 0;min-width:0}
+#wrongBuilder .wrong-date-filter legend{font-size:13px;font-weight:700;margin-bottom:10px;color:inherit}
+#wrongBuilder .wrong-date-options{display:flex;gap:10px;flex-wrap:wrap}
+#wrongBuilder .wrong-date-options button{font:inherit;font-size:13px;padding:9px 14px;border:1px solid #c8b65b;border-radius:20px;color:#473900;background:transparent;cursor:pointer;transition:box-shadow .3s ease,border-color .3s ease,background .3s ease,color .3s ease}
+#wrongBuilder .wrong-date-options button:is(:hover,[aria-pressed="true"]){background:linear-gradient(135deg,#fff4b8,#ffd43b);border-color:#d3ad20}
+#wrongBuilder .wrong-date-options button:focus-visible{outline:2px solid #d4a900;outline-offset:3px}
+html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button{background:transparent!important;color:#fff!important;border-color:#65592e;box-shadow:none}
+html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,[aria-pressed="true"]){border-color:#ffd43b;box-shadow:0 0 10px #ffd43b66,inset 0 0 5px #ffd43b22}
+@media(prefers-reduced-motion:reduce){#wrongBuilder .wrong-date-options button{transition:none}}
+</style>
 </head>
 <body class="duck-redesign">
 
@@ -2861,6 +2872,7 @@ html body[data-exam-scheme=contrast] #testMain img.official-source-fig{filter:in
         <div><span class="wrong-big" id="wrongPoolCount">0</span><span> eligible questions</span></div>
         <div class="wrong-time-rule"><b>Standard time:</b> 03:45 per question</div>
       </div>
+      <fieldset class="wrong-date-filter"><legend>Last answered incorrectly</legend><div class="wrong-date-options"><button type="button" data-wrong-age="all" aria-pressed="true">All questions</button><button type="button" data-wrong-age="1w" aria-pressed="false">More than 1 week ago</button><button type="button" data-wrong-age="2w" aria-pressed="false">More than 2 weeks ago</button><button type="button" data-wrong-age="3w" aria-pressed="false">More than 3 weeks ago</button><button type="button" data-wrong-age="1m" aria-pressed="false">More than 1 month ago</button><button type="button" data-wrong-age="3m" aria-pressed="false">More than 3 months ago</button></div></fieldset>
       <div class="wrong-controls">
         <label>Questions
           <select id="wrongCountSelect"></select>
@@ -4833,8 +4845,32 @@ function makeWrongRandomPaper(items,stamp){
     type:0,group:6,esat:qs.every(q=>q.esat),randomized:true,questions:qs
   };
 }
+let wrongDateFilter='all';
+function wrongDateCutoff(filter,now=Date.now()){
+  const weeks={'1w':1,'2w':2,'3w':3};
+  if(weeks[filter]) return now-weeks[filter]*7*24*60*60*1000;
+  const months={'1m':1,'3m':3};
+  if(!months[filter]) return null;
+  const date=new Date(now),day=date.getDate();
+  date.setDate(1);
+  date.setMonth(date.getMonth()-months[filter]);
+  const lastDay=new Date(date.getFullYear(),date.getMonth()+1,0).getDate();
+  date.setDate(Math.min(day,lastDay));
+  return date.getTime();
+}
+function filteredWrongQuestionPool(now=Date.now()){
+  const cutoff=wrongDateCutoff(wrongDateFilter,now);
+  return wrongQuestionPool().filter(item=>cutoff===null || (Number.isFinite(item.lastWrong) && item.lastWrong>0 && item.lastWrong<cutoff));
+}
+$('wrongBuilder').querySelectorAll('[data-wrong-age]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    wrongDateFilter=button.dataset.wrongAge;
+    buildWrongHub();
+  });
+});
 function buildWrongHub(){
-  const pool=wrongQuestionPool().sort((a,b)=>b.lastWrong-a.lastWrong);
+  $('wrongBuilder').querySelectorAll('[data-wrong-age]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.wrongAge===wrongDateFilter)));
+  const pool=filteredWrongQuestionPool().sort((a,b)=>b.lastWrong-a.lastWrong);
   $('wrongPoolCount').textContent=pool.length;
   const sel=$('wrongCountSelect'); sel.innerHTML='';
   const choices=[5,10,15,20].filter(n=>n<=pool.length);
@@ -4848,7 +4884,7 @@ function buildWrongHub(){
   $('wrongGenerateBtn').disabled=!pool.length;
   $('wrongPoolNote').textContent=pool.length
     ? 'Only questions you actually attempted and answered incorrectly in a completed source paper enter the eligible bank; unanswered questions are ignored. A source question stays eligible until you answer it correctly in a randomised wrong-answer paper. Leaving it blank in the randomised paper does not resolve it. If you later attempt a resolved question and get it wrong again in a normal paper, it returns to the bank.'
-    : 'No eligible questions right now. Only attempted wrong answers from completed source papers enter this bank; unanswered questions are ignored. Questions answered correctly in randomised wrong-answer papers move to Resolved errors.';
+    : (wrongDateFilter==='all' ? 'No eligible questions right now.' : 'No questions match this date filter.');
   const refreshTime=()=>{
     const n=+sel.value||0;
     const seconds=selectedTimeSecondsForPaper({randomized:true,questions:new Array(n)});
@@ -4923,7 +4959,7 @@ function openRandomRecord(rec){
   showResults(); enterReview();
 }
 $('wrongGenerateBtn').addEventListener('click',()=>{
-  const pool=wrongQuestionPool();
+  const pool=filteredWrongQuestionPool();
   const n=Math.min(pool.length,+$('wrongCountSelect').value||0);
   if(!n) return;
   const items=shuffleCopy(pool).slice(0,n);
@@ -5982,13 +6018,14 @@ $('retakeBtn').addEventListener('click', ()=>{
   const t=selectedTimeMinutesForPaper(active);
   if(active && active.randomized){
     const n=QUESTIONS.length;
-    const pool=wrongQuestionPool();
+    const pool=filteredWrongQuestionPool();
     if(pool.length){
       const items=shuffleCopy(pool).slice(0,Math.min(n,pool.length));
       active=makeWrongRandomPaper(items,Date.now()); QUESTIONS=active.questions;
       secondsLeft=selectedTimeSecondsForPaper(active);noTimer=secondsLeft===0;sessionMode=paperSessionMode(active,secondsLeft)+' · randomised wrong-answer paper';
       $('resultScreen').classList.add('hidden'); beginExamIntroFlow(); return;
     }
+    showWrongHub(); return;
   }
   if(active && active.combined){
     const p1=paperById(active.p1Id),p2=paperById(active.p2Id);
