@@ -96,7 +96,8 @@ function leaderboardModeSeconds(mode,p){
  if(min||sec||hour)return Math.round((hour?Number(hour[1])*3600:0)+(min?Number(min[1])*60:0)+(sec?Number(sec[1]):0));
  if(/extra/.test(text))return Math.ceil(standardPaperSeconds(p)*1.25);
  if(/challenge/.test(text))return selectedTimeSecondsForPaper(p,'challenge');
- if(/speedrun/.test(text))return 2700;
+ if(/speedrun/.test(text))return selectedTimeSecondsForPaper(p,'45');
+ if(/impossible/.test(text))return selectedTimeSecondsForPaper(p,'impossible');
  if(text==='standard')return standardPaperSeconds(p);
  return null;
 }
@@ -107,7 +108,9 @@ function renderLeaderboardEntries(p,entries){
  const duration=s=>{const m=Math.floor(s/60),sec=s%60;return m+' min'+(sec?' '+sec+'s':'');};
  const base=standardPaperSeconds(p),modes=[base,Math.ceil(base*1.25)];
  if(!p.esat&&!p.randomized)modes.push(selectedTimeSecondsForPaper(p,'challenge'));
- if(!p.esat&&!p.mat&&!p.randomized&&!isChallengePaper(p))modes.push(2700);
+ if(!p.esat&&!p.randomized)modes.push(selectedTimeSecondsForPaper(p,'45'),selectedTimeSecondsForPaper(p,'impossible'));
+ // Older attempts keep their recorded duration when a preset changes.
+ for(const entry of entries){const seconds=leaderboardModeSeconds(entry.mode,p);if(seconds>0&&!modes.includes(seconds))modes.push(seconds);}
  const choices=[...new Set(modes)].map(s=>[String(s),duration(s)]);choices.push(['0','Untimed'],['all','All']);
  const content=make('div','pp-lb-content'),status=make('p','pp-lb-status');status.setAttribute('role','status');let selected='all';
  const buttons=[];

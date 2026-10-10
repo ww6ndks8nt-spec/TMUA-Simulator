@@ -5059,13 +5059,12 @@ function isChallengePaper(p){
 }
 function normaliseTimingChoice(value){
   const v=String(value)==='60'?'challenge':String(value);
-  return (ESAT_MODE?['75','extra','0']:['75','extra','challenge','45','0']).includes(v)?v:'75';
+  return (ESAT_MODE?['75','extra','0']:['75','extra','challenge','45','impossible','0']).includes(v)?v:'75';
 }
 function paperTimingChoice(p,value){
   let choice=normaliseTimingChoice(value===undefined?$(p?.randomized?'wrongTimingSelect':'timeSelect').value:value);
-  if(p?.esat&&['challenge','45','60'].includes(choice))choice='75';
-  if(p?.randomized&&['challenge','45','60'].includes(choice))choice='75';
-  if((p?.mat||isChallengePaper(p))&&['45','60'].includes(choice))choice='75';
+  if(p?.esat&&['challenge','45','impossible'].includes(choice))choice='75';
+  if(p?.randomized&&['challenge','45','impossible'].includes(choice))choice='75';
   return choice;
 }
 function standardPaperSeconds(p){
@@ -5080,8 +5079,10 @@ function selectedTimeSecondsForPaper(p,value){
   if(mode==='0')return 0;
   // The countdown uses whole seconds; never round away any extra allowance.
   if(mode==='extra')return Math.ceil(base*1.25);
-  if(mode==='challenge')return (p?.mat?30:isChallengePaper(p)?105:60)*60;
-  if(mode==='45'||mode==='60')return Number(mode)*60;
+  if(mode==='challenge')return (p?.mat?30:isChallengePaper(p)?90:60)*60;
+  // Keep the legacy '45' preset key for saved Speedrun preferences.
+  if(mode==='45')return (p?.mat?20:isChallengePaper(p)?60:45)*60;
+  if(mode==='impossible')return (p?.mat?15:isChallengePaper(p)?45:30)*60;
   return base;
 }
 function paperTimeLabel(seconds){
@@ -5090,13 +5091,13 @@ function paperTimeLabel(seconds){
   return mins+' min'+(secs?' '+secs+' sec':'');
 }
 function paperSessionMode(p,seconds,combined=false){
-  const choice=paperTimingChoice(p),label=choice==='extra'?' · 25% extra time':choice==='challenge'?' · Challenge mode':choice==='45'?' · Speedrun mode':'';
+  const choice=paperTimingChoice(p),label=choice==='extra'?' · 25% extra time':choice==='challenge'?' · Challenge mode':choice==='45'?' · Speedrun mode':choice==='impossible'?' · Impossible mode':'';
   return paperTimeLabel(seconds)+label+(combined?' · combined':'');
 }
 function timingOptions(p){
   const rows=[['75','Standard'],['extra','25% extra time']];
   if(!ESAT_MODE&&!p?.esat&&!p?.randomized)rows.push(['challenge','Challenge mode']);
-  if(!ESAT_MODE&&!p?.esat&&!p?.mat&&!p?.randomized&&!isChallengePaper(p))rows.push(['45','Speedrun mode']);
+  if(!ESAT_MODE&&!p?.esat&&!p?.randomized)rows.push(['45','Speedrun mode'],['impossible','Impossible mode']);
   rows.push(['0','Untimed']);
   return rows.map(([value,label])=>'<option value="'+value+'">'+label+(p&&!p.randomized&&value!=='0'?' · '+paperTimeLabel(selectedTimeSecondsForPaper(p,value)):'')+'</option>').join('');
 }
@@ -6580,7 +6581,7 @@ function flattenCloud(profile,state){
   if(k==='duration'){
    // Keep the numeric field compatible with existing database rules. The full
    // preset uses the same version-independent record store as other app data.
-   const choice=['75','extra','challenge','60','45','0'].includes(String(v))?String(v):'75';
+   const choice=['75','extra','challenge','60','45','impossible','0'].includes(String(v))?String(v):'75';
    flat['profile/preferences/duration']=['0','45','60','75'].includes(choice)?Number(choice):75;
    put(['preferences','duration'],choice);
   }else flat['profile/preferences/'+k]=v;
@@ -6615,7 +6616,7 @@ function expandCloud(flat,fallbackName='Student'){
   if(!key.startsWith('records/'))continue;
   const path=cloudPath(key.slice(8));if(!Array.isArray(path)||path.some(k=>['__proto__','constructor','prototype'].includes(k)))throw Error('Invalid cloud record.');
   const r=JSON.parse(value),[a,b,c]=path;
-  if(a==='preferences'&&b==='duration'&&['75','extra','challenge','60','45','0'].includes(r))timingChoice=r;
+  if(a==='preferences'&&b==='duration'&&['75','extra','challenge','60','45','impossible','0'].includes(r))timingChoice=r;
   else if(a==='preferences'&&b==='leaderboardConsent'&&r&&r.version===1&&typeof r.enabled==='boolean')state.leaderboardConsent=r;
   else if(a==='preferences'&&b==='generalLeaderboardConsent'&&r&&r.version===1)state.generalLeaderboardConsent=r;
   else if(a==='mentalMaths'&&typeof b==='string'&&r&&r.v===1){(state.mentalMaths??={})[b]=r;}
@@ -7213,7 +7214,7 @@ refreshAccountCircles();
 <link rel="stylesheet" href="general-leaderboards.css?v=20261004-6">
 <script src="general-leaderboards.js?v=20261004-7"></script>
 <link rel="stylesheet" href="paper-preview.css?v=20261004-7">
-<script src="paper-preview.js?v=20261005-mat-additional"></script>
+<script src="paper-preview.js?v=20261010-timing-modes"></script>
 <link rel="stylesheet" href="full-page-ui.css?v=20261004-10">
 <link rel="stylesheet" href="revision-guides.css?v=20261006-practice">
 <script src="revision-guides-data.js?v=20261006-renderfix"></script>
