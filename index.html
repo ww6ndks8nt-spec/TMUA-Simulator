@@ -2626,7 +2626,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
     <button class="side-nav-item" id="navWrong" type="button" aria-label="Wrong-answer papers" title="Wrong-answer papers">
       <span class="side-nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7h-7M17 4l3 3-3 3M4 17h7M7 14l-3 3 3 3M4 7h3l10 10h3"/></svg></span><span class="side-nav-label">Wrong-answer papers</span><span class="side-nav-badge" id="wrongBadge">0</span>
     </button>
-<button class="side-nav-item" id="navBank" type="button" aria-label="Question bank" title="Question bank"><span class="side-nav-icon" aria-hidden="true">▤</span><span class="side-nav-label">Question bank</span></button><button class="side-nav-item" id="navBookmarks" type="button" aria-label="Bookmarks" title="Bookmarks"><span class="side-nav-icon" aria-hidden="true">☆</span><span class="side-nav-label">Bookmarks</span></button><button class="side-nav-item" id="navJournal" type="button" aria-label="Mistake journal" title="Mistake journal"><span class="side-nav-icon" aria-hidden="true">✎</span><span class="side-nav-label">Mistake journal</span></button><button class="side-nav-item" id="navLeaderboards" type="button" aria-label="Leaderboards" title="Leaderboards"><span class="side-nav-icon" aria-hidden="true">▥</span><span class="side-nav-label">Leaderboards</span></button><button class="side-nav-item" id="navFormulae" type="button" aria-label="Formulae list" title="Formulae list"><span class="side-nav-icon" aria-hidden="true">∑</span><span class="side-nav-label">Formulae list</span></button><button class="side-nav-item" id="navPlanner" type="button" aria-label="Practice planner" title="Practice planner"><span class="side-nav-icon" aria-hidden="true">▦</span><span class="side-nav-label">Practice planner</span></button>  </div>
+<button class="side-nav-item" id="navBank" type="button" aria-label="Question bank" title="Question bank"><span class="side-nav-icon" aria-hidden="true">▤</span><span class="side-nav-label">Question bank</span></button><button class="side-nav-item" id="navBookmarks" type="button" aria-label="Bookmarks" title="Bookmarks"><span class="side-nav-icon" aria-hidden="true">☆</span><span class="side-nav-label">Bookmarks</span></button><button class="side-nav-item" id="navJournal" type="button" aria-label="Mistake journal" title="Mistake journal"><span class="side-nav-icon" aria-hidden="true">✎</span><span class="side-nav-label">Mistake journal</span></button><button class="side-nav-item" id="navLeaderboards" type="button" aria-label="Leaderboards" title="Leaderboards"><span class="side-nav-icon" aria-hidden="true">▥</span><span class="side-nav-label">Leaderboards</span></button><button class="side-nav-item" id="navFormulae" type="button" aria-label="Formulae list" title="Formulae list"><span class="side-nav-icon" aria-hidden="true">∑</span><span class="side-nav-label">Formulae list</span></button><button class="side-nav-item" id="navStepTracker" type="button" aria-label="STEP tracker" title="STEP tracker"><span class="side-nav-icon" aria-hidden="true">▦</span><span class="side-nav-label">STEP tracker</span></button><button class="side-nav-item" id="navPlanner" type="button" aria-label="Practice planner" title="Practice planner"><span class="side-nav-icon" aria-hidden="true">▦</span><span class="side-nav-label">Practice planner</span></button>  </div>
   <div class="side-nav-foot"><span class="duck-logo" aria-hidden="true"></span><span>Duck TMUA</span></div>
 </nav>
 
@@ -2650,6 +2650,11 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
 <div class="formula-intro"><p>Learn what each formula means and when it applies. <strong>Core recall</strong> covers standard results and their immediate applications; <strong>Useful shortcut</strong> marks optional time-savers; <strong>Supplied if needed</strong> marks reference material you need not memorise.</p><p>There is no formula booklet in the TMUA. This revision guide follows the <a href="https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/03165619/TMUA_Content_Specification.pdf" target="_blank" rel="noopener">2026/27 specification</a> and checks scope against the <a href="https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2026/06/30103537/Notes_on_Mathematics_-for_TMUA_and_ESAT_M2.pdf" target="_blank" rel="noopener">official Notes on Mathematics</a>. Scope checked 3 October 2026. Formulae alone do not replace practice with graphs, reasoning and proof.</p></div>
 <div class="formula-controls"><label>Search formulae<input id="formulaSearch" type="search" placeholder="Try tangent, quadratic, probability…" autocomplete="off"></label><label>Topic<select id="formulaTopic"><option value="all">All topics</option></select></label><label>Type<select id="formulaKind"><option value="all">All formulae</option><option value="core">Core recall</option><option value="shortcut">Useful shortcuts</option><option value="provided">Supplied if needed</option></select></label><button id="formulaClear" type="button" class="bigbtn ghost">Clear filters</button></div>
 <p id="formulaCount" class="study-muted" role="status"></p><p id="formulaEmpty" hidden>No formulae match. Try another search or clear the filters.</p><div id="formulaContent"></div>
+</div></section>
+
+<section id="stepTrackerScreen" class="screen hidden nav-aware modern-ui studio-ui" aria-labelledby="stepTrackerTitle"><div class="card">
+<header class="studio-heading"><div><h1 id="stepTrackerTitle">STEP tracker</h1></div></header>
+<div id="stepTrackerRoot"></div>
 </div></section>
 
 <section id="mentalScreen" class="screen hidden nav-aware modern-ui studio-ui mm-open-layout" aria-labelledby="mentalTitle">
@@ -4402,12 +4407,28 @@ $('backupProfile').onclick=()=>{
  const a=document.createElement('a');a.href=url;a.download='tmua-profile-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
  $('backupStatus').textContent='Backup downloaded.';
 };
+function validStepTrackerRecord(id,r){
+ const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
+ const question=k=>/^(?:[1-9]|1[0-9]|20)$/.test(k);
+ if(!/^[123]-(?:\d{4}|mock[123])$/.test(id)||!object(r)||r.v!==1||typeof r.graded!=='boolean'||!object(r.scores))return false;
+ if(Object.entries(r.scores).some(([q,n])=>!question(q)||(n!==null&&(!Number.isInteger(n)||n<0||n>20))))return false;
+ if(r.times!==undefined&&(!object(r.times)||Object.entries(r.times).some(([q,n])=>!question(q)||(n!==null&&(typeof n!=='number'||!Number.isFinite(n)||n<0||n>1440)))))return false;
+ if(r.notes!==undefined&&(!object(r.notes)||Object.entries(r.notes).some(([q,n])=>!question(q)||typeof n!=='string'||n.length>2000)))return false;
+ if(r.statuses!==undefined&&(!object(r.statuses)||Object.entries(r.statuses).some(([q,n])=>!question(q)||!['hinted','done',null].includes(n))))return false;
+ if(r.boundaries!==undefined&&r.boundaries!==null){
+  if(!object(r.boundaries)||Object.keys(r.boundaries).some(k=>!['S','1','2','3'].includes(k)))return false;
+  let previous=120;
+  for(const k of ['S','1','2','3']){const n=r.boundaries[k];if(n===undefined||n===null)continue;if(!Number.isInteger(n)||n<0||n>previous)return false;previous=n;}
+ }
+ return true;
+}
 function validateProfileBackup(b){
  const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
  if(!object(b)||b.format!=='tmua-profile-backup'||b.version!==1||!object(b.data))throw Error('This is not a supported TMUA profile backup.');
  const d=b.data;
  if(!object(d.results)||!object(d.inprogress)||!Array.isArray(d.combinedResults)||!Array.isArray(d.randomResults)||!object(d.resolvedErrors))throw Error('The backup is missing valid practice history.');
  const safeTree=x=>{if(x&&typeof x==='object'){for(const k of Object.keys(x)){if(['__proto__','constructor','prototype'].includes(k))throw Error('Invalid backup field.');safeTree(x[k]);}}};safeTree(b);
+ if(d.stepTracker!==undefined&&(!object(d.stepTracker)||Object.entries(d.stepTracker).some(([id,r])=>!validStepTrackerRecord(id,r))))throw Error('Invalid STEP tracker data.');
  for(const rows of Object.values(d.results))if(!Array.isArray(rows)||rows.some(r=>!object(r)||r.a!==undefined&&!Array.isArray(r.a)))throw Error('Invalid attempt records.');
  for(const r of Object.values(d.inprogress)){
   if(!object(r)||!Array.isArray(r.answers)||!Array.isArray(r.flags)||(r.seen!==undefined&&!Array.isArray(r.seen)))throw Error('Invalid saved session.');
@@ -4808,6 +4829,8 @@ function setSideNav(tab){
   }
   $('navLeaderboards').classList.toggle('active',tab==='leaderboards');
   if(tab!=='leaderboards')$('leaderboardsScreen').classList.add('hidden');
+  $('navStepTracker').classList.toggle('active',tab==='stepTracker');
+  if(tab!=='stepTracker')$('stepTrackerScreen').classList.add('hidden');
   $('navFormulae').classList.toggle('active',tab==='formulae');
   if(tab!=='formulae')$('formulaeScreen').classList.add('hidden');
   $('navMental').classList.toggle('active',tab==='mental');
@@ -4823,7 +4846,7 @@ function setSideNav(tab){
   $('navWrong').classList.toggle('active',tab==='wrong');
   updateReviewBadge();
 }
-function hideSideNav(){ $('leaderboardsScreen').classList.add('hidden'); $('formulaeScreen').classList.add('hidden'); $('sideNav').classList.add('hidden'); $('mentalScreen').classList.add('hidden'); }
+function hideSideNav(){ $('stepTrackerScreen').classList.add('hidden'); $('leaderboardsScreen').classList.add('hidden'); $('formulaeScreen').classList.add('hidden'); $('sideNav').classList.add('hidden'); $('mentalScreen').classList.add('hidden'); }
 function showLibraryHub(){
   if(timerId) clearInterval(timerId);
   if(dualGapTimerId){ clearInterval(dualGapTimerId); dualGapTimerId=null; }
@@ -6117,7 +6140,7 @@ document.addEventListener('keydown',e=>{
 });
 
 /* Additional practice tools. Existing exam delivery and scoring stay separate. */
-const STUDY_SCREENS=['bankScreen','bookmarksScreen','journalScreen','plannerScreen','studyScreen'];
+const STUDY_SCREENS=['bankScreen','bookmarksScreen','journalScreen','plannerScreen','studyScreen','stepTrackerScreen'];
 const STUDY_TABS={bank:'navBank',bookmarks:'navBookmarks',journal:'navJournal',planner:'navPlanner'};
 const STUDY_CATEGORIES=['Unclassified','Conceptual gap','Algebra slip','Misreading','Time pressure','Guessing'];
 let studyOwner=null,studySelected=new Set(),studyPage=0,studySession=null,studyTick=0;
@@ -6707,6 +6730,7 @@ function flattenCloud(profile,state){
  if(state.leaderboardConsent)put(['preferences','leaderboardConsent'],state.leaderboardConsent);
  if(state.generalLeaderboardConsent)put(['preferences','generalLeaderboardConsent'],state.generalLeaderboardConsent);
  for(const [id,r] of Object.entries(state.mentalMaths||{}))put(['mentalMaths',id],r);
+ for(const [id,r] of Object.entries(state.stepTracker||{}))if(validStepTrackerRecord(id,r))put(['stepTracker',id],r);
  for(const [k,v] of Object.entries(profile.preferences||{}))if(v!==undefined){
   if(k==='duration'){
    // Keep the numeric field compatible with existing database rules. The full
@@ -6750,6 +6774,7 @@ function expandCloud(flat,fallbackName='Student'){
   else if(a==='preferences'&&b==='leaderboardConsent'&&r&&r.version===1&&typeof r.enabled==='boolean')state.leaderboardConsent=r;
   else if(a==='preferences'&&b==='generalLeaderboardConsent'&&r&&r.version===1)state.generalLeaderboardConsent=r;
   else if(a==='mentalMaths'&&typeof b==='string'&&r&&r.v===1){(state.mentalMaths??={})[b]=r;}
+  else if(a==='stepTracker'&&path.length===2&&typeof b==='string'&&validStepTrackerRecord(b,r)){(state.stepTracker??={})[b]=r;}
   else if(a==='results'){(state.results[b]??=[]).push(r);}
   else if(['combinedResults','randomResults'].includes(a))state[a].push(r);
   else if(['inprogress','resolvedErrors'].includes(a))state[a][b]=r;
@@ -6846,6 +6871,7 @@ async function cloudRefresh(){
    if(!$('libraryScreen').classList.contains('hidden'))buildLibrary();
    if(!$('reviewHubScreen').classList.contains('hidden'))buildReviewHub();
    if(!$('plannerScreen').classList.contains('hidden'))buildStudyPlanner();
+   if(!$('stepTrackerScreen').classList.contains('hidden'))window.StepTracker?.refresh();
   }
   cloudStatus(Object.keys(CLOUD.pending).length?'Not synced — retry when online':'Cloud saved');
  }catch(error){cloudStatus('Not synced — retry when online');}
@@ -7351,7 +7377,9 @@ refreshAccountCircles();
 <script src="revision-guides-data.js?v=20261006-renderfix"></script>
 <script src="revision-tricks-questions.js?v=20261006-1"></script>
 <script src="revision-guides.js?v=20261006-renderfix"></script>
-<script src="full-page-ui.js?v=20261006-fractals-inline"></script>
+<link rel="stylesheet" href="step-tracker.css?v=20261011-1">
+<script src="step-tracker.js?v=20261011-1"></script>
+<script src="full-page-ui.js?v=20261011-step-tracker"></script>
 <link rel="stylesheet" href="google-signin.css?v=20261006-1">
 <script src="google-signin.js?v=20261006-1"></script>
 <script>cloudBoot();</script>

@@ -28,6 +28,7 @@
  }
  menu('Practise',[['navPapers','Papers'],['navBank','Question bank'],['navMental','Mental maths'],['navFormulae','Formulae list'],['navTricks','Recurring tricks'],['navLogic','Logic']]);
  menu('Review',[['navReview','Attempts'],['navWrong','Mistake drill'],['navJournal','Mistake journal'],['navBookmarks','Bookmarks']]);
+ menu('Other',[['navStepTracker','STEP tracker']]);
  items.appendChild($('navLeaderboards'));
  const account=nav.querySelector('.airy-header-account'),planner=$('navPlanner');
  planner.classList.add('fp-planner');planner.title='Planner';planner.setAttribute('aria-label','Planner');account.prepend(planner);

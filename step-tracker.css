@@ -1,0 +1,103 @@
+/* STEP tracker follows the site's workspace colours and gradual control glow. */
+html body.duck-airy.duck-redesign.duck-fullpage #stepTrackerScreen{background:var(--du-bg)!important}
+html body.duck-airy.duck-redesign.duck-fullpage #stepTrackerScreen>.card{background:transparent!important}
+html body.duck-airy #stepTrackerScreen [hidden]{display:none!important}
+html body.duck-airy #stepTrackerScreen :is(.st-toolbar,.st-controls,.st-table-head){display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+html body.duck-airy #stepTrackerScreen .st-buttons{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+html body.duck-airy #stepTrackerScreen .st-buttons button{transition:box-shadow .25s ease,border-color .25s ease,background .25s ease!important}
+html body.duck-airy #stepTrackerScreen .st-buttons button[aria-pressed="true"]{border-color:#bb9427!important;background:#fff2b9!important}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen .st-buttons button[aria-pressed="true"]{background:var(--du-bg)!important;color:#ffdc5a!important;box-shadow:0 0 0 1px #e0bd52,0 0 14px #ffd23c3a!important}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen .st-buttons button{background:var(--du-bg)!important;background-image:none!important;color:var(--du-ink)!important;border:1px solid var(--du-line)!important}
+html body.duck-airy #stepTrackerScreen .st-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin:26px 0;padding:26px;border:1px solid var(--du-line);border-radius:20px;background:var(--du-surface)}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen .st-summary{background:var(--du-bg);border-color:#d8bd52;box-shadow:0 0 12px #ffd23c2e,inset 0 0 0 1px #ffdc5a14}
+html body.duck-airy #stepTrackerScreen .st-summary b{display:block;font-size:clamp(20px,2vw,30px);font-weight:650;color:var(--du-ink)!important;font-variant-numeric:tabular-nums}
+html body.duck-airy #stepTrackerScreen .st-summary span{display:block;font-size:12px;color:var(--du-muted);margin-top:8px}
+html body.duck-airy #stepTrackerScreen .st-controls{justify-content:flex-start;margin:26px 0 18px}
+html body.duck-airy #stepTrackerScreen .st-search{display:flex;align-items:center;gap:12px;font-size:13px;margin-left:auto;color:var(--du-muted)}
+html body.duck-airy #stepTrackerScreen .st-search input{width:180px}
+html body.duck-airy #stepTrackerScreen .st-legend{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;font-size:12px;margin:18px 0}
+html body.duck-airy #stepTrackerScreen .st-band{display:inline-flex;align-items:center;gap:3px;color:var(--du-muted)}
+html body.duck-airy #stepTrackerScreen .st-band::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--st-colour);margin-right:5px}
+html body.duck-airy #stepTrackerScreen .st-shorthand{color:var(--du-muted)}
+html body.duck-airy #stepTrackerScreen [data-band="low"]{--st-colour:#b84954;--st-tint:#b849541a}
+html body.duck-airy #stepTrackerScreen [data-band="partial"]{--st-colour:#b76216;--st-tint:#c277161a}
+html body.duck-airy #stepTrackerScreen [data-band="nearly"]{--st-colour:#8c7300;--st-tint:#dab9001a}
+html body.duck-airy #stepTrackerScreen [data-band="complete"]{--st-colour:#227f4b;--st-tint:#22934b1a}
+html body.duck-airy #stepTrackerScreen [data-band="hinted"]{--st-colour:#2679ad;--st-tint:#2679ad1a}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen [data-band="low"]{--st-colour:#ff868d}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen [data-band="partial"]{--st-colour:#ffb267}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen [data-band="nearly"]{--st-colour:#ffdf67}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen [data-band="complete"]{--st-colour:#87dda8}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen [data-band="hinted"]{--st-colour:#85caff}
+html body.duck-airy #stepTrackerScreen .st-table-head{font-size:12px;color:var(--du-muted);padding:8px 0 14px}
+html body.duck-airy #stepTrackerScreen .st-table-wrap{max-width:100%;overflow:auto;border:1px solid var(--du-line);border-radius:16px;background:var(--du-bg);max-height:70vh;overscroll-behavior:contain;scroll-padding-top:52px}
+html body.duck-airy #stepTrackerScreen .st-table{width:100%;border-collapse:separate;border-spacing:0;font-size:12px;font-variant-numeric:tabular-nums}
+html body.duck-airy #stepTrackerScreen .st-table :is(th,td){padding:10px 5px;text-align:center;border-bottom:1px solid var(--du-line);white-space:nowrap;background:var(--du-bg)!important}
+html body.duck-airy #stepTrackerScreen .st-table th{font-size:12px;color:var(--du-muted);font-weight:600}
+html body.duck-airy #stepTrackerScreen .st-table thead th{position:sticky;top:0;z-index:3;height:48px;box-sizing:border-box}
+html body.duck-airy #stepTrackerScreen .st-table th:first-child{position:sticky;left:0;z-index:2;min-width:108px;border-right:1px solid var(--du-line);text-align:left;padding-left:14px}
+html body.duck-airy #stepTrackerScreen .st-table thead th:first-child{z-index:4}
+html body.duck-airy #stepTrackerScreen .st-year-button{padding:0!important;border:0!important;background:none!important;color:var(--du-ink)!important;box-shadow:none!important;font:inherit;font-weight:650;cursor:pointer;text-align:left;white-space:normal;max-width:105px}
+html body.duck-airy #stepTrackerScreen .st-year-button:hover{text-decoration:underline;text-underline-offset:4px;text-shadow:0 0 8px #e2b64a55}
+html body.duck-airy #stepTrackerScreen .st-progress{display:block;font-size:10px;font-weight:400;color:var(--du-muted);margin-top:6px}
+html body.duck-airy #stepTrackerScreen .st-entry{width:46px!important;min-width:46px!important;min-height:38px!important;box-sizing:border-box;padding:8px 2px!important;text-align:center!important;border:1px solid var(--du-line)!important;border-radius:7px!important;background:var(--du-bg)!important;color:var(--du-ink)!important;box-shadow:none!important;font-size:13px!important;font-family:inherit!important;font-variant-numeric:tabular-nums;transition:box-shadow .25s ease,border-color .25s ease!important}
+html body.duck-airy #stepTrackerScreen .st-entry[data-band]:not([data-band=""]){border-color:var(--st-colour)!important;color:var(--st-colour)!important;background:var(--st-tint)!important}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen .st-entry[data-band]:not([data-band=""]){background:var(--du-bg)!important;box-shadow:inset 0 0 7px var(--st-tint),0 0 5px var(--st-tint)!important}
+html body.duck-airy #stepTrackerScreen .st-entry:is(:hover,:focus-visible){border-color:#c8a63c!important;box-shadow:0 0 8px #ffd23c33!important;outline:2px solid transparent}
+html body.duck-airy #stepTrackerScreen .st-entry[aria-invalid="true"]{border-color:#e35968!important;outline:1px solid #e35968}
+html body.duck-airy #stepTrackerScreen .st-entry.has-note{text-decoration:underline dotted;text-underline-offset:4px}
+html body.duck-airy #stepTrackerScreen .st-table .st-section-start{border-left:1px solid var(--du-line)}
+html body.duck-airy #stepTrackerScreen .st-unavailable{color:var(--du-line)}
+html body.duck-airy #stepTrackerScreen :is(.st-total,.st-grade){font-size:15px;font-weight:650;min-width:65px;color:var(--du-ink)}
+html body.duck-airy #stepTrackerScreen .st-grade .linkbtn{font-size:11px;padding:0!important;white-space:nowrap}
+html body.duck-airy #stepTrackerScreen .st-grade[data-grade="S"]{color:#319665;text-shadow:0 0 8px #31966522}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen .st-grade[data-grade="S"],html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen .st-grade[data-grade="1"]{color:#87dda8;text-shadow:0 0 8px #87dda844}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen .st-grade[data-grade="2"]{color:#ffdf67}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen .st-grade[data-grade="3"]{color:#ffb267}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen .st-grade[data-grade="U"]{color:#ff868d}
+html body.duck-airy #stepTrackerScreen .st-graded,html body.duck-airy #stepTrackerScreen #stDialogGraded{width:18px!important;height:18px!important;min-height:18px!important;accent-color:#d9b62a;cursor:pointer}
+html body.duck-airy #stepTrackerScreen .st-dialog{width:min(920px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 48px);box-sizing:border-box;padding:28px;border:1px solid var(--du-line);border-radius:20px;background:var(--du-bg)!important;color:var(--du-ink)!important;overflow:auto}
+html body.duck-airy #stepTrackerScreen .st-dialog::backdrop{background:#0009;backdrop-filter:blur(4px)}
+html[data-duck-theme="dark"] body.duck-airy #stepTrackerScreen .st-dialog{border-color:#d8bd52;box-shadow:0 0 24px #ffd23c24}
+html body.duck-airy #stepTrackerScreen .st-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+html body.duck-airy #stepTrackerScreen .st-dialog-head h2{font-size:24px;margin:0!important;color:var(--du-ink)!important}
+html body.duck-airy #stepTrackerScreen #stCloseDialog{font-size:22px;line-height:1;min-width:38px;padding:8px!important}
+html body.duck-airy #stepTrackerScreen .st-dialog-summary{display:flex;flex-wrap:wrap;align-items:center;gap:16px;font-size:14px;margin-bottom:18px}
+html body.duck-airy #stepTrackerScreen .st-dialog-summary label{display:flex;align-items:center;gap:8px;color:var(--du-ink)}
+html body.duck-airy #stepTrackerScreen #stDialogTime{color:var(--du-muted);font-size:12px}
+html body.duck-airy #stepTrackerScreen .st-boundary-details{border-top:1px solid var(--du-line);border-bottom:1px solid var(--du-line);padding:16px 0;margin-bottom:22px}
+html body.duck-airy #stepTrackerScreen .st-boundary-details summary{cursor:pointer;font-size:14px;color:var(--du-ink)}
+html body.duck-airy #stepTrackerScreen .st-boundary-fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+html body.duck-airy #stepTrackerScreen .st-boundary-fields label{display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--du-muted)}
+html body.duck-airy #stepTrackerScreen .st-boundary-fields input{width:100%;min-width:0}
+html body.duck-airy #stepTrackerScreen :is(.st-question-head,.st-question-row){display:grid;grid-template-columns:40px 80px 94px minmax(0,1fr);gap:12px;align-items:center}
+html body.duck-airy #stepTrackerScreen .st-question-head{font-size:12px;color:var(--du-muted);padding-bottom:12px}
+html body.duck-airy #stepTrackerScreen .st-question-row{padding:10px 0;border-top:1px solid var(--du-line)}
+html body.duck-airy #stepTrackerScreen .st-question-row .st-entry{width:100%!important}
+html body.duck-airy #stepTrackerScreen .st-note{width:100%;min-width:0;font-size:13px!important}
+@media(max-width:800px){
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav:has(#navStepTracker) .side-nav-items{gap:4px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav:has(#navStepTracker) .fp-nav-menu>summary{font-size:13px!important;padding:9px 6px!important;gap:7px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav:has(#navStepTracker) #navLeaderboards{font-size:12px!important;padding:8px 6px!important;min-width:0!important}
+ html body.duck-fullpage #sideNav:has(#navStepTracker) .fp-nav-menu:last-of-type .fp-nav-list{left:auto;right:0}
+ html body.duck-airy #stepTrackerScreen .st-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:20px}
+ html body.duck-airy #stepTrackerScreen .st-search{margin-left:0}
+ html body.duck-airy #stepTrackerScreen .st-table-wrap{max-height:65vh}
+}
+@media(max-width:360px){
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav:has(#navStepTracker) .side-nav-items{gap:2px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav:has(#navStepTracker) .fp-nav-menu>summary{font-size:12px!important;padding:9px 4px!important;gap:5px!important}
+ html body.duck-airy.duck-redesign.duck-fullpage #sideNav:has(#navStepTracker) #navLeaderboards{font-size:11px!important;padding:8px 3px!important}
+}
+@media(max-width:520px){
+ html body.duck-airy #stepTrackerScreen .st-controls{gap:14px}
+ html body.duck-airy #stepTrackerScreen .st-buttons button{padding:9px 13px!important;font-size:12px}
+ html body.duck-airy #stepTrackerScreen .st-search{width:100%;justify-content:space-between}
+ html body.duck-airy #stepTrackerScreen .st-table th:first-child{min-width:75px;padding-left:8px}
+ html body.duck-airy #stepTrackerScreen .st-year-button{max-width:75px}
+ html body.duck-airy #stepTrackerScreen .st-dialog{padding:18px 14px}
+ html body.duck-airy #stepTrackerScreen :is(.st-question-head,.st-question-row){grid-template-columns:24px 70px 76px minmax(60px,1fr);gap:7px}
+ html body.duck-airy #stepTrackerScreen .st-boundary-fields{gap:8px}
+ html body.duck-airy #stepTrackerScreen .st-dialog-head h2{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){html body.duck-airy #stepTrackerScreen :is(.st-entry,.st-buttons button){transition:none!important}}
