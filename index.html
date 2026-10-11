@@ -2702,7 +2702,35 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
 <fieldset id="bankEstimatedDifficulty" class="bank-filter-group"><legend>Estimated difficulty</legend><div class="bank-filter-buttons"></div></fieldset>
 <fieldset id="bankStatus" class="bank-filter-group"><legend>Attempt status</legend><div class="bank-filter-buttons"></div></fieldset>
 </div>
-<div class="study-actions"><button id="bankSelect" class="bigbtn ghost">Select this page</button><button id="bankClear" class="bigbtn ghost">Clear selection</button><button id="bankStart" class="bigbtn" disabled>Practise selected questions</button></div><p id="bankCount" class="study-muted" role="status"></p><p id="bankSessionSummary" role="status"></p><div id="bankResume" class="study-actions"></div><p class="study-muted"><button type="button" id="downloadDifficulties" class="linkback">Download difficulty ratings (CSV)</button></p><div id="bankList"></div><div class="study-actions"><button id="bankPrev" class="bigbtn ghost">Previous page</button><span id="bankPage"></span><button id="bankNext" class="bigbtn ghost">Next page</button></div></div></div><div id="bookmarksScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div class="duck-heading-copy"><span class="duck-logo" aria-hidden="true"></span><div><div class="studio-eyebrow">Return to the good ones</div><h1>Bookmarks</h1></div></div></header><p class="lead">Your saved questions, with a note about what makes each worth revisiting.</p><div id="bookmarksList"></div></div></div><div id="journalScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Review & reflect</div><h1>Mistake journal</h1></div></header><p class="lead">Turn incorrect answers into specific lessons. Marking a journal entry resolved does not remove it from wrong-answer practice.</p><div class="study-filters"><label>Status<select id="journalFilter"><option value="">All entries</option><option value="open">To review</option><option value="resolved">Resolved</option></select></label><label>Category<select id="journalCategoryFilter"></select></label></div><p id="journalCount" role="status" class="study-muted"></p><div id="journalList"></div></div></div><div id="plannerScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Make a plan</div><h1>Practice planner</h1></div></header><p class="lead">Plan a full paper or a focused topic session. Dates are saved with your profile; this planner does not send notifications.</p><form id="plannerForm" class="study-panel"><div class="study-filters"><label>Session type<select id="planKind"><option value="paper">Full paper</option><option value="topic">Topic practice</option></select></label><label>Paper or topic<select id="planTarget" required></select></label><label>Date<input id="planDate" type="date" required></label><label>Planned minutes<input id="planMinutes" type="number" min="5" max="600" value="75" required></label></div><button class="bigbtn" type="submit">Schedule session</button><span id="plannerSaved" role="status"></span><p class="study-muted">Planned minutes reserve study time. Full papers keep their existing exam timer settings.</p></form><section class="study-panel"><h2>Suggested topics</h2><p class="study-muted">Lowest accuracy in your completed papers, with at least three attempted questions per topic.</p><div id="plannerSuggestions" class="study-actions"></div></section><div id="plannerList"></div></div></div><div id="studyScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Question-bank practice</div><h1>Focused practice</h1></div></header><div class="study-actions"><button id="studyBack" class="bigbtn ghost">Save & return to bank</button><button id="studyBookmark" class="bigbtn ghost">Bookmark question</button></div><p id="studyPosition" class="study-muted"></p><section id="studyContent" class="study-panel"><h2 id="studyTitle"></h2><div id="studyStem" class="study-stem"></div><div id="studyOptions"></div><button id="studyCheck" class="bigbtn">Check answer</button><p id="studyFeedback" role="status"></p><div id="studySolution" class="study-solution hidden"></div></section><div class="study-actions"><button id="studyPrev" class="bigbtn ghost">Previous question</button><button id="studyNext" class="bigbtn ghost">Next question</button><button id="studyFinish" class="bigbtn">Finish session</button></div><details class="study-panel"><summary>Bookmark notes & mistake lesson</summary><div class="study-filters"><label>Your difficulty<select id="studyRating"><option>Unrated</option><option>Easy</option><option>Moderate</option><option>Hard</option></select></label><label>Mistake category<select id="studyCategory"></select></label></div><label class="study-field">Bookmark note<textarea id="studyBookmarkNote" maxlength="4000" placeholder="Adding a note also bookmarks this question."></textarea></label><label class="study-field">Lesson learned<textarea id="studyLesson" maxlength="4000" placeholder="What will you do differently next time?"></textarea></label><button id="studySaveDetails" class="bigbtn ghost">Save notes & lesson</button><span id="studySaved" role="status"></span></details></div></div>
+<div class="study-actions"><button id="bankSelect" class="bigbtn ghost">Select this page</button><button id="bankClear" class="bigbtn ghost">Clear selection</button><button id="bankStart" class="bigbtn" disabled>Practise selected questions</button></div><p id="bankCount" class="study-muted" role="status"></p><p id="bankSessionSummary" role="status"></p><div id="bankResume" class="study-actions"></div><p class="study-muted"><button type="button" id="downloadDifficulties" class="linkback">Download difficulty ratings (CSV)</button></p><div id="bankList"></div><div class="study-actions"><button id="bankPrev" class="bigbtn ghost">Previous page</button><span id="bankPage"></span><button id="bankNext" class="bigbtn ghost">Next page</button></div></div></div><div id="bookmarksScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div class="duck-heading-copy"><span class="duck-logo" aria-hidden="true"></span><div><div class="studio-eyebrow">Return to the good ones</div><h1>Bookmarks</h1></div></div></header><p class="lead">Your saved questions, with a note about what makes each worth revisiting.</p><div id="bookmarksList"></div></div></div><div id="journalScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Review & reflect</div><h1>Mistake journal</h1></div></header><p class="lead">Turn incorrect answers into specific lessons. Marking a journal entry resolved does not remove it from wrong-answer practice.</p><div class="study-filters"><label>Status<select id="journalFilter"><option value="">All entries</option><option value="open">To review</option><option value="resolved">Resolved</option></select></label><label>Category<select id="journalCategoryFilter"></select></label></div><p id="journalCount" role="status" class="study-muted"></p><div id="journalList"></div></div></div><div id="plannerScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card">
+<header class="studio-heading"><div><div class="studio-eyebrow">Make a plan</div><h1>Practice planner</h1></div></header>
+<div class="planner-top">
+<section id="plannerSitting" class="study-panel planner-sitting" aria-labelledby="plannerSittingTitle">
+<h2 id="plannerSittingTitle">TMUA sitting</h2>
+<div id="plannerCountdown" class="planner-countdown" role="status" aria-live="polite"></div>
+<form id="plannerSittingForm" class="planner-sitting-form">
+<label class="study-field">Date<select id="plannerSittingDay" required><optgroup label="October"><option value="10-12">12 October</option><option value="10-13">13 October</option><option value="10-14">14 October</option><option value="10-15">15 October</option><option value="10-16">16 October</option></optgroup><optgroup label="January"><option value="01-04">4 January</option><option value="01-05">5 January</option><option value="01-06">6 January</option><option value="01-07">7 January</option><option value="01-08">8 January</option></optgroup></select></label>
+<label class="study-field">Year<input id="plannerSittingYear" type="number" min="2000" max="9999" step="1" required aria-label="Sitting year"></label>
+<button class="bigbtn" type="submit">Set date</button>
+<button id="plannerClearSitting" class="linkbtn" type="button" hidden>Clear date</button>
+</form>
+</section>
+<form id="plannerForm" class="study-panel">
+<h2>Plan a session</h2>
+<div class="study-filters"><label>Session type<select id="planKind"><option value="paper">Full paper</option><option value="topic">Topic practice</option></select></label><label>Paper or topic<select id="planTarget" required></select></label><label>Date<input id="planDate" type="date" required></label><label>Planned minutes<input id="planMinutes" type="number" min="5" max="600" value="75" required></label></div>
+<button class="bigbtn" type="submit">Schedule session</button><span id="plannerSaved" role="status"></span>
+</form>
+</div>
+<section class="study-panel planner-calendar" aria-labelledby="plannerCalendarTitle">
+<div class="planner-calendar-head"><div><h2 id="plannerCalendarTitle">Session calendar</h2><p id="plannerMonthSummary" class="study-muted"></p></div><div class="planner-calendar-nav"><button id="plannerPrevMonth" class="bigbtn ghost" type="button" aria-label="Previous month">‹</button><h3 id="plannerMonthLabel" aria-live="polite"></h3><button id="plannerNextMonth" class="bigbtn ghost" type="button" aria-label="Next month">›</button><button id="plannerToday" class="bigbtn ghost" type="button">Today</button></div></div>
+<div class="planner-weekdays" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+<div id="plannerCalendarDays" class="planner-calendar-days" role="group" aria-labelledby="plannerMonthLabel"></div>
+</section>
+<div class="planner-list-head"><h2 id="plannerListTitle">All sessions</h2><button id="plannerAllSessions" class="bigbtn ghost" type="button" hidden>All sessions</button></div>
+<div id="plannerList"></div>
+<section class="study-panel"><h2>Suggested topics</h2><div id="plannerSuggestions" class="study-actions"></div></section>
+</div></div>
+<div id="studyScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Question-bank practice</div><h1>Focused practice</h1></div></header><div class="study-actions"><button id="studyBack" class="bigbtn ghost">Save & return to bank</button><button id="studyBookmark" class="bigbtn ghost">Bookmark question</button></div><p id="studyPosition" class="study-muted"></p><section id="studyContent" class="study-panel"><h2 id="studyTitle"></h2><div id="studyStem" class="study-stem"></div><div id="studyOptions"></div><button id="studyCheck" class="bigbtn">Check answer</button><p id="studyFeedback" role="status"></p><div id="studySolution" class="study-solution hidden"></div></section><div class="study-actions"><button id="studyPrev" class="bigbtn ghost">Previous question</button><button id="studyNext" class="bigbtn ghost">Next question</button><button id="studyFinish" class="bigbtn">Finish session</button></div><details class="study-panel"><summary>Bookmark notes & mistake lesson</summary><div class="study-filters"><label>Your difficulty<select id="studyRating"><option>Unrated</option><option>Easy</option><option>Moderate</option><option>Hard</option></select></label><label>Mistake category<select id="studyCategory"></select></label></div><label class="study-field">Bookmark note<textarea id="studyBookmarkNote" maxlength="4000" placeholder="Adding a note also bookmarks this question."></textarea></label><label class="study-field">Lesson learned<textarea id="studyLesson" maxlength="4000" placeholder="What will you do differently next time?"></textarea></label><button id="studySaveDetails" class="bigbtn ghost">Save notes & lesson</button><span id="studySaved" role="status"></span></details></div></div>
 <div id="modernReviewScreen" class="screen hidden nav-aware modern-ui studio-ui"><div class="card"><header class="studio-heading"><div><div class="studio-eyebrow">Review & understand</div><h1>Answer review</h1></div><div class="study-actions"><button id="modernReviewBack" class="bigbtn ghost">Results summary</button><button id="modernReviewHistory" class="bigbtn ghost">Review history</button></div></header><p id="modernReviewPaper" class="lead"></p><div class="modern-review-layout"><nav class="study-panel modern-review-navigation" aria-label="Review questions"><div id="modernReviewNavigator"></div></nav><div id="modernReviewContent"><section class="study-panel"><div class="modern-review-heading"><h2 id="modernReviewQuestion"></h2><span id="modernReviewState"></span></div><p id="modernReviewTopic" class="study-muted"></p><div class="modern-review-metrics"><div><span>Your answer</span><b id="modernReviewYourAnswer"></b></div><div><span>Correct answer</span><b id="modernReviewCorrectAnswer"></b></div><div><span>Time spent</span><b id="modernReviewTime"></b></div></div><div id="modernReviewStem" class="study-stem"></div><div id="modernReviewOptions"></div></section><section class="study-panel modern-review-worked"><h2 id="modernReviewSolutionTitle">Worked solution</h2><p id="modernReviewSolutionNotice" class="modern-review-notice" role="status"></p><div id="modernReviewSolution"></div></section><div class="study-actions"><button id="modernReviewPrev" class="bigbtn ghost">Previous question</button><button id="modernReviewNext" class="bigbtn">Next question</button><button id="modernReviewBookmark" class="bigbtn ghost">Bookmark question</button><button id="modernReviewPractice" class="bigbtn ghost">Practise again</button></div><details class="study-panel"><summary>Add a lesson to your mistake journal</summary><label class="study-field">Category<select id="modernReviewCategory"></select></label><label class="study-field">Lesson<textarea id="modernReviewLesson" maxlength="4000" placeholder="What will you do differently next time?"></textarea></label><button id="modernReviewSaveLesson" class="bigbtn ghost">Save lesson</button><span id="modernReviewSaved" role="status"></span></details></div></div></div></div>
 <!-- ============ LOGIN ============ -->
 <div class="screen modern-ui studio-ui" id="loginScreen">
@@ -4388,7 +4416,7 @@ function validateProfileBackup(b){
   if(r.seen===undefined)r.seen=r.answers.map((answer,i)=>(answer!==null&&answer!==undefined)||r.flags[i]===true||i===r.idx);
  }
  for(const r of [...d.combinedResults,...d.randomResults])if(!object(r))throw Error('Invalid attempt records.');
- if(d.study){if(!object(d.study))throw Error('Invalid study data.');for(const k of ['bookmarks','ratings','journal'])if(d.study[k]&&!object(d.study[k]))throw Error('Invalid study data.');for(const k of ['responses','plans','sessions'])if(d.study[k]&&!Array.isArray(d.study[k]))throw Error('Invalid study data.');}
+ if(d.study){if(!object(d.study))throw Error('Invalid study data.');for(const k of ['bookmarks','ratings','journal','settings'])if(d.study[k]&&!object(d.study[k]))throw Error('Invalid study data.');for(const k of ['responses','plans','sessions'])if(d.study[k]&&!Array.isArray(d.study[k]))throw Error('Invalid study data.');}
  return b;
 }
 
@@ -6099,7 +6127,7 @@ function studyData(){
  if(studyOwner!==currentUser){studyOwner=currentUser;studySelected.clear();studySession=null;studyTick=0;studyPage=0;}
  if(!STATE.study || typeof STATE.study!=='object') STATE.study={};
  const d=STATE.study;
- for(const k of ['bookmarks','ratings','journal']) if(!d[k]||typeof d[k]!=='object')d[k]={};
+ for(const k of ['bookmarks','ratings','journal','settings']) if(!d[k]||typeof d[k]!=='object')d[k]={};
  for(const k of ['responses','plans','sessions']) if(!Array.isArray(d[k]))d[k]=[];
  return d;
 }
@@ -6274,16 +6302,118 @@ function buildStudyJournal(){
 function studyToday(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function studyPlanLabel(plan){return plan.kind==='paper'?(paperById(plan.target)?.title||'Unavailable paper'):planTopicCategories(plan).join(' · ');}
 function studyPlanOptions(){const kind=$('planKind').value;$('planTarget').innerHTML=(kind==='paper'?PAPERS.filter(p=>!p.locked&&!p.archived).map(p=>studyOption(p.id,p.title)):TOPIC_CATEGORIES.map(t=>studyOption(t))).join('');}
+// Dates are local calendar dates, not UTC instants or a guessed exam start time.
+let plannerView={owner:null,prep:null,month:'',selected:null,today:''};
+const PLANNER_SITTING_DAYS=['10-12','10-13','10-14','10-15','10-16','01-04','01-05','01-06','01-07','01-08'];
+function plannerDate(value){
+ if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return null;
+ const [y,m,d]=value.split('-').map(Number),date=new Date(y,m-1,d,12);
+ return y>=2000&&y<=9999&&date.getFullYear()===y&&date.getMonth()===m-1&&date.getDate()===d?date:null;
+}
+function plannerSittingDate(){
+ const value=studyData().settings.tmuaSitting?.date;
+ return plannerDate(value)&&PLANNER_SITTING_DAYS.includes(value.slice(5))?value:null;
+}
+function plannerDayDifference(date,today=studyToday()){
+ const a=plannerDate(date),b=plannerDate(today);if(!a||!b)return null;
+ return Math.round((Date.UTC(a.getFullYear(),a.getMonth(),a.getDate())-Date.UTC(b.getFullYear(),b.getMonth(),b.getDate()))/86400000);
+}
+function plannerNextSitting(today=studyToday()){
+ const year=Number(today.slice(0,4));
+ return [year,year+1].flatMap(y=>PLANNER_SITTING_DAYS.map(d=>y+'-'+d)).sort().find(d=>d>=today);
+}
+function plannerDateLabel(date){return plannerDate(date)?.toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'long',year:'numeric'})||date;}
+function plannerEnsureView(){
+ const prep=ESAT_MODE?'esat':'tmua';
+ if(plannerView.owner!==currentUser||plannerView.prep!==prep){
+  plannerView={owner:currentUser,prep,month:studyToday().slice(0,7),selected:null,today:studyToday()};
+  $('planDate').value=studyToday();
+ }
+}
+function plannerRenderSitting(){
+ $('plannerSitting').hidden=ESAT_MODE;
+ const date=plannerSittingDate(),suggestion=date||plannerNextSitting(),host=$('plannerCountdown');
+ if(!$('plannerSittingForm').contains(document.activeElement)){
+  $('plannerSittingDay').value=suggestion.slice(5);$('plannerSittingYear').value=suggestion.slice(0,4);
+ }
+ $('plannerClearSitting').hidden=!date;
+ host.replaceChildren();
+ const value=document.createElement('strong'),label=document.createElement('span'),detail=document.createElement('p');
+ const days=date?plannerDayDifference(date):null;
+ value.className='planner-countdown-value';label.className='planner-countdown-label';detail.className='study-muted';
+ value.textContent=days===null?'—':days===0?'Today':days<0?'Passed':String(days);
+ label.textContent=days===null?'Choose your sitting date':days===0?'Your sitting is today':days<0?'Sitting date passed':days===1?'day to go':'days to go';
+ detail.textContent=date?plannerDateLabel(date):'October or January';
+ host.append(value,label,detail);
+}
+function plannerCurrentPlans(){return studyData().plans.filter(planInCurrentPrep);}
+function plannerRenderCalendar(plans=plannerCurrentPlans()){
+ const [year,month]=plannerView.month.split('-').map(Number),first=new Date(year,month-1,1,12);
+ const today=studyToday(),sitting=ESAT_MODE?null:plannerSittingDate();
+ const monthPlans=plans.filter(p=>p.date?.slice(0,7)===plannerView.month&&plannerDate(p.date));
+ const total=monthPlans.reduce((sum,p)=>sum+(Number(p.minutes)||0),0);
+ $('plannerMonthLabel').textContent=first.toLocaleDateString(undefined,{month:'long',year:'numeric'});
+ $('plannerMonthSummary').textContent=monthPlans.length+' '+(monthPlans.length===1?'session':'sessions')+' · '+total+' min planned';
+ $('plannerPrevMonth').disabled=year===2000&&month===1;
+ $('plannerNextMonth').disabled=year===9999&&month===12;
+ const host=$('plannerCalendarDays'),focused=host.contains(document.activeElement)?document.activeElement.dataset.date:null;host.replaceChildren();
+ const offset=(first.getDay()+6)%7,days=new Date(year,month,0).getDate(),cells=Math.ceil((offset+days)/7)*7;
+ for(let i=0;i<cells;i++){
+  const day=i-offset+1;
+  if(day<1||day>days){const blank=document.createElement('div');blank.className='planner-day-blank';blank.setAttribute('aria-hidden','true');host.appendChild(blank);continue;}
+  const date=plannerView.month+'-'+String(day).padStart(2,'0'),entries=monthPlans.filter(p=>p.date===date);
+  const button=document.createElement('button');button.type='button';button.className='planner-day';button.dataset.date=date;
+  button.classList.toggle('is-today',date===today);button.classList.toggle('is-sitting',date===sitting);button.classList.toggle('has-sessions',entries.length>0);
+  button.setAttribute('aria-pressed',String(date===plannerView.selected));
+  if(date===today)button.setAttribute('aria-current','date');
+  const description=[plannerDateLabel(date),date===today?'Today':'',date===sitting?'TMUA sitting':'',...entries.map(p=>studyPlanLabel(p)+', '+p.minutes+' minutes'+(p.done?', completed':''))].filter(Boolean).join('. ');
+  button.setAttribute('aria-label',description);button.title=description;
+  const number=document.createElement('span');number.className='planner-day-number';number.textContent=day;button.appendChild(number);
+  if(date===sitting){const badge=document.createElement('span');badge.className='planner-sitting-badge';badge.textContent='TMUA';button.appendChild(badge);}
+  entries.slice(0,2).forEach(p=>{const event=document.createElement('span');event.className='planner-calendar-event'+(p.done?' is-done':'');event.textContent=(p.done?'✓ ':'')+studyPlanLabel(p);button.appendChild(event);});
+  if(entries.length>2){const more=document.createElement('span');more.className='planner-calendar-more';more.textContent='+'+(entries.length-2)+' more';button.appendChild(more);}
+  if(entries.length){const count=document.createElement('span');count.className='planner-calendar-count';count.textContent=entries.length;count.title=entries.length+' '+(entries.length===1?'session':'sessions');button.appendChild(count);}
+  button.addEventListener('click',()=>{plannerView.selected=date;$('planDate').value=date;buildStudyPlanner();$('plannerCalendarDays').querySelector('[data-date="'+date+'"]').focus({preventScroll:true});});
+  host.appendChild(button);
+ }
+ if(focused)host.querySelector('[data-date="'+focused+'"]')?.focus({preventScroll:true});
+ $('plannerListTitle').textContent=plannerView.selected?plannerDateLabel(plannerView.selected):'All sessions';
+ $('plannerAllSessions').hidden=!plannerView.selected;
+}
+function plannerMoveMonth(change){
+ const [year,month]=plannerView.month.split('-').map(Number),date=new Date(year,month-1+change,1,12);
+ if(date.getFullYear()<2000||date.getFullYear()>9999)return;
+ plannerView.month=date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0');plannerView.selected=null;buildStudyPlanner();
+}
+$('plannerSittingForm').addEventListener('submit',e=>{
+ e.preventDefault();const year=Number($('plannerSittingYear').value),date=String(year)+'-'+$('plannerSittingDay').value;
+ if(!Number.isInteger(year)||!plannerDate(date)||!PLANNER_SITTING_DAYS.includes(date.slice(5)))return;
+ studyData().settings.tmuaSitting={date,updated:Date.now()};studySave();buildStudyPlanner();
+});
+$('plannerClearSitting').addEventListener('click',()=>{delete studyData().settings.tmuaSitting;studySave();buildStudyPlanner();});
+$('plannerPrevMonth').addEventListener('click',()=>plannerMoveMonth(-1));
+$('plannerNextMonth').addEventListener('click',()=>plannerMoveMonth(1));
+$('plannerToday').addEventListener('click',()=>{const today=studyToday();plannerView.month=today.slice(0,7);plannerView.selected=today;$('planDate').value=today;buildStudyPlanner();});
+$('plannerAllSessions').addEventListener('click',()=>{plannerView.selected=null;buildStudyPlanner();});
+function plannerRefreshDay(){
+ if(!currentUser||document.hidden||$('plannerScreen').classList.contains('hidden'))return;
+ if(plannerView.today!==studyToday()){plannerView.today=studyToday();buildStudyPlanner();}
+}
+setInterval(plannerRefreshDay,30000);
+document.addEventListener('visibilitychange',plannerRefreshDay);
+
 function buildStudyPlanner(){
- const host=$('plannerList');host.innerHTML='';const plans=studyData().plans.filter(planInCurrentPrep).slice().sort((a,b)=>Number(a.done)-Number(b.done)||a.date.localeCompare(b.date));
- if(!plans.length)studyEmpty(host,'No sessions planned yet. Schedule a paper or a topic session above.');
+ plannerEnsureView();plannerRenderSitting();
+ const allPlans=plannerCurrentPlans();plannerRenderCalendar(allPlans);
+ const host=$('plannerList');host.innerHTML='';const plans=allPlans.filter(p=>!plannerView.selected||p.date===plannerView.selected).slice().sort((a,b)=>Number(a.done)-Number(b.done)||a.date.localeCompare(b.date));
+ if(!plans.length)studyEmpty(host,plannerView.selected?'No sessions planned for this date.':'No sessions planned yet.');
  plans.forEach(p=>{
  const row=document.createElement('article');row.className='study-list-row';const body=document.createElement('div');body.className='study-row-body';const title=document.createElement('b');title.textContent=studyPlanLabel(p);
  const info=document.createElement('p');info.className='study-muted';info.textContent=new Date(p.date+'T12:00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'})+' · '+p.minutes+' minutes planned · '+(p.done?'Completed':p.date<studyToday()?'Overdue':'Scheduled');body.append(title,info);
- const actions=document.createElement('div');actions.className='study-actions';actions.append(studyButton('Start',()=>{if(p.kind==='paper'){const paper=paperById(p.target);if(paper){studyHide();openStart(paper);}}else{const targets=planTopicCategories(p);if(targets.length>1){startStudySession(studyCatalog.filter(x=>targets.some(t=>x.topics.includes(t))).map(x=>x.key));return;}studyNav('bank');resetBankFilters(targets);}}),studyButton(p.done?'Reopen':'Mark done',()=>{p.done=!p.done;studySave();buildStudyPlanner();}),studyButton('Remove',()=>{studyData().plans=studyData().plans.filter(x=>x.id!==p.id);studySave();buildStudyPlanner();}));row.append(body,actions);host.appendChild(row);
+ const actions=document.createElement('div');actions.className='study-actions';actions.append(studyButton('Start',()=>{if(p.kind==='paper'){const paper=paperById(p.target);if(paper){studyHide();openStart(paper);}}else{const targets=planTopicCategories(p);if(targets.length>1){startStudySession(studyCatalog.filter(x=>targets.some(t=>x.topics.includes(t))).map(x=>x.key));return;}studyNav('bank');resetBankFilters(targets);}}),studyButton(p.done?'Reopen':'Mark done',()=>{const plan=studyData().plans.find(x=>x.id===p.id);if(plan){plan.done=!plan.done;studySave();}buildStudyPlanner();}),studyButton('Remove',()=>{studyData().plans=studyData().plans.filter(x=>x.id!==p.id);studySave();buildStudyPlanner();}));row.append(body,actions);host.appendChild(row);
  });
  const rec=$('plannerSuggestions');rec.innerHTML='';const topics=dashboardTopicStats().filter(x=>x.attempted>=3).sort((a,b)=>a.correct/a.attempted-b.correct/b.attempted).slice(0,3);
- if(!topics.length){rec.textContent='Topic suggestions will appear after you have attempted at least three questions in a topic.';return;}
+ if(!topics.length){rec.textContent='No suggestions yet.';return;}
  topics.forEach(t=>rec.appendChild(studyButton(t.topic+' · '+Math.round(t.correct/t.attempted*100)+'% accuracy',()=>{$('planKind').value='topic';studyPlanOptions();$('planTarget').value=t.topic;$('planDate').focus();})));
 }
 function studyTimingRows(){
@@ -6342,7 +6472,7 @@ $('studyCategory').innerHTML=STUDY_CATEGORIES.map(c=>studyOption(c)).join('');
 $('journalCategoryFilter').innerHTML=studyOption('','All categories')+STUDY_CATEGORIES.map(c=>studyOption(c)).join('');
 ['journalFilter','journalCategoryFilter'].forEach(id=>$(id).addEventListener('change',buildStudyJournal));
 $('planKind').addEventListener('change',studyPlanOptions);studyPlanOptions();$('planDate').value=studyToday();
-$('plannerForm').addEventListener('submit',e=>{e.preventDefault();const date=$('planDate').value,minutes=Number($('planMinutes').value);if(!date||!Number.isFinite(minutes)||minutes<5||minutes>600)return;studyData().plans.push({id:'plan-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),date,minutes,kind:$('planKind').value,target:$('planTarget').value,done:false,prep:ESAT_MODE?'esat':'tmua'});studySave();$('plannerSaved').textContent='Session scheduled.';buildStudyPlanner();});
+$('plannerForm').addEventListener('submit',e=>{e.preventDefault();const date=$('planDate').value,minutes=Number($('planMinutes').value);if(!plannerDate(date)||!Number.isFinite(minutes)||minutes<5||minutes>600)return;studyData().plans.push({id:'plan-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),date,minutes,kind:$('planKind').value,target:$('planTarget').value,done:false,prep:ESAT_MODE?'esat':'tmua'});studySave();plannerView.month=date.slice(0,7);plannerView.selected=date;$('plannerSaved').textContent='Session scheduled.';buildStudyPlanner();});
 window.addEventListener('beforeunload',studyFlush);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)studyFlush();else if(studySession&&!$('studyScreen').classList.contains('hidden')&&!studySession.revealed[studySession.keys[studySession.index]]&&!studySession.finished)studyTick=Date.now();});
 
@@ -6591,7 +6721,7 @@ function flattenCloud(profile,state){
  for(const key of ['inprogress','resolvedErrors'])for(const [id,r] of Object.entries(state[key]||{}))put([key,id],r);
  const study=state.study||{};
  for(const key of ['responses','plans','sessions'])for(const r of study[key]||[])put(['study',key,cloudRecordId(r)],r);
- for(const key of ['bookmarks','ratings','journal'])for(const [id,r] of Object.entries(study[key]||{}))put(['study',key,id],r);
+ for(const key of ['bookmarks','ratings','journal','settings'])for(const [id,r] of Object.entries(study[key]||{}))put(['study',key,id],r);
  return flat;
 }
 function remoteCloudMap(remote){
@@ -6607,7 +6737,7 @@ function remoteCloudMap(remote){
 function expandCloud(flat,fallbackName='Student'){
  const profile={name:fallbackName,created:Date.now(),preferences:{}},state=emptyCloudState();
  let timingChoice;
- state.study={responses:[],plans:[],sessions:[],bookmarks:{},ratings:{},journal:{}};
+ state.study={responses:[],plans:[],sessions:[],bookmarks:{},ratings:{},journal:{},settings:{}};
  for(const [key,value] of Object.entries(flat)){
   if(value===null)continue;
   if(key==='profile/name'){profile.name=String(value);continue;}
@@ -6624,7 +6754,7 @@ function expandCloud(flat,fallbackName='Student'){
   else if(['combinedResults','randomResults'].includes(a))state[a].push(r);
   else if(['inprogress','resolvedErrors'].includes(a))state[a][b]=r;
   else if(a==='study'&&['responses','plans','sessions'].includes(b))state.study[b].push(r);
-  else if(a==='study'&&['bookmarks','ratings','journal'].includes(b))state.study[b][c]=r;
+  else if(a==='study'&&['bookmarks','ratings','journal','settings'].includes(b))state.study[b][c]=r;
  }
  if(timingChoice!==undefined)profile.preferences.duration=timingChoice;
  const byTime=(a,b)=>(a.t||a.started||0)-(b.t||b.started||0);
@@ -6715,6 +6845,7 @@ async function cloudRefresh(){
    if(!$('dashboardScreen').classList.contains('hidden'))buildDashboard();
    if(!$('libraryScreen').classList.contains('hidden'))buildLibrary();
    if(!$('reviewHubScreen').classList.contains('hidden'))buildReviewHub();
+   if(!$('plannerScreen').classList.contains('hidden'))buildStudyPlanner();
   }
   cloudStatus(Object.keys(CLOUD.pending).length?'Not synced — retry when online':'Cloud saved');
  }catch(error){cloudStatus('Not synced — retry when online');}
@@ -7227,5 +7358,65 @@ refreshAccountCircles();
 <link rel="stylesheet" href="site-footer.css?v=20261002-1">
 <script src="site-footer.js?v=20261002-1"></script>
 <link rel="stylesheet" href="question-bank-filters.css?v=20261006-1">
+<style id="planner-calendar-theme">
+/* Planner: use the workspace palette, with local calendar dates and concise labels. */
+html body.duck-airy #plannerScreen .planner-top{display:grid;grid-template-columns:minmax(300px,.75fr) minmax(0,1.25fr);gap:24px;align-items:stretch}
+html body.duck-airy #plannerScreen .planner-top>.study-panel{margin:0!important;min-width:0}
+html body.duck-airy #plannerScreen .planner-top:has(#plannerSitting[hidden]){grid-template-columns:1fr}
+html body.duck-airy #plannerScreen [hidden]{display:none!important}
+html body.duck-airy #plannerScreen .study-filters{grid-template-columns:repeat(2,minmax(0,1fr));margin:16px 0}
+html body.duck-airy #plannerScreen .planner-countdown{margin:24px 0}
+html body.duck-airy #plannerScreen .planner-countdown-value{display:block;font-size:clamp(32px,3.8vw,60px);font-weight:650;line-height:1.12;letter-spacing:-.04em;color:#886800!important;font-variant-numeric:tabular-nums}
+html body.duck-airy #plannerScreen .planner-countdown-label{display:block;font-size:16px;margin-top:8px;color:var(--du-ink)}
+html body.duck-airy #plannerScreen .planner-sitting-form{display:flex;align-items:flex-end;flex-wrap:wrap;gap:12px}
+html body.duck-airy #plannerScreen .planner-sitting-form label{flex:1 1 120px}
+html body.duck-airy #plannerScreen .planner-sitting-form label:nth-child(2){flex:0 1 95px}
+html body.duck-airy #plannerScreen .planner-sitting-form :is(input,select){width:100%;min-width:0}
+html body.duck-airy #plannerScreen #plannerClearSitting{align-self:center;padding:6px 0!important;margin-left:4px}
+html body.duck-airy #plannerScreen #plannerSaved{font-size:13px;padding-left:12px}
+html body.duck-airy #plannerScreen :is(.planner-calendar-head,.planner-list-head){display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+html body.duck-airy #plannerScreen .planner-calendar-head{margin-bottom:20px}
+html body.duck-airy #plannerScreen .planner-calendar-head h2{margin:0!important}
+html body.duck-airy #plannerScreen .planner-calendar-nav{display:flex;align-items:center;gap:10px}
+html body.duck-airy #plannerScreen .planner-calendar-nav h3{font-size:17px;min-width:150px;text-align:center;margin:0!important;color:var(--du-ink)!important}
+html body.duck-airy #plannerScreen :is(#plannerPrevMonth,#plannerNextMonth){font-size:24px;line-height:1;padding:6px!important;min-width:38px;min-height:38px;display:grid;place-items:center}
+html body.duck-airy #plannerScreen :is(.planner-weekdays,.planner-calendar-days){display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+html body.duck-airy #plannerScreen .planner-weekdays{margin-bottom:10px;color:var(--du-muted);font-size:12px;text-align:center}
+html body.duck-airy #plannerScreen .planner-day{display:flex;flex-direction:column;align-items:stretch;gap:5px;position:relative;text-align:left;min-width:0;min-height:125px;padding:12px!important;border:1px solid var(--du-line)!important;border-radius:12px!important;background:var(--du-bg)!important;color:var(--du-ink)!important;box-shadow:none!important;font:inherit;cursor:pointer;transition:border-color .25s ease,box-shadow .25s ease,background .25s ease!important}
+html body.duck-airy #plannerScreen .planner-day-number{align-self:flex-start;display:grid;place-items:center;min-width:26px;min-height:26px;font-size:14px;font-weight:600;border-radius:50%}
+html body.duck-airy #plannerScreen .is-today .planner-day-number{background:#f8d85a;color:#1b1c20!important}
+html body.duck-airy #plannerScreen .planner-day:is(:hover,:focus-visible,[aria-pressed="true"]){border-color:#bb9427!important;background:#fff8df!important;box-shadow:0 0 0 1px #e9c75544!important}
+html body.duck-airy #plannerScreen .planner-day.is-sitting{border-color:#caa737!important}
+html body.duck-airy #plannerScreen .planner-sitting-badge{color:#866400!important;font-size:10px;letter-spacing:.06em;font-weight:700}
+html body.duck-airy #plannerScreen .planner-calendar-event{font-size:12px;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:2px solid #b89830;padding-left:6px;color:var(--du-ink)}
+html body.duck-airy #plannerScreen .planner-calendar-event.is-done{border-color:#31905e;color:#277846}
+html body.duck-airy #plannerScreen .planner-calendar-more{font-size:11px;color:var(--du-muted)}
+html body.duck-airy #plannerScreen .planner-calendar-count{display:none;font-size:10px;color:var(--du-muted)}
+html body.duck-airy #plannerScreen .planner-list-head{margin-top:28px}
+html body.duck-airy #plannerScreen .planner-list-head h2{font-size:20px;margin:0}
+html[data-duck-theme="dark"] body.duck-airy #plannerScreen .planner-countdown-value{color:#ffdc5a!important;text-shadow:0 0 10px #ffd23c44,0 0 24px #ffd23c22}
+html[data-duck-theme="dark"] body.duck-airy #plannerScreen .planner-day:is(:hover,:focus-visible,[aria-pressed="true"]){background:var(--du-bg)!important;border-color:#d8bd52!important;box-shadow:0 0 10px #ffd23c38,inset 0 0 0 1px #ffdc5a14!important}
+html[data-duck-theme="dark"] body.duck-airy #plannerScreen .planner-sitting-badge{color:#ffdc5a!important}
+html[data-duck-theme="dark"] body.duck-airy #plannerScreen .planner-calendar-event.is-done{color:#84d7a0!important}
+@media(min-width:1600px){html body.duck-airy #plannerScreen .planner-day{min-height:155px}}
+@media(max-width:1000px){html body.duck-airy #plannerScreen .planner-top{grid-template-columns:1fr}}
+@media(max-width:600px){
+ html body.duck-airy #plannerScreen .planner-calendar-head{gap:10px}
+ html body.duck-airy #plannerScreen .planner-calendar-nav{width:100%;gap:6px}
+ html body.duck-airy #plannerScreen .planner-calendar-nav h3{flex:1;min-width:0;font-size:15px}
+ html body.duck-airy #plannerScreen #plannerToday{padding:8px!important;font-size:12px}
+ html body.duck-airy #plannerScreen :is(.planner-weekdays,.planner-calendar-days){gap:3px}
+ html body.duck-airy #plannerScreen .planner-day{min-height:84px;padding:6px 2px!important;border-radius:7px!important;gap:3px;align-items:center}
+ html body.duck-airy #plannerScreen .planner-day-number{align-self:center;font-size:12px;min-height:22px;min-width:22px}
+ html body.duck-airy #plannerScreen :is(.planner-calendar-event,.planner-calendar-more){display:none}
+ html body.duck-airy #plannerScreen .planner-calendar-count{display:block;font-size:11px;white-space:nowrap}
+ html body.duck-airy #plannerScreen .planner-calendar-count::before{content:'';display:block;margin:1px auto 4px;width:4px;height:4px;border-radius:50%;background:#bd9a28}
+ html[data-duck-theme="dark"] body.duck-airy #plannerScreen .planner-calendar-count::before{background:#ffdc5a;box-shadow:0 0 6px #ffdc5a66}
+ html body.duck-airy #plannerScreen .planner-sitting-badge{font-size:8px}
+ html body.duck-airy #plannerScreen .study-filters{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){html body.duck-airy #plannerScreen .planner-day{transition:none!important}}
+
+</style>
 </body>
 </html>
