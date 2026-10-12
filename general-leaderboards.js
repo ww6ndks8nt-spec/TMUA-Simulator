@@ -10,7 +10,7 @@ const boards={
 const finite=x=>Number.isFinite(x)&&x>=0?x:0;
 const unique=rows=>{const seen=new Set();return (Array.isArray(rows)?rows:[]).filter(r=>{if(!r||typeof r!=='object')return false;const k=r._syncId||r.id||JSON.stringify(r);if(seen.has(k))return false;seen.add(k);return true;});};
 function metrics(state=STATE){
- const known=new Map(ALL_PAPERS.map(p=>[p.id,p]));let ms=0,papers=0;const first=[],timeInfo={eligible:0,legacy:0,continued:0,untimed:0,unavailable:0};
+  const known=new Map(ALL_PAPERS.map(p=>[p.id,p]));let ms=0,papers=0;const timeInfo={eligible:0,legacy:0,continued:0,untimed:0,unavailable:0};
  const times=r=>(Array.isArray(r.questionTimesMs)?r.questionTimesMs:[]).reduce((n,x)=>n+((typeof x==='number'||typeof x==='string')?finite(Number(x)):0),0);
  for(const [pid,saved] of Object.entries(state.results||{})){
   const p=known.get(pid);if(!p)continue;const rows=unique(saved).sort((a,b)=>finite(a.t)-finite(b.t));
@@ -32,14 +32,10 @@ function metrics(state=STATE){
    }else timeInfo.unavailable++;
   }
   if(!p.esat&&rows.some(r=>Array.isArray(r.a)&&r.a.reduce((n,a,i)=>n+(Number.isInteger(a)&&a>=0&&a<(p.questions[i]?.opts?.length||0)?1:0),0)>=(p.mat?8:15)))papers++;
-  // As on Overview, a first submitted attempt cannot be replaced by a retake.
-  const r=rows[0];if(!r||p.mat||p.esat||!p.questions?.length)continue;
-  const sc=Array.isArray(r.a)&&r.a.length===p.questions.length?scoreAttemptForPaper(p,r.a):{c:r.c,s:r.s};
-  if(!Number.isFinite(sc.c)||!Number.isFinite(sc.s)||sc.s<=0||sc.c<0||sc.c>sc.s)continue;
-  const grade=dashboardAttemptGrade(sc.c,sc.s,p);if(Number.isFinite(grade)&&grade>=1&&grade<=9)first.push({grade,weight:dashboardSourceWeight(p)});
  }
- const mean=dashboardMeanGrade(first);
- return {time:Math.min(31557600000,Math.floor(ms/1000)),performance:mean===null?null:Math.round(mean*1000)/1000,papers,samples:first.length,timeInfo};
+  const attempts=dashboardPerformanceAttempts(state,ALL_PAPERS),mean=performanceWeightedStats(attempts)?.mean??null;
+  const samples=new Set(attempts.map(row=>row.p.id)).size;
+  return {time:Math.min(31557600000,Math.floor(ms/1000)),performance:mean===null?null:Math.round(mean*1000)/1000,papers,samples,timeInfo};
 }
 function preferences(){return ROOT.profiles[currentUser]?.preferences||{};}
 function consent(state,key,enabled,source){const record=state.generalLeaderboardConsent??={version:1};record[key]={enabled,t:Date.now(),source,notice:'2026-10-04'};}

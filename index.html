@@ -2641,7 +2641,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
 <div class="glb-panel glb-ranking"><div id="generalLbTabs" role="group" aria-label="Choose a leaderboard"></div>
 <div class="glb-table-scroll" role="region" tabindex="0" aria-label="Leaderboard results"><table class="glb-table"><caption id="generalLbHeading" class="glb-sr">Most time spent practising</caption><thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th id="generalLbValueHeading" scope="col">Recorded time</th></tr></thead><tbody id="generalLbRows"></tbody></table></div>
 </div>
-<details class="glb-panel glb-methods"><summary>How these rankings work</summary><p><strong>Practice time:</strong> recorded time from completed exam attempts. Attempts marked untimed, continued or resumed are excluded, as are mental maths, question-bank sessions and mistake drills. Older completed attempts contribute their saved question times even when the original timing mode was not recorded; these cannot retrospectively be confirmed as timed exams. Time is capped when the original allowance is recorded. No time is invented for attempts without recorded question times. Combined sittings are counted through the individual paper records, without adding the combined summary again.</p><p><strong>Estimated performance:</strong> the same source-weighted first-attempt TMUA estimate used on the Overview page, on a 1–9 scale. At least three scored TMUA papers are needed. MAT and question drills do not contribute. Estimates are unofficial and do not adjust for timing arrangements.</p><p><strong>Papers completed:</strong> different full papers submitted with at least 15 recorded answers for TMUA or 8 for MAT. Retakes do not increase the count; a combined Paper 1 / Paper 2 sitting counts as two when each paper meets its threshold.</p><p>When you join, eligible saved history contributes. Updates follow successful account sync and may take up to a minute while practising. Turning a switch off removes that public entry once the change reaches the server. If you are offline, reconnect and use Retry sync. Your private history is retained. Changing to Anonymous in Settings updates the name used on these rankings; it does not make a public entry impossible to link with earlier versions.</p><p>Top 100 published entries. Equal values share a rank. These are practice statistics, not verified exam results.</p></details>
+<details class="glb-panel glb-methods"><summary>How these rankings work</summary><p><strong>Practice time:</strong> recorded time from completed exam attempts. Attempts marked untimed, continued or resumed are excluded, as are mental maths, question-bank sessions and mistake drills. Older completed attempts contribute their saved question times even when the original timing mode was not recorded; these cannot retrospectively be confirmed as timed exams. Time is capped when the original allowance is recorded. No time is invented for attempts without recorded question times. Combined sittings are counted through the individual paper records, without adding the combined summary again.</p><p><strong>Estimated performance:</strong> the same weighted TMUA and MAT estimate used on Overview. Recent results count more; quick retakes count less. At least three different scored papers are needed. Unofficial; timing arrangements are not adjusted.</p><p><strong>Papers completed:</strong> different full papers submitted with at least 15 recorded answers for TMUA or 8 for MAT. Retakes do not increase the count; a combined Paper 1 / Paper 2 sitting counts as two when each paper meets its threshold.</p><p>When you join, eligible saved history contributes. Updates follow successful account sync and may take up to a minute while practising. Turning a switch off removes that public entry once the change reaches the server. If you are offline, reconnect and use Retry sync. Your private history is retained. Changing to Anonymous in Settings updates the name used on these rankings; it does not make a public entry impossible to link with earlier versions.</p><p>Top 100 published entries. Equal values share a rank. These are practice statistics, not verified exam results.</p></details>
 </div></section>
 
 <section id="formulaeScreen" class="screen hidden nav-aware modern-ui studio-ui" aria-labelledby="formulaeTitle"><div class="card">
@@ -2805,7 +2805,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
         <div class="mastery-number" id="dashMastery">—</div>
         <div class="mastery-range">Estimated range: <b id="dashMasteryRange">—</b></div>
       </div>
-      <div class="mastery-sub">Estimated TMUA-score-equivalent performance from completed first attempts.</div>
+      <div class="mastery-sub">TMUA-equivalent estimate from weighted TMUA and MAT attempts.</div>
 
       <div class="mastery-scale">
         <div class="mastery-track">
@@ -2833,32 +2833,32 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
       </div>
       <div id="dashMasteryChart"></div>
       
-    </section></div><div class="dash-explain hidden" id="dashExplain">The dashboard uses first completed attempts. Scores use the paper conversion tables shown in the simulator. Source weights and the spread of your results determine the overall estimate and range.</div><div class="studio-estimate-note"><button class="dash-help" id="dashHelpBtn" type="button">About this estimate</button></div><section class="studio-benchmarks"><div class="dash-bench-title">Performance benchmarks</div>
+    </section></div><div class="dash-explain hidden" id="dashExplain">Recent results carry more weight; quick retakes carry less. The range reflects result variation and limited evidence. Unofficial estimate.</div><div class="studio-estimate-note"><button class="dash-help" id="dashHelpBtn" type="button">About this estimate</button></div><section class="studio-benchmarks"><div class="dash-bench-title">Performance benchmarks</div>
       <div class="dash-bench-sub">Separated by source type so harder or less representative mocks do not obscure your official-paper record.</div>
       <div class="dash-bench-grid">
         <div class="dash-bench">
-          <div><div class="label">Official 2016–2023 benchmark</div><div class="desc">First attempts on official past papers</div></div>
+          <div><div class="label">Official benchmark</div><div class="desc">Official TMUA papers</div></div>
           <div class="value" id="dashOfficialBench">—</div>
         </div>
         <div class="dash-bench">
-          <div><div class="label">Mock / simulation benchmark</div><div class="desc">Community mocks and uploaded simulations</div></div>
+          <div><div class="label">Non-official benchmark</div><div class="desc">Practice, community, challenge, STEP and MAT</div></div>
           <div class="value" id="dashMockBench">—</div>
         </div>
         <div class="dash-bench">
-          <div><div class="label">Recent form</div><div class="desc">Latest five first-attempt papers</div></div>
+          <div><div class="label">Recent form</div><div class="desc">Five most recently practised papers</div></div>
           <div class="value" id="dashRecentBench">—</div>
         </div>
       </div>
     </section><div class="dash-split">
         <div class="dash-split-card">
-          <div class="h">Paper 1</div>
+          <div class="h">Paper 1 &amp; MAT</div>
           <div class="big" id="dashP1Score">—</div>
-          <div class="small" id="dashP1Sub">No scored first attempts yet</div>
+          <div class="small" id="dashP1Sub">No scored attempts yet</div>
         </div>
         <div class="dash-split-card">
           <div class="h">Paper 2</div>
           <div class="big" id="dashP2Score">—</div>
-          <div class="small" id="dashP2Sub">No scored first attempts yet</div>
+          <div class="small" id="dashP2Sub">No scored attempts yet</div>
         </div>
       </div><section class="studio-analysis"><h2>Performance by topic</h2><section class="dash-panel">
       <div class="topic-table" id="dashTopics"></div>
@@ -4503,43 +4503,106 @@ function completedAttemptCount(){
 
 let dashboardRange='30';
 
+// Shared by Overview, its detail estimates and the general performance ranking.
+const PERFORMANCE_MODEL={version:'2026-10-12',dayMs:86400000,halfLifeDays:60,retryRecoveryDays:20,priorDf:3,priorSd:0.65,minimumSd:0.35,calibrationSd:0.2};
 function dashboardSourceWeight(p){
-  if(!p) return 0.75;
-  if(p.group===4) return 1.00;
-  if(p.simulation) return 0.90;
-  if(p.group===3||p.group===7) return 0.85;
-  return 0.75;
+  if(!p)return 0.75;
+  if(p.mat)return 0.85;
+  if(p.group===4){
+    const year=Number(p.year)||(Number((String(p.id)+' '+String(p.title)).match(/20\d{2}/)?.[0])||0);
+    return year>=2016&&year<=2020?0.85:1;
+  }
+  if(p.group===3)return 0.70;
+  if(p.group===1||p.group===2||p.group===7||p.simulation)return 0.85;
+  return 0.75; // STEP adaptations retain their existing source weight.
 }
-function dashboardAttemptGrade(c,s,p){
-  if(!s || !p) return null;
-  return difficultyGrade(c,p);
+function performanceRecencyWeight(ageDays){return Math.pow(2,-Math.max(0,ageDays)/PERFORMANCE_MODEL.halfLifeDays);}
+function performanceRetryWeight(gapDays){return -Math.expm1(-Math.max(0,gapDays)/PERFORMANCE_MODEL.retryRecoveryDays);}
+function performanceAttemptGrade(c,s,p){
+  if(!p||p.esat||!Number.isFinite(c)||!Number.isFinite(s)||s<=0||c<0||c>s)return null;
+  return difficultyGrade(c/s*difficultyItems(p).length,p);
+}
+function dashboardAttemptGrade(c,s,p){return performanceAttemptGrade(c,s,p);}
+function performanceUniqueResults(saved){
+  const seen=new Set();
+  return (Array.isArray(saved)?saved:[]).filter(r=>{
+    if(!r||typeof r!=='object')return false;
+    const key=r._syncId||r.id||JSON.stringify([r.t,r.c,r.s,r.a]);
+    if(seen.has(key))return false;seen.add(key);return true;
+  });
+}
+function dashboardPerformanceAttempts(state=STATE,papers=ALL_PAPERS,asOf=Date.now()){
+  const rows=[];
+  for(const p of papers){
+    if(p.esat||p.randomized||!p.questions?.length)continue;
+    const recs=performanceUniqueResults(state.results?.[p.id]).sort((a,b)=>Number(a.t)-Number(b.t));
+    let previous=null;
+    for(const r of recs){
+      const t=Number(r.t);
+      if(!Number.isFinite(t)||t<=0||t>asOf)continue;
+      const sc=Array.isArray(r.a)&&r.a.length===p.questions.length?scoreAttemptForPaper(p,r.a):{c:r.c,s:r.s};
+      const grade=performanceAttemptGrade(sc.c,sc.s,p);if(!Number.isFinite(grade))continue;
+      const sourceWeight=dashboardSourceWeight(p),retryWeight=previous===null?1:performanceRetryWeight((t-previous)/PERFORMANCE_MODEL.dayMs);
+      previous=t;
+      const baseWeight=sourceWeight*retryWeight;
+      if(baseWeight<=0)continue;
+      rows.push({p,r,c:sc.c,s:sc.s,t,grade,sourceWeight,retryWeight,baseWeight,weight:baseWeight*performanceRecencyWeight((asOf-t)/PERFORMANCE_MODEL.dayMs)});
+    }
+  }
+  return rows.sort((a,b)=>a.t-b.t||a.p.id.localeCompare(b.p.id));
 }
 function dashboardFirstAttempts(){
+  // Retain the established entry point for the chart resize handler; ESAT stays first-attempt accuracy.
+  if(!ESAT_MODE)return dashboardPerformanceAttempts(STATE,PAPERS);
   const rows=[];
-  PAPERS.filter(p=>!p.mat).forEach(p=>{
-    const recs=(STATE.results&&Array.isArray(STATE.results[p.id]))?STATE.results[p.id].slice():[];
-    if(!recs.length) return;
-    recs.sort((a,b)=>(a.t||0)-(b.t||0));
-    const r=recs[0];
-    const sc=(Array.isArray(r.a)&&r.a.length===p.questions.length)?scoreAttemptForPaper(p,r.a):{c:r.c||0,s:r.s||0};
-    if(!sc.s) return;
-    rows.push({p,r,c:sc.c,s:sc.s,t:r.t||0,grade:dashboardAttemptGrade(sc.c,sc.s,p),weight:dashboardSourceWeight(p)});
-  });
+  for(const p of PAPERS){
+    const r=performanceUniqueResults(STATE.results?.[p.id]).sort((a,b)=>(a.t||0)-(b.t||0))[0];
+    if(!r)continue;
+    const sc=Array.isArray(r.a)&&r.a.length===p.questions.length?scoreAttemptForPaper(p,r.a):{c:r.c||0,s:r.s||0};
+    if(sc.s)rows.push({p,r,c:sc.c,s:sc.s,t:r.t||0,grade:dashboardAttemptGrade(sc.c,sc.s,p),weight:1});
+  }
   return rows.sort((a,b)=>a.t-b.t);
 }
-function dashboardWeightedStats(rows){
-  if(!rows.length) return null;
-  let sw=0, sx=0, sw2=0;
-  rows.forEach(x=>{ const w=x.weight||1; sw+=w; sx+=w*x.grade; sw2+=w*w; });
-  if(!sw) return null;
-  const mean=sx/sw;
-  let varNum=0;
-  rows.forEach(x=>{ const w=x.weight||1; varNum+=w*Math.pow(x.grade-mean,2); });
-  const variance=varNum/sw;
-  const neff=sw2?sw*sw/sw2:rows.length;
-  let half=1.96*Math.sqrt(Math.max(0,variance)/Math.max(1,neff));
-  half=Math.max(rows.length<3?0.75:0.35,Math.min(1.25,half));
-  return {mean,lo:Math.max(1,mean-half),hi:Math.min(9,mean+half),half,n:rows.length};
+function performanceRowWeight(row,asOf=Date.now()){
+  if(Number.isFinite(row.baseWeight))return row.baseWeight*performanceRecencyWeight((asOf-row.t)/PERFORMANCE_MODEL.dayMs);
+  return Number.isFinite(row.weight)?Math.max(0,row.weight):1;
+}
+function performancePredictionMultiplier(df){
+  // Student-t 90th percentiles (an 80% central predictive band), with a model-error allowance below.
+  const table=[[1,3.077684],[2,1.885618],[3,1.637744],[4,1.533206],[5,1.475884],[6,1.439756],[8,1.396815],[10,1.372184],[15,1.340606],[20,1.325341],[30,1.310415],[60,1.295821],[120,1.288646],[1000,1.282398]];
+  if(df>=1000)return 1.281552;
+  return scoreInterpolate(table,Math.max(1,df));
+}
+function performanceStatsFromMoments(m){
+  const {sw,sx,sxx,sw2,n}=m;if(!(sw>0)||!(sw2>0))return null;
+  const mean=sx/sw,kish=sw*sw/sw2,effective=Math.min(kish,sw),dataDf=Math.max(0,effective-1);
+  const denominator=sw-sw2/sw;
+  const observed=denominator>1e-12?Math.max(0,sxx-sx*sx/sw)/denominator:0;
+  const model=PERFORMANCE_MODEL;
+  // Discounted retakes and old evidence cannot manufacture a large independent sample.
+  const variance=Math.max(model.minimumSd**2,(model.priorDf*model.priorSd**2+dataDf*observed)/(model.priorDf+dataDf));
+  const half=performancePredictionMultiplier(model.priorDf+dataDf)*Math.sqrt(variance*(1+1/Math.max(0.1,effective))+model.calibrationSd**2);
+  return {mean,lo:Math.max(1,mean-half),hi:Math.min(9,mean+half),half,n,effective,variance};
+}
+function performanceWeightedStats(rows,asOf=Date.now()){
+  const m={sw:0,sx:0,sxx:0,sw2:0,n:0};
+  for(const row of rows){
+    const w=performanceRowWeight(row,asOf),g=row.grade;
+    if(!Number.isFinite(w)||w<=0||!Number.isFinite(g)||g<1||g>9)continue;
+    m.sw+=w;m.sx+=w*g;m.sxx+=w*g*g;m.sw2+=w*w;m.n++;
+  }
+  return performanceStatsFromMoments(m);
+}
+function dashboardWeightedStats(rows,asOf=Date.now()){return performanceWeightedStats(rows,asOf);}
+function dashboardRecentPaperRows(rows,count=5){
+  const ids=new Set();
+  for(const row of rows.slice().sort((a,b)=>b.t-a.t)){ids.add(row.p.id);if(ids.size>=count)break;}
+  return rows.filter(row=>ids.has(row.p.id));
+}
+function dashboardWeightedAccuracy(rows){
+  let total=0,correct=0;
+  for(const row of rows){const w=performanceRowWeight(row);if(w>0&&row.s>0){total+=w;correct+=w*row.c/row.s;}}
+  return total?Math.round(100*correct/total):null;
 }
 function dashboardMeanGrade(rows){
   const st=dashboardWeightedStats(rows);
@@ -4602,11 +4665,15 @@ function dashboardTopicStats(){
   return Array.from(map.values()).sort((a,b)=>b.attempted-a.attempted || (a.correct/Math.max(1,a.attempted))-(b.correct/Math.max(1,b.attempted)) || a.topic.localeCompare(b.topic));
 }
 function dashboardCumulativeHistory(rows){
-  const out=[];
-  for(let i=0;i<rows.length;i++){
-    const sub=rows.slice(0,i+1);
-    const st=dashboardWeightedStats(sub);
-    out.push({t:rows[i].t,mean:st.mean,lo:st.lo,hi:st.hi});
+  const out=[],m={sw:0,sx:0,sxx:0,sw2:0,n:0};let previous=null;
+  for(const row of rows){
+    // Linear-time historical estimates; later retakes never alter an earlier point.
+    const decay=previous===null?1:performanceRecencyWeight((row.t-previous)/PERFORMANCE_MODEL.dayMs);
+    m.sw*=decay;m.sx*=decay;m.sxx*=decay;m.sw2*=decay*decay;
+    const w=performanceRowWeight(row,row.t),g=row.grade;
+    m.sw+=w;m.sx+=w*g;m.sxx+=w*g*g;m.sw2+=w*w;m.n++;previous=row.t;
+    const st=performanceStatsFromMoments(m);
+    if(st)out.push({t:row.t,mean:st.mean,lo:st.lo,hi:st.hi});
   }
   return out;
 }
@@ -4623,7 +4690,7 @@ function renderDashboardChart(firstRows){
   const host=$('dashMasteryChart');
   const points=dashboardFilteredHistory(dashboardCumulativeHistory(firstRows));
   if(!points.length){
-    host.innerHTML='<div class="dash-chart-empty">No first-attempt results in this period.</div>';
+    host.innerHTML='<div class="dash-chart-empty">No scored attempts in this period.</div>';
     return;
   }
   const W=Math.max(320,host.clientWidth||940),H=320,PL=50,PR=18,PT=18,PB=42;
@@ -4696,9 +4763,9 @@ function renderDashboardTopics(focusKey=null){
  if(focusKey)host.querySelector('[data-topic-sort="'+focusKey+'"]').focus({preventScroll:true});
 }
 function buildDashboard(){
-  const first=dashboardFirstAttempts();
+  const performanceRows=dashboardFirstAttempts();
   const all=dashboardAllAttemptRows();
-  const stats=dashboardWeightedStats(first);
+  const stats=dashboardWeightedStats(performanceRows);
 
   $('dashProfName').textContent=(currentUser&&ROOT.profiles[currentUser])?ROOT.profiles[currentUser].name:'';
   $('dashMastery').textContent=stats?dashboardFmtGrade(stats.mean):'—';
@@ -4714,9 +4781,9 @@ function buildDashboard(){
   }
   cap.style.left='calc(100% - 1px)';
 
-  const official=first.filter(x=>x.p.group===4);
-  const mock=first.filter(x=>x.p.group===3 || x.p.simulation);
-  const recent=first.slice().sort((a,b)=>b.t-a.t).slice(0,5);
+  const official=performanceRows.filter(x=>x.p.group===4);
+  const mock=performanceRows.filter(x=>x.p.group!==4);
+  const recent=dashboardRecentPaperRows(performanceRows);
   $('dashOfficialBench').textContent=dashboardFmtGrade(dashboardMeanGrade(official));
   $('dashMockBench').textContent=dashboardFmtGrade(dashboardMeanGrade(mock));
   $('dashRecentBench').textContent=dashboardFmtGrade(dashboardMeanGrade(recent));
@@ -4730,16 +4797,19 @@ function buildDashboard(){
   $('dashQuestions').textContent=questions.toLocaleString();
   $('dashTime').textContent=dashboardDuration(totalMs);
 
-  const p1=first.filter(x=>x.p.type===1), p2=first.filter(x=>x.p.type===2);
+  const p1=performanceRows.filter(x=>x.p.type===1), p2=performanceRows.filter(x=>x.p.type===2);
   const p1g=dashboardMeanGrade(p1), p2g=dashboardMeanGrade(p2);
-  const p1pct=p1.length?Math.round(100*p1.reduce((s,x)=>s+x.c/x.s,0)/p1.length):null;
-  const p2pct=p2.length?Math.round(100*p2.reduce((s,x)=>s+x.c/x.s,0)/p2.length):null;
+  const p1pct=dashboardWeightedAccuracy(p1),p2pct=dashboardWeightedAccuracy(p2);
   $('dashP1Score').textContent=p1g===null?'—':dashboardFmtGrade(p1g);
   $('dashP2Score').textContent=p2g===null?'—':dashboardFmtGrade(p2g);
-  $('dashP1Sub').textContent=p1.length?(p1pct+'% mean · '+p1.length+' first-attempt paper'+(p1.length===1?'':'s')):'No scored first attempts yet';
-  $('dashP2Sub').textContent=p2.length?(p2pct+'% mean · '+p2.length+' first-attempt paper'+(p2.length===1?'':'s')):'No scored first attempts yet';
+  $('dashP1Sub').textContent=p1.length?(p1pct+'% weighted accuracy · '+new Set(p1.map(x=>x.p.id)).size+' papers'):'No scored attempts yet';
+  $('dashP2Sub').textContent=p2.length?(p2pct+'% weighted accuracy · '+new Set(p2.map(x=>x.p.id)).size+' papers'):'No scored attempts yet';
+  for(const [id,rows] of [['dashOfficialBench',official],['dashMockBench',mock],['dashRecentBench',recent],['dashP1Score',p1],['dashP2Score',p2]]){
+    const range=dashboardWeightedStats(rows);
+    $(id).title=range?'Estimated range: '+dashboardFmtGrade(range.lo)+' – '+dashboardFmtGrade(range.hi):'';
+  }
 
-  renderDashboardChart(first);
+  renderDashboardChart(performanceRows);
   document.querySelectorAll('#dashRangeToggle .dash-range-btn').forEach(b=>b.classList.toggle('active',b.dataset.range===dashboardRange));
 
   renderDashboardTopics();
@@ -5076,7 +5146,7 @@ function buildReviewHub(){
       const row=document.createElement('div'); row.className='review-attempt';
       const sc=(Array.isArray(r.a)&&r.a.length===p.questions.length)?scoreAttemptForPaper(p,r.a):{c:r.c||0,s:r.s||0};
       const pct=sc.s?Math.round(100*sc.c/sc.s):0;
-      row.innerHTML='<span class="date">'+fmtDate(r.t)+'</span><span class="score">'+sc.c+' / '+sc.s+' ('+pct+'%)'+((p.mat||p.esat)?'':' · estimated score '+difficultyGradeText(sc.c,p))+'</span>';
+      row.innerHTML='<span class="date">'+fmtDate(r.t)+'</span><span class="score">'+sc.c+' / '+sc.s+' ('+pct+'%)'+(p.esat?'':' · '+(p.mat?'TMUA estimate ':'estimated score ')+difficultyGradeText(sc.c,p))+'</span>';
       if(Array.isArray(r.a) && r.a.length===p.questions.length){
         const go=document.createElement('button'); go.className='review-go'; go.type='button'; go.textContent='Review answers & solutions →';
         go.addEventListener('click',()=>openStoredAttempt(p,r)); row.appendChild(go);
@@ -5217,7 +5287,7 @@ function openStart(p){
       const sc=(r.a && r.a.length===p.questions.length) ? scoreAttemptForPaper(p,r.a) : {c:r.c||0,s:r.s||0};
       row.innerHTML='<span>'+fmtDate(r.t)+'</span>'
         +(r.a?'<span class="rv">Review &rarr;</span>':'')
-        +'<span class="sc">Score <b>'+sc.c+' / '+sc.s+'</b> ('+Math.round(100*sc.c/Math.max(1,sc.s))+'%)'+((p.mat||p.esat)?'':' · estimated score '+difficultyGradeText(sc.c,p))+'</span>';
+        +'<span class="sc">Score <b>'+sc.c+' / '+sc.s+'</b> ('+Math.round(100*sc.c/Math.max(1,sc.s))+'%)'+(p.esat?'':' · '+(p.mat?'TMUA estimate ':'estimated score ')+difficultyGradeText(sc.c,p))+'</span>';
       if(r.a) row.addEventListener('click',()=>reviewAttempt(r));
       ah.appendChild(row);
     });
@@ -5925,7 +5995,7 @@ function submit(){
   });
 
   (STATE.results[finishedPaper.id]=STATE.results[finishedPaper.id]||[]).push({t:Date.now(), c, s, a:finishedAnswers, questionTimesMs:questionTimesMs.slice(), mode:sessionMode, noTimer, examTiming:leaderboardExamTiming?{...leaderboardExamTiming}:null});
-  if(STATE.results[finishedPaper.id].length>30) STATE.results[finishedPaper.id]=STATE.results[finishedPaper.id].slice(-30);
+  // Preserve attempt spacing: truncating this history would turn an old retake into a full-weight first attempt.
   const isFirst = STATE.results[finishedPaper.id].length===1;
   persistNow();
 
@@ -6005,14 +6075,14 @@ function showResults(){
   const conversionButton=$('showScoreConversion');
   conversionButton.classList.toggle('hidden',!!active.randomized||!!active.esat);
   conversionButton.setAttribute('aria-expanded','false');conversionButton.textContent=active.mat?'View difficulty calibration':'View score conversion';
-  $('resultDifficulty').setAttribute('aria-label',active.mat?'MAT difficulty calibration':'Estimated score conversion');
+  $('resultDifficulty').setAttribute('aria-label',active.mat?'TMUA-equivalent MAT score conversion':'Estimated score conversion');
   conversionButton.onclick=()=>{
     const open=$('resultDifficulty').classList.contains('hidden');
     $('resultDifficulty').classList.toggle('hidden',!open);
     conversionButton.setAttribute('aria-expanded',String(open));
     conversionButton.textContent=active.mat?(open?'Hide difficulty calibration':'View difficulty calibration'):(open?'Hide score conversion':'View score conversion');
   };
-  $('bandText').textContent=active.esat?pct+'%':active.mat?(correct*4)+' / '+(scored*4):scored ? (active.combined?overallGrade(correct,active):(active.randomized?'Wrong-answer drill':scaledBand(pct,active,correct))) : 'Not available';
+  $('bandText').textContent=active.esat?pct+'%':active.mat?(correct*4)+' / '+(scored*4)+' · TMUA estimate '+difficultyGradeText(correct,active):scored ? (active.combined?overallGrade(correct,active):(active.randomized?'Wrong-answer drill':scaledBand(pct,active,correct))) : 'Not available';
   $('resultScreen').classList.toggle('combined-result',!!active.combined);
   $('dial').style.setProperty('--pct', scored ? (pct+'%') : '0%');
 
@@ -6603,22 +6673,22 @@ QUESTION_DIFFICULTY_RATINGS.customset1p2=CHALLENGE_SET_1_P2.map(q=>q.estimatedDi
 [...STEP_PAPER1_PAPERS,...STEP_LEGACY_PAPERS].forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
 [...QIUYUN_MOCK01_PAPERS,QIUYUN_SIMULATION_P2].forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
 const SPREADSHEET_RATING_COLUMNS={"tmua2023p1":"B","tmua2023p2":"C","tmua2022p1":"D","tmua2022p2":"E","tmua2021p1":"F","tmua2021p2":"G","tmua2020p1":"H","tmua2020p2":"I","tmua2019p1":"J","tmua2019p2":"K","tmua2018p1":"L","tmua2018p2":"M","tmua2017p1":"N","tmua2017p2":"O"};
-PAPERS.forEach(p=>{if(p.esat)return;if(p.mat){const reviews=MAT_DIFFICULTY_REVIEWS[p.id];if(!reviews||reviews.length!==p.questions.length)throw new Error("Incomplete MAT difficulty review: "+p.id);p.questions.forEach((q,i)=>Object.assign(q,reviews[i]));return;}const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":q.difficultyReviewVersion?(p.id.startsWith("qiuyunmock01")?"community-editorial-review":"step-editorial-review"):"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
+ALL_PAPERS.forEach(p=>{if(p.esat)return;if(p.mat){const reviews=MAT_DIFFICULTY_REVIEWS[p.id];if(!reviews||reviews.length!==p.questions.length)throw new Error("Incomplete MAT difficulty review: "+p.id);p.questions.forEach((q,i)=>Object.assign(q,reviews[i]));return;}const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":q.difficultyReviewVersion?(p.id.startsWith("qiuyunmock01")?"community-editorial-review":"step-editorial-review"):"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
 /* Sources: user spreadsheet (280 official item ratings), user-supplied 2023
    conversion image and approximate digitisation of the attached 2023/2024 CDF.
    Estimated ratings are comparisons with supplied questions, not ability thresholds.
    Curve blend and mean adjustment are conservative practice assumptions, not official equating. */
-const DIFFICULTY_MODEL_VERSION='spreadsheet-reference-v1';
+const DIFFICULTY_MODEL_VERSION='difficulty-weighted-2026-10-12';
 const SCORE_CONVERSION_REFERENCE={
  paper1:[1,1,1,1,1.9,2.7,3.4,4,4.6,5.2,5.8,6.3,6.6,6.9,7.1,7.3,7.6,7.9,8.3,9,9],
  paper2:[1,1,1,1.2,2.2,3,3.7,4.4,5,5.6,6.1,6.5,6.7,7,7.2,7.4,7.7,8,8.4,9,9],
  overall:[1,1,1,1,1,1,1.5,1.9,2.4,2.8,3.2,3.5,3.9,4.2,4.5,4.8,5.1,5.4,5.7,6,6.2,6.5,6.6,6.7,6.8,6.9,7,7.1,7.2,7.3,7.4,7.6,7.7,7.8,8,8.2,8.4,8.6,9,9,9],
  cdf2023:[[1,2],[1.5,3.5],[1.9,6],[2.4,9.5],[2.8,13.5],[3.2,18],[3.5,23],[3.9,28.5],[4.2,34.5],[4.5,40],[4.8,46],[5.1,50],[5.4,55.5],[6,63.5],[6.2,68],[6.5,72],[6.6,76],[6.7,78.5],[6.8,81],[6.9,84],[7.1,88],[7.4,92.5],[7.6,94],[7.9,96.5],[8.2,97.5],[8.6,99],[9,100]],
  cdf2024:[[1,3.5],[1.5,7],[2,12.5],[2.5,20.5],[3,31],[3.5,41.5],[4,54],[4.5,66],[5,76],[5.5,82.5],[6,88],[6.5,91.5],[7,93],[7.5,95.5],[8,96.5],[8.5,97.5],[9,100]],
- curveBlend:0.25,maximumCurveShift:0.4,meanRawFractionPerPoint:0.05
+  curveBlend:0.25,maximumCurveShift:0.4,meanRawFractionPerPoint:0.05,hardDifficultyStart:6.25,hardRawFractionPerPointSquared:0.015
 };
 function difficultyItems(p){return (p?.questions||[]).filter(q=>q.correct!==99&&Number.isFinite(q.estimatedDifficulty));}
-const tmua2022p1Reviewed=PAPERS.find(p=>p.id==='tmua2022p1');
+const tmua2022p1Reviewed=ALL_PAPERS.find(p=>p.id==='tmua2022p1');
 if(tmua2022p1Reviewed)tmua2022p1Reviewed.questions.forEach(q=>{q.difficultySource='user-review';q.difficultySourceCell=null;q.difficultyReviewVersion='2026-10-05';});
 function difficultyStats(p){
  const all=(p?.questions||[]).filter(q=>Number.isFinite(q.estimatedDifficulty)),items=difficultyItems(p);
@@ -6639,17 +6709,18 @@ function distributionAdjustedScore(score){
 }
 function referenceMeanDifficulty(p){
  if(p?.combined){const a=paperById(p.p1Id),b=paperById(p.p2Id),na=difficultyItems(a).length,nb=difficultyItems(b).length;return na+nb?(referenceMeanDifficulty(a)*na+referenceMeanDifficulty(b)*nb)/(na+nb):5.95;}
- return p?.type===1?5.9:p?.type===2?6:5.95;
+ return p?.mat||p?.type===1?5.9:p?.type===2?6:5.95;
 }
 function difficultyGrade(raw,p){
- if(p?.esat||p?.mat)return null;
+  if(p?.esat)return null;
  const stats=difficultyStats(p),n=stats.scored;if(!n||!Number.isFinite(Number(raw)))return null;
  const fraction=Math.max(0,Math.min(1,Number(raw)/n));
  const r=SCORE_CONVERSION_REFERENCE;
  // Taper at endpoints: blank scripts stay at the floor and perfect scripts at 9.
  const delta=stats.scoredMean-referenceMeanDifficulty(p);
- const adjustedFraction=Math.max(0,Math.min(1,fraction+r.meanRawFractionPerPoint*delta*4*fraction*(1-fraction)));
- const table=p?.combined||![1,2].includes(p?.type)?r.overall:p.type===1?r.paper1:r.paper2;
+  const hardBonus=r.hardRawFractionPerPointSquared*Math.pow(Math.max(0,stats.scoredMean-r.hardDifficultyStart),2);
+  const adjustedFraction=Math.max(0,Math.min(1,fraction+(r.meanRawFractionPerPoint*delta+hardBonus)*4*fraction*(1-fraction)));
+ const table=p?.mat?r.paper1:p?.combined||![1,2].includes(p?.type)?r.overall:p.type===1?r.paper1:r.paper2;
  const equivalentRaw=adjustedFraction*(table.length-1);
  const base=scoreInterpolate(table.map((score,raw)=>[raw,score]),equivalentRaw);
  return Math.round(distributionAdjustedScore(base)*10)/10;
@@ -6666,15 +6737,15 @@ function difficultyRatingMarkup(value){
 }
 function matDifficultySummary(p){
  const s=difficultyStats(p);if(!s.count)return '';
- const ratings=p.questions.map(q=>q.estimatedDifficulty);
- return '<p><b>Estimated difficulty '+s.mean.toFixed(2)+'</b> · question range '+Math.min(...ratings).toFixed(1)+'–'+Math.max(...ratings).toFixed(1)+'</p><p class="study-muted">Compared individually with your rated official TMUA questions at the standard 37.5-minute pace (3.75 minutes per question). Editorial estimates; not an official MAT score conversion. Half-point ratings are approximate; close paper averages should not be treated as precise rankings.</p>';
+ return '<p><b>Mean difficulty '+s.mean.toFixed(2)+'</b></p><p class="study-muted">TMUA-equivalent estimate.</p>';
 }
 function difficultyPanel(p){
  const s=difficultyStats(p);if(!s.count)return '';
- if(p.mat)return matDifficultySummary(p)+'<div class="difficulty-scroll"><table class="difficulty-table"><caption>MAT question difficulty ratings</caption><thead><tr><th scope="col">Question</th><th scope="col">Difficulty</th></tr></thead><tbody>'+p.questions.map((q,i)=>'<tr><th scope="row">'+(i+1)+'</th><td>'+difficultyRatingMarkup(q.estimatedDifficulty)+'</td></tr>').join('')+'</tbody></table></div>';
- let html='<div class="difficulty-scroll"><table class="difficulty-table"><caption>Estimated score conversion</caption><thead><tr><th scope="col">Raw mark</th><th scope="col">Score</th></tr></thead><tbody>';
+ let html=(p.mat?matDifficultySummary(p):'')+'<div class="difficulty-scroll"><table class="difficulty-table"><caption>'+(p.mat?'TMUA-equivalent score conversion':'Estimated score conversion')+'</caption><thead><tr><th scope="col">Raw mark</th><th scope="col">Score</th></tr></thead><tbody>';
  html+=Array.from({length:s.scored+1},(_,raw)=>'<tr><th scope="row">'+raw+' / '+s.scored+'</th><td>'+difficultyGradeText(raw,p)+'</td></tr>').join('');
- return html+'</tbody></table></div>';
+ html+='</tbody></table></div>';
+ if(p.mat)html+='<details><summary>Question difficulty ratings</summary><div class="difficulty-scroll"><table class="difficulty-table"><thead><tr><th scope="col">Question</th><th scope="col">Difficulty</th></tr></thead><tbody>'+p.questions.map((q,i)=>'<tr><th scope="row">'+(i+1)+'</th><td>'+difficultyRatingMarkup(q.estimatedDifficulty)+'</td></tr>').join('')+'</tbody></table></div></details>';
+ return html;
 }
 function downloadDifficultyRatings(){
  const rows=[['Paper','Question','Difficulty','Paper mean','Scored mean','Scored','Source','Model version']];
@@ -7369,7 +7440,7 @@ refreshAccountCircles();
 <script src="formulae-data.js?v=20261003-1"></script>
 <script src="formulae-list.js?v=20261003-1"></script>
 <link rel="stylesheet" href="general-leaderboards.css?v=20261004-6">
-<script src="general-leaderboards.js?v=20261004-7"></script>
+<script src="general-leaderboards.js?v=20261012-performance"></script>
 <link rel="stylesheet" href="paper-preview.css?v=20261004-7">
 <script src="paper-preview.js?v=20261010-timing-modes"></script>
 <link rel="stylesheet" href="full-page-ui.css?v=20261004-10">
@@ -7378,7 +7449,7 @@ refreshAccountCircles();
 <script src="revision-tricks-questions.js?v=20261006-1"></script>
 <script src="revision-guides.js?v=20261006-renderfix"></script>
 <link rel="stylesheet" href="step-tracker.css?v=20261011-1">
-<script src="step-tracker.js?v=20261011-1"></script>
+<script src="step-tracker.js?v=20261012-1"></script>
 <script src="full-page-ui.js?v=20261011-step-tracker"></script>
 <link rel="stylesheet" href="google-signin.css?v=20261006-1">
 <script src="google-signin.js?v=20261006-1"></script>
