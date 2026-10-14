@@ -1629,7 +1629,9 @@ try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-ap
   #navOver,
   #navOver *,
   #endConfirm,
-  #endConfirm *{
+  #endConfirm *,
+  #timeWarning,
+  #timeWarning *{
     border-radius:0 !important;
   }
 
@@ -1677,6 +1679,7 @@ try{document.documentElement.dataset.duckTheme=localStorage.getItem('ducktmua-ap
   }
   /* The information orb in the End Exam / navigator confirmations stays round. */
   #endConfirm .info-orb,
+  #timeWarning .info-orb,
   #navOver .info-orb,
   .info-orb{
     border-radius:50% !important;
@@ -3102,6 +3105,16 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
   </section>
 </div>
 
+<!-- ============ TEN-MINUTE WARNING ============ -->
+<div class="exam-confirm-shell hidden" id="timeWarning">
+  <section class="exam-confirm" role="alertdialog" aria-modal="true" aria-labelledby="timeWarningTitle" aria-describedby="timeWarningMessage">
+    <div class="exam-confirm-title" id="timeWarningTitle">Time Remaining</div>
+    <div class="exam-confirm-rule"></div>
+    <div class="exam-confirm-body"><div class="info-orb" aria-hidden="true">i</div><div id="timeWarningMessage">You have 10 minutes remaining.</div></div>
+    <div class="exam-confirm-actions"><button type="button" id="timeWarningOk">OK</button></div>
+  </section>
+</div>
+
 <!-- ============ RESULTS ============ -->
 <div class="screen hidden modern-ui studio-ui" id="resultScreen">
   <div class="card">
@@ -4078,6 +4091,7 @@ let questionTimesMs = [], questionTimingIdx = null, questionTimingStartedAt = 0;
 let submitted = false, reviewMode = false;
 let examReviewOpen=false, examReviewAvailable=false;
 let secondsLeft = 0, timerId = null, noTimer = false;
+let tenMinuteWarningShown=false, tenMinuteWarningReturnFocus=null;
 let sessionMode = '75 min';
 let leaderboardExamTiming=null;
 let reviewOriginHub = false;
@@ -4131,7 +4145,7 @@ function persistNow(){ clearTimeout(saveDebounce); Store.write(ROOT); }
 function snapshotProgress(){
   if(!active || submitted || reviewMode || !currentUser) return;
   flushQuestionTiming(true);
-  STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, examReviewOpen, examReviewAvailable, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
+  STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, examReviewOpen, examReviewAvailable, tenMinuteWarningShown, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
   persist();
 }
 function fmtDate(t){
@@ -4847,7 +4861,7 @@ function showDashboardHub(){
   if(timerId) clearInterval(timerId);
   if(dualGapTimerId){clearInterval(dualGapTimerId);dualGapTimerId=null;}
   stopPreExamTimer();
-  ['libraryScreen','reviewHubScreen','wrongHubScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','paperGapScreen','endConfirm'].forEach(id=>$(id).classList.add('hidden'));
+  ['libraryScreen','reviewHubScreen','wrongHubScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','paperGapScreen','endConfirm','timeWarning'].forEach(id=>$(id).classList.add('hidden'));
   submitted=false;reviewMode=false;reviewOriginHub=false;
   buildDashboard();setSideNav('dashboard');
   $('dashboardScreen').classList.remove('hidden');
@@ -4931,7 +4945,7 @@ function showLibraryHub(){
   if(timerId) clearInterval(timerId);
   if(dualGapTimerId){ clearInterval(dualGapTimerId); dualGapTimerId=null; }
   stopPreExamTimer();
-  ['dashboardScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','reviewHubScreen','wrongHubScreen','paperGapScreen','endConfirm'].forEach(id=>$(id).classList.add('hidden'));
+  ['dashboardScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','reviewHubScreen','wrongHubScreen','paperGapScreen','endConfirm','timeWarning'].forEach(id=>$(id).classList.add('hidden'));
   submitted=false; reviewMode=false; reviewOriginHub=false;
   buildLibrary(); setSideNav('papers');
   $('libraryScreen').classList.remove('hidden');
@@ -5061,7 +5075,7 @@ function buildWrongHub(){
 function showWrongHub(){
   if(timerId) clearInterval(timerId);
   stopPreExamTimer();
-  ['dashboardScreen','libraryScreen','reviewHubScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','paperGapScreen','endConfirm'].forEach(id=>$(id).classList.add('hidden'));
+  ['dashboardScreen','libraryScreen','reviewHubScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','paperGapScreen','endConfirm','timeWarning'].forEach(id=>$(id).classList.add('hidden'));
   submitted=false; reviewMode=false; reviewOriginHub=false;
   buildWrongHub(); setSideNav('wrong');
   $('wrongHubScreen').classList.remove('hidden');
@@ -5401,7 +5415,7 @@ function preInstructionTable(rows){
 function showPreExamShell(){
   hideSideNav();
   updateExamTitles();
-  ['dashboardScreen','libraryScreen','reviewHubScreen','wrongHubScreen','startScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','paperGapScreen','endConfirm'].forEach(id=>$(id).classList.add('hidden'));
+  ['dashboardScreen','libraryScreen','reviewHubScreen','wrongHubScreen','startScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','paperGapScreen','endConfirm','timeWarning'].forEach(id=>$(id).classList.add('hidden'));
   $('preExamScreen').classList.remove('hidden');
   applyExamScheme(document.body.dataset.examScheme||'standard');
   window.scrollTo(0,0);
@@ -5595,11 +5609,13 @@ function startDualSecondPaper(){
 
 function startTest(resume){
   if(timerId){clearInterval(timerId);timerId=null;}
+  closeTenMinuteWarning(false);
   leaderboardExamTiming={version:1,kind:resume?'continued-exam':noTimer?'untimed':'timed-exam',limitMs:!resume&&!noTimer?Math.max(0,secondsLeft)*1000:0};
   stopPreExamTimer();
   $('preExamScreen').classList.add('hidden');
   hideSideNav(); reviewOriginHub=false;
   const s = resume ? STATE.inprogress[active.id] : null;
+  tenMinuteWarningShown=!!s?.tenMinuteWarningShown;
   const N = QUESTIONS.length;
   if(s && Array.isArray(s.answers) && s.answers.length===N){
     answers=s.answers.slice(); flags=(Array.isArray(s.flags)&&s.flags.length===N)?s.flags.slice():new Array(N).fill(false);
@@ -5624,13 +5640,30 @@ function startTest(resume){
   if(noTimer){ el.textContent=''; } else { updateTimerDisplay(); timerId=setInterval(tick,1000); }
   render();
   if(s?.examReviewOpen)showExamReview();
+  if(!noTimer&&secondsLeft===600)showTenMinuteWarning();
 }
 
 function tick(){
   secondsLeft--; updateTimerDisplay();if(profilePreferences().timerAlerts&&(secondsLeft===300||secondsLeft===60))playPracticeAlert();
   if(secondsLeft<=0){ clearInterval(timerId); submit(true); return; }
+  if(secondsLeft===600)showTenMinuteWarning();
   if(secondsLeft%120===0) snapshotProgress();
 }
+function showTenMinuteWarning(){
+  if(noTimer||submitted||reviewMode||tenMinuteWarningShown||$('testMain').classList.contains('hidden'))return;
+  tenMinuteWarningShown=true;
+  tenMinuteWarningReturnFocus=document.activeElement;
+  $('timeWarning').classList.remove('hidden');
+  $('timeWarningOk').focus();
+  snapshotProgress();
+}
+function closeTenMinuteWarning(restoreFocus=true){
+  $('timeWarning').classList.add('hidden');
+  const target=tenMinuteWarningReturnFocus;
+  tenMinuteWarningReturnFocus=null;
+  if(restoreFocus&&target?.isConnected&&target.getClientRects().length)target.focus();
+}
+$('timeWarningOk').addEventListener('click',()=>closeTenMinuteWarning());
 function fmtTime(s){
   const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
   return h+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
@@ -5757,7 +5790,7 @@ function showExamReview(){
   QUESTIONS.forEach((_,i)=>{
     const status=navStatus(i),row=document.createElement('tr');
     row.innerHTML='<th scope="row">'+(i+1)+'</th>'
-      +'<td class="status-'+status.toLowerCase()+'">'+status+'</td>'
+      +'<td><span class="exam-review-status status-'+status.toLowerCase()+'">'+status+'</span></td>'
       +'<td><button type="button" class="exam-review-link" aria-label="Review question '+(i+1)+'">Review</button></td>';
     row.querySelector('button').addEventListener('click',()=>{
       idx=i;render();$('examAnswer'+(answers[i]??0))?.focus();
@@ -6000,6 +6033,7 @@ function openCombinedRecord(rec,fromHub){
 function scaledBand(pct,paper,raw){return difficultyGradeText(raw,paper);}
 function submit(){
   if(submitted)return;
+  closeTenMinuteWarning(false);
   reviewOriginHub=false;
   flushQuestionTiming(false);
   submitted=true; if(timerId){ clearInterval(timerId); timerId=null; }
@@ -6226,7 +6260,7 @@ $('exitBtn').addEventListener('click', ()=>{
 function unloadSave(){
   if(active && currentUser && !submitted && !reviewMode && !$('testMain').classList.contains('hidden')){
     flushQuestionTiming(true);
-    STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, examReviewOpen, examReviewAvailable, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
+    STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, examReviewOpen, examReviewAvailable, tenMinuteWarningShown, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
     const s=JSON.stringify(ROOT);
     try{ localStorage.setItem(SAVE_KEY, s); return true; }catch(e){return false;}
     if(window.storage && window.storage.set){ try{ window.storage.set(SAVE_KEY, s); }catch(e){} }
@@ -6238,6 +6272,9 @@ document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState=
 /* ---------------- keyboard ---------------- */
 document.addEventListener('keydown',e=>{
   if($('testMain').classList.contains('hidden'))return;
+  if(!$('timeWarning').classList.contains('hidden')){
+    if(e.key==='Escape'){e.preventDefault();closeTenMinuteWarning();}else trapExamFocus(e,$('timeWarning'));return;
+  }
   if(!$('endConfirm').classList.contains('hidden')){
     if(e.key==='Escape'){e.preventDefault();$('endNo').click();}else trapExamFocus(e,$('endConfirm'));return;
   }
@@ -6298,7 +6335,7 @@ function studyFlush(){
 function studyHide(){studyFlush();STUDY_SCREENS.forEach(id=>$(id).classList.add('hidden'));}
 function studyNav(tab){
  studyHide();
- ['dashboardScreen','libraryScreen','reviewHubScreen','wrongHubScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','paperGapScreen','endConfirm','loginScreen'].forEach(id=>$(id).classList.add('hidden'));
+ ['dashboardScreen','libraryScreen','reviewHubScreen','wrongHubScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','paperGapScreen','endConfirm','timeWarning','loginScreen'].forEach(id=>$(id).classList.add('hidden'));
  if(timerId)clearInterval(timerId);stopPreExamTimer();
  setSideNav(tab);
  $(tab==='bank'?'bankScreen':tab==='bookmarks'?'bookmarksScreen':tab==='journal'?'journalScreen':'plannerScreen').classList.remove('hidden');
@@ -6705,7 +6742,7 @@ function renderModernReview(){
 enterReview=function(){
  if(timerId)clearInterval(timerId);stopPreExamTimer();flushQuestionTiming(false);
  setSideNav('review');
- ['resultScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','navOver','endConfirm','paperGapScreen','reviewHubScreen','libraryScreen','dashboardScreen','wrongHubScreen'].forEach(id=>$(id).classList.add('hidden'));
+ ['resultScreen','startScreen','preExamScreen','topbar','substrip','testMain','footbar','navOver','endConfirm','timeWarning','paperGapScreen','reviewHubScreen','libraryScreen','dashboardScreen','wrongHubScreen'].forEach(id=>$(id).classList.add('hidden'));
  submitted=true;reviewMode=true;$('modernReviewScreen').classList.remove('hidden');renderModernReview();
 };
 backToResults=function(){reviewMode=false;$('modernReviewScreen').classList.add('hidden');hideSideNav();['testMain','topbar','substrip','footbar'].forEach(id=>$(id).classList.add('hidden'));$('resultScreen').classList.remove('hidden');};
@@ -7487,7 +7524,7 @@ refreshAccountCircles();
 <script src="esat.js?v=20261006-bank-filters"></script>
 <link rel="stylesheet" href="duck-airy.css?v=20261003-heading-alignment">
 <script src="duck-airy.js?v=20261004-descriptions"></script>
-<link rel="stylesheet" href="pearson-exam.css?v=20261014-exam-review">
+<link rel="stylesheet" href="pearson-exam.css?v=20261014-time-warning">
 <link rel="stylesheet" href="mental-maths.css?v=20261006-clean">
 <script src="mental-maths-engine.js?v=20261003-no-zero"></script>
 <script src="mental-maths-factorisation.js?v=20261003-1"></script>

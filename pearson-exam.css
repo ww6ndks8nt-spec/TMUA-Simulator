@@ -10,8 +10,8 @@ body[data-exam-scheme="light-yellow"]{--exam-bg:#ffff80;--exam-bar:#ffff80;--exa
 body[data-exam-scheme="salmon"]{--exam-bg:#fdd3c5;--exam-bar:#fdd3c5;--exam-strip:#fdd3c5;--exam-bar-text:#000;--exam-rule:#000;--exam-hover:#000;}
 body[data-exam-scheme="white"]{--exam-bg:#fff;--exam-bar:#fff;--exam-strip:#fff;--exam-bar-text:#000;--exam-rule:#000;--exam-hover:#000;}
 body[data-exam-scheme="yellow"]{--exam-bg:#ffff00;--exam-bar:#ffff00;--exam-strip:#ffff00;--exam-bar-text:#000;--exam-rule:#000;--exam-hover:#000;}
-:is(#topbar,#substrip,#testMain,#footbar,#navOver,#endConfirm){font-family:var(--pv-font)!important;letter-spacing:normal!important;color-scheme:light;}
-:is(#topbar,#substrip,#testMain,#footbar,#navOver,#endConfirm) :is(button,label,input,select){transition:none!important;animation:none!important;box-shadow:none!important;transform:none!important;}
+:is(#topbar,#substrip,#testMain,#footbar,#navOver,#endConfirm,#timeWarning){font-family:var(--pv-font)!important;letter-spacing:normal!important;color-scheme:light;}
+:is(#topbar,#substrip,#testMain,#footbar,#navOver,#endConfirm,#timeWarning) :is(button,label,input,select){transition:none!important;animation:none!important;box-shadow:none!important;transform:none!important;}
 #topbar{height:var(--pv-header-height)!important;padding:0 6px!important;gap:0!important;border:0!important;border-top:1px solid #51393b!important;color:var(--exam-bar-text)!important;z-index:80;}
 #topbar .title{font:normal 21.3333px/1.2 var(--pv-font)!important;color:inherit!important;min-width:0;}
 #topbar .exam-status{display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-end;flex-shrink:0;height:50px;margin:0 -4px 0 16px;}
@@ -136,18 +136,21 @@ body:not([data-exam-scheme="standard"]) #navWindow .official-navtable tr:is(.cur
 body:not([data-exam-scheme="standard"]) #preExamScreen .pre-exam-timer{color:#000;}
 #paperGapScreen :is(.dual-gap-shell,.dual-gap-body){background:var(--exam-bg)!important;color:var(--exam-text)!important;}
 #endConfirm{position:fixed;inset:0;z-index:110;pointer-events:auto;}
-#endConfirm .exam-confirm{background:var(--exam-bar);color:var(--exam-bar-text);border-color:var(--exam-rule);max-width:calc(100vw - 24px);}
-#endConfirm .exam-confirm-actions button{color:inherit;border-color:var(--exam-rule);}
-#endConfirm .exam-confirm-actions button:hover:where(html:not([data-duck-theme="dark"]) *){color:var(--exam-hover);}
+#timeWarning{position:fixed;inset:0;z-index:130;pointer-events:auto;}
+:is(#endConfirm,#timeWarning) .exam-confirm{background:var(--exam-bar);color:var(--exam-bar-text);border-color:var(--exam-rule);max-width:calc(100vw - 24px);}
+:is(#endConfirm,#timeWarning) .exam-confirm-actions button{color:inherit;border-color:var(--exam-rule);}
+:is(#endConfirm,#timeWarning) .exam-confirm-actions button:hover:where(html:not([data-duck-theme="dark"]) *){color:var(--exam-hover);}
 /* Full-page end-of-paper review, separate from the floating Navigator. */
 #testMain .exam-review-screen{padding:22px 24px 32px;color:var(--exam-text);}
-#testMain #examReviewTitle{margin:0 0 20px;font:normal 24px/1.3 var(--pv-font);color:inherit;text-shadow:none;}
-#testMain .exam-review-table{width:100%;max-width:1150px;margin:0;border-collapse:collapse;table-layout:fixed;font:16px/1.4 var(--pv-font);background:var(--exam-bg);color:var(--exam-text);}
-#testMain .exam-review-table :is(th,td){height:38px;padding:6px 16px;text-align:left;border:1px solid #bec6cc;box-shadow:none;}
-#testMain .exam-review-table thead th{background:var(--exam-strip)!important;color:var(--exam-bar-text)!important;font-size:16px;font-weight:bold;}
-#testMain .exam-review-table tbody :is(th,td){background:var(--exam-bg)!important;color:var(--exam-text);font-weight:normal;}
-body[data-exam-scheme="standard"] #testMain .exam-review-table tbody tr:nth-child(even) :is(th,td){background:#f4f6f8!important;}
-#testMain .exam-review-table :is(.status-incomplete,.status-unseen){color:#b00020;}
+#testMain #examReviewTitle{max-width:1150px;margin:0 auto 20px;font:normal 24px/1.3 var(--pv-font);color:inherit;text-shadow:none;}
+#testMain #examReviewTitle:focus{outline:none;}
+#testMain .exam-review-table{width:100%;max-width:1150px;margin:0 auto;border:0!important;border-collapse:separate;border-spacing:0;border-radius:14px!important;overflow:hidden;table-layout:fixed;font:16px/1.4 var(--pv-font);background:#fff;color:#111827;box-shadow:0 3px 18px rgba(15,23,42,.14);}
+#testMain .exam-review-table :is(th,td){height:40px;padding:6px 20px;text-align:left;border:0!important;border-bottom:1px solid #e5e7eb!important;box-shadow:none;}
+#testMain .exam-review-table thead th{height:44px;background:#fff!important;color:#6b7280!important;font-size:14px;font-weight:bold;letter-spacing:.04em;text-transform:uppercase;}
+#testMain .exam-review-table tbody :is(th,td){background:#fff!important;color:#111827;font-weight:normal;}
+#testMain .exam-review-table tbody tr:last-child :is(th,td){border-bottom:0!important;}
+#testMain .exam-review-table .exam-review-status{display:inline-block;padding:3px 12px;border:0;border-radius:999px!important;background:#fee2e2;color:#991b1b;font-size:14px;line-height:20px;font-weight:bold;white-space:nowrap;}
+#testMain .exam-review-table .exam-review-status.status-complete{background:#dcfce7;color:#166534;}
 #testMain .exam-review-link{display:inline-block;margin:0;padding:2px 0;border:0;background:transparent!important;color:#005b91!important;font:inherit;text-decoration:underline;cursor:pointer;min-height:0;}
 #testMain .exam-review-link:hover{color:#002f4c!important;}
 #testMain .exam-review-link:focus-visible{outline:2px solid currentColor;outline-offset:3px;}
@@ -182,6 +185,7 @@ body[data-exam-scheme="standard"] #testMain .exam-review-table tbody tr:nth-chil
  #testMain .opt{padding-left:12px!important;}
  #testMain .exam-review-screen{padding:18px 12px 24px;}
  #testMain .exam-review-table :is(th,td){padding:8px;font-size:14px;}
+ #testMain .exam-review-table .exam-review-status{padding:3px 8px;font-size:12px;line-height:18px;}
  #preExamScreen .pre-exam-title{font-size:16px;}
  #preExamScreen .pre-exam-timer{font-size:14px;}
 }
