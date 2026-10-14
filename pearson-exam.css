@@ -139,6 +139,34 @@ body:not([data-exam-scheme="standard"]) #preExamScreen .pre-exam-timer{color:#00
 #endConfirm .exam-confirm{background:var(--exam-bar);color:var(--exam-bar-text);border-color:var(--exam-rule);max-width:calc(100vw - 24px);}
 #endConfirm .exam-confirm-actions button{color:inherit;border-color:var(--exam-rule);}
 #endConfirm .exam-confirm-actions button:hover:where(html:not([data-duck-theme="dark"]) *){color:var(--exam-hover);}
+/* Full-page end-of-paper review, separate from the floating Navigator. */
+#testMain .exam-review-screen{padding:22px 24px 32px;color:var(--exam-text);}
+#testMain #examReviewTitle{margin:0 0 20px;font:normal 24px/1.3 var(--pv-font);color:inherit;text-shadow:none;}
+#testMain .exam-review-table{width:100%;max-width:1150px;margin:0;border-collapse:collapse;table-layout:fixed;font:16px/1.4 var(--pv-font);background:var(--exam-bg);color:var(--exam-text);}
+#testMain .exam-review-table :is(th,td){height:38px;padding:6px 16px;text-align:left;border:1px solid #bec6cc;box-shadow:none;}
+#testMain .exam-review-table thead th{background:var(--exam-strip)!important;color:var(--exam-bar-text)!important;font-size:16px;font-weight:bold;}
+#testMain .exam-review-table tbody :is(th,td){background:var(--exam-bg)!important;color:var(--exam-text);font-weight:normal;}
+body[data-exam-scheme="standard"] #testMain .exam-review-table tbody tr:nth-child(even) :is(th,td){background:#f4f6f8!important;}
+#testMain .exam-review-table :is(.status-incomplete,.status-unseen){color:#b00020;}
+#testMain .exam-review-link{display:inline-block;margin:0;padding:2px 0;border:0;background:transparent!important;color:#005b91!important;font:inherit;text-decoration:underline;cursor:pointer;min-height:0;}
+#testMain .exam-review-link:hover{color:#002f4c!important;}
+#testMain .exam-review-link:focus-visible{outline:2px solid currentColor;outline-offset:3px;}
+#preExamScreen .pre-completion-title{margin:30px 0 0;font-size:22px;font-weight:normal;}
+#topbar .title,#preExamScreen .pre-exam-title{white-space:normal;overflow-wrap:anywhere;line-height:1.1!important;}
+@media(max-width:900px){
+ body[data-exam-scheme]{--pv-header-height:80px;}
+ #topbar .title{font-size:16px!important;max-width:none!important;flex:1;}
+ #topbar > .spacer{display:none;}
+ #preExamScreen .pre-exam-top{height:80px;flex-direction:column;align-items:flex-start;justify-content:center;}
+ #preExamScreen .pre-exam-title{font-size:16px;}
+ #preExamScreen .pre-exam-timer{margin-left:0;font-size:14px;}
+ #preExamScreen .pre-exam-body{top:112px;}
+}
+@media(max-width:800px){
+ #footbar:has(#returnToExamReviewBtn:not(.hidden)){height:auto!important;min-height:var(--pv-footer-height);flex-wrap:wrap;}
+ #footbar #returnToExamReviewBtn{order:-1;flex-basis:100%;border-left:0!important;border-bottom:1px solid var(--exam-rule)!important;}
+ body:has(#returnToExamReviewBtn:not(.hidden)) #testMain{bottom:calc(var(--pv-footer-height) * 2);}
+}
 @media(max-width:600px){
  #topbar .title{font-size:16px!important;max-width:calc(100% - 130px);}
  #topbar #timeWrap .lbl{display:none!important;}
@@ -152,4 +180,8 @@ body:not([data-exam-scheme="standard"]) #preExamScreen .pre-exam-timer{color:#00
  #navWindow .official-navtable td,#navWindow .navigator-summary{font-size:13px!important;}
  #testMain .wrap{padding:14px 12px 26px!important;}
  #testMain .opt{padding-left:12px!important;}
+ #testMain .exam-review-screen{padding:18px 12px 24px;}
+ #testMain .exam-review-table :is(th,td){padding:8px;font-size:14px;}
+ #preExamScreen .pre-exam-title{font-size:16px;}
+ #preExamScreen .pre-exam-timer{font-size:14px;}
 }

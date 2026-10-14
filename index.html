@@ -3007,7 +3007,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
     <div class="dual-gap-strip"></div>
     <div class="dual-gap-body">
       <h2>Paper 1 has ended. Paper 2 will begin automatically.</h2>
-      <p>Use this one-minute interval to read the instructions for the second paper. Your Paper 1 answers have already been submitted and saved.</p>
+      <p>Use this two-minute interval to read the instructions for the second paper. Your Paper 1 answers have already been submitted and saved.</p>
       <table class="dual-gap-table">
         <tr><th>Next section</th><td id="dualNextTitle">Paper 2</td></tr>
         <tr><th>Questions</th><td id="dualNextCount">20</td></tr>
@@ -3017,7 +3017,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
       </table>
       <p>For each question, choose the one answer you consider correct. Attempt every question.</p>
       <a class="dual-gap-link hidden" id="dualPaper2Link" href="#" target="_blank" rel="noopener">Open Paper 2 materials</a>
-      <div class="dual-countdown" id="dualGapCountdown">1:00</div>
+      <div class="dual-countdown" id="dualGapCountdown">2:00</div>
       <div>Paper 2 starts automatically when the countdown reaches zero.</div>
     </div>
     <div class="dual-gap-foot"></div>
@@ -3049,17 +3049,25 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
 </div>
 
 <main class="hidden" id="testMain">
-  <div class="wrap">
+  <div class="wrap" id="examQuestion">
     <div class="stem" id="stem"></div>
     <div class="question-topic hidden" id="questionTopic"></div>
     <div class="options" id="options" role="radiogroup" aria-label="Answer choices"></div>
     <div class="solution hidden" id="solution"></div>
   </div>
+  <section class="exam-review-screen hidden" id="examReviewScreen" aria-labelledby="examReviewTitle">
+    <h1 id="examReviewTitle" tabindex="-1">Review</h1>
+    <table class="exam-review-table" aria-label="Question review">
+      <thead><tr><th scope="col">QUESTION</th><th scope="col">STATUS</th><th scope="col">REVIEW</th></tr></thead>
+      <tbody id="examReviewRows"></tbody>
+    </table>
+  </section>
 </main>
 
 <footer class="actions hidden" id="footbar">
   <button type="button" class="pvbtn ghost" id="exitBtn" title="End Exam (Alt+E)">&#10534; End Exam</button>
   <div class="spacer"></div>
+  <button type="button" class="pvbtn hidden" id="returnToExamReviewBtn">Review screen</button>
   <button type="button" class="pvbtn" id="prevBtn" title="Previous (Alt+P)">&#8592; Previous</button>
   <button type="button" class="pvbtn" id="reviewBtn" aria-haspopup="dialog" aria-controls="navOver" title="Navigator (Alt+V)">&#9881; Navigator</button>
   <button type="button" class="pvbtn" id="nextBtn" title="Next (Alt+N)">Next &#8594;</button>
@@ -4068,6 +4076,7 @@ let QUESTIONS = [];
 let idx = 0, answers = [], flags = [], seen = [];
 let questionTimesMs = [], questionTimingIdx = null, questionTimingStartedAt = 0;
 let submitted = false, reviewMode = false;
+let examReviewOpen=false, examReviewAvailable=false;
 let secondsLeft = 0, timerId = null, noTimer = false;
 let sessionMode = '75 min';
 let leaderboardExamTiming=null;
@@ -4077,6 +4086,7 @@ let dualPaperSeconds = 75*60, dualGapTimerId = null, dualGapEndsAt = 0;
 let preExamTimerId=null, preExamEndsAt=0, preExamStage='', preExamReturnStage='';
 let pendingResultsReady=false;
 const PRE_EXAM_SECONDS=60;
+const DUAL_BREAK_SECONDS=120;
 const PRE_UAT_LOGO="data:image/webp;base64,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";
 
 let dualFirstResult = null;
@@ -4121,7 +4131,7 @@ function persistNow(){ clearTimeout(saveDebounce); Store.write(ROOT); }
 function snapshotProgress(){
   if(!active || submitted || reviewMode || !currentUser) return;
   flushQuestionTiming(true);
-  STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
+  STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, examReviewOpen, examReviewAvailable, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
   persist();
 }
 function fmtDate(t){
@@ -4136,7 +4146,7 @@ function flushQuestionTiming(restart){
     }
     questionTimingStartedAt=0;
   }
-  if(restart && !submitted && !reviewMode && idx>=0 && idx<QUESTIONS.length){
+  if(restart && !submitted && !reviewMode && !examReviewOpen && idx>=0 && idx<QUESTIONS.length){
     questionTimingIdx=idx;
     questionTimingStartedAt=Date.now();
   } else {
@@ -5240,11 +5250,11 @@ function updateCombinedStartButton(p){
   if(t===0){
     btn.disabled=true;
     btn.textContent='Sit both papers';
-    note.textContent='Choose a timed duration to use combined mode. Combined mode runs Paper 1, a 1-minute instruction interval, then Paper 2 automatically.';
+    note.textContent='Choose a timed duration to use combined mode. Combined mode runs Paper 1, a 2-minute instruction interval, then Paper 2 automatically.';
   } else {
     btn.disabled=false;
     btn.textContent='Sit both papers ('+formatDurationCompact(Math.round(t*60))+' each)';
-    note.textContent='Combined sitting: '+pair.p1.title+' followed by a 1-minute instruction interval, then '+pair.p2.title+'. Paper 2 starts automatically.';
+    note.textContent='Combined sitting: '+pair.p1.title+' followed by a 2-minute instruction interval, then '+pair.p2.title+'. Paper 2 starts automatically.';
   }
 }
 
@@ -5390,6 +5400,7 @@ function preInstructionTable(rows){
 }
 function showPreExamShell(){
   hideSideNav();
+  updateExamTitles();
   ['dashboardScreen','libraryScreen','reviewHubScreen','wrongHubScreen','startScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','paperGapScreen','endConfirm'].forEach(id=>$(id).classList.add('hidden'));
   $('preExamScreen').classList.remove('hidden');
   applyExamScheme(document.body.dataset.examScheme||'standard');
@@ -5413,9 +5424,9 @@ function showWelcomeIntro(){
     +'Do not disclose, publish, reproduce or transmit the test content while the sitting is in progress.</p>'
     +'<p>Click the <strong>Next (N)</strong> button when you are ready to begin the test.</p>';
 }
-function startPreCountdown(onDone){
+function startPreCountdown(onDone,duration=PRE_EXAM_SECONDS){
   stopPreExamTimer();
-  preExamEndsAt=Date.now()+PRE_EXAM_SECONDS*1000;
+  preExamEndsAt=Date.now()+duration*1000;
   $('preTimerWrap').classList.remove('hidden');
   const update=()=>{
     const left=Math.max(0,Math.ceil((preExamEndsAt-Date.now())/1000));
@@ -5447,19 +5458,20 @@ function showGeneralInstructions(){
   startPreCountdown(showPaperInstructions);
 }
 function showPaperInstructions(){
-  preExamStage='paper';
+  const betweenPapers=!!(dualMode && dualStage===2 && dualFirstResult);
+  preExamStage=betweenPapers?'gap':'paper';
   showPreExamShell();
   $('prePrevBtn').classList.add('hidden');
-  $('preNextBtn').classList.remove('hidden');
+  $('preNextBtn').classList.toggle('hidden',betweenPapers);
   $('preNextBtn').innerHTML='Next &#10140;';
-  $('preEndBtn').classList.remove('hidden');
+  $('preEndBtn').classList.toggle('hidden',betweenPapers);
   const lab=prePaperLabel(active);
   $('preExamBody').innerHTML=
     '<div class="pre-paper-name">'+escapeHtml(lab)+'</div>'
-    +'<h2>You have 1 minute to read these instructions.</h2>'
+    +'<h2>'+(betweenPapers?'You have 2 minutes before Paper 2 begins.':'You have 1 minute to read these instructions.')+'</h2>'
     +preInstructionTable([{name:lab,n:QUESTIONS.length,time:preTimeLabel()}])
-    +'<p>Please click the <strong>Next (N)</strong> button to proceed.</p>';
-  startPreCountdown(beginPaperAfterInstructions);
+    +'<p>'+(betweenPapers?'Paper 2 begins automatically when the countdown reaches zero.':'Please click the <strong>Next (N)</strong> button to proceed.')+'</p>';
+  startPreCountdown(beginPaperAfterInstructions,betweenPapers?DUAL_BREAK_SECONDS:PRE_EXAM_SECONDS);
 }
 function beginPaperAfterInstructions(){
   stopPreExamTimer();
@@ -5481,14 +5493,11 @@ function showSubmissionComplete(){
   $('prePrevBtn').classList.add('hidden');
   $('preEndBtn').classList.add('hidden');
   $('preNextBtn').classList.remove('hidden');
-  $('preNextBtn').innerHTML='Next &#10140;';
-  const scored=QUESTIONS.some(q=>q.correct!==99);
+  $('preNextBtn').innerHTML='View Results &#10140;';
   $('preExamBody').innerHTML=
-    '<div class="pre-submitted"><h2>Your answers have been submitted.</h2>'
-    +(scored
-      ?'<p>Your answers have been marked and your result is now available.</p><p>You can review every question and the recorded answers on the next screen.</p>'
-      :'<p>This paper has been submitted. It is unscored, but your recorded answers are available for review.</p>')
-    +'<p>Click <strong>Next (N)</strong> to continue.</p></div>';
+    '<img class="pre-uat-logo" src="'+PRE_UAT_LOGO+'" alt="UAT-UK">'
+    +'<h2 class="pre-completion-title" id="examCompleteTitle" tabindex="-1">Thank you for completing the '+escapeHtml(examTestName())+'</h2>';
+  $('examCompleteTitle').focus();
 }
 function showPendingResults(){
   stopPreExamTimer();
@@ -5524,7 +5533,7 @@ $('preEndBtn').addEventListener('click',()=>{
 });
 document.addEventListener('keydown',e=>{
   if($('preExamScreen').classList.contains('hidden')) return;
-  if(e.key==='n' || e.key==='N' || e.key==='ArrowRight'){
+  if((e.key==='n' || e.key==='N' || e.key==='ArrowRight') && !$('preNextBtn').classList.contains('hidden')){
     e.preventDefault(); $('preNextBtn').click();
   } else if((e.key==='p' || e.key==='P' || e.key==='ArrowLeft') && !$('prePrevBtn').classList.contains('hidden')){
     e.preventDefault(); $('prePrevBtn').click();
@@ -5585,6 +5594,7 @@ function startDualSecondPaper(){
 }
 
 function startTest(resume){
+  if(timerId){clearInterval(timerId);timerId=null;}
   leaderboardExamTiming={version:1,kind:resume?'continued-exam':noTimer?'untimed':'timed-exam',limitMs:!resume&&!noTimer?Math.max(0,secondsLeft)*1000:0};
   stopPreExamTimer();
   $('preExamScreen').classList.add('hidden');
@@ -5602,6 +5612,7 @@ function startTest(resume){
   }
   questionTimingIdx=null; questionTimingStartedAt=0;
   submitted=false; reviewMode=false;
+  examReviewOpen=false; examReviewAvailable=!!(s?.examReviewAvailable || s?.examReviewOpen);
   $('startScreen').classList.add('hidden'); $('resultScreen').classList.add('hidden'); $('paperGapScreen').classList.add('hidden');
   $('topbar').classList.remove('hidden'); $('substrip').classList.remove('hidden');
   $('testMain').classList.remove('hidden'); $('footbar').classList.remove('hidden');
@@ -5612,6 +5623,7 @@ function startTest(resume){
   const el=$('timer'); el.classList.remove('warn','crit');
   if(noTimer){ el.textContent=''; } else { updateTimerDisplay(); timerId=setInterval(tick,1000); }
   render();
+  if(s?.examReviewOpen)showExamReview();
 }
 
 function tick(){
@@ -5635,35 +5647,53 @@ function updateTimerDisplay(){
 
 /* ---------------- reference-calibrated exam delivery ---------------- */
 let examQuestionCountVisible=true;
+function examTestName(){
+  return active?.esat?'Engineering and Science Admissions Test':'Test of Mathematics for University Admission';
+}
+function updateExamTitles(){
+  const name=String(ROOT.profiles[currentUser]?.name||'').trim();
+  const title=examTestName()+(name?' ('+name+')':'');
+  $('topbar').querySelector('.title').firstChild.textContent=title;
+  $('preExamScreen').querySelector('.pre-exam-title').textContent=title;
+  $('paperGapScreen').querySelector('.dual-gap-top').textContent=title;
+}
 function examIcon(name){
   // Local, unmodified Pearson sprite: the same shapes as the reference controls.
   const names=['flag','stack','clock','previous','next','exit','navigator','solution'];
   return names.includes(name)?'<span class="pv-icon pv-icon-'+name+'" aria-hidden="true"></span>':'';
 }
 function renderExamChrome(){
-  $('topbar').querySelector('.title').firstChild.textContent=active?.esat?'Engineering and Science Admissions Test':'Test of Mathematics for University Admission';
+  updateExamTitles();
+  $('topQCount').classList.toggle('hidden',examReviewOpen);
   $('topQCount').innerHTML=examIcon('stack')+'<span'+(examQuestionCountVisible?'':' class="hidden"')+'>'+(idx+1)+' of '+QUESTIONS.length+'</span>';
   $('topQCount').classList.toggle('count-hidden',!examQuestionCountVisible);
   $('topQCount').setAttribute('aria-pressed',String(examQuestionCountVisible));
   $('topQCount').setAttribute('aria-label',(examQuestionCountVisible?'Hide':'Show')+' question count');
   $('topQCount').title=(examQuestionCountVisible?'Hide':'Show')+' question count';
-  $('flagWrap').classList.toggle('hidden',reviewMode);
+  $('flagWrap').classList.toggle('hidden',reviewMode||examReviewOpen);
   $('flagWrap').classList.toggle('on',!!flags[idx]);
   $('flagChk').checked=!!flags[idx];
   $('flagIcon').innerHTML=examIcon('flag');
   $('timerIcon').innerHTML=examIcon('clock');
+  ['prevBtn','reviewBtn','nextBtn'].forEach(id=>$(id).classList.toggle('hidden',examReviewOpen));
+  $('returnToExamReviewBtn').classList.toggle('hidden',!examReviewAvailable||examReviewOpen||reviewMode);
   $('prevBtn').disabled=(idx===0);
   $('prevBtn').innerHTML=examIcon('previous')+'<span><u>P</u>revious</span>';
   $('reviewBtn').innerHTML=examIcon('navigator')+'<span>Na<u>v</u>igator</span>';
   $('nextBtn').innerHTML=(reviewMode&&idx===QUESTIONS.length-1)?'Finish Review':'<span><u>N</u>ext</span>'+examIcon('next');
   $('exitBtn').classList.remove('hidden');
-  $('exitBtn').innerHTML=examIcon('exit')+'<span><u>E</u>'+(reviewMode?'xit Review':'nd Exam')+'</span>';
+  const endLabel=reviewMode?'xit Review':examReviewOpen?'nd Review':'nd Exam';
+  $('exitBtn').innerHTML=examIcon('exit')+'<span><u>E</u>'+endLabel+'</span>';
+  $('exitBtn').title='E'+endLabel+' (Alt+E)';
   // Pearson's Explain Answer is a review feature; never reveal a live answer key.
   $('explainAnswerBtn').classList.toggle('hidden',!reviewMode);
   $('explainAnswerBtn').innerHTML=examIcon('solution')+'<span>Explain Answer</span>';
   $('explainAnswerBtn').setAttribute('aria-expanded','true');
 }
 function render(){
+  examReviewOpen=false;
+  $('examQuestion').classList.remove('hidden');
+  $('examReviewScreen').classList.add('hidden');
   if(!reviewMode && !submitted) startQuestionTiming(idx);
   if(!reviewMode && seen.length===QUESTIONS.length) seen[idx]=true;
   const q=QUESTIONS[idx];
@@ -5700,13 +5730,13 @@ function render(){
   snapshotProgress();
 }
 function choose(i,focusAnswer=false){
-  if(reviewMode||submitted||!Number.isInteger(i)||i<0||i>=QUESTIONS[idx].opts.length)return;
+  if(reviewMode||submitted||examReviewOpen||!Number.isInteger(i)||i<0||i>=QUESTIONS[idx].opts.length)return;
   // Native radio behaviour: clicking the selected answer does not clear it.
   answers[idx]=i;render();
   if(focusAnswer)$('examAnswer'+i)?.focus();
 }
 $('prevBtn').addEventListener('click',()=>{if(idx>0){idx--;render();}});
-$('nextBtn').addEventListener('click',()=>{if(idx<QUESTIONS.length-1){idx++;render();}else if(reviewMode){backToResults();}else{openNav();}});
+$('nextBtn').addEventListener('click',()=>{if(examReviewOpen)return;if(idx<QUESTIONS.length-1){idx++;render();}else if(reviewMode){backToResults();}else{showExamReview();}});
 $('flagChk').addEventListener('change',()=>{if(!reviewMode){flags[idx]=$('flagChk').checked;renderExamChrome();snapshotProgress();}});
 $('explainAnswerBtn').addEventListener('click',()=>{
   if(!reviewMode)return;
@@ -5714,6 +5744,31 @@ $('explainAnswerBtn').addEventListener('click',()=>{
   $('solution').classList.toggle('hidden',!showing);$('explainAnswerBtn').setAttribute('aria-expanded',String(showing));
   if(showing)$('solution').scrollIntoView({block:'nearest'});
 });
+
+/* ---------------- end-of-paper review ---------------- */
+function showExamReview(){
+  if(submitted||reviewMode||$('testMain').classList.contains('hidden'))return;
+  flushQuestionTiming(false);
+  examReviewOpen=true;examReviewAvailable=true;
+  $('navOver').classList.add('hidden');
+  $('endConfirm').classList.add('hidden');
+  $('examQuestion').classList.add('hidden');
+  const rows=$('examReviewRows');rows.replaceChildren();
+  QUESTIONS.forEach((_,i)=>{
+    const status=navStatus(i),row=document.createElement('tr');
+    row.innerHTML='<th scope="row">'+(i+1)+'</th>'
+      +'<td class="status-'+status.toLowerCase()+'">'+status+'</td>'
+      +'<td><button type="button" class="exam-review-link" aria-label="Review question '+(i+1)+'">Review</button></td>';
+    row.querySelector('button').addEventListener('click',()=>{
+      idx=i;render();$('examAnswer'+(answers[i]??0))?.focus();
+    });
+    rows.appendChild(row);
+  });
+  $('examReviewScreen').classList.remove('hidden');
+  renderExamChrome();snapshotProgress();
+  $('testMain').scrollTop=0;$('examReviewTitle').focus();
+}
+$('returnToExamReviewBtn').addEventListener('click',showExamReview);
 
 /* ---------------- floating navigator ---------------- */
 let navSort={key:'question',ascending:true},navReturnFocus=null;
@@ -5724,7 +5779,7 @@ function closeNav(){
   $('navOver').classList.add('hidden');
   (navReturnFocus&&navReturnFocus.isConnected?navReturnFocus:$('reviewBtn')).focus();
 }
-function navStatus(i){return answers[i]!==null?'Complete':seen[i]?'Incomplete':'Unseen';}
+function navStatus(i){return answers[i]!==null&&answers[i]!==undefined?'Complete':seen[i]?'Incomplete':'Unseen';}
 function renderNavigator(){
   const tb=$('navTable');tb.innerHTML='';
   const order=QUESTIONS.map((_,i)=>i);
@@ -5750,7 +5805,7 @@ function renderNavigator(){
   $('navPendingCount').textContent=QUESTIONS.reduce((n,_,i)=>n+(answers[i]===null?1:0),0);
 }
 function openNav(){
-  if($('testMain').classList.contains('hidden'))return;
+  if(examReviewOpen||$('testMain').classList.contains('hidden'))return;
   if($('navOver').classList.contains('hidden'))navReturnFocus=document.activeElement;
   $('endConfirm').classList.add('hidden');renderNavigator();
   $('navDragHandle').innerHTML=examIcon('navigator')+'<span>Navigator - <small>select a question to go to it</small></span>';
@@ -5770,15 +5825,16 @@ function trapExamFocus(event,container){
 }
 
 function showEndConfirm(){
+  if(submitted||reviewMode)return;
   $('navOver').classList.add('hidden');
   if(dualMode && dualStage===1){
     $('endConfirmTitle').textContent='End Paper 1';
     $('endConfirmLead').textContent='You have chosen to end Paper 1 before its timer expires.';
-    $('endConfirmQuestion').textContent='Submit Paper 1 now and begin the 1-minute interval before Paper 2?';
+    $('endConfirmQuestion').textContent='Submit Paper 1 now and begin the 2-minute interval before Paper 2?';
   } else {
-    $('endConfirmTitle').textContent='End Exam';
-    $('endConfirmLead').textContent='You have chosen to end this exam.';
-    $('endConfirmQuestion').textContent='Are you sure you want to end this exam?';
+    $('endConfirmTitle').textContent='End Test';
+    $('endConfirmLead').textContent='You have chosen to end this test.';
+    $('endConfirmQuestion').textContent='Are you sure you want to end this test?';
   }
   $('endConfirm').classList.remove('hidden');
   $('endNo').focus();
@@ -5943,6 +5999,7 @@ function openCombinedRecord(rec,fromHub){
 
 function scaledBand(pct,paper,raw){return difficultyGradeText(raw,paper);}
 function submit(){
+  if(submitted)return;
   reviewOriginHub=false;
   flushQuestionTiming(false);
   submitted=true; if(timerId){ clearInterval(timerId); timerId=null; }
@@ -5999,7 +6056,7 @@ function submit(){
   const isFirst = STATE.results[finishedPaper.id].length===1;
   persistNow();
 
-  // In a combined sitting, Paper 1 submits silently and the mandatory one-minute
+  // In a combined sitting, Paper 1 submits silently and the mandatory two-minute
   // instruction interval begins. Paper 2 then starts automatically.
   if(dualMode && dualStage===1 && dualPair && finishedPaper.id===dualPair.p1.id){
     dualFirstResult={paper:finishedPaper,c,s,a:finishedAnswers,flags:flags.slice(),seen:seen.slice(),questionTimesMs:questionTimesMs.slice()};
@@ -6169,7 +6226,7 @@ $('exitBtn').addEventListener('click', ()=>{
 function unloadSave(){
   if(active && currentUser && !submitted && !reviewMode && !$('testMain').classList.contains('hidden')){
     flushQuestionTiming(true);
-    STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
+    STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, examReviewOpen, examReviewAvailable, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
     const s=JSON.stringify(ROOT);
     try{ localStorage.setItem(SAVE_KEY, s); return true; }catch(e){return false;}
     if(window.storage && window.storage.set){ try{ window.storage.set(SAVE_KEY, s); }catch(e){} }
@@ -6186,6 +6243,10 @@ document.addEventListener('keydown',e=>{
   }
   if(!$('navOver').classList.contains('hidden')){
     if(e.key==='Escape'){e.preventDefault();closeNav();}else trapExamFocus(e,$('navWindow'));return;
+  }
+  if(examReviewOpen){
+    if(e.altKey&&!e.ctrlKey&&!e.metaKey&&e.key.toLowerCase()==='e'){e.preventDefault();showEndConfirm();}
+    return;
   }
   const k=e.key.toLowerCase();
   if(e.altKey&&!e.ctrlKey&&!e.metaKey){
@@ -7426,7 +7487,7 @@ refreshAccountCircles();
 <script src="esat.js?v=20261006-bank-filters"></script>
 <link rel="stylesheet" href="duck-airy.css?v=20261003-heading-alignment">
 <script src="duck-airy.js?v=20261004-descriptions"></script>
-<link rel="stylesheet" href="pearson-exam.css?v=20261002-dark-glow">
+<link rel="stylesheet" href="pearson-exam.css?v=20261014-exam-review">
 <link rel="stylesheet" href="mental-maths.css?v=20261006-clean">
 <script src="mental-maths-engine.js?v=20261003-no-zero"></script>
 <script src="mental-maths-factorisation.js?v=20261003-1"></script>
