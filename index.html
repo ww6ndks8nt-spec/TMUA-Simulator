@@ -5510,7 +5510,8 @@ function showSubmissionComplete(){
   $('preNextBtn').innerHTML='View Results &#10140;';
   $('preExamBody').innerHTML=
     '<img class="pre-uat-logo" src="'+PRE_UAT_LOGO+'" alt="UAT-UK">'
-    +'<h2 class="pre-completion-title" id="examCompleteTitle" tabindex="-1">Thank you for completing the '+escapeHtml(examTestName())+'</h2>';
+    +'<h2 class="pre-completion-title" id="examCompleteTitle" tabindex="-1">Thank you for completing the '+escapeHtml(examTestName())+'</h2>'
+    +'<p>Your answers have been recorded and saved.</p>';
   $('examCompleteTitle').focus();
 }
 function showPendingResults(){
