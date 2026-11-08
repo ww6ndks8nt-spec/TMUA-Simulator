@@ -2943,7 +2943,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
 <div class="pre-exam-screen hidden" id="preExamScreen">
   <div class="pre-exam-top">
     <div class="pre-exam-title">Test of Mathematics for University Admission</div>
-    <div class="pre-exam-timer hidden" id="preTimerWrap">&#9719;Time Remaining <span id="preTimer">01:00</span></div>
+    <div class="pre-exam-timer hidden" id="preTimerWrap"><span class="pv-icon pv-icon-clock" aria-hidden="true"></span><span class="pre-timer-label">Time Remaining</span> <span id="preTimer">01:00</span></div>
   </div>
   <div class="pre-exam-strip">
     <div class="pre-scheme">
@@ -2955,6 +2955,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
         <option value="white">Black on White</option>
         <option value="yellow">Black on Yellow</option>
       </select>
+      <span class="scheme-caret" aria-hidden="true"></span>
     </div>
   </div>
   <div class="pre-exam-body" id="preExamBody"></div>
@@ -4104,6 +4105,7 @@ let submitted = false, reviewMode = false;
 let examReviewOpen=false, examReviewAvailable=false;
 let secondsLeft = 0, timerId = null, noTimer = false;
 let tenMinuteWarningShown=false, tenMinuteWarningReturnFocus=null;
+let examTimeExpired=false, combinedExpiryNoticePending=false, examEndsAt=0, dualGapActive=false;
 let sessionMode = '75 min';
 let leaderboardExamTiming=null;
 let reviewOriginHub = false;
@@ -4157,7 +4159,7 @@ function persistNow(){ clearTimeout(saveDebounce); Store.write(ROOT); }
 function snapshotProgress(){
   if(!active || submitted || reviewMode || !currentUser) return;
   flushQuestionTiming(true);
-  STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, examReviewOpen, examReviewAvailable, tenMinuteWarningShown, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
+  STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, examReviewOpen, examReviewAvailable, tenMinuteWarningShown, secondsLeft, examEndsAt, dualGapEndsAt, dualGapActive, combinedExpiryNoticePending, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
   persist();
 }
 function fmtDate(t){
@@ -4166,13 +4168,13 @@ function fmtDate(t){
 }
 function flushQuestionTiming(restart){
   if(questionTimingIdx!==null && questionTimingStartedAt){
-    const now=Date.now();
+    const now=!noTimer&&examEndsAt&&!submitted?Math.min(Date.now(),examEndsAt):Date.now();
     if(questionTimingIdx>=0 && questionTimingIdx<questionTimesMs.length){
       questionTimesMs[questionTimingIdx]=(questionTimesMs[questionTimingIdx]||0)+Math.max(0,now-questionTimingStartedAt);
     }
     questionTimingStartedAt=0;
   }
-  if(restart && !submitted && !reviewMode && !examReviewOpen && idx>=0 && idx<QUESTIONS.length){
+  if(restart && !submitted && !reviewMode && !examReviewOpen && !examTimeExpired && !combinedExpiryNoticePending && !dualGapActive && idx>=0 && idx<QUESTIONS.length){
     questionTimingIdx=idx;
     questionTimingStartedAt=Date.now();
   } else {
@@ -4181,7 +4183,7 @@ function flushQuestionTiming(restart){
 }
 function startQuestionTiming(i){
   flushQuestionTiming(false);
-  if(!submitted && !reviewMode && i>=0 && i<QUESTIONS.length){
+  if(!submitted && !reviewMode && !examTimeExpired && !combinedExpiryNoticePending && !dualGapActive && i>=0 && i<QUESTIONS.length){
     questionTimingIdx=i;
     questionTimingStartedAt=Date.now();
   }
@@ -4230,7 +4232,7 @@ function renderPaperAnswerTable(host,q,selected,{readOnly=false,showCorrect=fals
       radio.checked=selected===i;radio.className=exam?'exam-radio':'paper-table-radio';
       radio.setAttribute('aria-label','Answer '+LETTERS[i]);radio.setAttribute('aria-describedby',prefix+'Text'+i);
       radio.tabIndex=selected===i||((selected===null||selected===undefined)&&i===0)?0:-1;
-      radio.addEventListener('change',()=>onSelect?.(i));letter.appendChild(radio);
+      radio.addEventListener(exam?'click':'change',()=>onSelect?.(i));letter.appendChild(radio);
       const label=document.createElement('label');label.htmlFor=radio.id;label.textContent=LETTERS[i];letter.appendChild(label);
       row.addEventListener('click',event=>{if(!event.target.closest('input,label'))onSelect?.(i);});
     }else{letter.textContent=LETTERS[i];if(correct)letter.setAttribute('aria-label',LETTERS[i]+', correct answer');else if(wrong)letter.setAttribute('aria-label',LETTERS[i]+', your answer');}
@@ -5428,10 +5430,14 @@ function preInstructionTable(rows){
 function showPreExamShell(){
   hideSideNav();
   updateExamTitles();
+  $('preEndBtn').innerHTML=examIcon('exit')+'<span><u>E</u>nd Exam</span>';
+  $('prePrevBtn').innerHTML=examIcon('previous')+'<span><u>P</u>revious</span>';
+  $('preNextBtn').innerHTML='<span>'+(preExamStage==='submitted'?'View Results':'<u>N</u>ext')+'</span>'+examIcon('next');
   ['dashboardScreen','libraryScreen','reviewHubScreen','wrongHubScreen','startScreen','topbar','substrip','testMain','footbar','resultScreen','navOver','paperGapScreen','endConfirm','timeWarning'].forEach(id=>$(id).classList.add('hidden'));
   $('preExamScreen').classList.remove('hidden');
   applyExamScheme(document.body.dataset.examScheme||'standard');
   window.scrollTo(0,0);
+  if(combinedExpiryNoticePending)renderTimeExpiredNotice();
 }
 function showWelcomeIntro(){
   stopPreExamTimer();
@@ -5441,7 +5447,6 @@ function showWelcomeIntro(){
   $('preTimerWrap').classList.add('hidden');
   $('prePrevBtn').classList.add('hidden');
   $('preNextBtn').classList.remove('hidden');
-  $('preNextBtn').innerHTML='Next &#10140;';
   $('preEndBtn').classList.remove('hidden');
   $('preExamBody').innerHTML=
     '<img class="pre-uat-logo" src="'+PRE_UAT_LOGO+'" alt="UAT-UK">'
@@ -5451,9 +5456,9 @@ function showWelcomeIntro(){
     +'Do not disclose, publish, reproduce or transmit the test content while the sitting is in progress.</p>'
     +'<p>Click the <strong>Next (N)</strong> button when you are ready to begin the test.</p>';
 }
-function startPreCountdown(onDone,duration=PRE_EXAM_SECONDS){
+function startPreCountdown(onDone,duration=PRE_EXAM_SECONDS,deadline=0){
   stopPreExamTimer();
-  preExamEndsAt=Date.now()+duration*1000;
+  preExamEndsAt=deadline||Date.now()+duration*1000;
   $('preTimerWrap').classList.remove('hidden');
   const update=()=>{
     const left=Math.max(0,Math.ceil((preExamEndsAt-Date.now())/1000));
@@ -5463,15 +5468,14 @@ function startPreCountdown(onDone,duration=PRE_EXAM_SECONDS){
       onDone();
     }
   };
-  update();
   preExamTimerId=setInterval(update,200);
+  update();
 }
 function showGeneralInstructions(){
   preExamStage='general';
   showPreExamShell();
   $('prePrevBtn').classList.remove('hidden');
   $('preNextBtn').classList.remove('hidden');
-  $('preNextBtn').innerHTML='Next &#10140;';
   $('preEndBtn').classList.remove('hidden');
   const rows=preSectionRows();
   const wording=rows.length===2?'This exam consists of two sections:':'This exam consists of one section:';
@@ -5490,7 +5494,6 @@ function showPaperInstructions(){
   showPreExamShell();
   $('prePrevBtn').classList.add('hidden');
   $('preNextBtn').classList.toggle('hidden',betweenPapers);
-  $('preNextBtn').innerHTML='Next &#10140;';
   $('preEndBtn').classList.toggle('hidden',betweenPapers);
   const lab=prePaperLabel(active);
   $('preExamBody').innerHTML=
@@ -5498,14 +5501,18 @@ function showPaperInstructions(){
     +'<h2>'+(betweenPapers?'You have 2 minutes before Paper 2 begins.':'You have 1 minute to read these instructions.')+'</h2>'
     +preInstructionTable([{name:lab,n:QUESTIONS.length,time:preTimeLabel()}])
     +'<p>'+(betweenPapers?'Paper 2 begins automatically when the countdown reaches zero.':'Please click the <strong>Next (N)</strong> button to proceed.')+'</p>';
-  startPreCountdown(beginPaperAfterInstructions,betweenPapers?DUAL_BREAK_SECONDS:PRE_EXAM_SECONDS);
+  startPreCountdown(beginPaperAfterInstructions,betweenPapers?DUAL_BREAK_SECONDS:PRE_EXAM_SECONDS,betweenPapers?dualGapEndsAt:0);
 }
 function beginPaperAfterInstructions(){
+  const deadline=dualMode&&dualStage===2&&dualGapEndsAt?dualGapEndsAt+dualPaperSeconds*1000:0;
+  dualGapActive=false;
   stopPreExamTimer();
   $('preExamScreen').classList.add('hidden');
-  startTest(false);
+  startTest(false,deadline);
 }
 function beginExamIntroFlow(){
+  combinedExpiryNoticePending=false;dualGapActive=false;dualGapEndsAt=0;
+  setExamTimeExpired(false);closeTenMinuteWarning(false);
   if(active?.mat){beginPaperAfterInstructions();return;}
   if(timerId){ clearInterval(timerId); timerId=null; }
   stopPreExamTimer();
@@ -5520,7 +5527,6 @@ function showSubmissionComplete(){
   $('prePrevBtn').classList.add('hidden');
   $('preEndBtn').classList.add('hidden');
   $('preNextBtn').classList.remove('hidden');
-  $('preNextBtn').innerHTML='View Results &#10140;';
   $('preExamBody').innerHTML=
     '<img class="pre-uat-logo" src="'+PRE_UAT_LOGO+'" alt="UAT-UK">'
     +'<h2 class="pre-completion-title" id="examCompleteTitle" tabindex="-1">Thank you for completing the '+escapeHtml(examTestName())+'</h2>'
@@ -5560,6 +5566,7 @@ $('preEndBtn').addEventListener('click',()=>{
   }
 });
 document.addEventListener('keydown',e=>{
+  if(combinedExpiryNoticePending)return;
   if($('preExamScreen').classList.contains('hidden')) return;
   if((e.key==='n' || e.key==='N' || e.key==='ArrowRight') && !$('preNextBtn').classList.contains('hidden')){
     e.preventDefault(); $('preNextBtn').click();
@@ -5585,10 +5592,13 @@ $('resumeBtn').addEventListener('click', ()=>{
     const p1=paperById(s.dualP1Id), p2=paperById(s.dualP2Id);
     dualMode=!!(p1&&p2); dualPair=dualMode?{p1,p2}:null; dualStage=s.dualStage||1; dualPaperSeconds=s.dualPaperSeconds||75*60;
     if(dualMode && s.dualFirstResult && Array.isArray(s.dualFirstResult.a)){
-      dualFirstResult={paper:p1,c:s.dualFirstResult.c||0,s:s.dualFirstResult.s||p1.questions.length,a:s.dualFirstResult.a.slice(),flags:(s.dualFirstResult.flags||[]).slice(),seen:(s.dualFirstResult.seen||[]).slice()};
+      dualFirstResult={paper:p1,c:s.dualFirstResult.c||0,s:s.dualFirstResult.s||p1.questions.length,a:s.dualFirstResult.a.slice(),flags:(s.dualFirstResult.flags||[]).slice(),seen:(s.dualFirstResult.seen||[]).slice(),questionTimesMs:(s.dualFirstResult.questionTimesMs||[]).slice()};
     } else dualFirstResult=null;
   } else { dualMode=false; dualPair=null; dualStage=0; dualFirstResult=null; }
-  noTimer=!!s.noTimer; secondsLeft=noTimer?0:Math.max(1, s.secondsLeft|0);
+  noTimer=!!s.noTimer; secondsLeft=noTimer?0:Math.max(0, s.secondsLeft|0);
+  dualGapEndsAt=dualMode?Number(s.dualGapEndsAt)||0:0;
+  dualGapActive=dualMode&&!!s.dualGapActive;
+  combinedExpiryNoticePending=dualMode&&!!s.combinedExpiryNoticePending;
   sessionMode = s.mode || (noTimer ? 'Untimed' : 'Timed');
   startTest(true);
 });
@@ -5608,9 +5618,18 @@ function startDualGap(){
   if(!dualMode || !dualPair) return;
   if(timerId){ clearInterval(timerId); timerId=null; }
   if(dualGapTimerId){ clearInterval(dualGapTimerId); dualGapTimerId=null; }
+  // Anchor the break to expiry, even if a throttled browser processes it late.
+  dualGapEndsAt=(combinedExpiryNoticePending&&examEndsAt?Math.min(Date.now(),examEndsAt):Date.now())+DUAL_BREAK_SECONDS*1000;
   dualStage=2;
   active=dualPair.p2; QUESTIONS=active.questions;
   noTimer=false; secondsLeft=dualPaperSeconds;
+  examEndsAt=dualGapEndsAt+dualPaperSeconds*1000;dualGapActive=true;
+  idx=0;answers=new Array(QUESTIONS.length).fill(null);flags=new Array(QUESTIONS.length).fill(false);seen=new Array(QUESTIONS.length).fill(false);
+  questionTimesMs=new Array(QUESTIONS.length).fill(0);questionTimingIdx=null;questionTimingStartedAt=0;
+  submitted=false;reviewMode=false;examReviewOpen=false;examReviewAvailable=false;tenMinuteWarningShown=false;
+  sessionMode=paperSessionMode(active,dualPaperSeconds,true);
+  leaderboardExamTiming={version:1,kind:'timed-exam',limitMs:dualPaperSeconds*1000};
+  snapshotProgress();persistNow();
   showPaperInstructions();
 }
 
@@ -5621,10 +5640,15 @@ function startDualSecondPaper(){
   showPaperInstructions();
 }
 
-function startTest(resume){
+function startTest(resume,deadline=0){
   if(timerId){clearInterval(timerId);timerId=null;}
+  setExamTimeExpired(false);
   closeTenMinuteWarning(false);
-  leaderboardExamTiming={version:1,kind:resume?'continued-exam':noTimer?'untimed':'timed-exam',limitMs:!resume&&!noTimer?Math.max(0,secondsLeft)*1000:0};
+  const savedSession=resume?STATE.inprogress[active.id]:null;
+  const limitSeconds=dualMode?dualPaperSeconds:secondsLeft;
+  examEndsAt=noTimer?0:deadline||(dualMode&&resume&&Number(savedSession?.examEndsAt))||Date.now()+secondsLeft*1000;
+  if(!noTimer&&!dualGapActive)secondsLeft=Math.max(0,Math.ceil((examEndsAt-Date.now())/1000));
+  leaderboardExamTiming={version:1,kind:resume?'continued-exam':noTimer?'untimed':'timed-exam',limitMs:!resume&&!noTimer?Math.max(0,limitSeconds)*1000:0};
   stopPreExamTimer();
   $('preExamScreen').classList.add('hidden');
   hideSideNav(); reviewOriginHub=false;
@@ -5643,6 +5667,7 @@ function startTest(resume){
   questionTimingIdx=null; questionTimingStartedAt=0;
   submitted=false; reviewMode=false;
   examReviewOpen=false; examReviewAvailable=!!(s?.examReviewAvailable || s?.examReviewOpen);
+  if(resume&&dualMode&&dualGapActive){showPaperInstructions();return;}
   $('startScreen').classList.add('hidden'); $('resultScreen').classList.add('hidden'); $('paperGapScreen').classList.add('hidden');
   $('topbar').classList.remove('hidden'); $('substrip').classList.remove('hidden');
   $('testMain').classList.remove('hidden'); $('footbar').classList.remove('hidden');
@@ -5651,33 +5676,80 @@ function startTest(resume){
   $('topQCount').textContent = '1 of ' + N;
   $('timeWrap').classList.toggle('hidden', !!noTimer);
   const el=$('timer'); el.classList.remove('warn','crit');
-  if(noTimer){ el.textContent=''; } else { updateTimerDisplay(); timerId=setInterval(tick,1000); }
+  if(noTimer){ el.textContent=''; } else { updateTimerDisplay(); if(secondsLeft>0)timerId=setInterval(tick,1000); }
   render();
   if(s?.examReviewOpen)showExamReview();
-  if(!noTimer&&secondsLeft===600)showTenMinuteWarning();
+  if(combinedExpiryNoticePending)renderTimeExpiredNotice();
+  if(!noTimer&&secondsLeft<=0)showTimeExpired();
+  else if(!noTimer&&secondsLeft===600)showTenMinuteWarning();
 }
 
 function tick(){
-  secondsLeft--; updateTimerDisplay();if(profilePreferences().timerAlerts&&(secondsLeft===300||secondsLeft===60))playPracticeAlert();
-  if(secondsLeft<=0){ clearInterval(timerId); submit(true); return; }
-  if(secondsLeft===600)showTenMinuteWarning();
+  if(noTimer||submitted||reviewMode||examTimeExpired)return;
+  const previous=secondsLeft;
+  secondsLeft=Math.max(0,Math.ceil((examEndsAt-Date.now())/1000)); updateTimerDisplay();if(profilePreferences().timerAlerts&&[300,60].some(t=>previous>t&&secondsLeft<=t))playPracticeAlert();
+  if(secondsLeft<=0){ showTimeExpired(); return; }
+  if(previous>600&&secondsLeft<=600)showTenMinuteWarning();
   if(secondsLeft%120===0) snapshotProgress();
 }
 function showTenMinuteWarning(){
-  if(noTimer||submitted||reviewMode||tenMinuteWarningShown||$('testMain').classList.contains('hidden'))return;
+  if(noTimer||submitted||reviewMode||examTimeExpired||combinedExpiryNoticePending||tenMinuteWarningShown||$('testMain').classList.contains('hidden'))return;
   tenMinuteWarningShown=true;
   tenMinuteWarningReturnFocus=document.activeElement;
+  $('timeWarning').removeAttribute('data-expired');
+  $('timeWarningTitle').textContent='Time Remaining';
+  $('timeWarningMessage').textContent='You have 10 minutes remaining.';
   $('timeWarning').classList.remove('hidden');
   $('timeWarningOk').focus();
   snapshotProgress();
 }
 function closeTenMinuteWarning(restoreFocus=true){
+  if(combinedExpiryNoticePending)return;
   $('timeWarning').classList.add('hidden');
   const target=tenMinuteWarningReturnFocus;
   tenMinuteWarningReturnFocus=null;
   if(restoreFocus&&target?.isConnected&&target.getClientRects().length)target.focus();
 }
-$('timeWarningOk').addEventListener('click',()=>closeTenMinuteWarning());
+function setExamTimeExpired(expired){
+  examTimeExpired=expired;
+  ['topbar','substrip','testMain','footbar','preExamScreen'].forEach(id=>{$(id).inert=expired||combinedExpiryNoticePending;});
+}
+function showTimeExpired(){
+  if(noTimer||submitted||reviewMode||examTimeExpired)return;
+  if(timerId){clearInterval(timerId);timerId=null;}
+  secondsLeft=0;updateTimerDisplay();
+  flushQuestionTiming(false);
+  if(dualMode)combinedExpiryNoticePending=true;
+  setExamTimeExpired(true);
+  tenMinuteWarningReturnFocus=null;
+  $('navOver').classList.add('hidden');
+  $('endConfirm').classList.add('hidden');
+  renderTimeExpiredNotice();
+  // Keep the frozen answers recoverable if the page closes before acknowledgement.
+  snapshotProgress();persistNow();
+  // Acknowledging a combined-sitting notice never postpones the next stage.
+  if(dualMode)submit();
+}
+function renderTimeExpiredNotice(){
+  $('timeWarning').setAttribute('data-expired','true');
+  $('timeWarningTitle').textContent='Time Expired';
+  $('timeWarningMessage').textContent='Your time has expired. Click OK to continue.';
+  $('timeWarning').classList.remove('hidden');
+  $('timeWarningOk').focus();
+}
+$('timeWarningOk').addEventListener('click',()=>{
+  if(combinedExpiryNoticePending){
+    if(dualGapActive&&Date.now()>=dualGapEndsAt)beginPaperAfterInstructions();
+    if(!submitted&&!dualGapActive&&!noTimer&&examEndsAt&&Date.now()>=examEndsAt)tick();
+    combinedExpiryNoticePending=false;setExamTimeExpired(false);closeTenMinuteWarning(false);
+    if(!submitted&&!dualGapActive&&!$('testMain').classList.contains('hidden')){startQuestionTiming(idx);$('examAnswer'+(answers[idx]??0))?.focus();snapshotProgress();}
+    else if(dualGapActive){snapshotProgress();$('preExamBody').focus();}
+    else $('preNextBtn').focus();
+    persistNow();
+  }
+  else if(examTimeExpired)submit();
+  else closeTenMinuteWarning();
+});
 function fmtTime(s){
   const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
   return h+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
@@ -5750,7 +5822,7 @@ function render(){
   $('questionTopic').classList.toggle('hidden',!reviewMode);
   const wrap=$('options');wrap.innerHTML='';
   wrap.className='options'+(q.companion?' companion':'');
-  if(q.optionTableHeaders)renderPaperAnswerTable(wrap,q,answers[idx],{readOnly:reviewMode,showCorrect:reviewMode,prefix:'examAnswer',exam:true,onSelect:i=>choose(i,true)});
+  if(q.optionTableHeaders)renderPaperAnswerTable(wrap,q,answers[idx],{readOnly:reviewMode,showCorrect:reviewMode,prefix:'examAnswer',exam:true,onSelect:i=>choose(i,true,true)});
   else q.opts.forEach((o,i)=>{
     const label=document.createElement('label');
     const correct=reviewMode&&q.correct!==99&&isCorrectOpt(q,i);
@@ -5763,7 +5835,7 @@ function render(){
     radio.setAttribute('aria-label','Answer '+LETTERS[i]);
     radio.setAttribute('aria-describedby','examAnswerText'+i);
     radio.tabIndex=answers[idx]===i||(answers[idx]===null&&i===0)?0:-1;
-    radio.addEventListener('change',()=>choose(i,true));
+    radio.addEventListener('click',()=>choose(i,true,true));
     label.appendChild(radio);
     const body=document.createElement('span');body.className='body';body.id='examAnswerText'+i;
     body.innerHTML=q.companion?LETTERS[i]:richMathHtml(o);label.appendChild(body);
@@ -5776,10 +5848,11 @@ function render(){
   typeset($('testMain'));$('testMain').scrollTop=0;
   snapshotProgress();
 }
-function choose(i,focusAnswer=false){
-  if(reviewMode||submitted||examReviewOpen||!Number.isInteger(i)||i<0||i>=QUESTIONS[idx].opts.length)return;
-  // Native radio behaviour: clicking the selected answer does not clear it.
-  answers[idx]=i;render();
+function choose(i,focusAnswer=false,toggleSelection=false){
+  if(reviewMode||submitted||examReviewOpen||examTimeExpired||combinedExpiryNoticePending||dualGapActive||!Number.isInteger(i)||i<0||i>=QUESTIONS[idx].opts.length)return;
+  if(!noTimer&&examEndsAt&&Date.now()>=examEndsAt){showTimeExpired();return;}
+  // A second click clears the answer; keyboard navigation still selects normally.
+  answers[idx]=toggleSelection&&answers[idx]===i?null:i;render();
   if(focusAnswer)$('examAnswer'+i)?.focus();
 }
 $('prevBtn').addEventListener('click',()=>{if(idx>0){idx--;render();}});
@@ -6047,6 +6120,7 @@ function openCombinedRecord(rec,fromHub){
 function scaledBand(pct,paper,raw){return difficultyGradeText(raw,paper);}
 function submit(){
   if(submitted)return;
+  setExamTimeExpired(false);
   closeTenMinuteWarning(false);
   reviewOriginHub=false;
   flushQuestionTiming(false);
@@ -6104,8 +6178,8 @@ function submit(){
   const isFirst = STATE.results[finishedPaper.id].length===1;
   persistNow();
 
-  // In a combined sitting, Paper 1 submits silently and the mandatory two-minute
-  // instruction interval begins. Paper 2 then starts automatically.
+  // Save Paper 1 before starting the fixed two-minute interval. Paper 2 starts
+  // automatically, independently of acknowledgement of the expiry notice.
   if(dualMode && dualStage===1 && dualPair && finishedPaper.id===dualPair.p1.id){
     dualFirstResult={paper:finishedPaper,c,s,a:finishedAnswers,flags:flags.slice(),seen:seen.slice(),questionTimesMs:questionTimesMs.slice()};
     if(LEADERBOARD_URL && profilePreferences().leaderboard && isFirst && currentUser && ROOT.profiles[currentUser] && s>0){
@@ -6274,7 +6348,7 @@ $('exitBtn').addEventListener('click', ()=>{
 function unloadSave(){
   if(active && currentUser && !submitted && !reviewMode && !$('testMain').classList.contains('hidden')){
     flushQuestionTiming(true);
-    STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, examReviewOpen, examReviewAvailable, tenMinuteWarningShown, secondsLeft, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
+    STATE.inprogress[active.id]={ answers:answers.slice(), flags:flags.slice(), seen:seen.slice(), questionTimesMs:questionTimesMs.slice(), leaderboardExamTiming, idx, examReviewOpen, examReviewAvailable, tenMinuteWarningShown, secondsLeft, examEndsAt, dualGapEndsAt, dualGapActive, combinedExpiryNoticePending, noTimer, mode:sessionMode, savedAt:Date.now(), dual:dualMode, dualStage, dualP1Id:dualPair&&dualPair.p1?dualPair.p1.id:null, dualP2Id:dualPair&&dualPair.p2?dualPair.p2.id:null, dualPaperSeconds, dualFirstResult:dualFirstResult?{paperId:dualFirstResult.paper&&dualFirstResult.paper.id,c:dualFirstResult.c,s:dualFirstResult.s,a:(dualFirstResult.a||[]).slice(),flags:(dualFirstResult.flags||[]).slice(),seen:(dualFirstResult.seen||[]).slice(),questionTimesMs:(dualFirstResult.questionTimesMs||[]).slice()}:null };
     const s=JSON.stringify(ROOT);
     try{ localStorage.setItem(SAVE_KEY, s); return true; }catch(e){return false;}
     if(window.storage && window.storage.set){ try{ window.storage.set(SAVE_KEY, s); }catch(e){} }
@@ -6285,10 +6359,10 @@ document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState=
 
 /* ---------------- keyboard ---------------- */
 document.addEventListener('keydown',e=>{
-  if($('testMain').classList.contains('hidden'))return;
   if(!$('timeWarning').classList.contains('hidden')){
-    if(e.key==='Escape'){e.preventDefault();closeTenMinuteWarning();}else trapExamFocus(e,$('timeWarning'));return;
+    if(e.key==='Escape'){e.preventDefault();if(!examTimeExpired&&!combinedExpiryNoticePending)closeTenMinuteWarning();}else trapExamFocus(e,$('timeWarning'));return;
   }
+  if($('testMain').classList.contains('hidden'))return;
   if(!$('endConfirm').classList.contains('hidden')){
     if(e.key==='Escape'){e.preventDefault();$('endNo').click();}else trapExamFocus(e,$('endConfirm'));return;
   }
@@ -7539,7 +7613,7 @@ refreshAccountCircles();
 <script src="esat.js?v=20261006-bank-filters"></script>
 <link rel="stylesheet" href="duck-airy.css?v=20261003-heading-alignment">
 <script src="duck-airy.js?v=20261004-descriptions"></script>
-<link rel="stylesheet" href="pearson-exam.css?v=20261108-flag-states">
+<link rel="stylesheet" href="pearson-exam.css?v=20261109-exam-controls">
 <link rel="stylesheet" href="mental-maths.css?v=20261006-clean">
 <script src="mental-maths-engine.js?v=20261003-no-zero"></script>
 <script src="mental-maths-factorisation.js?v=20261003-1"></script>
