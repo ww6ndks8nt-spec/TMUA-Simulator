@@ -44,12 +44,14 @@ function timeText(r){if(!Array.isArray(r.questionTimesMs)||!r.questionTimesMs.so
 function render(p){
  brand.textContent=p.matAdditional?'Additional MAT paper':category(p);
  banner.classList.toggle('pp-mat-additional',!!p.matAdditional);
- sourceLinks.replaceChildren();sourceLinks.hidden=!p.matAdditional;
+ sourceLinks.replaceChildren();sourceLinks.hidden=!(p.matAdditional||p.earlySpecimen);
  extraInfo.hidden=!p.matAdditional;
- if(p.matAdditional){
+ if(p.matAdditional||p.earlySpecimen){
    for(const [label,url] of [['Question PDF',p.url],['Solutions PDF',p.solutionUrl]]){
      const a=make('a','',label+' ↗');a.href=url;a.target='_blank';a.rel='noopener noreferrer';sourceLinks.append(a);
    }
+ }
+ if(p.matAdditional){
    extraInfo.textContent=(p.id==='mat2023additional'
      ?'Oxford arranged this additional multiple-choice test before shortlisting for candidates affected by technical disruption in the 2023 MAT.'
      :'Oxford arranged this additional multiple-choice test just before interviews for a small number of candidates shortlisted without a MAT score.')

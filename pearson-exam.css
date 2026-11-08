@@ -36,9 +36,11 @@ body[data-exam-scheme="standard"] #topbar #timer.warn,body[data-exam-scheme="sta
 #substrip #colorSchemeSelect{appearance:none;-webkit-appearance:none;width:100%;height:28px;min-height:0;padding:0 18px 0 5px;margin:0;border:0;border-radius:0!important;outline-offset:-1px;background:transparent;color:inherit;font:inherit;cursor:default;}
 #substrip #colorSchemeSelect option{font:inherit;color:#000;background:#fff;}
 #substrip .scheme-caret{position:absolute;display:block;right:2px;top:50%;width:9px;height:9px;margin-top:-4px;padding:0;border:0;background:url("pearson-caret.png?v=20260922-2") no-repeat center;font-size:0;pointer-events:none;}
-#substrip .flagwrap:hover:where(html:not([data-duck-theme="dark"]) *),#substrip .flagwrap:focus-within:where(html:not([data-duck-theme="dark"]) *),#substrip .sub-left:hover:where(html:not([data-duck-theme="dark"]) *),#substrip .sub-left:focus-visible:where(html:not([data-duck-theme="dark"]) *){color:var(--exam-hover)!important;}
+#substrip .flagwrap{box-shadow:none!important;text-shadow:none!important;filter:none!important;}
+#substrip .flagwrap:is(:hover,:has(#flagChk:focus-visible)){color:var(--exam-hover)!important;}
+#substrip .sub-left:hover:where(html:not([data-duck-theme="dark"]) *),#substrip .sub-left:focus-visible:where(html:not([data-duck-theme="dark"]) *){color:var(--exam-hover)!important;}
 #topbar #topQCount:focus-visible{outline:1px dotted currentColor!important;outline-offset:-1px!important;}
-#substrip .flagwrap:focus-within,#substrip .sub-left:focus-visible{outline:1px dotted currentColor!important;outline-offset:-1px;}
+#substrip .flagwrap:has(#flagChk:focus-visible),#substrip .sub-left:focus-visible{outline:1px dotted currentColor!important;outline-offset:-1px;}
 #testMain{position:fixed;top:calc(var(--pv-header-height) + var(--pv-toolbar-height));bottom:var(--pv-footer-height);left:0;right:0;min-height:0!important;height:auto!important;margin:0!important;padding:0!important;overflow:auto;overscroll-behavior:contain;background:var(--exam-bg)!important;color:var(--exam-text)!important;z-index:70;}
 #testMain .wrap{max-width:none!important;width:100%;padding:16px 16px 32px!important;margin:0!important;}
 #testMain .stem{font:normal 16px/24px var(--pv-font)!important;color:var(--exam-text)!important;margin:0!important;overflow-wrap:break-word;}
@@ -81,15 +83,14 @@ body:not([data-exam-scheme="standard"]) #footbar{border-top:1px solid #000!impor
 .pv-icon{display:inline-block;vertical-align:middle;flex:none;width:25px;height:25px;background-image:url("pearson-controls.png?v=20260922-2");background-repeat:no-repeat;background-size:29px 3509px;}
 .pv-icon-clock{width:21px;background-position:0 0;}
 .pv-icon-stack{width:20px;background-position:0 -90px;}
-.pv-icon-flag{width:27px;height:30px;background-position:0 -1621px;}
+.pv-icon-flag{width:27px;height:30px;background-position:0 -970px;}
 .pv-icon-exit{width:27px;background-position:0 -1277px;}
 .pv-icon-previous{width:22px;background-position:0 -1707px;}
 .pv-icon-next{width:21px;background-position:-8px -1917px;}
 .pv-icon-navigator{width:22px;background-position:0 -1791px;}
 .pv-icon-solution{width:27px;height:30px;background-position:0 -440px;}
-#substrip .flagwrap.on .pv-icon-flag{background-position:0 -1450px;}
-#substrip .flagwrap:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-within:where(html:not([data-duck-theme="dark"]) *)) .pv-icon-flag{background-position:0 -1664px;}
-#substrip .flagwrap.on:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-within:where(html:not([data-duck-theme="dark"]) *)) .pv-icon-flag{background-position:0 -1493px;}
+#substrip .flagwrap:not(.on):is(:hover,:has(#flagChk:focus-visible)) .pv-icon-flag{background-position:0 -1015px;}
+#substrip .flagwrap.on .pv-icon-flag{background-position:0 -1060px;}
 #substrip .sub-left:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)) .pv-icon-solution{background-position:0 -570px;}
 #footbar .pvbtn:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)):not(:disabled) .pv-icon-exit{background-position:0 -1320px;}
 #footbar .pvbtn:is(:hover:where(html:not([data-duck-theme="dark"]) *),:focus-visible:where(html:not([data-duck-theme="dark"]) *)):not(:disabled) .pv-icon-previous{background-position:0 -1748px;}
