@@ -10,8 +10,8 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
     "year": 2026,
     "officialTyped": true,
     "reconstructed": true,
-    "url": "official-papers/TMUA-2026-reconstructed-question-paper.pdf#page=1",
-    "solutionUrl": "official-papers/TMUA-2026-reconstructed-answer-key.pdf#page=2",
+    "url": "TMUA-2026-reconstructed-question-paper.pdf#page=1",
+    "solutionUrl": "TMUA-2026-reconstructed-answer-key.pdf#page=2",
     "questions": [
       {
         "n": 1,
@@ -95,7 +95,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
       },
       {
         "n": 5,
-        "stem": "<div class=\"official-paper-content\"><p>The diagram shows triangle \\(QRS\\). The angles \\(RQT\\) and \\(TQS\\) are equal.</p><img class=\"official-source-fig\" src=\"official-papers/tmua-2026-reconstruction/p1-q5.png\" alt=\"Triangle QRS with equal angles RQT and TQS, and T on RS.\" width=\"410\"><p>Which of the following is equal to \\(\\dfrac{RT}{TS}\\)?</p></div>",
+        "stem": "<div class=\"official-paper-content\"><p>The diagram shows triangle \\(QRS\\). The angles \\(RQT\\) and \\(TQS\\) are equal.</p><img class=\"official-source-fig\" src=\"p1-q5.png\" alt=\"Triangle QRS with equal angles RQT and TQS, and T on RS.\" width=\"410\"><p>Which of the following is equal to \\(\\dfrac{RT}{TS}\\)?</p></div>",
         "opts": [
           "\\(\\dfrac{\\sin S}{\\sin R}\\)",
           "\\(\\dfrac{\\sin R}{\\sin S}\\)",
@@ -231,11 +231,11 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         "n": 12,
         "stem": "<div class=\"official-paper-content\"><p>Which of the following graphs represents \\(y=3^{\\sin x}\\)?</p><p>Each graph is shown for \\(-2\\pi\\leq x\\leq2\\pi\\).</p></div>",
         "opts": [
-          "<img class=\"official-source-fig\" src=\"official-papers/tmua-2026-reconstruction/p1-q12-a.png\" alt=\"Graph A\" width=\"310\">",
-          "<img class=\"official-source-fig\" src=\"official-papers/tmua-2026-reconstruction/p1-q12-b.png\" alt=\"Graph B\" width=\"310\">",
-          "<img class=\"official-source-fig\" src=\"official-papers/tmua-2026-reconstruction/p1-q12-c.png\" alt=\"Graph C\" width=\"310\">",
-          "<img class=\"official-source-fig\" src=\"official-papers/tmua-2026-reconstruction/p1-q12-d.png\" alt=\"Graph D\" width=\"310\">",
-          "<img class=\"official-source-fig\" src=\"official-papers/tmua-2026-reconstruction/p1-q12-e.png\" alt=\"Graph E\" width=\"310\">"
+          "<img class=\"official-source-fig\" src=\"p1-q12-a.png\" alt=\"Graph A\" width=\"310\">",
+          "<img class=\"official-source-fig\" src=\"p1-q12-b.png\" alt=\"Graph B\" width=\"310\">",
+          "<img class=\"official-source-fig\" src=\"p1-q12-c.png\" alt=\"Graph C\" width=\"310\">",
+          "<img class=\"official-source-fig\" src=\"p1-q12-d.png\" alt=\"Graph D\" width=\"310\">",
+          "<img class=\"official-source-fig\" src=\"p1-q12-e.png\" alt=\"Graph E\" width=\"310\">"
         ],
         "correct": 1,
         "sol": "<p>The graph is always positive, has period \\(2\\pi\\), passes through \\((0,1)\\) increasing, and has range \\([1/3,3]\\).</p>",
@@ -469,8 +469,8 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
     "year": 2026,
     "officialTyped": true,
     "reconstructed": true,
-    "url": "official-papers/TMUA-2026-reconstructed-question-paper.pdf#page=22",
-    "solutionUrl": "official-papers/TMUA-2026-reconstructed-answer-key.pdf#page=3",
+    "url": "TMUA-2026-reconstructed-question-paper.pdf#page=22",
+    "solutionUrl": "TMUA-2026-reconstructed-answer-key.pdf#page=3",
     "questions": [
       {
         "n": 1,
@@ -510,7 +510,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
       },
       {
         "n": 3,
-        "stem": "<div class=\"official-paper-content\"><p>The diagram shows infinitely many squares \\(S_n\\), with \\(n\\) increasing from left to right. The leftmost and rightmost vertices of \\(S_n\\) have \\(x\\)-coordinates \\(x_n\\) and \\(x_{n+1}\\), respectively.</p><img class=\"official-source-fig\" src=\"official-papers/tmua-2026-reconstruction/p2-q3.png\" alt=\"Squares S1, S2, S3 and smaller squares along the x-axis, with vertices x1, x2 and x3.\" width=\"540\"><p>Given that</p>\\[\nx_{n+1}=x_n+2^{3-n},\\qquad x_1=0,\n\\]<p>what is the sum of the areas of all the squares?</p></div>",
+        "stem": "<div class=\"official-paper-content\"><p>The diagram shows infinitely many squares \\(S_n\\), with \\(n\\) increasing from left to right. The leftmost and rightmost vertices of \\(S_n\\) have \\(x\\)-coordinates \\(x_n\\) and \\(x_{n+1}\\), respectively.</p><img class=\"official-source-fig\" src=\"p2-q3.png\" alt=\"Squares S1, S2, S3 and smaller squares along the x-axis, with vertices x1, x2 and x3.\" width=\"540\"><p>Given that</p>\\[\nx_{n+1}=x_n+2^{3-n},\\qquad x_1=0,\n\\]<p>what is the sum of the areas of all the squares?</p></div>",
         "opts": [
           "\\(8\\)",
           "\\(\\dfrac{32}{3}\\)",
@@ -567,7 +567,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
       },
       {
         "n": 6,
-        "stem": "<div class=\"official-paper-content\"><p>The diagram shows the graph of \\(y=ax^2+bx+c\\), where \\(a\\), \\(b\\) and \\(c\\) are non-zero real numbers.</p><img class=\"official-source-fig\" src=\"official-papers/tmua-2026-reconstruction/p2-q6.png\" alt=\"An upward-opening parabola crossing the positive x-axis twice; the axes have no numerical scale.\" width=\"346\"><p>Which of the following statements must be true?</p><div class=\"paper-proof\"><div class=\"paper-proof-step\"><span class=\"paper-step-label\">I</span><div>\\(b^2-4ac>0\\)</div></div><div class=\"paper-proof-step\"><span class=\"paper-step-label\">II</span><div>\\(abc>0\\)</div></div><div class=\"paper-proof-step\"><span class=\"paper-step-label\">III</span><div>\\(a+b+c>0\\)</div></div></div></div>",
+        "stem": "<div class=\"official-paper-content\"><p>The diagram shows the graph of \\(y=ax^2+bx+c\\), where \\(a\\), \\(b\\) and \\(c\\) are non-zero real numbers.</p><img class=\"official-source-fig\" src=\"p2-q6.png\" alt=\"An upward-opening parabola crossing the positive x-axis twice; the axes have no numerical scale.\" width=\"346\"><p>Which of the following statements must be true?</p><div class=\"paper-proof\"><div class=\"paper-proof-step\"><span class=\"paper-step-label\">I</span><div>\\(b^2-4ac>0\\)</div></div><div class=\"paper-proof-step\"><span class=\"paper-step-label\">II</span><div>\\(abc>0\\)</div></div><div class=\"paper-proof-step\"><span class=\"paper-step-label\">III</span><div>\\(a+b+c>0\\)</div></div></div></div>",
         "opts": [
           "None of them",
           "I only",
@@ -626,7 +626,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
       },
       {
         "n": 9,
-        "stem": "<div class=\"official-paper-content\"><p>The diagram shows the graphs of \\(y=f(x)\\) (dashed for clarity) and \\(y=g(x)\\). The two curves intersect at \\(x=a,b,c,d\\) as shown and do not meet anywhere else.</p><img class=\"official-source-fig\" src=\"official-papers/tmua-2026-reconstruction/p2-q9.png\" alt=\"The dashed curve y=f(x) and solid curve y=g(x) intersect at a, b, c and d.\" width=\"514\"><p>Which of the following gives the area of the region bounded between the two curves?</p></div>",
+        "stem": "<div class=\"official-paper-content\"><p>The diagram shows the graphs of \\(y=f(x)\\) (dashed for clarity) and \\(y=g(x)\\). The two curves intersect at \\(x=a,b,c,d\\) as shown and do not meet anywhere else.</p><img class=\"official-source-fig\" src=\"p2-q9.png\" alt=\"The dashed curve y=f(x) and solid curve y=g(x) intersect at a, b, c and d.\" width=\"514\"><p>Which of the following gives the area of the region bounded between the two curves?</p></div>",
         "opts": [
           "\\(\\displaystyle\\int_a^d\\bigl(g(x)-f(x)\\bigr)\\,dx\\)",
           "\\(\\displaystyle\\int_a^d\\bigl(f(x)-g(x)\\bigr)\\,dx\\)",
