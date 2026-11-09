@@ -2843,7 +2843,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
       </div>
       <div id="dashMasteryChart"></div>
       
-    </section></div><div class="dash-explain hidden" id="dashExplain">Recent results carry more weight; quick retakes carry less. The range reflects result variation and limited evidence. Unofficial estimate.</div><div class="studio-estimate-note"><button class="dash-help" id="dashHelpBtn" type="button">About this estimate</button></div><section class="studio-benchmarks"><div class="dash-bench-title">Performance benchmarks</div>
+    </section></div><div class="dash-explain hidden" id="dashExplain">Recent results carry more weight; quick retakes carry less. The range reflects result variation and limited evidence. Unofficial estimate.</div><div class="studio-estimate-note"><button class="dash-help" id="dashHelpBtn" type="button">About this estimate</button></div><section class="studio-benchmarks"><section id="dashScoreDistribution" class="score-distribution" aria-label="TMUA score distribution"></section><div class="dash-bench-title">Performance benchmarks</div>
       <div class="dash-bench-sub">Separated by source type so harder or less representative mocks do not obscure your official-paper record.</div>
       <div class="dash-bench-grid">
         <div class="dash-bench">
@@ -4724,6 +4724,109 @@ function dashboardFilteredHistory(points){
 function dashboardLinePath(points,xFn,yFn,key){
   return points.map((p,i)=>(i?'L':'M')+xFn(p,i).toFixed(1)+' '+yFn(p[key]).toFixed(1)).join(' ');
 }
+// Relative bar heights digitised from the supplied TMUA 2025/26 histogram,
+// at scores 1.0, 1.5, ..., 9.0. These are approximate, not candidate-level data.
+const TMUA_2025_DISTRIBUTION=(()=>{
+  const weights=[78,111,150,285,328,457,389,427,265,233,223,131,74,74,39,36,84];
+  const total=weights.reduce((s,w)=>s+w,0);
+  const mean=weights.reduce((s,w,i)=>s+w*(1+i/2),0)/total;
+  const sd=Math.sqrt(weights.reduce((s,w,i)=>s+w*(1+i/2-mean)**2,0)/total);
+  return {mean,sd};
+})();
+function renderDashboardDistribution(score){
+  const host=$('dashScoreDistribution');
+  if(!host)return;
+  host.hidden=ESAT_MODE;
+  if(ESAT_MODE)return;
+  const hasScore=Number.isFinite(score);
+  host.dataset.score=hasScore?String(score):'';
+  if(!host.distributionObserver){
+    let previousWidth=0;
+    host.distributionObserver=new ResizeObserver(entries=>{
+      const width=Math.round(entries[0].contentRect.width);
+      if(width>0&&width!==previousWidth){
+        previousWidth=width;
+        renderDashboardDistribution(host.dataset.score===''?null:Number(host.dataset.score));
+      }
+    });
+    host.distributionObserver.observe(host);
+  }
+  const {mean,sd}=TMUA_2025_DISTRIBUTION;
+  const W=Math.max(280,host.clientWidth||800),H=246,L=24,R=24,base=192,peak=38;
+  const x=v=>L+(v-1)/8*(W-L-R);
+  const y=v=>base-(base-peak)*Math.exp(-0.5*((v-mean)/sd)**2);
+  const curve=Array.from({length:241},(_,i)=>{const v=1+8*i/240;return (i?'L':'M')+x(v).toFixed(2)+' '+y(v).toFixed(2);}).join(' ');
+  let ticks='';
+  for(let v=1;v<=9;v+=(W<440?2:1))ticks+='<line x1="'+x(v)+'" y1="'+base+'" x2="'+x(v)+'" y2="'+(base+5)+'"/><text x="'+x(v)+'" y="'+(base+22)+'" text-anchor="middle">'+v+'</text>';
+  let marker='';
+  if(hasScore){
+    const value=Math.max(1,Math.min(9,score)),px=x(value),py=y(value);
+    const anchor=value<2?'start':value>8?'end':'middle';
+    marker='<g class="distribution-marker"><line x1="'+px+'" y1="'+py+'" x2="'+px+'" y2="'+base+'"/>'
+      +'<circle cx="'+px+'" cy="'+py+'" r="5.5"/>'
+      +'<text x="'+px+'" y="'+(py-17)+'" text-anchor="'+anchor+'">YOU · '+dashboardFmtGrade(score)+'</text></g>';
+  }
+  host.innerHTML='<div class="distribution-heading"><h3>TMUA score distribution 2025/26</h3><p>Approximate normal fit</p></div>'
+    +'<svg class="distribution-chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Approximate normal fit to the TMUA 2025/26 score distribution. Mean '+mean.toFixed(1)+', standard deviation '+sd.toFixed(2)+'. '+(hasScore?'Your estimated grade is '+dashboardFmtGrade(score)+' out of 9.':'No estimated grade yet.')+'">'
+    +'<defs><linearGradient id="distributionFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".22"/><stop offset="1" stop-color="currentColor" stop-opacity=".015"/></linearGradient></defs>'
+    +'<path class="distribution-area" d="'+curve+' L'+x(9)+' '+base+' L'+x(1)+' '+base+' Z"/>'
+    +'<g class="distribution-axis"><line x1="'+L+'" y1="'+base+'" x2="'+(W-R)+'" y2="'+base+'"/>'+ticks+'<text x="'+(W/2)+'" y="'+(H-6)+'" text-anchor="middle">Overall score</text></g>'
+    +'<path class="distribution-curve" d="'+curve+'"/>'+marker+'</svg>'
+    +(hasScore?'':'<p class="distribution-empty">Complete a paper to see your position.</p>');
+}
+function bindDashboardChartTooltip(host){
+  host.performanceTooltipEvents?.abort();
+  host.performanceTooltipEvents=new AbortController();
+  const listenerOptions={signal:host.performanceTooltipEvents.signal};
+  const tooltip=host.querySelector('.performance-tooltip');
+  const dots=[...host.querySelectorAll('.performance-point')];
+  let active=null,keyboardFocus=false,pointerX=null,pointerY=null;
+  function hide(){
+    tooltip.hidden=true;
+    active?.classList.remove('is-active');
+    active?.removeAttribute('aria-describedby');
+    active=null;
+  }
+  function show(point){
+    if(!point)return;
+    if(active!==point)hide();
+    active=point;point.classList.add('is-active');
+    point.setAttribute('aria-describedby',tooltip.id);
+    tooltip.querySelector('span').textContent=point.dataset.date;
+    tooltip.querySelector('strong').textContent='Estimated grade: '+point.dataset.grade+' / 9';
+    tooltip.hidden=false;
+    const box=host.getBoundingClientRect(),dot=point.querySelector('circle').getBoundingClientRect();
+    const cx=dot.left+dot.width/2-box.left,cy=dot.top+dot.height/2-box.top;
+    const top=cy-tooltip.offsetHeight-15;
+    tooltip.style.left=Math.max(6,Math.min(box.width-tooltip.offsetWidth-6,cx-tooltip.offsetWidth/2))+'px';
+    tooltip.style.top=Math.max(6,Math.min(box.height-tooltip.offsetHeight-6,top>=6?top:cy+15))+'px';
+  }
+  host.onpointerover=e=>{if(!keyboardFocus){pointerX=e.clientX;pointerY=e.clientY;show(e.target.closest('.performance-point'));}};
+  host.onpointermove=e=>{
+    if(e.clientX!==pointerX||e.clientY!==pointerY)keyboardFocus=false;
+    pointerX=e.clientX;pointerY=e.clientY;
+    if(keyboardFocus)return;
+    const point=e.target.closest('.performance-point');
+    if(point)show(point);else if(active&&!active.matches(':focus'))hide();
+  };
+  host.onpointerleave=()=>{if(!keyboardFocus)hide();};
+  host.addEventListener('focusin',e=>{keyboardFocus=true;show(e.target.closest('.performance-point'));},listenerOptions);
+  host.addEventListener('focusout',hide,listenerOptions);
+  host.onclick=e=>{
+    keyboardFocus=false;
+    const point=e.target.closest('.performance-point');
+    if(point){dots.forEach(dot=>dot.tabIndex=dot===point?0:-1);show(point);}else hide();
+  };
+  host.onkeydown=e=>{
+    keyboardFocus=true;
+    if(e.key==='Escape'){hide();return;}
+    const index=dots.indexOf(e.target.closest('.performance-point'));
+    if(index<0)return;
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();show(dots[index]);return;}
+    const next=e.key==='Home'?0:e.key==='End'?dots.length-1:e.key==='ArrowLeft'?Math.max(0,index-1):e.key==='ArrowRight'?Math.min(dots.length-1,index+1):-1;
+    if(next>=0){e.preventDefault();dots.forEach((dot,i)=>dot.tabIndex=i===next?0:-1);dots[next].focus();}
+  };
+}
 function renderDashboardChart(firstRows){
   const host=$('dashMasteryChart');
   const points=dashboardFilteredHistory(dashboardCumulativeHistory(firstRows));
@@ -4751,19 +4854,27 @@ function renderDashboardChart(firstRows){
     rangePoly='<polygon points="'+upper+' '+lower+'" fill="var(--duck-chart-range,#f2c200)" fill-opacity=".22"/>';
   }
   const path=dashboardLinePath(points,x,y,'mean');
-  let dots=points.map((p,i)=>'<circle cx="'+x(p,i).toFixed(1)+'" cy="'+y(p.mean).toFixed(1)+'" r="3.5" fill="#2e6ca5"/>').join('');
+  const hitWidth=n===1?32:Math.min(32,(x1-x0)/(n-1));
+  const dots=points.map((p,i)=>{
+    const px=x(p,i),py=y(p.mean),grade=dashboardFmtGrade(p.mean);
+    const date=new Date(p.t).toLocaleString(undefined,{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    return '<g class="performance-point" role="button" tabindex="'+(i===0?'0':'-1')+'" data-grade="'+grade+'" data-date="'+escapeHtml(date)+'" aria-label="'+escapeHtml(date)+': estimated grade '+grade+' out of 9">'
+      +'<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="3.5" fill="#2e6ca5"/>'
+      +'<rect x="'+(px-hitWidth/2)+'" y="'+(py-16)+'" width="'+hitWidth+'" height="32" fill="transparent"/></g>';
+  }).join('');
   const labels=[];
   const labelIdx=Array.from(new Set([0,Math.floor((n-1)/2),n-1]));
   labelIdx.forEach(i=>{
     labels.push('<text x="'+x(points[i],i).toFixed(1)+'" y="'+(H-14)+'" text-anchor="'+(i===0?'start':i===n-1?'end':'middle')+'" font-size="11" fill="#747985">'+escapeHtml(dashboardDateShort(points[i].t))+'</text>');
   });
-  host.innerHTML='<svg class="dash-chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Performance estimate over time">'
+  host.innerHTML='<svg class="dash-chart" viewBox="0 0 '+W+' '+H+'" role="group" aria-label="Performance estimate over time. Focus a point and use the arrow keys to explore estimated grades.">'
     +grid+rangePoly
     +'<line x1="'+x0+'" y1="'+y0+'" x2="'+x1+'" y2="'+y0+'" stroke="#bfc4cc"/>'
     +'<path d="'+path+'" fill="none" stroke="#2e6ca5" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>'
     +dots+labels.join('')
     +'<text x="14" y="'+((y0+y1)/2)+'" transform="rotate(-90 14 '+((y0+y1)/2)+')" text-anchor="middle" font-size="11" fill="#747985">Estimated score</text>'
-    +'</svg>';
+    +'</svg><div class="performance-tooltip" id="dashPerformanceTooltip" role="tooltip" hidden><span></span><strong></strong></div>';
+  bindDashboardChartTooltip(host);
 }
 let dashboardTopicSort={owner:null,key:'accuracy',direction:'descending',lastClicked:null};
 function renderDashboardTopics(focusKey=null){
@@ -4808,6 +4919,7 @@ function buildDashboard(){
   $('dashProfName').textContent=(currentUser&&ROOT.profiles[currentUser])?ROOT.profiles[currentUser].name:'';
   $('dashMastery').textContent=stats?dashboardFmtGrade(stats.mean):'—';
   $('dashMasteryRange').textContent=stats?(dashboardFmtGrade(stats.lo)+' – '+dashboardFmtGrade(stats.hi)):'—';
+  renderDashboardDistribution(stats?stats.mean:null);
 
   const ci=$('dashMasteryCI'), est=$('dashMasteryEst'), cap=$('dashMasteryCap');
   if(stats){
@@ -7631,6 +7743,7 @@ refreshAccountCircles();
 <link rel="stylesheet" href="paper-preview.css?v=20261004-7">
 <script src="paper-preview.js?v=20261108-early-specimen"></script>
 <link rel="stylesheet" href="full-page-ui.css?v=20261108-light-contrast">
+<link rel="stylesheet" href="performance-charts.css?v=20261109-1">
 <link rel="stylesheet" href="revision-guides.css?v=20261006-practice">
 <script src="revision-guides-data.js?v=20261006-renderfix"></script>
 <script src="revision-tricks-questions.js?v=20261006-1"></script>

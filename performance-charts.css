@@ -1,0 +1,53 @@
+/* Historical estimate tooltips and the approximate 2025/26 cohort comparison. */
+html body #dashboardScreen #dashMasteryChart{position:relative;}
+#dashMasteryChart .performance-point{cursor:pointer;outline:none;}
+#dashMasteryChart .performance-point circle{transition:r .14s ease,stroke-width .14s ease;}
+#dashMasteryChart .performance-point:is(.is-active,:focus-visible) circle{r:5.5px;stroke-width:2.5px;}
+html body #dashboardScreen #dashMasteryChart .performance-tooltip{
+ position:absolute;z-index:2;pointer-events:none;box-sizing:border-box;
+ max-width:calc(100% - 12px);padding:10px 13px;border:1px solid #b8962c;
+ border-radius:10px;background:#fffdf7;color:#1f2937;box-shadow:0 4px 18px #17253520;
+ text-align:left;font-size:12px;line-height:1.5;white-space:normal;
+}
+#dashMasteryChart .performance-tooltip[hidden]{display:none!important;}
+#dashMasteryChart .performance-tooltip span{display:block;color:#5c6570;}
+#dashMasteryChart .performance-tooltip strong{display:block;color:#202b3a;font-size:14px;font-weight:650;}
+html[data-duck-theme="dark"] body #dashboardScreen #dashMasteryChart .performance-tooltip{
+ background:var(--du-bg,#17181b);color:#fff;border-color:#d5b847;
+ box-shadow:0 0 12px #ffdc5a30,0 5px 18px #0006;
+}
+html[data-duck-theme="dark"] #dashMasteryChart .performance-tooltip span{color:#bfc4cd;}
+html[data-duck-theme="dark"] #dashMasteryChart .performance-tooltip strong{color:#fff;}
+
+html body #dashboardScreen .score-distribution{
+ --distribution-gold:#a5790a;--distribution-marker:#bd2f65;--distribution-axis:#bcc1cb;
+ box-sizing:border-box;width:100%;max-width:1100px;margin:0 auto 26px;padding:0 0 18px;
+ border-bottom:1px solid var(--du-line,#e3e5e8);color:var(--du-ink,#202b3a);
+}
+#dashboardScreen .score-distribution[hidden]{display:none!important;}
+html body #dashboardScreen .distribution-heading h3{
+ margin:0;font-size:17px;line-height:1.4;font-weight:650;color:var(--du-ink,#202b3a);
+}
+html body #dashboardScreen .distribution-heading p{
+ margin:5px 0 0;font-size:12px;line-height:1.5;color:var(--du-muted,#69717e);
+}
+#dashboardScreen .distribution-chart{display:block;width:100%;height:auto;overflow:visible;color:var(--distribution-gold);}
+#dashboardScreen .distribution-area{fill:url(#distributionFill);}
+#dashboardScreen .distribution-curve{fill:none;stroke:var(--distribution-gold);stroke-width:2.5;stroke-linecap:round;}
+#dashboardScreen .distribution-axis line{stroke:var(--distribution-axis);stroke-width:1;}
+#dashboardScreen .distribution-axis text{fill:var(--du-muted,#69717e);font-size:12px;}
+#dashboardScreen .distribution-marker line{stroke:var(--distribution-marker);stroke-width:2.5;}
+#dashboardScreen .distribution-marker circle{fill:var(--distribution-marker);}
+#dashboardScreen .distribution-marker text{fill:var(--distribution-marker);font-size:13px;font-weight:750;letter-spacing:1px;}
+html body #dashboardScreen .distribution-empty{margin:6px 0 0;text-align:center;font-size:13px;color:var(--du-muted,#69717e);}
+html[data-duck-theme="dark"] body #dashboardScreen .score-distribution{
+ --distribution-gold:#ffdc5a;--distribution-marker:#ff73a1;--distribution-axis:#414650;
+}
+html[data-duck-theme="dark"] #dashboardScreen .distribution-curve{
+ filter:drop-shadow(0 0 2px #ffdc5a88) drop-shadow(0 0 7px #ffd23c44);
+}
+html[data-duck-theme="dark"] #dashboardScreen .distribution-marker :is(line,circle){filter:drop-shadow(0 0 4px #ff73a155);}
+@media(max-width:600px){
+ html body #dashboardScreen .distribution-heading h3{font-size:15px;}
+}
+@media(prefers-reduced-motion:reduce){#dashMasteryChart .performance-point circle{transition:none;}}
