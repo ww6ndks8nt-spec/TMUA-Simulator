@@ -2560,6 +2560,11 @@ html[data-duck-theme="dark"] #reviewHubScreen .review-attempt :is(.date,.score,.
 /* Original-paper proof layouts and artwork. */
 .paper-inset{margin:18px 0 22px 36px;max-width:960px}
 .paper-proof{margin:22px 0;max-width:1100px}
+#options.graph-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-width:800px;gap:18px 24px}
+#options.graph-options .opt{align-items:flex-start;min-width:0}
+#options.graph-options .body{min-width:0}
+#options.graph-options img{margin:0!important}
+@media(max-width:560px){#options.graph-options{grid-template-columns:1fr}}
 .paper-proof-step{display:grid;grid-template-columns:34px minmax(0,1fr);column-gap:16px;margin:18px 0;align-items:baseline}
 .paper-step-label{white-space:nowrap}
 .paper-proof-step>div{min-width:0;overflow-x:auto;overflow-y:hidden;padding:3px 0}
@@ -2892,7 +2897,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
           <option value="0">No timer</option>
         </select>
       </label>
-    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025 · Early specimen papers</small><small>The 2024 and 2025 papers were supplied by Qiuyun (湫云数竞)</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Practice sets made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Challenge sets<small>Challenge sets made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCustom"></div></div></details><details class="studio-collection"><summary><span class="collection-num">04</span><span class="collection-name">MAT multiple choice questions<small>Useful additional paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridMAT"></div></div></details><details class="studio-collection" id="stepPracticeCollection"><summary><span class="collection-num">05</span><span class="collection-name">STEP adaptation papers<small>Useful additional paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridSTEP"></div></div></details><details class="studio-collection" id="communityPapersCollection"><summary><span class="collection-num">06</span><span class="collection-name">Community papers<small>Public community papers not made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCommunity"></div></div></details><p class="libnote" id="cloudDescription">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
+    </div><details class="studio-collection" open><summary><span class="collection-num">01</span><span class="collection-name">Official past papers<small>2016–2025 · Early specimens · 2026 reconstruction</small><small>The 2024 and 2025 papers were supplied by Qiuyun (湫云数竞)</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="grid4"></div></div></details><details class="studio-collection"><summary><span class="collection-num">02</span><span class="collection-name">Practice sets<small>Practice sets made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="mock-pair-head"><div class="mock-section-label">Paper 1</div><div class="mock-section-label">Paper 2</div></div><div class="mock-pair-grid" id="grid12pairs"></div></div></details><details class="studio-collection"><summary><span class="collection-num">03</span><span class="collection-name">Challenge sets<small>Challenge sets made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCustom"></div></div></details><details class="studio-collection"><summary><span class="collection-num">04</span><span class="collection-name">MAT multiple choice questions<small>Useful additional paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridMAT"></div></div></details><details class="studio-collection" id="stepPracticeCollection"><summary><span class="collection-num">05</span><span class="collection-name">STEP adaptation papers<small>Useful additional paper 1 practice</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridSTEP"></div></div></details><details class="studio-collection" id="communityPapersCollection"><summary><span class="collection-num">06</span><span class="collection-name">Community papers<small>Public community papers not made by ducktmua</small></span><span class="collection-chevron" aria-hidden="true">+</span></summary><div class="collection-content"><div class="paper-grid" id="gridCommunity"></div></div></details><p class="libnote" id="cloudDescription">Progress syncs to your cloud account. Wait for “Cloud saved” before switching devices; changes made offline remain on this device until synced. Independent practice tool — not affiliated with or endorsed by UAT-UK, Pearson VUE, or the University of Cambridge. Maths renders via MathJax and needs an internet connection on first load.</p></div>
 </div>
 
 <!-- ============ REVIEW HUB ============ -->
@@ -3203,6 +3208,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
 <script src="set_c_revised.js?v=6"></script>
 <script src="expanded-practice-solutions.js?v=20261003-1"></script>
 <script src="challenge_set_1_p2.js?v=20260915-1"></script>
+<script src="tmua-2026-reconstruction.js?v=20261109-1"></script>
 <script src="community_restore.js?v=20260925-1"></script>
 <script src="beyond2p2-expanded.js?v=20261003-2"></script>
 <link rel="stylesheet" href="beyond2p2-expanded.css?v=20261003-1">
@@ -3948,6 +3954,7 @@ MAT_PAPERS_METADATA.forEach(p=>PAPERS.push({
 PAPERS.push(...MAT_ADDITIONAL_PAPERS);
 PAPERS.push(...STEP_PAPER1_PAPERS,...STEP_LEGACY_PAPERS);
 PAPERS.push(...QIUYUN_MOCK01_PAPERS,QIUYUN_SIMULATION_P2);
+PAPERS.push(...TMUA_2026_RECONSTRUCTED_PAPERS);
 const ALL_PAPERS=[...PAPERS,...ESAT_ALL_PAPERS];
 if(ESAT_MODE) PAPERS.splice(0,PAPERS.length,...ESAT_PAPERS);
 function paperById(id){ return ALL_PAPERS.find(p=>p.id===id) || null; }
@@ -3977,6 +3984,7 @@ function pairedPapersFor(p){
     tmuaearlyspecimenp1:['tmuaearlyspecimenp1','tmuaearlyspecimenp2'], tmuaearlyspecimenp2:['tmuaearlyspecimenp1','tmuaearlyspecimenp2'],
     sim2024p1:['sim2024p1','sim2024p2'], sim2024p2:['sim2024p1','sim2024p2'],
     sim2025p1:['sim2025p1','sim2025p2'], sim2025p2:['sim2025p1','sim2025p2'],
+    tmua2026reconstructedp1:['tmua2026reconstructedp1','tmua2026reconstructedp2'], tmua2026reconstructedp2:['tmua2026reconstructedp1','tmua2026reconstructedp2'],
     yotta:['yotta','yotta2'], yotta2:['yotta','yotta2'],
     euclid:['euclid','euclid2'], euclid2:['euclid','euclid2'],
     sedp1:['sedp1','sedp2'], sedp2:['sedp1','sedp2'],
@@ -4237,7 +4245,7 @@ function renderPaperAnswerTable(host,q,selected,{readOnly=false,showCorrect=fals
       row.addEventListener('click',event=>{if(!event.target.closest('input,label'))onSelect?.(i);});
     }else{letter.textContent=LETTERS[i];if(correct)letter.setAttribute('aria-label',LETTERS[i]+', correct answer');else if(wrong)letter.setAttribute('aria-label',LETTERS[i]+', your answer');}
     row.appendChild(letter);
-    const cells=option.split(',');cells.forEach((value,j)=>{const td=row.insertCell();td.innerHTML=richMathHtml(value.trim());});
+    const cells=Array.isArray(q.optionTableCells?.[i])?q.optionTableCells[i]:option.split(',');cells.forEach((value,j)=>{const td=row.insertCell();td.innerHTML=richMathHtml(value.trim());});
     row.id=prefix+'Text'+i;
   });
   scroller.appendChild(table);host.appendChild(scroller);
@@ -5248,6 +5256,7 @@ const OFFICIAL_SOLUTION_PDFS={"tmua2016p1": "https://uat-wp.s3.eu-west-2.amazona
 EARLY_SPECIMEN_PAPERS.forEach(p=>{OFFICIAL_SOLUTION_PDFS[p.id]=p.solutionUrl;});
 function officialSolutionLink(p){
  if(p?.esat)return p.questions[0].sol;
+ if(p?.reconstructed)return '<a class="official-solution-link" href="'+p.solutionUrl+'" target="_blank" rel="noopener noreferrer">Answer key and checks · PDF ↗</a>';
  if(p?.mat)return '<a class="official-solution-link" href="'+p.solutionUrl+'" target="_blank" rel="noopener noreferrer">Oxford solutions · PDF ↗</a>';
  const url=p&&OFFICIAL_SOLUTION_PDFS[p.id];
  return url?'<a class="official-solution-link" href="'+url+'" target="_blank" rel="noopener noreferrer">UAT-UK worked solutions · PDF ↗</a>':'';
@@ -5933,7 +5942,7 @@ function render(){
   $('questionTopic').textContent=reviewMode?'Topic: '+questionTopic(q):'';
   $('questionTopic').classList.toggle('hidden',!reviewMode);
   const wrap=$('options');wrap.innerHTML='';
-  wrap.className='options'+(q.companion?' companion':'');
+  wrap.className='options'+(q.companion?' companion':'')+(q.optionLayout==='graphs'?' graph-options':'');
   if(q.optionTableHeaders)renderPaperAnswerTable(wrap,q,answers[idx],{readOnly:reviewMode,showCorrect:reviewMode,prefix:'examAnswer',exam:true,onSelect:i=>choose(i,true,true)});
   else q.opts.forEach((o,i)=>{
     const label=document.createElement('label');
@@ -6970,7 +6979,7 @@ QUESTION_DIFFICULTY_RATINGS.setcr3p2=REVISED_SET_C_P2.map(q=>q.estimatedDifficul
 QUESTION_DIFFICULTY_RATINGS.customset1p2=CHALLENGE_SET_1_P2.map(q=>q.estimatedDifficulty);
 [...STEP_PAPER1_PAPERS,...STEP_LEGACY_PAPERS].forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
 [...QIUYUN_MOCK01_PAPERS,QIUYUN_SIMULATION_P2].forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
-EARLY_SPECIMEN_PAPERS.forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
+[...EARLY_SPECIMEN_PAPERS,...TMUA_2026_RECONSTRUCTED_PAPERS].forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
 const SPREADSHEET_RATING_COLUMNS={"tmua2023p1":"B","tmua2023p2":"C","tmua2022p1":"D","tmua2022p2":"E","tmua2021p1":"F","tmua2021p2":"G","tmua2020p1":"H","tmua2020p2":"I","tmua2019p1":"J","tmua2019p2":"K","tmua2018p1":"L","tmua2018p2":"M","tmua2017p1":"N","tmua2017p2":"O"};
 ALL_PAPERS.forEach(p=>{if(p.esat)return;if(p.mat){const reviews=MAT_DIFFICULTY_REVIEWS[p.id];if(!reviews||reviews.length!==p.questions.length)throw new Error("Incomplete MAT difficulty review: "+p.id);p.questions.forEach((q,i)=>Object.assign(q,reviews[i]));return;}const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":q.difficultyReviewVersion?(p.id.startsWith("qiuyunmock01")?"community-editorial-review":"step-editorial-review"):"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
 /* Sources: user spreadsheet (280 official item ratings), user-supplied 2023
@@ -7741,9 +7750,9 @@ refreshAccountCircles();
 <link rel="stylesheet" href="general-leaderboards.css?v=20261004-6">
 <script src="general-leaderboards.js?v=20261012-performance"></script>
 <link rel="stylesheet" href="paper-preview.css?v=20261004-7">
-<script src="paper-preview.js?v=20261108-early-specimen"></script>
+<script src="paper-preview.js?v=20261109-reconstruction"></script>
 <link rel="stylesheet" href="full-page-ui.css?v=20261108-light-contrast">
-<link rel="stylesheet" href="performance-charts.css?v=20261109-1">
+<link rel="stylesheet" href="performance-charts.css?v=20261109-2">
 <link rel="stylesheet" href="revision-guides.css?v=20261006-practice">
 <script src="revision-guides-data.js?v=20261006-renderfix"></script>
 <script src="revision-tricks-questions.js?v=20261006-1"></script>

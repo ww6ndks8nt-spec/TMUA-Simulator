@@ -20,7 +20,7 @@ html[data-duck-theme="dark"] #dashMasteryChart .performance-tooltip span{color:#
 html[data-duck-theme="dark"] #dashMasteryChart .performance-tooltip strong{color:#fff;}
 
 html body #dashboardScreen .score-distribution{
- --distribution-gold:#a5790a;--distribution-marker:#bd2f65;--distribution-axis:#bcc1cb;
+ --distribution-gold:#a5790a;--distribution-marker:var(--distribution-gold);--distribution-axis:#bcc1cb;
  box-sizing:border-box;width:100%;max-width:1100px;margin:0 auto 26px;padding:0 0 18px;
  border-bottom:1px solid var(--du-line,#e3e5e8);color:var(--du-ink,#202b3a);
 }
@@ -41,12 +41,12 @@ html body #dashboardScreen .distribution-heading p{
 #dashboardScreen .distribution-marker text{fill:var(--distribution-marker);font-size:13px;font-weight:750;letter-spacing:1px;}
 html body #dashboardScreen .distribution-empty{margin:6px 0 0;text-align:center;font-size:13px;color:var(--du-muted,#69717e);}
 html[data-duck-theme="dark"] body #dashboardScreen .score-distribution{
- --distribution-gold:#ffdc5a;--distribution-marker:#ff73a1;--distribution-axis:#414650;
+ --distribution-gold:#ffdc5a;--distribution-marker:var(--distribution-gold);--distribution-axis:#414650;
 }
 html[data-duck-theme="dark"] #dashboardScreen .distribution-curve{
  filter:drop-shadow(0 0 2px #ffdc5a88) drop-shadow(0 0 7px #ffd23c44);
 }
-html[data-duck-theme="dark"] #dashboardScreen .distribution-marker :is(line,circle){filter:drop-shadow(0 0 4px #ff73a155);}
+html[data-duck-theme="dark"] #dashboardScreen .distribution-marker :is(line,circle){filter:drop-shadow(0 0 4px #ffdc5a55);}
 @media(max-width:600px){
  html body #dashboardScreen .distribution-heading h3{font-size:15px;}
 }

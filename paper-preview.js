@@ -37,17 +37,17 @@ panels.attempts.append(el('attemptHist'));panels.leaderboard.append(el('lbCard')
 const legacy=make('div','pp-legacy');legacy.hidden=true;legacy.append(el('startSub'),el('startDifficulty'),el('qGrid'));
 card.replaceChildren(back,top,stats,tabs,panels.attempts,panels.leaderboard,legacy);
 selectTab('attempts');
-function category(p){return p.esat?'Archive paper':p.mat?'MAT paper':isChallengePaper(p)?'Challenge set':p.group===4?'Official paper':p.group===1||p.group===2?'Practice set':/^step/i.test(p.id)?'STEP adaptation':'Community paper';}
+function category(p){return p.reconstructed?'Reconstructed paper':p.esat?'Archive paper':p.mat?'MAT paper':isChallengePaper(p)?'Challenge set':p.group===4?'Official paper':p.group===1||p.group===2?'Practice set':/^step/i.test(p.id)?'STEP adaptation':'Community paper';}
 function score(p,r){return Array.isArray(r.a)&&r.a.length===p.questions.length?scoreAttemptForPaper(p,r.a):Number.isFinite(r.c)&&Number.isFinite(r.s)&&r.s>0?{c:r.c,s:r.s}:null;}
 function scoreText(s){return s?s.c+' / '+s.s:'—';}
 function timeText(r){if(!Array.isArray(r.questionTimesMs)||!r.questionTimesMs.some(x=>Number.isFinite(Number(x))&&Number(x)>0))return '—';return fmtQuestionTime(dashboardAttemptTimeMs(r));}
 function render(p){
  brand.textContent=p.matAdditional?'Additional MAT paper':category(p);
  banner.classList.toggle('pp-mat-additional',!!p.matAdditional);
- sourceLinks.replaceChildren();sourceLinks.hidden=!(p.matAdditional||p.earlySpecimen);
+ sourceLinks.replaceChildren();sourceLinks.hidden=!(p.matAdditional||p.earlySpecimen||p.reconstructed);
  extraInfo.hidden=!p.matAdditional;
- if(p.matAdditional||p.earlySpecimen){
-   for(const [label,url] of [['Question PDF',p.url],['Solutions PDF',p.solutionUrl]]){
+ if(p.matAdditional||p.earlySpecimen||p.reconstructed){
+   for(const [label,url] of [['Question PDF',p.url],[p.reconstructed?'Answer key PDF':'Solutions PDF',p.solutionUrl]]){
      const a=make('a','',label+' ↗');a.href=url;a.target='_blank';a.rel='noopener noreferrer';sourceLinks.append(a);
    }
  }
