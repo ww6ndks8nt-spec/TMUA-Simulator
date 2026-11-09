@@ -27,7 +27,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 4,
         "sol": "<p>The six roots are \\(-\\pi/6,0,\\pi/3,5\\pi/6,\\pi,4\\pi/3\\), with sum \\(10\\pi/3\\).</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.5,
         "topics": [
           "Trigonometry",
           "General algebra"
@@ -49,7 +49,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 5,
         "sol": "<p>The fifth and sixth positive roots of \\(\\sin u=1/2\\) are \\(25\\pi/6\\) and \\(29\\pi/6\\). Hence \\(25/6\\leq k<29/6\\).</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.5,
         "topics": [
           "Trigonometry",
           "Functions and Graphs"
@@ -67,7 +67,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 1,
         "sol": "<p>The chord \\(PQ\\) is \\(y=15x+20\\). Maximise \\(21x-x^3-20\\) on \\((1,4)\\) to obtain \\(x=\\sqrt7\\).</p>",
-        "estimatedDifficulty": 6.5,
+        "estimatedDifficulty": 7.0,
         "topics": [
           "Geometry",
           "Differentiation"
@@ -87,7 +87,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 0,
         "sol": "<p>The repeated root is \\(-3\\) or \\(-1/3\\), giving \\(c=-9\\) or \\(13/27\\). Their sum is \\(-230/27\\).</p>",
-        "estimatedDifficulty": 5.0,
+        "estimatedDifficulty": 6.0,
         "topics": [
           "General algebra",
           "Differentiation"
@@ -107,7 +107,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 0,
         "sol": "<p>The angle-bisector theorem and sine rule give \\(RT/TS=QR/QS=\\sin S/\\sin R\\).</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.0,
         "topics": [
           "Geometry",
           "Trigonometry"
@@ -127,7 +127,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 3,
         "sol": "<p>For \\(k\\ne0\\), intersection requires \\(3(x-k/2)^2+(k^2-9)/4=0\\). Include \\(k=0\\), when the curves coincide.</p>",
-        "estimatedDifficulty": 7.0,
+        "estimatedDifficulty": 7.5,
         "topics": [
           "Functions and Graphs",
           "General algebra"
@@ -147,7 +147,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 1,
         "sol": "<p>The remainder conditions give \\(2p-q=4\\) and \\(p+q=11\\). Thus \\(p=5\\), \\(q=6\\), and \\(2p+13q=88\\).</p>",
-        "estimatedDifficulty": 4.0,
+        "estimatedDifficulty": 4.5,
         "topics": [
           "General algebra"
         ]
@@ -166,7 +166,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 3,
         "sol": "<p>The centre is distance \\(2\\) from the line. The minor central angle is \\(2\\pi/3\\), giving arc length \\(8\\pi/3\\).</p>",
-        "estimatedDifficulty": 6.0,
+        "estimatedDifficulty": 6.5,
         "topics": [
           "Geometry",
           "Trigonometry"
@@ -184,7 +184,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 3,
         "sol": "<p>Grouping odd and even powers gives \\(11111\\sqrt{10}+11110\\).</p>",
-        "estimatedDifficulty": 4.5,
+        "estimatedDifficulty": 5.0,
         "topics": [
           "General algebra",
           "Sequences and Series"
@@ -203,7 +203,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 3,
         "sol": "<p>With \\(t=x-2\\), \\(f(x)=t^4/4-t^2/2+C\\). Only the level \\(C\\) has exactly three roots; hence \\(a=b=C\\).</p>",
-        "estimatedDifficulty": 6.5,
+        "estimatedDifficulty": 7.5,
         "topics": [
           "Functions and Graphs",
           "Integration"
@@ -221,7 +221,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 2,
         "sol": "<p>Let \\(A=\\sqrt x+\\sqrt{x+1}\\). Subtract the reciprocal relation to obtain \\(2\\sqrt y=A^2-A^{-2}=4\\sqrt{x(x+1)}\\).</p>",
-        "estimatedDifficulty": 6.0,
+        "estimatedDifficulty": 7.0,
         "topics": [
           "General algebra",
           "Functions and Graphs"
@@ -259,7 +259,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 3,
         "sol": "<p>For \\(0<x<1\\), \\(2^{|\\log_2x|}=1/x\\); for \\(x\\geq1\\), it equals \\(x\\).</p>",
-        "estimatedDifficulty": 4.5,
+        "estimatedDifficulty": 5.0,
         "topics": [
           "Exponentials and Logarithms",
           "Functions and Graphs"
@@ -304,7 +304,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 3,
         "sol": "<p>Write \\(x^2+x-12=k\\pi\\). The cases \\(k=-3,-2,-1,0\\) give respectively \\(2,2,1,1\\) roots in \\((-\\pi,\\pi)\\).</p>",
-        "estimatedDifficulty": 7.0,
+        "estimatedDifficulty": 8.0,
         "topics": [
           "Trigonometry",
           "General algebra",
@@ -326,7 +326,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 1,
         "sol": "<p>On this interval, the second derivative is negative for I and positive for II and III. Only I is underestimated.</p>",
-        "estimatedDifficulty": 6.0,
+        "estimatedDifficulty": 6.5,
         "topics": [
           "Integration",
           "Trigonometry",
@@ -396,7 +396,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 2,
         "sol": "<p>The fractional-part integral is \\(5/2\\), so the result is \\(2(5/2)-25/2=-15/2\\).</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.5,
         "topics": [
           "Integration",
           "Functions and Graphs"
@@ -415,7 +415,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 3,
         "sol": "<p>The roots are \\(3\\pm\\sqrt{3+\\sqrt3}\\) and \\(3\\pm\\sqrt{3-\\sqrt3}\\): four distinct values.</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.0,
         "topics": [
           "Functions and Graphs",
           "General algebra"
@@ -433,7 +433,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 2,
         "sol": "<p>Put \\(h(x)=(x-1)^2\\). Inverting \\(h^{\\circ4}(x)=1\\) gives \\(h(x)\\in\\{0,2,1+\\sqrt{1+\\sqrt2}\\}\\), hence five roots.</p>",
-        "estimatedDifficulty": 6.5,
+        "estimatedDifficulty": 7.5,
         "topics": [
           "Functions and Graphs",
           "General algebra"
@@ -452,7 +452,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 3,
         "sol": "<p>If \\(b<0\\), then \\(a^2>b^2\\); if \\(b\\geq0\\), then \\(c^2>b^2\\). Both inequalities can also hold.</p>",
-        "estimatedDifficulty": 4.5,
+        "estimatedDifficulty": 5.0,
         "topics": [
           "General algebra",
           "Logic"
@@ -486,7 +486,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 2,
         "sol": "<p>Independence requires \\(n=7\\). Each of the six values of \\(m\\) then works.</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.5,
         "topics": [
           "Probability and Statistics"
         ]
@@ -502,7 +502,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 2,
         "sol": "<p>Writing \\(t=\\log_x y>0\\), the second inequality becomes \\(3t/(1+t)>2\\), equivalent to \\(t>2\\).</p>",
-        "estimatedDifficulty": 5.0,
+        "estimatedDifficulty": 5.5,
         "topics": [
           "Exponentials and Logarithms",
           "Logic"
@@ -521,7 +521,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 1,
         "sol": "<p>The square areas form \\(8+2+1/2+\\cdots\\), with sum \\(32/3\\).</p>",
-        "estimatedDifficulty": 5.0,
+        "estimatedDifficulty": 6.0,
         "topics": [
           "Geometry",
           "Sequences and Series"
@@ -559,7 +559,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 5,
         "sol": "<p>If \\(I(t)=\\int_{-t}^{t}f(x)\\,dx\\leq0\\) for all \\(t\\), then \\(I(-t)=-I(t)\\) forces \\(I(t)=0\\) for all \\(t\\).</p>",
-        "estimatedDifficulty": 6.0,
+        "estimatedDifficulty": 7.5,
         "topics": [
           "Integration",
           "Logic"
@@ -580,7 +580,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 1,
         "sol": "<p>There are two positive roots, so \\(b^2-4ac>0\\), \\(a,c>0\\) and \\(b<0\\). The sketch does not determine \\(f(1)\\).</p>",
-        "estimatedDifficulty": 4.5,
+        "estimatedDifficulty": 5.5,
         "topics": [
           "Functions and Graphs",
           "General algebra",
@@ -598,7 +598,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 0,
         "sol": "<p>\\(Q\\) holds exactly when at least two of \\(a,b,c\\) are even, so \\(Q\\Rightarrow P\\). The converse fails for \\((4,1,1)\\).</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.0,
         "topics": [
           "Number Theory",
           "Logic"
@@ -619,7 +619,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 1,
         "sol": "<p>I is \\((8\\cdot63!)^2\\). In II, the prime \\(61\\) has odd exponent; III is \\(65(64!)^2\\), also not a square.</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.5,
         "topics": [
           "Number Theory"
         ]
@@ -638,7 +638,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 5,
         "sol": "<p>Start with \\(\\int_a^d(g-f)\\,dx\\) and reverse its sign on \\((b,c)\\) by adding \\(2\\int_b^c(f-g)\\,dx\\).</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.0,
         "topics": [
           "Integration",
           "Functions and Graphs"
@@ -659,7 +659,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 6,
         "sol": "<p>The first identity holds exactly when \\(p=\\pi/2+2j\\pi\\), not at every odd multiple of \\(\\pi/2\\). Its converse and \\(T\\) are true.</p>",
-        "estimatedDifficulty": 6.0,
+        "estimatedDifficulty": 7.0,
         "topics": [
           "Trigonometry",
           "Logic"
@@ -697,7 +697,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 2,
         "sol": "<p>At \\(k=0\\) both lines are \\(y=x\\). Otherwise \\(2^k\\ne1\\), so the two slopes differ and there is one intersection.</p>",
-        "estimatedDifficulty": 4.0,
+        "estimatedDifficulty": 4.5,
         "topics": [
           "Functions and Graphs",
           "Exponentials and Logarithms"
@@ -714,7 +714,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 1,
         "sol": "<p>\\(S=na+dn(n-1)/2\\). If \\(d\\) is odd, the parity may depend on \\(n\\) modulo \\(4\\), which the value of \\(n\\) determines.</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.5,
         "topics": [
           "Sequences and Series",
           "Number Theory",
@@ -733,7 +733,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 3,
         "sol": "<p>The maximum of \\(2x+y\\) on the circle is \\(2p+q+5\\). Therefore \\(2p+q\\leq5\\), with equality attainable.</p>",
-        "estimatedDifficulty": 6.0,
+        "estimatedDifficulty": 7.0,
         "topics": [
           "Geometry"
         ]
@@ -751,7 +751,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 1,
         "sol": "<p>Choose \\(6\\) and two of \\(1,5,7\\) in \\(3\\) ways, or one of \\(2,4,8,10\\), one of \\(3,9\\), and one of \\(1,5,7\\) in \\(24\\) ways.</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.0,
         "topics": [
           "Combinatorics"
         ]
@@ -769,7 +769,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 0,
         "sol": "<p>For \\(x\\ne0\\), the sum is \\(x/|x|\\); for \\(x=0\\), it is \\(0\\). Thus the set is \\(\\{-1,0,1\\}\\).</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.5,
         "topics": [
           "Sequences and Series",
           "General algebra"
@@ -805,7 +805,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 2,
         "sol": "<p>The first copy gives \\(b=-4\\), and the second gives \\(c=-12\\). Hence the original roots are \\(6\\) and \\(-2\\).</p>",
-        "estimatedDifficulty": 4.5,
+        "estimatedDifficulty": 5.0,
         "topics": [
           "General algebra"
         ]
@@ -823,7 +823,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 2,
         "sol": "<p>Inclusion-exclusion gives \\(\\mathrm P(2)=0.4+0.7-(1-0.2)=0.3\\).</p>",
-        "estimatedDifficulty": 5.0,
+        "estimatedDifficulty": 5.5,
         "topics": [
           "Probability and Statistics"
         ]
@@ -840,7 +840,7 @@ const TMUA_2026_RECONSTRUCTED_PAPERS = [
         ],
         "correct": 2,
         "sol": "<p>IV gives \\(c=2b-a\\); with III, the triangle inequality \\(a+b>c\\) is equivalent to I, namely \\(2a>b\\).</p>",
-        "estimatedDifficulty": 5.5,
+        "estimatedDifficulty": 6.5,
         "topics": [
           "Logic",
           "Geometry",
