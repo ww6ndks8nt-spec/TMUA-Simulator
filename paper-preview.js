@@ -44,10 +44,11 @@ function timeText(r){if(!Array.isArray(r.questionTimesMs)||!r.questionTimesMs.so
 function render(p){
  brand.textContent=p.matAdditional?'Additional MAT paper':category(p);
  banner.classList.toggle('pp-mat-additional',!!p.matAdditional);
- sourceLinks.replaceChildren();sourceLinks.hidden=!(p.matAdditional||p.earlySpecimen||p.reconstructed);
+ sourceLinks.replaceChildren();sourceLinks.hidden=!((p.matAdditional||p.earlySpecimen||p.reconstructed)&&(p.url||p.solutionUrl));
  extraInfo.hidden=!p.matAdditional;
- if(p.matAdditional||p.earlySpecimen||p.reconstructed){
+ if(!sourceLinks.hidden){
    for(const [label,url] of [['Question PDF',p.url],[p.reconstructed?'Answer key PDF':'Solutions PDF',p.solutionUrl]]){
+     if(!url)continue;
      const a=make('a','',label+' ↗');a.href=url;a.target='_blank';a.rel='noopener noreferrer';sourceLinks.append(a);
    }
  }
