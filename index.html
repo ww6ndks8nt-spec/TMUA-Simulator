@@ -3208,7 +3208,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
 <script src="set_c_revised.js?v=6"></script>
 <script src="expanded-practice-solutions.js?v=20261003-1"></script>
 <script src="challenge_set_1_p2.js?v=20260915-1"></script>
-<script src="tmua-2026-reconstruction.js?v=20261109-1"></script>
+<script src="tmua-2026-reconstruction.js?v=20261109-score-calibration"></script>
 <script src="community_restore.js?v=20260925-1"></script>
 <script src="beyond2p2-expanded.js?v=20261003-2"></script>
 <link rel="stylesheet" href="beyond2p2-expanded.css?v=20261003-1">
@@ -6982,18 +6982,15 @@ QUESTION_DIFFICULTY_RATINGS.customset1p2=CHALLENGE_SET_1_P2.map(q=>q.estimatedDi
 [...EARLY_SPECIMEN_PAPERS,...TMUA_2026_RECONSTRUCTED_PAPERS].forEach(p=>{QUESTION_DIFFICULTY_RATINGS[p.id]=p.questions.map(q=>q.estimatedDifficulty);});
 const SPREADSHEET_RATING_COLUMNS={"tmua2023p1":"B","tmua2023p2":"C","tmua2022p1":"D","tmua2022p2":"E","tmua2021p1":"F","tmua2021p2":"G","tmua2020p1":"H","tmua2020p2":"I","tmua2019p1":"J","tmua2019p2":"K","tmua2018p1":"L","tmua2018p2":"M","tmua2017p1":"N","tmua2017p2":"O"};
 ALL_PAPERS.forEach(p=>{if(p.esat)return;if(p.mat){const reviews=MAT_DIFFICULTY_REVIEWS[p.id];if(!reviews||reviews.length!==p.questions.length)throw new Error("Incomplete MAT difficulty review: "+p.id);p.questions.forEach((q,i)=>Object.assign(q,reviews[i]));return;}const ratings=QUESTION_DIFFICULTY_RATINGS[p.id];if(!ratings||ratings.length!==p.questions.length)throw new Error("Incomplete difficulty ratings: "+p.id);p.questions.forEach((q,i)=>{q.estimatedDifficulty=ratings[i];q.difficultySource=SPREADSHEET_RATING_COLUMNS[p.id]?"spreadsheet":q.difficultyReviewVersion?(p.id.startsWith("qiuyunmock01")?"community-editorial-review":"step-editorial-review"):"estimated";q.difficultySourceCell=SPREADSHEET_RATING_COLUMNS[p.id]?SPREADSHEET_RATING_COLUMNS[p.id]+(i+3):null;});});
-/* Sources: user spreadsheet (280 official item ratings), user-supplied 2023
-   conversion image and approximate digitisation of the attached 2023/2024 CDF.
-   Estimated ratings are comparisons with supplied questions, not ability thresholds.
-   Curve blend and mean adjustment are conservative practice assumptions, not official equating. */
-const DIFFICULTY_MODEL_VERSION='difficulty-weighted-2026-10-12';
+/* User-calibrated practice curve, expressed as equivalent raw marks out of 40.
+   Reference anchors: 20 -> 4.5, 32 -> 7.0, 35 -> 8.0 and 39 -> 9.0.
+   Item ratings and paper-difficulty adjustments remain practice estimates,
+   not official raw-mark boundaries or cohort equating. */
+const DIFFICULTY_MODEL_VERSION='difficulty-weighted-2026-11-09';
 const SCORE_CONVERSION_REFERENCE={
- paper1:[1,1,1,1,1.9,2.7,3.4,4,4.6,5.2,5.8,6.3,6.6,6.9,7.1,7.3,7.6,7.9,8.3,9,9],
- paper2:[1,1,1,1.2,2.2,3,3.7,4.4,5,5.6,6.1,6.5,6.7,7,7.2,7.4,7.7,8,8.4,9,9],
- overall:[1,1,1,1,1,1,1.5,1.9,2.4,2.8,3.2,3.5,3.9,4.2,4.5,4.8,5.1,5.4,5.7,6,6.2,6.5,6.6,6.7,6.8,6.9,7,7.1,7.2,7.3,7.4,7.6,7.7,7.8,8,8.2,8.4,8.6,9,9,9],
- cdf2023:[[1,2],[1.5,3.5],[1.9,6],[2.4,9.5],[2.8,13.5],[3.2,18],[3.5,23],[3.9,28.5],[4.2,34.5],[4.5,40],[4.8,46],[5.1,50],[5.4,55.5],[6,63.5],[6.2,68],[6.5,72],[6.6,76],[6.7,78.5],[6.8,81],[6.9,84],[7.1,88],[7.4,92.5],[7.6,94],[7.9,96.5],[8.2,97.5],[8.6,99],[9,100]],
- cdf2024:[[1,3.5],[1.5,7],[2,12.5],[2.5,20.5],[3,31],[3.5,41.5],[4,54],[4.5,66],[5,76],[5.5,82.5],[6,88],[6.5,91.5],[7,93],[7.5,95.5],[8,96.5],[8.5,97.5],[9,100]],
-  curveBlend:0.25,maximumCurveShift:0.4,meanRawFractionPerPoint:0.05,hardDifficultyStart:6.25,hardRawFractionPerPointSquared:0.015
+ rawTotal:40,
+ rawScoreAnchors:[[0,1],[4,1],[8,1.5],[12,2.5],[16,3.5],[20,4.5],[32,7],[35,8],[39,9],[40,9]],
+ meanRawFractionPerPoint:0.05,hardDifficultyStart:6.25,hardRawFractionPerPointSquared:0.015
 };
 function difficultyItems(p){return (p?.questions||[]).filter(q=>q.correct!==99&&Number.isFinite(q.estimatedDifficulty));}
 const tmua2022p1Reviewed=ALL_PAPERS.find(p=>p.id==='tmua2022p1');
@@ -7008,13 +7005,6 @@ function scoreInterpolate(points,x){
  for(let i=1;i<points.length;i++)if(x<=points[i][0]){const [x0,y0]=points[i-1],[x1,y1]=points[i];return y0+(y1-y0)*(x-x0)/(x1-x0);}
  return points[points.length-1][1];
 }
-function distributionAdjustedScore(score){
- const r=SCORE_CONVERSION_REFERENCE;
- const percentile=scoreInterpolate(r.cdf2023,score);
- const newScore=scoreInterpolate(r.cdf2024.map(([s,p])=>[p,s]),percentile);
- const shift=Math.max(-r.maximumCurveShift,Math.min(r.maximumCurveShift,r.curveBlend*(newScore-score)));
- return Math.max(1,Math.min(9,score+shift));
-}
 function referenceMeanDifficulty(p){
  if(p?.combined){const a=paperById(p.p1Id),b=paperById(p.p2Id),na=difficultyItems(a).length,nb=difficultyItems(b).length;return na+nb?(referenceMeanDifficulty(a)*na+referenceMeanDifficulty(b)*nb)/(na+nb):5.95;}
  return p?.mat||p?.type===1?5.9:p?.type===2?6:5.95;
@@ -7028,10 +7018,11 @@ function difficultyGrade(raw,p){
  const delta=stats.scoredMean-referenceMeanDifficulty(p);
   const hardBonus=r.hardRawFractionPerPointSquared*Math.pow(Math.max(0,stats.scoredMean-r.hardDifficultyStart),2);
   const adjustedFraction=Math.max(0,Math.min(1,fraction+(r.meanRawFractionPerPoint*delta+hardBonus)*4*fraction*(1-fraction)));
- const table=p?.mat?r.paper1:p?.combined||![1,2].includes(p?.type)?r.overall:p.type===1?r.paper1:r.paper2;
- const equivalentRaw=adjustedFraction*(table.length-1);
- const base=scoreInterpolate(table.map((score,raw)=>[raw,score]),equivalentRaw);
- return Math.round(distributionAdjustedScore(base)*10)/10;
+ // All paper lengths use the same percentage thresholds, including MAT.
+ const equivalentRaw=adjustedFraction*r.rawTotal;
+ const score=scoreInterpolate(r.rawScoreAnchors,equivalentRaw);
+ // Avoid different rounding at an exact half-tenth due to mean precision.
+ return Math.round(score*10+1e-9)/10;
 }
 function difficultyGradeText(raw,p){const g=difficultyGrade(raw,p);return g===null?'Not available':g.toFixed(1);}
 function difficultyBoundary(p,target){const n=difficultyItems(p).length;if(!n)return null;for(let raw=0;raw<=n;raw++)if(difficultyGrade(raw,p)>=target)return raw;return null;}
