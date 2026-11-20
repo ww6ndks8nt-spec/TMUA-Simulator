@@ -2820,7 +2820,7 @@ html[data-duck-theme="dark"] #wrongBuilder .wrong-date-options button:is(:hover,
         <div class="mastery-number" id="dashMastery">—</div>
         <div class="mastery-range">Estimated range: <b id="dashMasteryRange">—</b></div>
       </div>
-      <div class="mastery-sub">TMUA-equivalent estimate from weighted TMUA and MAT attempts.</div>
+      <div class="mastery-sub">Based on your five most recently completed distinct papers, or all of them if you’ve completed fewer.</div>
 
       <div class="mastery-scale">
         <div class="mastery-track">
@@ -4544,7 +4544,7 @@ function completedAttemptCount(){
 let dashboardRange='30';
 
 // Shared by Overview, its detail estimates and the general performance ranking.
-const PERFORMANCE_MODEL={version:'2026-10-12',dayMs:86400000,halfLifeDays:60,retryRecoveryDays:20,priorDf:3,priorSd:0.65,minimumSd:0.35,calibrationSd:0.2};
+const PERFORMANCE_MODEL={version:'2026-11-20',recentPaperCount:5,dayMs:86400000,halfLifeDays:60,retryRecoveryDays:20,priorDf:3,priorSd:0.65,minimumSd:0.35,calibrationSd:0.2};
 function dashboardSourceWeight(p){
   if(!p)return 0.75;
   if(p.mat)return 0.85;
@@ -4624,29 +4624,37 @@ function performanceStatsFromMoments(m){
   const half=performancePredictionMultiplier(model.priorDf+dataDf)*Math.sqrt(variance*(1+1/Math.max(0.1,effective))+model.calibrationSd**2);
   return {mean,lo:Math.max(1,mean-half),hi:Math.min(9,mean+half),half,n,effective,variance};
 }
+function emptyPerformanceMoments(){return {sw:0,sx:0,sxx:0,sw2:0,n:0};}
+function addPerformanceAttempt(m,row,asOf){
+  const w=performanceRowWeight(row,asOf),g=row.grade;
+  if(!Number.isFinite(w)||w<=0||!Number.isFinite(g)||g<1||g>9)return false;
+  m.sw+=w;m.sx+=w*g;m.sxx+=w*g*g;m.sw2+=w*w;m.n++;
+  return true;
+}
 function performanceWeightedStats(rows,asOf=Date.now()){
-  const m={sw:0,sx:0,sxx:0,sw2:0,n:0};
-  for(const row of rows){
-    const w=performanceRowWeight(row,asOf),g=row.grade;
-    if(!Number.isFinite(w)||w<=0||!Number.isFinite(g)||g<1||g>9)continue;
-    m.sw+=w;m.sx+=w*g;m.sxx+=w*g*g;m.sw2+=w*w;m.n++;
-  }
+  const m=emptyPerformanceMoments();
+  for(const row of rows)addPerformanceAttempt(m,row,asOf);
   return performanceStatsFromMoments(m);
 }
 function dashboardWeightedStats(rows,asOf=Date.now()){return performanceWeightedStats(rows,asOf);}
-function dashboardRecentPaperRows(rows,count=5){
-  const ids=new Set();
-  for(const row of rows.slice().sort((a,b)=>b.t-a.t)){ids.add(row.p.id);if(ids.size>=count)break;}
-  return rows.filter(row=>ids.has(row.p.id));
+function rememberRecentPaper(recent,row,count=PERFORMANCE_MODEL.recentPaperCount){
+  const id=row.p.id,previous=recent.get(id);
+  if(previous&&previous.t>=row.t)return;
+  recent.set(id,row);
+  if(recent.size>count){
+    const oldest=[...recent.values()].sort((a,b)=>b.t-a.t||a.p.id.localeCompare(b.p.id)).pop();
+    recent.delete(oldest.p.id);
+  }
+}
+function dashboardRecentPaperRows(rows,count=PERFORMANCE_MODEL.recentPaperCount){
+  const recent=new Map();
+  for(const row of rows)rememberRecentPaper(recent,row,count);
+  return rows.filter(row=>recent.has(row.p.id));
 }
 function dashboardWeightedAccuracy(rows){
   let total=0,correct=0;
   for(const row of rows){const w=performanceRowWeight(row);if(w>0&&row.s>0){total+=w;correct+=w*row.c/row.s;}}
   return total?Math.round(100*correct/total):null;
-}
-function dashboardMeanGrade(rows){
-  const st=dashboardWeightedStats(rows);
-  return st?st.mean:null;
 }
 function dashboardFmtGrade(v){
   return v===null || !Number.isFinite(v) ? '—' : v.toFixed(1);
@@ -4705,14 +4713,22 @@ function dashboardTopicStats(){
   return Array.from(map.values()).sort((a,b)=>b.attempted-a.attempted || (a.correct/Math.max(1,a.attempted))-(b.correct/Math.max(1,b.attempted)) || a.topic.localeCompare(b.topic));
 }
 function dashboardCumulativeHistory(rows){
-  const out=[],m={sw:0,sx:0,sxx:0,sw2:0,n:0};let previous=null;
+  const out=[],perPaper=new Map(),recent=new Map();
+  function addAtTime(total,paper,t){
+    const d=performanceRecencyWeight((t-paper.t)/PERFORMANCE_MODEL.dayMs);
+    total.sw+=d*paper.sw;total.sx+=d*paper.sx;total.sxx+=d*paper.sxx;
+    total.sw2+=d*d*paper.sw2;total.n+=paper.n;
+  }
   for(const row of rows){
-    // Linear-time historical estimates; later retakes never alter an earlier point.
-    const decay=previous===null?1:performanceRecencyWeight((row.t-previous)/PERFORMANCE_MODEL.dayMs);
-    m.sw*=decay;m.sx*=decay;m.sxx*=decay;m.sw2*=decay*decay;
-    const w=performanceRowWeight(row,row.t),g=row.grade;
-    m.sw+=w;m.sx+=w*g;m.sxx+=w*g*g;m.sw2+=w*w;m.n++;previous=row.t;
-    const st=performanceStatsFromMoments(m);
+    // Keep earlier attempts even when a paper leaves the five: a retake can bring it back.
+    const paper=emptyPerformanceMoments(),previous=perPaper.get(row.p.id);
+    if(!addPerformanceAttempt(paper,row,row.t))continue;
+    if(previous)addAtTime(paper,previous,row.t);
+    paper.t=row.t;perPaper.set(row.p.id,paper);
+    rememberRecentPaper(recent,row);
+    const total=emptyPerformanceMoments();
+    for(const id of recent.keys())addAtTime(total,perPaper.get(id),row.t);
+    const st=performanceStatsFromMoments(total);
     if(st)out.push({t:row.t,mean:st.mean,lo:st.lo,hi:st.hi});
   }
   return out;
@@ -4916,7 +4932,8 @@ function renderDashboardTopics(focusKey=null){
 function buildDashboard(){
   const performanceRows=dashboardFirstAttempts();
   const all=dashboardAllAttemptRows();
-  const stats=dashboardWeightedStats(performanceRows);
+  const recentStats=dashboardWeightedStats(dashboardRecentPaperRows(performanceRows));
+  const stats=ESAT_MODE?dashboardWeightedStats(performanceRows):recentStats;
 
   $('dashProfName').textContent=(currentUser&&ROOT.profiles[currentUser])?ROOT.profiles[currentUser].name:'';
   $('dashMastery').textContent=stats?dashboardFmtGrade(stats.mean):'—';
@@ -4935,10 +4952,6 @@ function buildDashboard(){
 
   const official=performanceRows.filter(x=>x.p.group===4);
   const mock=performanceRows.filter(x=>x.p.group!==4);
-  const recent=dashboardRecentPaperRows(performanceRows);
-  $('dashOfficialBench').textContent=dashboardFmtGrade(dashboardMeanGrade(official));
-  $('dashMockBench').textContent=dashboardFmtGrade(dashboardMeanGrade(mock));
-  $('dashRecentBench').textContent=dashboardFmtGrade(dashboardMeanGrade(recent));
 
   let questions=0,totalMs=0;
   all.forEach(x=>{
@@ -4950,15 +4963,13 @@ function buildDashboard(){
   $('dashTime').textContent=dashboardDuration(totalMs);
 
   const p1=performanceRows.filter(x=>x.p.type===1), p2=performanceRows.filter(x=>x.p.type===2);
-  const p1g=dashboardMeanGrade(p1), p2g=dashboardMeanGrade(p2);
   const p1pct=dashboardWeightedAccuracy(p1),p2pct=dashboardWeightedAccuracy(p2);
-  $('dashP1Score').textContent=p1g===null?'—':dashboardFmtGrade(p1g);
-  $('dashP2Score').textContent=p2g===null?'—':dashboardFmtGrade(p2g);
   $('dashP1Sub').textContent=p1.length?(p1pct+'% weighted accuracy · '+new Set(p1.map(x=>x.p.id)).size+' papers'):'No scored attempts yet';
   $('dashP2Sub').textContent=p2.length?(p2pct+'% weighted accuracy · '+new Set(p2.map(x=>x.p.id)).size+' papers'):'No scored attempts yet';
-  for(const [id,rows] of [['dashOfficialBench',official],['dashMockBench',mock],['dashRecentBench',recent],['dashP1Score',p1],['dashP2Score',p2]]){
-    const range=dashboardWeightedStats(rows);
-    $(id).title=range?'Estimated range: '+dashboardFmtGrade(range.lo)+' – '+dashboardFmtGrade(range.hi):'';
+  for(const [id,bench] of [['dashOfficialBench',dashboardWeightedStats(official)],['dashMockBench',dashboardWeightedStats(mock)],['dashRecentBench',recentStats],['dashP1Score',dashboardWeightedStats(p1)],['dashP2Score',dashboardWeightedStats(p2)]]){
+    const el=$(id);
+    el.textContent=dashboardFmtGrade(bench?.mean);
+    el.title=bench?'Estimated range: '+dashboardFmtGrade(bench.lo)+' – '+dashboardFmtGrade(bench.hi):'';
   }
 
   renderDashboardChart(performanceRows);
@@ -7743,7 +7754,7 @@ refreshAccountCircles();
 <script src="formulae-data.js?v=20261003-1"></script>
 <script src="formulae-list.js?v=20261003-1"></script>
 <link rel="stylesheet" href="general-leaderboards.css?v=20261004-6">
-<script src="general-leaderboards.js?v=20261115-withdrawn-content"></script>
+<script src="general-leaderboards.js?v=20261120-recent-form"></script>
 <link rel="stylesheet" href="paper-preview.css?v=20261004-7">
 <script src="paper-preview.js?v=20261109-reconstruction-labels"></script>
 <link rel="stylesheet" href="full-page-ui.css?v=20261108-light-contrast">

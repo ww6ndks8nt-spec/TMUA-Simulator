@@ -31,9 +31,9 @@ function metrics(state=STATE){
     timeInfo.legacy++;
    }else timeInfo.unavailable++;
   }
-  if(!p.esat&&rows.some(r=>Array.isArray(r.a)&&r.a.reduce((n,a,i)=>n+(Number.isInteger(a)&&a>=0&&a<(p.questions[i]?.opts?.length||0)?1:0),0)>=(p.mat?8:15)))papers++;
+  if(!p.esat&&rows.some(r=>Array.isArray(r.a)&&r.a.reduce((n,a,i)=>n+(Number.isInteger(a)&&a>=0&&a<(p.contentUnavailable?(p.archivedOptionCounts?.[i]||0):(p.questions[i]?.opts?.length||0))?1:0),0)>=(p.mat?8:15)))papers++;
  }
-  const attempts=dashboardPerformanceAttempts(state,ALL_PAPERS),mean=performanceWeightedStats(attempts)?.mean??null;
+  const attempts=dashboardPerformanceAttempts(state,ALL_PAPERS),mean=performanceWeightedStats(dashboardRecentPaperRows(attempts))?.mean??null;
   const samples=new Set(attempts.map(row=>row.p.id)).size;
   return {time:Math.min(31557600000,Math.floor(ms/1000)),performance:mean===null?null:Math.round(mean*1000)/1000,papers,samples,timeInfo};
 }
